@@ -1,0 +1,87 @@
+import { api } from '../utils/axios';
+import { IRootState } from '@/store/store';
+ // Update with the correct path to your Redux store
+import { useSelector } from 'react-redux';
+
+export const useUserDetails = () => {
+    return useSelector((state: IRootState) => state.auth.user); // Replace 'user' with the correct slice name
+};
+
+export const fetchWithUserDetails = async (
+    endpoint: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    data?: any,
+    options?: RequestInit
+) => {
+    try {
+        // Fetch user details from Redux store
+        const { fullName, email, _id } = useUserDetails();
+
+        // Include user details in the payload or headers
+        const config = {
+            method,
+            url: endpoint,
+            headers: {
+                'Content-Type': 'application/json',
+                ...(options?.headers || {}),
+            },
+            data: {
+                ...data,
+                user: {
+                    fullName,
+                    email,
+                    _id,
+                },
+            },
+            ...options,
+        };
+
+        // Perform the API call, commented out for error
+        // const response = await api.request(config);
+
+        // console.log(`Response from ${endpoint}`, response.data);
+        // return response.data;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`Error in fetchWithUserDetails for ${endpoint}`, error.message);
+            throw new Error(error.message);
+        }
+        if (typeof error === 'object' && error !== null && 'response' in error) {
+            const apiError = error as { response: { data: any } };
+            console.error(`Error in fetchWithUserDetails for ${endpoint}`, apiError.response.data);
+            throw apiError.response.data;
+        }
+        throw new Error('Unknown error occurred during fetchWithUserDetails');
+    }
+};
+
+// Example usage
+export const createClient = async (clientData: any) => {
+    return await fetchWithUserDetails('/clients', 'POST', clientData);
+};
+
+export const fetchAllClients = async () => {
+    try {
+        const response = await api.get('/konkreteKlinkers/helpers/clients');
+        console.log("fetchall cleints", response.data);
+        return response.data; // Adjust based on your API response structure
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error fetching clients:', error.message);
+            throw new Error(error.message);
+        }
+        if (typeof error === 'object' && error !== null && 'response' in error) {
+            const apiError = error as { response: { data: any } };
+            console.error('Error fetching clients:', apiError.response.data);
+            throw apiError.response.data;
+        }
+        throw new Error('Unknown error occurred while fetching clients');
+    }
+};
+export const updateClient = async (clientId: string, clientData: any) => {
+    return await fetchWithUserDetails(`/clients/${clientId}`, 'PUT', clientData);
+};
+
+export const deleteClient = async (clientId: string) => {
+    return await fetchWithUserDetails(`/clients/${clientId}`, 'DELETE');
+};
