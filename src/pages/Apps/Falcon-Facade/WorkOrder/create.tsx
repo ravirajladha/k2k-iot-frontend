@@ -115,10 +115,13 @@ const Create = () => {
                 quantity: 0,
                 plantCode: "",
                 deliveryDate: "",
+                barMark: "", // Initialize Bar Mark
+                memberDetails: "", // Initialize Member Details
                 shapes: [], // Ensure shapes is always an array
             },
         ]);
     };
+    
 
 
     // Handle product selection
@@ -363,159 +366,118 @@ const Create = () => {
                     </div>
 
                     <div className="mt-8">
-                        <div className="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Product Name / Material Code</th>
-                                        <th>UOM</th>
-                                        <th>PO Quantity</th>
-                                        {/* <th>Diameter</th> */}
-                                        <th>Delivery Date (optional)</th>
+    <div className="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Shape Code</th>
+                    <th>UOM</th>
+                    <th>PO Quantity</th>
+                    <th>Delivery Date (optional)</th>
+                    <th>Bar Mark</th> {/* New Bar Mark column */}
+                    <th>Member Details</th> {/* New Member Details column */}
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {items.map((item) => (
+                    <React.Fragment key={item.id}>
+                        <tr>
+                            {/* Product Selection */}
+                            <td>
+                                <Select
+                                    id={`productDropdown-${item.id}`}
+                                    name={`productDropdown-${item.id}`}
+                                    options={products.map((p) => ({
+                                        ...p,
+                                        isDisabled: items.some((itm) => itm.product?.value === p.value),
+                                    }))}
+                                    onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
+                                    value={item.product}
+                                    getOptionLabel={(e: Product) => e.label}
+                                    getOptionValue={(e: Product) => e.value}
+                                    placeholder="Select Product"
+                                    isClearable
+                                    menuPortalTarget={document.body} // Ensures dropdown renders outside the table
+                                    menuPosition="absolute" // Prevents dropdown clipping inside the table
+                                    menuPlacement="auto" // Adjusts position dynamically
+                                    styles={{
+                                        menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
+                                        menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
+                                    }}
+                                />
+                            </td>
 
-                                        <th></th>
+                            {/* UOM */}
+                            <td>
+                                <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
+                            </td>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            {/* PO Quantity */}
+                            <td>
+                                <input
+                                    type="number"
+                                    className="form-input w-32"
+                                    placeholder="Quantity"
+                                    min={0}
+                                    value={item.quantity}
+                                    onChange={(e) => handleChange(item.id, "quantity", parseInt(e.target.value) || 0)}
+                                />
+                            </td>
 
-                                    {items.map((item) => (
-                                        <React.Fragment key={item.id}>
-                                            <tr>
-                                                {/* Product Selection */}
-                                                <td>
-                                                    <Select
-                                                        id={`productDropdown-${item.id}`}
-                                                        name={`productDropdown-${item.id}`}
-                                                        options={products.map((p) => ({
-                                                            ...p,
-                                                            isDisabled: items.some((itm) => itm.product?.value === p.value),
-                                                        }))}
-                                                        onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
-                                                        value={item.product}
-                                                        getOptionLabel={(e: Product) => e.label}
-                                                        getOptionValue={(e: Product) => e.value}
-                                                        placeholder="Select Product"
-                                                        isClearable
-                                                        menuPortalTarget={document.body} // Ensures dropdown renders outside the table
-                                                        menuPosition="absolute" // Prevents dropdown clipping inside the table
-                                                        menuPlacement="auto" // Adjusts position dynamically
-                                                        styles={{
-                                                            menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
-                                                            menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
-                                                        }}
-                                                    />
+                            {/* Delivery Date */}
+                            <td>
+                                <input
+                                    type="date"
+                                    className="form-input w-40"
+                                    value={item.deliveryDate}
+                                    onChange={(e) => handleChange(item.id, "deliveryDate", e.target.value)}
+                                />
+                            </td>
 
-                                                </td>
+                            {/* Bar Mark (New Field) */}
+                            <td>
+                                <input
+                                    type="text"
+                                    className="form-input w-32"
+                                    placeholder="Bar Mark"
+                                    value={item.barMark}
+                                    onChange={(e) => handleChange(item.id, "barMark", e.target.value)}
+                                />
+                            </td>
 
-                                                {/* UOM */}
-                                                <td>
-                                                    <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
-                                                </td>
+                            {/* Member Details (New Field) */}
+                            <td>
+                                <input
+                                    type="text"
+                                    className="form-input w-32"
+                                    placeholder="Member Details"
+                                    value={item.memberDetails}
+                                    onChange={(e) => handleChange(item.id, "memberDetails", e.target.value)}
+                                />
+                            </td>
 
-                                                {/* PO Quantity */}
-                                                <td>
-                                                    <input
-                                                        type="number"
-                                                        className="form-input w-32"
-                                                        placeholder="Quantity"
-                                                        min={0}
-                                                        value={item.quantity}
-                                                        onChange={(e) => handleChange(item.id, "quantity", parseInt(e.target.value) || 0)}
-                                                    />
-                                                </td>
-
-                                                {/* <td>
-                                                    <input type="text" className="form-input w-32" placeholder="(in cm)" value={item.diameter} readOnly />
-
-                                                </td> */}
-
-                                                {/* Delivery Date */}
-                                                <td>
-                                                    <input
-                                                        type="date"
-                                                        className="form-input w-40"
-                                                        value={item.deliveryDate}
-                                                        onChange={(e) => handleChange(item.id, "deliveryDate", e.target.value)}
-                                                    />
-                                                </td>
-                                                <td>
-                                                    <button type="button" onClick={() => removeItem(item.id)}>
-                                                        ❌
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            {/* Auto-Populated Dimensions */}
-                                            {item.dimensions && item.dimensions.length > 0 && (
-                                                <tr>
-                                                    <td colSpan={5}>
-                                                        <table className="w-full text-xs">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Dimension Name</th>
-                                                                    <th>Dimension Value</th>
-                                                                    <th>Dimension Name</th>
-                                                                    <th>Dimension Value</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {item.dimensions.map((dim, index) =>
-                                                                    index % 2 === 0 ? ( // Grouping two dimensions per row
-                                                                        <tr key={index}>
-                                                                            <td>{dim.name}</td>
-                                                                            <td>
-                                                                                <input
-                                                                                    type="text"
-                                                                                    className="form-input w-64"
-                                                                                    placeholder={`Enter ${dim.name}`}
-                                                                                    value={dim.value}
-                                                                                    onChange={(e) => handleChange(item.id, `dimension-${index}`, e.target.value)}
-                                                                                />
-                                                                            </td>
-                                                                            {item.dimensions[index + 1] ? ( // Add next dimension if available
-                                                                                <>
-                                                                                    <td>{item.dimensions[index + 1].name}</td>
-                                                                                    <td>
-                                                                                        <input
-                                                                                            type="text"
-                                                                                            className="form-input w-64"
-                                                                                            placeholder={`Enter ${item.dimensions[index + 1].name}`}
-                                                                                            value={item.dimensions[index + 1].value}
-                                                                                            onChange={(e) => handleChange(item.id, `dimension-${index + 1}`, e.target.value)}
-                                                                                        />
-                                                                                    </td>
-                                                                                </>
-                                                                            ) : (
-                                                                                <>
-                                                                                    <td></td>
-                                                                                    <td></td>
-                                                                                </>
-                                                                            )}
-                                                                        </tr>
-                                                                    ) : null
-                                                                )}
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            )}
-
-                                        </React.Fragment>
-                                    ))}
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                        <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
-                            <div className="sm:mb-0 mb-6">
-                                <button type="button" className="btn btn-primary" onClick={addItem}>
-                                    ➕ Add Product
+                            <td>
+                                <button type="button" onClick={() => removeItem(item.id)}>
+                                    ❌
                                 </button>
-                            </div>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                    </React.Fragment>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+    {/* Add Product Button */}
+    <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
+        <div className="sm:mb-0 mb-6">
+            <button type="button" className="btn btn-primary" onClick={addItem}>
+                ➕ Add Product
+            </button>
+        </div>
+    </div>
+</div>
 
 
                     {/* File Upload */}

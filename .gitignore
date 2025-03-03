@@ -43,7 +43,7 @@ Thumbs.db
 .next/
 .eslintcache
 node_modules/.cache
-
+``
 # Testing
 coverage/
 jest/

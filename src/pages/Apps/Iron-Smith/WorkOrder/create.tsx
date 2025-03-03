@@ -80,7 +80,7 @@ const Create = () => {
         orderQuantity: '',
         files: [], // Ensure it's correctly initialized as an array
     });
-    
+
 
     const maxNumber = 5;
 
@@ -115,6 +115,8 @@ const Create = () => {
                 quantity: 0,
                 plantCode: "",
                 deliveryDate: "",
+                barMark: "", // Initialize Bar Mark
+                memberDetails: "", // Initialize Member Details
                 shapes: [], // Ensure shapes is always an array
             },
         ]);
@@ -355,6 +357,8 @@ const Create = () => {
                                         <th>UOM</th>
                                         <th>PO Quantity</th>
                                         <th>Diameter</th>
+                                        <th>Member Details</th>
+                                        <th>Bar Mark</th>
                                         <th>Delivery Date (optional)</th>
 
                                         <th></th>
@@ -368,27 +372,27 @@ const Create = () => {
                                             <tr>
                                                 {/* Product Selection */}
                                                 <td>
-                                                <Select
-    id={`productDropdown-${item.id}`}
-    name={`productDropdown-${item.id}`}
-    options={products.map((p) => ({
-        ...p,
-        isDisabled: items.some((itm) => itm.product?.value === p.value),
-    }))}
-    onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
-    value={item.product}
-    getOptionLabel={(e: Product) => e.label}
-    getOptionValue={(e: Product) => e.value}
-    placeholder="Select Product"
-    isClearable
-    menuPortalTarget={document.body} // Ensures dropdown renders outside the table
-    menuPosition="absolute" // Prevents dropdown clipping inside the table
-    menuPlacement="auto" // Adjusts position dynamically
-    styles={{
-        menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
-        menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
-    }}
-/>
+                                                    <Select
+                                                        id={`productDropdown-${item.id}`}
+                                                        name={`productDropdown-${item.id}`}
+                                                        options={products.map((p) => ({
+                                                            ...p,
+                                                            isDisabled: items.some((itm) => itm.product?.value === p.value),
+                                                        }))}
+                                                        onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
+                                                        value={item.product}
+                                                        getOptionLabel={(e: Product) => e.label}
+                                                        getOptionValue={(e: Product) => e.value}
+                                                        placeholder="Select Product"
+                                                        isClearable
+                                                        menuPortalTarget={document.body} // Ensures dropdown renders outside the table
+                                                        menuPosition="absolute" // Prevents dropdown clipping inside the table
+                                                        menuPlacement="auto" // Adjusts position dynamically
+                                                        styles={{
+                                                            menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
+                                                            menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
+                                                        }}
+                                                    />
 
                                                 </td>
 
@@ -413,6 +417,30 @@ const Create = () => {
                                                     <input type="text" className="form-input w-32" placeholder="(in cm)" value={item.diameter} readOnly />
 
                                                 </td>
+
+   {/* Member Details (New Field) */}
+   <td>
+                                <input
+                                    type="text"
+                                    className="form-input w-32"
+                                    placeholder="Member Details"
+                                    value={item.memberDetails}
+                                    onChange={(e) => handleChange(item.id, "memberDetails", e.target.value)}
+                                />
+                            </td>
+                            
+       {/* Bar Mark (New Field) */}
+       <td>
+                                <input
+                                    type="text"
+                                    className="form-input w-32"
+                                    placeholder="Bar Mark"
+                                    value={item.barMark}
+                                    onChange={(e) => handleChange(item.id, "barMark", e.target.value)}
+                                />
+                            </td>
+
+                         
 
                                                 {/* Delivery Date */}
                                                 <td>

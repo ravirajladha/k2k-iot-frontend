@@ -296,52 +296,90 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'helpers' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('helpers')}>
-                                    <div className="flex items-center">
-                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
-                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Master Data')}</span>
-                                    </div>
-                                    <div className={currentMenu !== 'helpers' ? 'rtl:rotate-90 -rotate-90' : ''}>
-                                        <IconCaretDown />
-                                    </div>
-                                </button>
+    <button
+        type="button"
+        className={`${currentMenu === 'helpers' ? 'active' : ''} nav-link group w-full`}
+        onClick={() => toggleMenu('helpers')}
+    >
+        <div className="flex items-center">
+            <IconMenuPages className="group-hover:!text-primary shrink-0" />
+            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                {t('Master Data')}
+            </span>
+        </div>
+        <div className={currentMenu !== 'helpers' ? 'rtl:rotate-90 -rotate-90' : ''}>
+            <IconCaretDown />
+        </div>
+    </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'helpers' ? 'auto' : 0}>
-                                    <ul className="sub-menu text-gray-500">
+    <AnimateHeight duration={300} height={currentMenu === 'helpers' ? 'auto' : 0}>
+        <ul className="sub-menu text-gray-500">
 
-                                        {/* Plants Submenu */}
-                                        {/* <li className="menu nav-item">
-                                            <button type="button" className={`${currentSubMenu === 'machines' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleSubMenu('machines')}>
-                                                <div className="flex items-center">
-                                                    <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Machines')}</span>
-                                                </div>
-                                                <div className={currentSubMenu !== 'machines' ? 'rtl:rotate-90 -rotate-90' : ''}>
-                                                    <IconCaretDown />
-                                                </div>
-                                            </button>
+            {/* Clients Submenu */}
+            <li className="menu nav-item">
+                <button
+                    type="button"
+                    className={`${currentSubMenu === 'clients' ? 'active' : ''} nav-link group w-full`}
+                    onClick={() => toggleSubMenu('clients')}
+                >
+                    <div className="flex items-center">
+                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
+                            {t('Clients')}
+                        </span>
+                    </div>
+                    <div className={currentSubMenu !== 'clients' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                        <IconCaretDown />
+                    </div>
+                </button>
 
-                                            <AnimateHeight duration={300} height={currentSubMenu === 'machines' ? 'auto' : 0}>
-                                                <ul className="sub-menu text-gray-500">
-                                                    <li><NavLink to={`${falconFacadeBasePath}/machines`}>{t('Machines')}</NavLink></li>
-                                                </ul>
-                                            </AnimateHeight>
-                                        </li> */}
+                <AnimateHeight duration={300} height={currentSubMenu === 'clients' ? 'auto' : 0}>
+                    <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
+                        <li>
+                            <NavLink to={`${falconFacadeBasePath}/clients`}>{t('Clients')}</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={`${falconFacadeBasePath}/machines`}>{t('Machines')}</NavLink>
+                        </li>
+                    </ul>
+                </AnimateHeight>
+            </li>
 
-                                        {/* <li><NavLink to={`${falconFacadeBasePath}/machines`}>{t('Machines')}</NavLink></li> */}
+            {/* Products Submenu */}
+            <li className="menu nav-item">
+                <button
+                    type="button"
+                    className={`${currentSubMenu === 'products' ? 'active' : ''} nav-link group w-full`}
+                    onClick={() => toggleSubMenu('products')}
+                >
+                    <div className="flex items-center">
+                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
+                            {t('Products')}
+                        </span>
+                    </div>
+                    <div className={currentSubMenu !== 'products' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                        <IconCaretDown />
+                    </div>
+                </button>
 
-                                        {/* <li><NavLink to="to={`${falconFacadeBasePath}/clients`}">{t('Clients')}</NavLink></li> */}
-                                        <li><NavLink to={`${falconFacadeBasePath}/clients`}>{t('Clients')}</NavLink></li>
-                                        <li><NavLink to={`${falconFacadeBasePath}/projects`}>{t('Projects')}</NavLink></li>
-                                        <li><NavLink to={`${falconFacadeBasePath}/systems`}>{t('Systems')}</NavLink></li>
+                <AnimateHeight duration={300} height={currentSubMenu === 'products' ? 'auto' : 0}>
+                    <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
+                        <li>
+                            <NavLink to={`${falconFacadeBasePath}/systems`}>{t('Systems')}</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={`${falconFacadeBasePath}/product-systems`}>{t('Product System')}</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={`${falconFacadeBasePath}/products`}>{t('Products')}</NavLink>
+                        </li>
+                    </ul>
+                </AnimateHeight>
+            </li>
 
-                                        <li><NavLink to={`${falconFacadeBasePath}/product-systems`}>{t('Product System')}</NavLink></li>
-                                        <li><NavLink to={`${falconFacadeBasePath}/products`}>{t('Products')}</NavLink></li>
+        </ul>
+    </AnimateHeight>
+</li>
 
-
-
-                                    </ul>
-                                </AnimateHeight>
-                            </li>
 
 
                             <h2 className="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
