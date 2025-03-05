@@ -12,7 +12,7 @@ pnpm-lock.yaml
 dist/
 build/
 out/
-
+dist/
 # Logs
 logs
 *.log
