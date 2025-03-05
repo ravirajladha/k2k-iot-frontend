@@ -49,8 +49,12 @@ const DPR = () => {
                     ? { ...report, status: report.status === "Running" ? "Stopped" : "Running" }
                     : report
             )
-        );
+        );  
     };
+
+    // useEffect(() => {
+    //     console.log("Updated Reports: ", reports);
+    // }, [reports]);
 
     const handleComplete = (workOrderNumber: string) => {
         console.log(`Completing Work Order: ${workOrderNumber}`);
