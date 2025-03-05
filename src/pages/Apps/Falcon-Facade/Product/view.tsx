@@ -155,7 +155,7 @@ const ProductView = () => {
             ),
         },
     ];
-    
+
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);

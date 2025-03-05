@@ -125,68 +125,96 @@ const WorkOrderPage = () => {
 
     const jobOrders = [
         {
-            id: 1,
-            productName: 'Product A',
-            uom: 'Nos',
-            poQuantity: 100,
-            plannedQuantity: 90,
-            achievedQuantity: 80,
-            rejectedQuantity: 10,
-            dailyReports: [
+          id: 1,
+          productName: "Product A",
+          uom: "Nos",
+          poQuantity: 100,
+          plannedQuantity: 90,
+          achievedQuantity: 80,
+          rejectedQuantity: 10,
+          semiFinishedTasks: [
+            {
+              id: "SF101",
+              name: "Semi Finished 1",
+              file: null,
+              remark: "Initial cutting process",
+              steps: [
                 {
-                    createdBy: 'Operator 1',
-                    date: '2025-01-10',
-                    poQuantity: 50,
-                    plannedQuantity: 45,
-                    achievedQuantity: 40,
-                    rejectedQuantity: 5,
-                    recycledQuantity: 2,
+                  name: "Cutting",
+                  poQuantity: 30,
+                  plannedQuantity: 25,
+                  achievedQuantity: 22,
+                  rejectedQuantity: 3,
                 },
                 {
-                    createdBy: 'Operator 2',
-                    date: '2025-01-11',
-                    poQuantity: 50,
-                    plannedQuantity: 50,
-                    achievedQuantity: 40,
-                    rejectedQuantity: 10,
-                    recycledQuantity: 3,
+                  name: "Machining",
+                  poQuantity: 40,
+                  plannedQuantity: 35,
+                  achievedQuantity: 33,
+                  rejectedQuantity: 2,
                 },
-            ],
-            machineAssigned: ["Machine A - Bending", "Machine B - Cutting", "Machine C - Folding"],
+              ],
+            },
+            {
+              id: "SF102",
+              name: "Semi Finished 2",
+              file: null,
+              remark: "Machining and Glazing",
+              steps: [
+                {
+                  name: "Assembling",
+                  poQuantity: 20,
+                  plannedQuantity: 18,
+                  achievedQuantity: 17,
+                  rejectedQuantity: 1,
+                },
+                {
+                  name: "Glass Fixing",
+                  poQuantity: 10,
+                  plannedQuantity: 8,
+                  achievedQuantity: 7,
+                  rejectedQuantity: 1,
+                },
+              ],
+            },
+          ],
         },
         {
-            id: 2,
-            productName: 'Product B',
-            uom: 'Nos',
-            poQuantity: 200,
-            plannedQuantity: 180,
-            achievedQuantity: 170,
-            rejectedQuantity: 10,
-            dailyReports: [
+          id: 2,
+          productName: "Product B",
+          uom: "Nos",
+          poQuantity: 200,
+          plannedQuantity: 180,
+          achievedQuantity: 170,
+          rejectedQuantity: 10,
+          semiFinishedTasks: [
+            {
+              id: "SF201",
+              name: "Semi Finished 1",
+              file: null,
+              remark: "Complete all processes",
+              steps: [
                 {
-                    createdBy: 'Operator 3',
-                    date: '2025-01-12',
-                    poQuantity: 100,
-                    plannedQuantity: 90,
-                    achievedQuantity: 85,
-                    rejectedQuantity: 5,
-                    recycledQuantity: 4,
+                  name: "Cutting",
+                  poQuantity: 50,
+                  plannedQuantity: 45,
+                  achievedQuantity: 42,
+                  rejectedQuantity: 3,
                 },
                 {
-                    createdBy: 'Operator 4',
-                    date: '2025-01-13',
-                    poQuantity: 100,
-                    plannedQuantity: 90,
-                    achievedQuantity: 85,
-                    rejectedQuantity: 5,
-                    recycledQuantity: 3,
+                  name: "Machining",
+                  poQuantity: 60,
+                  plannedQuantity: 55,
+                  achievedQuantity: 50,
+                  rejectedQuantity: 5,
                 },
-            ],
-            machineAssigned: ["Machine A - Bending", "Machine B - Cutting", "Machine C - Folding"],
-
+              ],
+            },
+          ],
         },
-
-    ];
+      ];
+      
+      
 
 
     const workOrder = {
@@ -369,13 +397,23 @@ const WorkOrderPage = () => {
                             <p className="text-sm"><strong>Created At:</strong> {workOrder.createdAt}</p>
                             <p className="text-sm"><strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})</p>
 
+
+                            <p className="text-sm mt-2"><strong>Dates:</strong> {workOrder.deadline}</p>
+
+                            
                             <div className="flex items-center gap-2 mt-2">
                                 <strong>Files:</strong>
                                 <IconFile className="text-gray-600" />
                             </div>
 
-                            <p className="text-sm mt-2"><strong>Dates:</strong> {workOrder.deadline}</p>
 
+                        </div>
+
+                        <div className="bg-gray-300 p-4 rounded-md shadow">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Job Order Details</h3>
+                            <p className="text-sm"><strong>Job Order Id:</strong> JO1</p>
+                            <p className="text-sm"><strong>Created By:</strong> Bharath (Manager)</p>
+                            <p className="text-sm"><strong>Created At:</strong> 28/02/2025 12:24:23</p>
                             <p className="text-sm"><strong>Status:</strong>
                                 <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
                     ${workOrder.status === 'In Progress' ? 'text-blue-500' :
@@ -383,12 +421,23 @@ const WorkOrderPage = () => {
                                     {workOrder.status}
                                 </span>
                             </p>
-
-
                         </div>
+
                     </div>
                 </div>
 
+
+                {/* progress section */}
+                <div className="panel mb-4 bg-gray-100" id="labeled">
+                    <div className="flex items-center justify-between mb-5">
+                        <h5 className="font-semibold text-lg dark:text-white-light">Overall Progress</h5>
+                        {/* </div> */}
+                        {/* <div className="mb-5 space-y-5"> */}
+                        <div className="w-full h-4 bg-[#ebedf2] dark:bg-dark/40 rounded-full">
+                            <div className="bg-info h-4 rounded-full w-4/5 text-center text-white text-xs">80%</div>
+                        </div>
+                    </div>
+                </div>
 
                 {/* Products Section */}
                 <div className="panel mb-6 bg-blue-100">
@@ -406,7 +455,7 @@ const WorkOrderPage = () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Packed</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Plant Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">Delivery Date</th>
-                                    <th className="px-4 py-2 text-left border border-gray-300">Actions</th>
+                                    {/* <th className="px-4 py-2 text-left border border-gray-300">Actions</th> */}
 
                                 </tr>
                             </thead>
@@ -422,13 +471,13 @@ const WorkOrderPage = () => {
                                         <td className="px-4 py-2 border border-gray-300">{product.packed}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.plantCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.deliveryDate}</td>
-                                        <td className="px-4 py-2 border border-gray-300">
+                                        {/* <td className="px-4 py-2 border border-gray-300">
                                             <button
                                                 className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-700"
                                                 onClick={() => openModal(product)}
                                             >
                                                 <IconEye />                                    </button>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -494,155 +543,114 @@ const WorkOrderPage = () => {
 
                 </div>
 
-                {/* progress section */}
-                <div className="panel mb-4 bg-gray-100" id="labeled">
-                    <div className="flex items-center justify-between mb-5">
-                        <h5 className="font-semibold text-lg dark:text-white-light">Overall Progress</h5>
-                        {/* </div> */}
-                        {/* <div className="mb-5 space-y-5"> */}
-                        <div className="w-full h-4 bg-[#ebedf2] dark:bg-dark/40 rounded-full">
-                            <div className="bg-info h-4 rounded-full w-4/5 text-center text-white text-xs">80%</div>
-                        </div>
-                    </div>
-                </div>
-
                 {/* new job orders */}
                 <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
-                    {jobOrders.map((jobOrder) => (
-                        <div key={jobOrder.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
-                            {/* Job Order Header */}
-                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">
-                                Job Order - {jobOrder.id}
-                            </h2>
+                {jobOrders.map((jobOrder) => (
+        <div
+          key={jobOrder.id}
+          className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6"
+        >
+          {/* Job Order Header */}
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">
+            Job Order - {jobOrder.id}
+          </h2>
 
-                            {/* Job Order Details Section */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
-                                <div>
-                                    <p className="text-sm"><strong>Sales Order Number:</strong> Lorem, ipsum.</p>
-                                    <p className="text-sm"><strong>Date:</strong> 20/02/2025 - 30-03-2025</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm"><strong>Plant Name:</strong> Lorem, ipsum.</p>
-                                </div>
-                            </div>
+          {/* Job Order Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
+            <div>
+              <p className="text-sm">
+                <strong>Product Name:</strong> {jobOrder.productName}
+              </p>
+              <p className="text-sm">
+                <strong>UOM:</strong> {jobOrder.uom}
+              </p>
+              
+              <p className="text-sm">
+                <strong>PO Quantity:</strong> {jobOrder.poQuantity}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm">
+                <strong>Planned Quantity:</strong> {jobOrder.plannedQuantity}
+              </p>
+              <p className="text-sm">
+                <strong>Achieved Quantity:</strong>{" "}
+                <span className="text-green-600 font-semibold">
+                  {jobOrder.achievedQuantity}
+                </span>
+              </p>
+              <p className="text-sm">
+                <strong>Rejected Quantity:</strong>{" "}
+                <span className="text-red-500 font-semibold">
+                  {jobOrder.rejectedQuantity}
+                </span>
+              </p>
+            </div>
+          </div>
 
-                            {/* Product Details Table */}
-                            <div className="overflow-x-auto mt-3">
-                                <table className="w-full border-collapse border border-gray-200 text-sm">
-                                    <thead className="bg-gray-100 dark:bg-gray-700">
-                                        <tr className="text-gray-700 dark:text-white">
-                                            <th className="px-4 py-2 border">Product Name</th>
-                                            <th className="px-4 py-2 border">UOM</th>
-                                            <th className="px-4 py-2 border">PO Quantity</th>
-                                            <th className="px-4 py-2 border">Machine Assigned</th>
+          {/* Semi-Finished Production Details */}
+          <div className="mt-4 bg-gray-50 p-4 rounded-md">
+            <h3 className="text-md font-semibold mb-2">Semi-Finished Production</h3>
 
-                                            <th className="px-4 py-2 border">Planned Quantity</th>
-                                            <th className="px-4 py-2 border">Achieved Till Date</th>
-                                            <th className="px-4 py-2 border">Achieved Quantity</th>
-                                            <th className="px-4 py-2 border">Rejected Quantity</th>
+            {jobOrder.semiFinishedTasks.map((sf) => (
+              <div
+                key={sf.id}
+                className="border p-4 mb-4 bg-white shadow-sm rounded-md"
+              >
+                <h4 className="text-md font-semibold mb-2">{sf.name}</h4>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200">
-                                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                            <td className="px-4 py-2 border">{jobOrder.productName}</td>
-                                            <td className="px-4 py-2 border">{jobOrder.uom}</td>
-                                            <td className="px-4 py-2 border">{jobOrder.poQuantity}</td>
-                                            <td>
-                                                {jobOrder.machineAssigned.length > 0
-                                                    ? jobOrder.machineAssigned.join(", ") // Show multiple machines
-                                                    : "No Machines Assigned"}
-                                            </td>
-                                            <td className="px-4 py-2 border">{jobOrder.plannedQuantity}</td>
-                                            <td className="px-4 py-2 border text-green-600 font-semibold">100</td>
-                                            <td className="px-4 py-2 border text-blue-500 font-semibold">{jobOrder.achievedQuantity}</td>
-                                            <td className="px-4 py-2 border text-red-500 font-semibold">{jobOrder.rejectedQuantity}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* File Upload */}
+                  <div>
+                    <p className="text-sm font-semibold">File:</p>
+                    {sf.file ? (
+                      <p className="text-green-600">File Uploaded</p>
+                    ) : (
+                      <p className="text-gray-500">No file uploaded</p>
+                    )}
+                  </div>
 
-                            {/* Toggle Button for Production Reports */}
-                            <div className="mt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => toggleJobOrder(jobOrder.id)}
-                                    className="flex items-center text-primary font-semibold transition-all hover:text-blue-600"
-                                >
-                                    <span className={`mr-2 transition-transform ${expandedJobOrders.includes(jobOrder.id) ? 'rotate-180' : ''}`}>
-                                        ▼
-                                    </span>
-                                    {expandedJobOrders.includes(jobOrder.id) ? 'Hide Production Reports' : 'Show Production Reports'}
-                                </button>
-                            </div>
+                  {/* Remarks */}
+                  <div>
+                    <p className="text-sm font-semibold">Remarks:</p>
+                    <p className="text-gray-700">{sf.remark}</p>
+                  </div>
+                </div>
 
-                            {/* Expandable Daily Production Reports */}
-                            <AnimateHeight
-                                duration={300}
-                                height={expandedJobOrders.includes(jobOrder.id) ? 'auto' : 0}
-                                className="bg-gray-50 dark:bg-gray-900 rounded mt-3"
-                            >
-                                <ul className="text-gray-600 dark:text-gray-300">
-                                    {jobOrder.dailyReports.map((report, index) => (
-                                        <li key={index} className="p-3 border border-gray-200 rounded mb-3">
-                                            <h3 className="text-md font-semibold text-gray-800 dark:text-white">
-                                                Daily Report - {report.date} (Sales Order: DPR1123) (Created by {report.createdBy})
-                                            </h3>
-                                            <div className="overflow-x-auto mt-2">
-                                                <table className="w-full border-collapse border border-gray-200 text-sm">
-                                                    <thead className="bg-gray-100 dark:bg-gray-700">
-                                                        <tr>
-                                                            <th className="px-4 py-2 border">PO Quantity</th>
-                                                            <th className="px-4 py-2 border">Planned Quantity</th>
-                                                            <th className="px-4 py-2 border">Achieved Quantity</th>
-                                                            <th className="px-4 py-2 border">Rejected Quantity</th>
-                                                            <th className="px-4 py-2 border">Recycled Quantity</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td className="px-4 py-2 border">{report.poQuantity}</td>
-                                                            <td className="px-4 py-2 border">{report.plannedQuantity}</td>
-                                                            <td className="px-4 py-2 border">{report.achievedQuantity}</td>
-                                                            <td className="px-4 py-2 border">{report.rejectedQuantity}</td>
-                                                            <td className="px-4 py-2 border">{report.recycledQuantity}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AnimateHeight>
-
-                            {/* Downtime Details Section */}
-                            <div className="mt-6 bg-red-50 dark:bg-red-900 p-4 rounded-lg">
-                                <h2 className="text-lg font-semibold text-red-600 dark:text-red-300 mb-3">Downtime Details</h2>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full border-collapse border border-gray-200 text-sm">
-                                        <thead className="bg-red-100 dark:bg-red-700 text-red-800 dark:text-white">
-                                            <tr>
-                                                <th className="px-4 py-2 border">Sl. No.</th>
-                                                <th className="px-4 py-2 border">Description</th>
-                                                <th className="px-4 py-2 border">Hours</th>
-                                                <th className="px-4 py-2 border">Remarks</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-gray-200">
-                                            {downtimeDetails.map((downtime, index) => (
-                                                <tr key={index} className="hover:bg-red-50 dark:hover:bg-red-800">
-                                                    <td className="px-4 py-2 border">{downtime.serialNumber}</td>
-                                                    <td className="px-4 py-2 border">{downtime.description}</td>
-                                                    <td className="px-4 py-2 border">{downtime.numberOfHours}</td>
-                                                    <td className="px-4 py-2 border">{downtime.remarks}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                {/* Steps Table */}
+                <div className="mt-4">
+                  <table className="w-full border-collapse border border-gray-200 text-sm">
+                    <thead className="bg-gray-100 dark:bg-gray-700">
+                      <tr>
+                        <th className="px-4 py-2 border">Step Name</th>
+                        <th className="px-4 py-2 border">PO Quantity</th>
+                        <th className="px-4 py-2 border">Planned Quantity</th>
+                        <th className="px-4 py-2 border">Achieved Quantity</th>
+                        <th className="px-4 py-2 border">Rejected Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sf.steps.map((step, index) => (
+                        <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <td className="px-4 py-2 border">{step.name}</td>
+                          <td className="px-4 py-2 border">{step.poQuantity}</td>
+                          <td className="px-4 py-2 border">{step.plannedQuantity}</td>
+                          <td className="px-4 py-2 border text-blue-500 font-semibold">
+                            {step.achievedQuantity}
+                          </td>
+                          <td className="px-4 py-2 border text-red-500 font-semibold">
+                            {step.rejectedQuantity}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
                 </div>
 
 

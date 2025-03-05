@@ -482,6 +482,7 @@ const ProductionPlanning = () => {
                       {item.sfSteps.map((sf) => (
                         <tr key={sf.id} className="bg-gray-50">
                           <td colSpan={3} className="p-4 rounded-lg shadow-md">
+                            {/* SF Step Header */}
                             <div className="flex justify-between items-center bg-gray-100 p-3 rounded-md">
                               <h4 className="text-lg font-semibold">{sf.name}</h4>
                               <button
@@ -495,17 +496,43 @@ const ProductionPlanning = () => {
 
                             {/* Image Upload & Remarks */}
                             <div className="mt-4 grid grid-cols-2 gap-4">
+                              {/* Image Upload */}
                               <div>
-                                <input type="file" onChange={(e) => handleImageUpload(item.id, sf.id, e.target.files[0])} />
-                                {sf.image && <img src={sf.image} alt="Uploaded SF" className="w-24 h-24 mt-2" />}
+                                <input
+                                  type="file"
+                                  onChange={(e) => handleImageUpload(item.id, sf.id, e.target.files[0])}
+                                />
+                                {sf.image && (
+                                  <img src={sf.image} alt="Uploaded SF" className="w-24 h-24 mt-2" />
+                                )}
                               </div>
+
+                              {/* Remarks */}
                               <div>
                                 <textarea placeholder="Remark" className="form-textarea w-full mt-2"></textarea>
                               </div>
                             </div>
+
+                            {/* Checkbox Selection */}
+                            <div className="mt-4 grid grid-cols-2 gap-2">
+                              {["Cutting Process", "Machining", "Assembling", "Glass Fixing / Glazing"].map(
+                                (step, index) => (
+                                  <label key={index} className="flex items-center space-x-2">
+                                    <input
+                                      type="checkbox"
+                                      name={`sfStep-${sf.id}`}
+                                      value={step}
+                                      className="form-checkbox"
+                                    />
+                                    <span>{step}</span>
+                                  </label>
+                                )
+                              )}
+                            </div>
                           </td>
                         </tr>
                       ))}
+
 
                       {/* Button to Add SF Step (Placed Inside Each Product Row) */}
                       <tr>
