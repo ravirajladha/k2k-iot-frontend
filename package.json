@@ -13,6 +13,8 @@
         "@copilotkit/react-ui": "^1.4.7",
         "@copilotkit/runtime": "^1.4.7",
         "@emotion/react": "^11.10.6",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
         "@mantine/core": "^5.10.5",
         "@mantine/hooks": "^5.10.5",
         "@popperjs/core": "^2.11.6",
