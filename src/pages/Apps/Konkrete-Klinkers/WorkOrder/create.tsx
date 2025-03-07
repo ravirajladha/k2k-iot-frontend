@@ -3,25 +3,20 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconX from '@/components/Icon/IconX';
 import Select from 'react-select';
 import IconSave from '@/components/Icon/IconSave';
-// IconSend
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconFile from '@/components/Icon/IconFile';
-import IconChecks from '@/components/Icon/IconChecks';
-import { BackgroundImage } from '@mantine/core';
 import IconInfoCircle from '@/components/Icon/IconInfoCircle';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
-import { addAlert } from "@/store/slices/alertSlice"; // Import Redux action
-import { useDispatch } from "react-redux";
-import { StringNullableChain } from 'lodash';
-
-{/* <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" /> */ }
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import { addAlert } from '@/store/slices/alertSlice';
+import { useDispatch } from 'react-redux';
 
 interface Client {
     value: string;
     label: string;
     projects: Project[];
 }
+
 interface Product {
     value: string;
     label: string;
@@ -44,7 +39,6 @@ interface FormData {
     plantCode: string;
     files: ImageListType;
 }
-
 
 const Create = () => {
     const [formData, setFormData] = useState<FormData>({
@@ -70,27 +64,22 @@ const Create = () => {
         setFormData((prev) => ({ ...prev, files: imageList }));
     };
 
-    // const handleSubmit = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     console.log('Form Data:', formData);
-    // };
+    const dispatch = useDispatch();
 
-    // const clients = ['Client A', 'Client B', 'Client C'];
-    const plantCodes = ['Plant 101', 'Plant 102', 'Plant 103'];
-
-    const products: Product[] = [
-        { label: "Paver Black 200*200*60", value: "Paver_Black_200_200_60", uom: "SQM" },
-        { label: "Paver Grey 200*200*60", value: "Paver_Grey_200_200_60", uom: "SQM" },
-        { label: "Paver Dark Grey 200*200*60", value: "Paver_Dark_Grey_200_200_60", uom: "SQM" },
-        { label: "Paver Red 200*200*60", value: "Paver_Red_200_200_60", uom: "SQM" },
-        { label: "Paver Yellow 200*200*60", value: "Paver_Yellow_200_200_60", uom: "SQM" },
-        { label: "Paver Black 200*100*60", value: "Paver_Black_200_100_60", uom: "PCS" },
-        { label: "Pavers Dark Grey 200*100*60", value: "Pavers_Dark_Grey_200_100_60", uom: "PCS" },
-    ];
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            dispatch(
+                addAlert({
+                    type: 'warning',
+                    message: 'Do consider: The work order creates buffer stock, so all the products listed here will go for buffer stock.',
+                    autoClose: 5000,
+                })
+            );
+        }
+    };
 
     const [items, setItems] = useState<any[]>([]);
     const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     const clients: Client[] = [
@@ -110,23 +99,20 @@ const Create = () => {
                 { value: 'project4', label: 'Project 4' },
             ],
         },
-        // Add more clients as needed
     ];
-    const dispatch = useDispatch();
 
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-            dispatch(
-                addAlert({
-                    type: "warning",
-                    message: "Do consider: The work order creates buffer stock, so all the products listed here will go for buffer stock.",
-                    autoClose: 5000, // Auto-close after 5 seconds
-                })
-            );
-        }
-    };
+    const products: Product[] = [
+        { label: '1000010188/Paver Black 200*200*60', value: 'Paver_Black_200_200_60', uom: 'sqmt' },
+        { label: '1000010184/Paver Grey 200*200*60', value: 'Paver_Grey_200_200_60', uom: 'sqmt' },
+        { label: '1000010185/Paver Dark Grey 200*200*60', value: 'Paver_Dark_Grey_200_200_60', uom: 'sqmt' },
+        { label: '1000010186/Paver Red 200*200*60', value: 'Paver_Red_200_200_60', uom: 'sqmt' },
+        { label: '1000010464/Paver Yellow 200*200*60', value: 'Paver_Yellow_200_200_60', uom: 'sqmt' },
+        { label: '1000010180/Paver Black 200*100*60', value: 'Paver_Black_200_100_60', uom: 'nos' },
+        { label: '1000010189/Pavers Dark Grey 200*100*60', value: 'Pavers_Dark_Grey_200_100_60', uom: 'nos' },
+    ];
 
-    //add a new item row
+    const plantCodes = ['Plant 101', 'Plant 102', 'Plant 103'];
+
     const addItem = () => {
         let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
         setItems([
@@ -134,45 +120,69 @@ const Create = () => {
             {
                 id: maxId + 1,
                 product: null,
-                uom: "",
+                uom: '',
                 quantity: 0,
-                plantCode: "",
-                deliveryDate: "",
+                plantCode: '',
+                deliveryDate: '',
             },
         ]);
     };
 
-
-    // Handle project selection
     const handleClientChange = (selectedOption: Client | null) => {
         setSelectedClient(selectedOption);
         setSelectedProject(null); // Reset project selection
     };
 
-    // Handle product selection
     const handleProductChange = (selectedOption: Product | null, id: number) => {
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === id
-                    ? { ...item, product: selectedOption, uom: selectedOption ? selectedOption.uom : "" }
+                    ? {
+                          ...item,
+                          product: selectedOption,
+                          // Do not set uom here
+                      }
                     : item
             )
         );
     };
 
+    const uomOptions = [
+        { value: 'sqmt', label: 'sqmt' },
+        { value: 'nos', label: 'nos' },
+    ];
 
-
+    const handleUOMChange = (selectedOption: any, id: number) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === id
+                    ? {
+                          ...item,
+                          uom: selectedOption.value,
+                          quantity: selectedOption.value === 'sqmt' ? 0.0 : 0,
+                      }
+                    : item
+            )
+        );
+    };
 
     const handleProjectChange = (selectedOption: Project | null) => {
         setSelectedProject(selectedOption);
     };
 
-    // Handle input field changes
     const handleChange = (id: number, field: string, value: any) => {
         setItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id ? { ...item, [field]: value } : item
-            )
+            prevItems.map((item) => {
+                if (item.id === id) {
+                    if (field === 'quantity') {
+                        const uom = item.uom;
+                        const parsedValue = uom === 'sqmt' ? parseFloat(value) : parseInt(value, 10);
+                        return { ...item, [field]: parsedValue < 0 ? 0 : parsedValue };
+                    }
+                    return { ...item, [field]: value };
+                }
+                return item;
+            })
         );
     };
 
@@ -181,32 +191,10 @@ const Create = () => {
         console.log('Form Data:', formData);
     };
 
-    const updateItemField = (field: string, value: any, id: number) => {
-        const list = items;
-        const item = list.find((d: any) => d.id === id);
-        if (item) {
-            item[field] = value;
-        }
-        setItems([...list]);
-    };
-
     const removeItem = (id: number) => {
         setItems(items.filter((item) => item.id !== id));
     };
 
-    const changeQuantityPrice = (type: string, value: string, id: number) => {
-        const list = items;
-        const item = list.find((d: any) => d.id === id);
-        if (type === 'quantity') {
-            item.quantity = Number(value);
-        }
-        if (type === 'price') {
-            item.amount = Number(value);
-        }
-        setItems([...list]);
-    };
-
-    const [selectedFiles, setSelectedFiles] = useState([]);
     const [showTooltip, setShowTooltip] = useState(false);
 
     const customStyles = {
@@ -228,7 +216,6 @@ const Create = () => {
         }),
     };
 
-
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
@@ -237,20 +224,14 @@ const Create = () => {
     ];
 
     return (
-
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5">
                     <h5 className="font-semibold text-lg">Create Work Order</h5>
                 </div>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-
                         <div>
                             <label htmlFor="clientName">Client Name</label>
                             <Select
@@ -266,8 +247,6 @@ const Create = () => {
                             />
                         </div>
 
-                        {/* Project Selection */}
-
                         <div>
                             <label htmlFor="projectName">Project Name</label>
                             <Select
@@ -281,13 +260,10 @@ const Create = () => {
                                 placeholder="Select Project"
                                 styles={customStyles}
                                 isClearable
-                                isDisabled={!selectedClient} // Disable until a client is selected
+                                isDisabled={!selectedClient}
                             />
                         </div>
 
-
-
-                        {/* Work Order Number */}
                         <div>
                             <label htmlFor="workOrderNumber">Work Order Number</label>
                             <input
@@ -301,29 +277,14 @@ const Create = () => {
                             />
                         </div>
 
-
-                        {/* Work Order Date */}
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input
-                                id="workOrderDate"
-                                name="workOrderDate"
-                                type="date"
-                                className="form-input"
-                                value={formData.workOrderDate}
-                                onChange={handleInputChange}
-                            />
+                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input" value={formData.workOrderDate} onChange={handleInputChange} />
                         </div>
-
 
                         <div>
                             <label className="inline-flex items-center">
-                                <input
-                                    type="checkbox"
-                                    className="form-checkbox outline-success rounded-full mr-2"
-                                    style={{ transform: "scale(1.5)" }}
-                                    onChange={handleCheckboxChange} 
-                                />
+                                <input type="checkbox" className="form-checkbox outline-success rounded-full mr-2" style={{ transform: 'scale(1.5)' }} onChange={handleCheckboxChange} />
                                 <span> &ensp;Buffer Stock</span>
                             </label>
                         </div>
@@ -367,22 +328,30 @@ const Create = () => {
                                                         getOptionValue={(e: Product) => e.value}
                                                         placeholder="Select Product"
                                                         isClearable
-                                                        menuPortalTarget={document.body} // Ensures dropdown renders outside the table
+                                                        menuPortalTarget={document.body}
                                                         styles={{
-                                                            menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures visibility over other elements
-                                                            menu: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
+                                                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                                                            menu: (base) => ({ ...base, zIndex: 9999 }),
                                                         }}
                                                     />
-
                                                 </div>
                                             </td>
                                             <td>
-                                                <input
-                                                    type="text"
-                                                    className="form-input w-32"
-                                                    placeholder="UOM"
-                                                    value={item.uom}
-                                                    readOnly
+                                                <Select
+                                                    id={`uomDropdown-${item.id}`}
+                                                    name={`uomDropdown-${item.id}`}
+                                                    options={uomOptions}
+                                                    onChange={(selectedOption) => handleUOMChange(selectedOption, item.id)}
+                                                    value={uomOptions.find((option) => option.value === item.uom)}
+                                                    getOptionLabel={(e) => e.label}
+                                                    getOptionValue={(e) => e.value}
+                                                    placeholder="Select UOM"
+                                                    isClearable
+                                                    menuPortalTarget={document.body}
+                                                    styles={{
+                                                        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                                                        menu: (base) => ({ ...base, zIndex: 9999 }),
+                                                    }}
                                                 />
                                             </td>
                                             <td>
@@ -390,17 +359,14 @@ const Create = () => {
                                                     type="number"
                                                     className="form-input w-32"
                                                     placeholder="Quantity"
-                                                    min={0}
                                                     value={item.quantity}
-                                                    onChange={(e) => handleChange(item.id, "quantity", parseInt(e.target.value) || 0)}
+                                                    onChange={(e) => handleChange(item.id, 'quantity', e.target.value)}
+                                                    step={item.uom === 'sqmt' ? '0.01' : '1'}
+                                                    min={0}
                                                 />
                                             </td>
                                             <td>
-                                                <select
-                                                    className="form-select w-48"
-                                                    value={item.plantCode}
-                                                    onChange={(e) => handleChange(item.id, "plantCode", e.target.value)}
-                                                >
+                                                <select className="form-select w-48" value={item.plantCode} onChange={(e) => handleChange(item.id, 'plantCode', e.target.value)}>
                                                     <option value="">Select Plant Code</option>
                                                     {plantCodes.map((code) => (
                                                         <option key={code} value={code}>
@@ -410,12 +376,7 @@ const Create = () => {
                                                 </select>
                                             </td>
                                             <td>
-                                                <input
-                                                    type="date"
-                                                    className="form-input w-40"
-                                                    value={item.deliveryDate}
-                                                    onChange={(e) => handleChange(item.id, "deliveryDate", e.target.value)}
-                                                />
+                                                <input type="date" className="form-input w-40" value={item.deliveryDate} onChange={(e) => handleChange(item.id, 'deliveryDate', e.target.value)} />
                                             </td>
                                             <td>
                                                 <button type="button" onClick={() => removeItem(item.id)}>
@@ -437,20 +398,13 @@ const Create = () => {
                         </div>
                     </div>
 
-
-                    {/* File Upload */}
                     <div className="mb-12 gap-72">
-                        {/* Label and Tooltip */}
                         <div className="flex items-center space-x-1">
                             <label htmlFor="clientName">
                                 Upload Files <span className="text-red-500">*</span>
                             </label>
                             <div className="relative flex items-center">
-                                <button
-                                    onMouseEnter={() => setShowTooltip(true)}
-                                    onMouseLeave={() => setShowTooltip(false)}
-                                    className="text-gray-500 hover:text-gray-700"
-                                >
+                                <button onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} className="text-gray-500 hover:text-gray-700">
                                     <IconInfoCircle className="h-5 w-5" />
                                 </button>
                                 {showTooltip && (
@@ -461,36 +415,18 @@ const Create = () => {
                             </div>
                         </div>
 
-                        {/* File Upload Section */}
-                        <ImageUploading
-                            multiple
-                            value={formData.files}
-                            onChange={handleFileChange}
-                            maxNumber={maxNumber}
-                        >
+                        <ImageUploading multiple value={formData.files} onChange={handleFileChange} maxNumber={maxNumber}>
                             {({ imageList, onImageUpload, onImageRemove }) => (
                                 <div>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary mb-2 flex items-center space-x-2"
-                                        onClick={onImageUpload}
-                                    >
+                                    <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
                                         <IconFile className="shrink-0" />
                                         <span>Upload Files</span>
                                     </button>
                                     <div className="grid gap-4 sm:grid-cols-3 grid-cols-1">
                                         {imageList.map((image, index) => (
                                             <div key={index} className="relative">
-                                                <img
-                                                    src={image.dataURL}
-                                                    alt="uploaded"
-                                                    className="w-full h-32 object-cover rounded"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-                                                    onClick={() => onImageRemove(index)}
-                                                >
+                                                <img src={image.dataURL} alt="uploaded" className="w-full h-32 object-cover rounded" />
+                                                <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full" onClick={() => onImageRemove(index)}>
                                                     ×
                                                 </button>
                                             </div>
@@ -501,7 +437,6 @@ const Create = () => {
                         </ImageUploading>
                     </div>
 
-                    {/* Submit Button */}
                     <div className="flex gap-4">
                         <button type="submit" className="btn btn-success w-1/2">
                             <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
@@ -512,8 +447,6 @@ const Create = () => {
                             Cancel
                         </button>
                     </div>
-
-
                 </form>
             </div>
         </div>
@@ -521,5 +454,3 @@ const Create = () => {
 };
 
 export default Create;
-
-

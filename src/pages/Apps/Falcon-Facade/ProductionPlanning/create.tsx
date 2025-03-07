@@ -342,10 +342,16 @@ const ProductionPlanning = () => {
     }),
   };
   const fakeSystems = [
-    { value: 'system1', label: 'System 1' },
-    { value: 'system2', label: 'System 2' },
-    { value: 'system3', label: 'System 3' },
-    { value: 'system4', label: 'System 4' },
+    { value: 'Schuco', label: 'Schuco' },
+    { value: 'Schuco', label: 'Schuco' },
+    { value: 'Schuco', label: 'Schuco' },
+    { value: 'Schuco', label: 'Schuco' },
+];
+  const fakeProjects = [
+    { value: 'Inward Door', label: 'Inward Door' },
+    { value: 'Fixed Door', label: 'Fixed Door' },
+    { value: 'Fixed Window', label: 'Fixed Window' },
+    { value: 'Facade', label: 'Facade' },
 ];
 
 
@@ -381,12 +387,13 @@ const ProductionPlanning = () => {
   // Handle changes in the system selection
   const handleSystemChange = (selectedOption: any) => {
     setFormData((prev) => ({ ...prev, system: selectedOption.value, productSystem: '' }));
-    setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
   };
 
   // Handle changes in the product system selection
   const handleProductSystemChange = (selectedOption: any) => {
-    setFormData((prev) => ({ ...prev, productSystem: selectedOption.value }));
+    setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
+    setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+
   };
 
   return (
@@ -493,9 +500,9 @@ const ProductionPlanning = () => {
                         
                           <Select
                               id="system"
-                              value={formData.system ? { value: formData.system, label: formData.system } : null}
-                              onChange={handleSystemChange}
-                              options={fakeSystems}
+                              value={formData.productName ? { value: formData.productName, label: formData.productName } : null}
+                              onChange={handleProductSystemChange}
+                              options={fakeProjects}
                               className="custom-select flex-1"
                               classNamePrefix="custom-select"
                               placeholder="Select a System"
@@ -537,7 +544,7 @@ const ProductionPlanning = () => {
                       {/* SF Steps Section */}
                       {item.sfSteps.map((sf) => (
                         <tr key={sf.id} className="bg-gray-50">
-                          <td colSpan={3} className="p-4 rounded-lg shadow-md">
+                          <td colSpan={5} className="p-4 rounded-lg shadow-md">
                             {/* SF Step Header */}
                             <div className="flex justify-between items-center bg-gray-100 p-3 rounded-md">
                               <h4 className="text-lg font-semibold">{sf.name}</h4>
