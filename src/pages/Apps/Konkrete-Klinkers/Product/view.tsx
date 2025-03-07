@@ -30,8 +30,8 @@ interface Product {
 
 const rowData = [
     {
-        materialCode: 101,
-        productDescription: 'Concrete Blocks',
+        materialCode: 1000010188,
+        productDescription: 'Paver Black',
         plantCode: "P101",
         unitOfMeasurement: 'sqmt',
         noOfPiecesPerPunch: 5,
@@ -40,8 +40,8 @@ const rowData = [
         status: 'Active',
     },
     {
-        materialCode: 102,
-        productDescription: 'Cement Bags',
+        materialCode: 1000010184,
+        productDescription: 'Paver Grey',
         plantCode: "P101",
         unitOfMeasurement: 'nos',
         noOfPiecesPerPunch: 10,
@@ -50,8 +50,8 @@ const rowData = [
         status: 'Active',
     },
     {
-        materialCode: 103,
-        productDescription: 'Steel Rods',
+        materialCode: 1000010185,
+        productDescription: 'Paver Dark Grey',
         plantCode: "P101",
         unitOfMeasurement: 'nos',
         noOfPiecesPerPunch: 2,
@@ -60,8 +60,8 @@ const rowData = [
         status: 'Inactive',
     },
     {
-        materialCode: 104,
-        productDescription: 'Bricks',
+        materialCode: 1000010186,
+        productDescription: 'Paver Red',
         plantCode: "P101",
         unitOfMeasurement: 'sqmt',
         noOfPiecesPerPunch: 8,
