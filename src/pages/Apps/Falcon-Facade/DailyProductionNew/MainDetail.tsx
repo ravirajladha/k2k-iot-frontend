@@ -314,7 +314,7 @@ const WorkOrderPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order/view', isActive: false },
+        { label: 'Work Order', link: '/falcon-facade/work-order', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -323,7 +323,7 @@ const WorkOrderPage = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/falcon-facade/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }}
             />
             <button
                 onClick={() => window.print()}
