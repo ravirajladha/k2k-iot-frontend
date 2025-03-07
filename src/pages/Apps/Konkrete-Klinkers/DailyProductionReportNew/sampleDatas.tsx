@@ -48,6 +48,7 @@ export const pastReports: Report[] = [
         productName: "Steel Rods",
         materialCode: "SR-98765",
         UOM: "Kg",
+        batchNumber: "Batch001",
         POQuantity: 2000,
         plannedQuantity: 1500,
         balancedQuantity: 350,
@@ -64,6 +65,8 @@ export const pastReports: Report[] = [
     {
         workOrderNumber: "WO-2002",
         jobOrderNumber: "JO-3002",
+        batchNumber: "Batch001",
+
         clientName: "Reliance Infra",
         projectName: "Bangalore Smart City",
         productName: "Concrete Mix",

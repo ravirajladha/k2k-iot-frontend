@@ -20,6 +20,8 @@ import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         id: 1,
+        work_order_number: 'WO101',
+
         client: 'Client A',
         project: 'Project Alpha',
         created_at: '2025-01-01',
@@ -28,6 +30,8 @@ const rowData = [
     },
     {
         id: 2,
+        work_order_number: 'WO102',
+
         client: 'Client B',
         project: 'Project Beta',
         created_at: '2025-01-05',
@@ -107,6 +111,9 @@ const ColumnChooser = () => {
             return rowData.filter((item) => {
                 return (
                     item.id.toString().includes(search.toLowerCase()) ||
+                    item.work_order_number.toString().includes(search.toLowerCase()) ||
+                 
+
                     item.client.toLowerCase().includes(search.toLowerCase()) ||
                     item.project.toLowerCase().includes(search.toLowerCase()) ||
                     item.created_at.toLowerCase().includes(search.toLowerCase()) ||
@@ -250,6 +257,12 @@ const ColumnChooser = () => {
                         records={recordsData}
                         columns={[
                             { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
+                            {
+                                accessor: 'work_order_number',
+                                title: 'Work Order Number',
+                                sortable: true,
+                                hidden: hideCols.includes('work_order_number'),
+                            },
                             {
                                 accessor: 'client',
                                 title: 'Client Name',

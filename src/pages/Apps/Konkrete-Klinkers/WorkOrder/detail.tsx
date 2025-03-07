@@ -151,7 +151,7 @@ const WorkOrderPage = () => {
 
 
     const workOrder = {
-        id: 'abc123',
+        id: 'WO123',
         createdAt: '2025-01-10 10:30 AM',
         createdBy: {
             name: 'Bharath Kumar',
