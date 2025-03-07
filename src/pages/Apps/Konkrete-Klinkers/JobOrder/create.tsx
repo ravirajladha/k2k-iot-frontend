@@ -41,6 +41,7 @@ interface FormData {
     poQuantity: string | number; // Can be string (from input) or number (from `workOrders`)
     date: string;
     plannedQuantity: string;
+    batchNumber:string;
     actualQuantity: string;
     rejectedQuantity: string;
 }
@@ -53,6 +54,7 @@ const ProductionPlanning = () => {
         projectName: '',
         salesOrderNumber: '',
         productId: '',
+        batchNumber:'',
         uom: '',
         poQuantity: '',
         date: '',
@@ -146,8 +148,6 @@ const ProductionPlanning = () => {
             )
         );
     };
-
-
 
     const workOrderOptions = workOrders.map(wo => ({ value: wo.id, label: `${wo.id} - ${wo.clientName} - ${wo.projectName}` }));
     const plantOptions = plants.map(plant => ({ value: plant.id, label: plant.name }));
@@ -256,30 +256,7 @@ const ProductionPlanning = () => {
                             />
                         </div>
 
-                        {/* Client Details Card */}
-
-                        {/* </div> */}
-                        {/* </form> */}
-
-
-                        {/* </div> */}
-
-                        {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4"> */}
-
-
-                        {/* Date */}
-                        {/* <div>
-                            <label htmlFor="date">Date <span className="text-red-700">*</span></label>
-                            <input
-                                id="date"
-                                name="date"
-                                type="date"
-                                className="form-input"
-                                value={formData.date}
-                                onChange={handleInputChange}
-                            />
-                        </div> */}
-
+              
                         <div>
                             <label htmlFor="date">Range Date (from and to) <span className="text-red-700">*</span></label>
 
@@ -294,30 +271,20 @@ const ProductionPlanning = () => {
                                 onChange={(date3) => setDate3(date3)}
                             />
                         </div>
+                        <div>
+                            <label htmlFor="batchNumber">Batch Number <span className="text-red-700">*</span></label>
 
-                        {/* Planned Quantity */}
-
-
-                        {/* Plant Name */}
-
-
-                        {/* Factory Name */}
-                        {/* <div>
-                            <label htmlFor="factory">Factory Name <span className="text-red-700">*</span></label>
-                            <Select
-                                id="factory"
-                                name="factory"
-                                options={factoryOptions}
-                                onChange={handleFactoryChange}
-                                value={factoryOptions.find(option => option.value === selectedFactory)}
+                            <input
+                                id="batchNumber"
+                                name="batchNumber"
+                                type="text"
                                 className="form-input"
-                                placeholder="Select Factory"
-                                isSearchable
-                                isDisabled={!selectedPlant}
-                                styles={customStyles}
-                                
+                                placeholder='Enter Batch Number'
+                                value={formData.batchNumber}
+                                onChange={handleInputChange}
                             />
-                        </div> */}
+                        </div>
+                     
 
                     </div>
 

@@ -74,10 +74,10 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        "QR123456": { productId: "P001", workOrder: "WO101", product: "Steel Rod", uom: "Nos", quantity: 50 },
-        "QR654321": { productId: "P002", workOrder: "WO101", product: "Cement Bag", uom: "Nos", quantity: 30 },
-        "QR789012": { productId: "P001", workOrder: "WO101", product: "Steel Rod", uom: "Nos", quantity: 100 }, // Same productId as "QR123456"
-        "QR345678": { productId: "P003", workOrder: "WO103", product: "Wood Plank", uom: "Nos", quantity: 20 },
+        "QR123456": { productId: "P001", workOrder: "WO101", product: "Inward Window", uom: "Nos", quantity: 50 },
+        "QR654321": { productId: "P002", workOrder: "WO101", product: "Outward Window", uom: "Nos", quantity: 30 },
+        "QR789012": { productId: "P001", workOrder: "WO101", product: "Facade", uom: "Nos", quantity: 100 }, // Same productId as "QR123456"
+        "QR345678": { productId: "P003", workOrder: "WO103", product: "Curtain Wall", uom: "Nos", quantity: 20 },
     };
 
 

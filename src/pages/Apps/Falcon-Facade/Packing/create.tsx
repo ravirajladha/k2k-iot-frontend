@@ -59,9 +59,9 @@ interface FormData {
 }
 
 const products = [
-    { label: "Product1", value: "Product1", uom: "nos", sf: ["SF1", "SF2", "SF3"] },
-    { label: "Product2", value: "Product2", uom: "nos", sf: ["SF1", "SF2"] },
-    { label: "Product3", value: "Product3", uom: "nos", sf: ["SF3", "SF4"] },
+    { label: "Inward Window", value: "Inward Window", uom: "nos", sf: ["SF1", "SF2", "SF3"] },
+    { label: "Outward Window", value: "Outward Window", uom: "nos", sf: ["SF1", "SF2"] },
+    { label: "Facade", value: "Facade", uom: "nos", sf: ["SF3", "SF4"] },
     // Add more products here...
 ];
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DataTable } from "mantine-datatable";
-
+import IconEye from "@/components/Icon/IconEye";
 const PackingTable = ({ rowData, openPackingDetailsModal }) => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -44,10 +44,10 @@ const PackingTable = ({ rowData, openPackingDetailsModal }) => {
               title: 'Details',
               render: (row) => (
                 <button
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  className="px-4 py-2 text-blue-500"
                   onClick={() => openPackingDetailsModal(row)}
                 >
-                  View Details
+            <IconEye/>
                 </button>
               ),
             },

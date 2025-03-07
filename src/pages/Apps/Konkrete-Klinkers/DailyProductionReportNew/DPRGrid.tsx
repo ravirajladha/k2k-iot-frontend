@@ -3,14 +3,13 @@ import { AiOutlineStop } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
 import { useState } from 'react';
 
-{
-    /* Add Downtime Modal Button */
-}
+
 import DowntimeReasonModal from './DowntimeReasonCreationModal'; // Import modal component
 
 interface Report {
     workOrderNumber: string;
     jobOrderNumber: string;
+    batchNumber:string;
     clientName: string;
     projectName: string;
     productName: string;
@@ -33,8 +32,8 @@ interface DPRGridProps {
     handleStartStop?: (workOrderNumber: string) => void;
     handleComplete?: (workOrderNumber: string) => void;
     handleRefresh: () => void;
-    setIsModalOpen: (open: boolean) => void; // ✅ Expecting a boolean, not a Report
-    setIsLogsModalOpen: (open: boolean) => void; // ✅ Expecting a boolean
+    setIsModalOpen: (open: boolean) => void; 
+    setIsLogsModalOpen: (open: boolean) => void; 
     getStatusColor: (status: Report['status']) => string;
     showActionButtons: boolean;
 }
@@ -77,6 +76,9 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                                     <span className="font-semibold">Job Order No:</span> <span>{report.jobOrderNumber}</span>
                                 </div>
                                 <div className="flex justify-between">
+                                    <span className="font-semibold">Batch No:</span> <span>{report.batchNumber}</span>
+                                </div>
+                                <div className="flex justify-between">
                                     <span className="font-semibold">Client:</span> <span>{report.clientName}</span>
                                 </div>
                                 <div className="flex justify-between">
@@ -115,6 +117,9 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-semibold">PO Quantity:</span> <span>{report.POQuantity}</span>
+                                </div>
+                                 <div className="flex justify-between">
+                                    <span className="font-semibold">Planned Quantity:</span> <span>{report.plannedQuantity}</span>
                                 </div>
                                 <div className="flex justify-between text-green-600">
                                     <span className="font-semibold">Achieved:</span> <span>{report.achievedTillNow}</span>

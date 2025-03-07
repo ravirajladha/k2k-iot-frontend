@@ -12,7 +12,7 @@ import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import IconArrowLeft from '@/components/Icon/IconArrowLeft';
 import IconMultipleForwardRight from '@/components/Icon/IconMultipleForwardRight';
 import PackingTable from "./PackingTable"; // Import PackingTable
-import ViewPackingDetailsModal from "./PackingModal"; 
+import ViewPackingDetailsModal from "./PackingModal";
 import DispatchDetailsModal from './DispatchDetailsModal';
 import DispatchTable from './DispatchTable';
 const WorkOrderPage = () => {
@@ -26,53 +26,55 @@ const WorkOrderPage = () => {
     const [selectedAchievedLogs, setSelectedAchievedData] = useState([]);
     const [selectedRejectedLogs, setSelectedRejectedData] = useState([]);
     const [modalTitle, setModalTitle] = useState("");
-// packing modal
-const [selectedPackingData, setSelectedPackingData] = useState(null);
-const [isModalOpen, setIsModalOpen] = useState(false);
+    // packing modal
+    const [selectedPackingData, setSelectedPackingData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-const [selectedDispatch, setSelectedDispatch] = useState(null);
-const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
+    const [selectedDispatch, setSelectedDispatch] = useState(null);
+    const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
 
-const dispatchData = [
-    {
-      dispatchId: "D001",
-      workOrderId: "WO001",
-      jobOrderId: "JO001",
-      vehicleNumber: "V1234",
-      docketNumber: "DN001",
-      products: [
+    const dispatchData = [
         {
-          productId: "P001",
-          productName: "Steel Rod",
-          uom: "Nos",
-          quantity: 50,
-          timestamp: "2025-03-04 10:30 AM",
-          qrCodes: ["QR001", "QR002", "QR003"],
+            dispatchId: "D001",
+            workOrderId: "WO001",
+            jobOrderId: "JO001",
+            vehicleNumber: "V1234",
+            docketNumber: "DN001",
+            products: [
+                {
+                    productId: "P001",
+                    productName: "Inward Window",
+                    uom: "Nos",
+                    quantity: 50,
+                    vehicleNumber: "V1234",
+                    docketNumber: "DN001",
+                    timestamp: "2025-03-04 10:30 AM",
+                    qrCodes: ["QR001", "QR002", "QR003"],
+                },
+            ],
         },
-      ],
-    },
-    // Other dispatch entries
-  ];
-  const openDispatchDetailsModal = (dispatch) => {
-    setSelectedDispatch(dispatch);
-    setIsModalOpen(true);
-  };
+        // Other dispatch entries
+    ];
+    const openDispatchDetailsModal = (dispatch) => {
+        setSelectedDispatch(dispatch);
+        setIsModalOpen(true);
+    };
 
-  const closeModalDispatch = () => {
-    setIsModalOpen(false);
-    setSelectedDispatch(null);
-  };
+    const closeModalDispatch = () => {
+        setIsModalOpen(false);
+        setSelectedDispatch(null);
+    };
 
 
-const openPackingDetailsModal = (data) => {
-  setSelectedPackingData(data);
-  setIsModalOpen(true);
-};
+    const openPackingDetailsModal = (data) => {
+        setSelectedPackingData(data);
+        setIsModalOpen(true);
+    };
 
-const closeModalPacking= () => {
-  setIsModalOpen(false);
-  setSelectedPackingData(null);
-};
+    const closeModalPacking = () => {
+        setIsModalOpen(false);
+        setSelectedPackingData(null);
+    };
 
 
     const closeAchievedModal = () => setShowAchievedModal(false);
@@ -133,7 +135,7 @@ const closeModalPacking= () => {
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
-         
+
             dispatched: 70,
             packed: 60,
             plantCode: 'P1',
@@ -150,7 +152,7 @@ const closeModalPacking= () => {
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
-       
+
             dispatched: 160,
             packed: 140,
             plantCode: 'P2',
@@ -162,7 +164,7 @@ const closeModalPacking= () => {
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
-        
+
             dispatched: 120,
             packed: 110,
             plantCode: 'P3',
@@ -180,7 +182,7 @@ const closeModalPacking= () => {
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
-          
+
             dispatched: 200,
             packed: 190,
             plantCode: 'P4',
@@ -198,7 +200,7 @@ const closeModalPacking= () => {
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
-        
+
             dispatched: 140,
             packed: 130,
             plantCode: 'P5',
@@ -214,83 +216,83 @@ const closeModalPacking= () => {
 
     const rowData = [
         {
-          packing_id: 1,
-          workOrderId: 'WO12345',
-          jobOrder: 'JO98765',
-          status: 'Pending',  
-          createdBy: 'Pending',  
-          timestamp: "2025-02-25 10:30 AM",
-    
-    
-          products: [
-            {
-              productId: 'PRD001',
-              productName: 'Product1',
-              uom: 'nos',
-              semiFinishedProducts: [
+            packing_id: 1,
+            workOrderId: 'WO12345',
+            jobOrder: 'JO98765',
+            status: 'Pending',
+            createdBy: 'Pending',
+            timestamp: "2025-02-25 10:30 AM",
+
+
+            products: [
                 {
-                  sfId: 'SF1',
-                  quantity: 3,  // This means 3 QR codes will be generated for this SF
-                  qrCodes: ['QR1', 'QR2', 'QR3'],
+                    productId: 'PRD001',
+                    productName: 'Product1',
+                    uom: 'nos',
+                    semiFinishedProducts: [
+                        {
+                            sfId: 'SF1',
+                            quantity: 3,  // This means 3 QR codes will be generated for this SF
+                            qrCodes: ['QR1', 'QR2', 'QR3'],
+                        },
+                        {
+                            sfId: 'SF2',
+                            quantity: 2,  // This means 2 QR codes will be generated for SF2
+                            qrCodes: ['QR4', 'QR5'],
+                        },
+                    ],
                 },
                 {
-                  sfId: 'SF2',
-                  quantity: 2,  // This means 2 QR codes will be generated for SF2
-                  qrCodes: ['QR4', 'QR5'],
+                    productId: 'PRD002',
+                    productName: 'Product2',
+                    uom: 'nos',
+                    semiFinishedProducts: [
+                        {
+                            sfId: 'SF3',
+                            quantity: 1,  // 1 QR code for SF3
+                            qrCodes: ['QR6'],
+                        },
+                    ],
                 },
-              ],
-            },
-            {
-              productId: 'PRD002',
-              productName: 'Product2',
-              uom: 'nos',
-              semiFinishedProducts: [
-                {
-                  sfId: 'SF3',
-                  quantity: 1,  // 1 QR code for SF3
-                  qrCodes: ['QR6'],
-                },
-              ],
-            },
-          ],
+            ],
         },
         {
-          packing_id: 2,  // Added new row data
-          workOrderId: 'WO12346',
-          jobOrder: 'JO98766',
-          status: 'Completed', 
-          createdBy: 'Pending',  
-          timestamp: "2025-02-25 10:30 AM",
-          products: [
-            {
-              productId: 'PRD003',
-              productName: 'Product3',
-              uom: 'nos',
-              semiFinishedProducts: [
+            packing_id: 2,  // Added new row data
+            workOrderId: 'WO12346',
+            jobOrder: 'JO98766',
+            status: 'Completed',
+            createdBy: 'Pending',
+            timestamp: "2025-02-25 10:30 AM",
+            products: [
                 {
-                  sfId: 'SF4',
-                  quantity: 4,  // This means 4 QR codes will be generated for SF4
-                  qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
+                    productId: 'PRD003',
+                    productName: 'Product3',
+                    uom: 'nos',
+                    semiFinishedProducts: [
+                        {
+                            sfId: 'SF4',
+                            quantity: 4,  // This means 4 QR codes will be generated for SF4
+                            qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
+                        },
+                    ],
                 },
-              ],
-            },
-            {
-              productId: 'PRD004',
-              productName: 'Product4',
-              uom: 'nos',
-              semiFinishedProducts: [
                 {
-                  sfId: 'SF5',
-                  quantity: 5,  // This means 5 QR codes will be generated for SF5
-                  qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
+                    productId: 'PRD004',
+                    productName: 'Product4',
+                    uom: 'nos',
+                    semiFinishedProducts: [
+                        {
+                            sfId: 'SF5',
+                            quantity: 5,  // This means 5 QR codes will be generated for SF5
+                            qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
+                        },
+                    ],
                 },
-              ],
-            },
-          ],
+            ],
         },
         // You can add more rows here as needed
-      ];
-      
+    ];
+
 
     const mockAchievedLogs1 = [
         {
@@ -444,7 +446,7 @@ const closeModalPacking= () => {
         },
     ];
 
-   
+
 
     const filteredData = packingData.filter(
         (item) =>
@@ -457,8 +459,8 @@ const closeModalPacking= () => {
     const filteredData1 = dispatchData.filter((dispatch) =>
         dispatch.products.some(
             (product) =>
-                product.productName.toLowerCase().includes(search.toLowerCase()) 
-                // product.vehicleNumber.toLowerCase().includes(search.toLowerCase())
+                product.productName.toLowerCase().includes(search.toLowerCase())
+            // product.vehicleNumber.toLowerCase().includes(search.toLowerCase())
         )
     );
 
@@ -474,7 +476,7 @@ const closeModalPacking= () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }}
             />
             <button
                 onClick={() => window.print()}
@@ -548,7 +550,7 @@ const closeModalPacking= () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Description</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
-                                
+
                                     <th className="px-4 py-2 text-left border border-gray-300">PO Quantity</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Achieved</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Dispatched</th>
@@ -565,7 +567,7 @@ const closeModalPacking= () => {
                                         <td className="px-4 py-2 border border-gray-300">{product.description}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
-                                      
+
                                         <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.dispatched}</td>
@@ -767,8 +769,12 @@ const closeModalPacking= () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
                                 <div>
                                     <p className="text-sm"><strong>Product Name:</strong> {jobOrder.productName}</p>
+                                    <p className="text-sm"><strong>System:</strong>Schuco</p>
+                                    <p className="text-sm"><strong>Product System:</strong>Casement Window 45 Series</p>
+
                                     <p className="text-sm"><strong>UOM:</strong> {jobOrder.uom}</p>
                                     <p className="text-sm"><strong>PO Quantity:</strong> {jobOrder.poQuantity}</p>
+
                                 </div>
                                 <div>
                                     {/* <p className="text-sm"><strong>Planned Quantity:</strong> {jobOrder.plannedQuantity}</p> */}
@@ -864,120 +870,26 @@ const closeModalPacking= () => {
                 </div>
 
                 <PackingTable
-        rowData={rowData} // Pass your row data here
-        openPackingDetailsModal={openPackingDetailsModal}
-      />
-      <ViewPackingDetailsModal
-        isOpen={isModalOpen}
-        closeModal={closeModalPacking}
-        data={selectedPackingData}
-      />
-                {/* Packing Section */}
-                {/* <div className="panel  bg-slate-50">
-                    <div className="flex items-center justify-between mb-5">
-                        <h5 className="font-semibold text-lg dark:text-white-light">Packing Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Serial Number or Product ID..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
-                    <div className="datatables">
-                        <DataTable
-                            striped
-                            className="whitespace-nowrap table-striped"
-                            records={filteredData}
-                            columns={[
-                                { accessor: 'serialNumber', title: 'Serial Number' },
-                                // { accessor: 'workOrderId', title: 'Work Order ID' },
+                    rowData={rowData} // Pass your row data here
+                    openPackingDetailsModal={openPackingDetailsModal}
+                />
+                <ViewPackingDetailsModal
+                    isOpen={isModalOpen}
+                    closeModal={closeModalPacking}
+                    data={selectedPackingData}
+                />
+              
+                <DispatchTable
+                    dispatchData={dispatchData}
+                    openDispatchDetailsModal={openDispatchDetailsModal}
+                />
 
-                                { accessor: 'productId', title: 'Product ID' },
-                                { accessor: 'date', title: 'Date & Time' },
-                                { accessor: 'quantity', title: 'Quantity' },
-                                { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
-                                { accessor: 'createdBy', title: 'Created By' },
-
-                            ]}
-                            totalRecords={filteredData.length}
-                            recordsPerPage={pageSize}
-                            page={page}
-                            onPageChange={(p) => setPage(p)}
-                            recordsPerPageOptions={PAGE_SIZES}
-                            onRecordsPerPageChange={setPageSize}
-                            minHeight={200}
-                            paginationText={({ from, to, totalRecords }) =>
-                                `Showing ${from} to ${to} of ${totalRecords} entries`
-                            }
-                        />
-                    </div>
-                </div> */}
-<DispatchTable
-        dispatchData={dispatchData}
-        openDispatchDetailsModal={openDispatchDetailsModal}
-      />
-      <DispatchDetailsModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        dispatch={selectedDispatch}
-      />
-                {/* Dispatch Section */}
-                {/* <div className="panel mt-4 bg-slate-50">
-                    <div className="flex items-center justify-between mb-5">
-                        <h5 className="font-semibold text-lg dark:text-white-light">Dispatch Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Product Name or Vehicle Number..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
-                    <div className="datatables">
-                        <div className="overflow-x-auto">
-                            <table className="table-auto w-full border-collapse border border-gray-200">
-                                <thead className="bg-gray-100">
-
-                                    <tr>
-                                        <th>Dispatch ID</th>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th>UOM</th>
-                                      
-                                        <th>Timestamp</th>
-                                        <th>Vehicle Number</th>
-                                        <th>Docket Number</th>
-                                        <th>Files</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredData1.map((dispatch) => (
-                                        <React.Fragment key={dispatch.dispatchId}>
-                                            <tr className="bg-gray-100 font-bold">
-                                                <td colSpan={7}>Dispatch ID: {dispatch.dispatchId}</td>
-                                                <td><IconFile /></td>
-                                            </tr>
-                                            {dispatch.products.map((product, index) => (
-                                                <tr key={index}>
-                                                    <td></td> 
-
-                                                    <td>{product.productName}</td>
-                                                    <td>{product.quantity}</td>
-                                                    <td>{product.uom}</td>
-                                                  
-                                                    <td>{product.timestamp}</td>
-                                                    <td>{product.vehicleNumber}</td>
-                                                    <td>{product.docketNumber}</td>
-                                                </tr>
-                                            ))}
-                                        </React.Fragment>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> */}
+                <DispatchDetailsModal
+                    isOpen={isModalOpen}
+                    closeModal={closeModal}
+                    dispatch={selectedDispatch}
+                />
+                
             </div>
         </div>
 
