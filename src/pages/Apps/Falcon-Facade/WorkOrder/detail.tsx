@@ -128,13 +128,12 @@ const closeModalPacking= () => {
 
     const products = [
         {
-            description: 'Product A',
+            description: 'Inward Door',
             materialCode: 'M001',
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
-            barMark: "BM111",
-            memberDetails: "P1",
+         
             dispatched: 70,
             packed: 60,
             plantCode: 'P1',
@@ -146,26 +145,24 @@ const closeModalPacking= () => {
             ],
         },
         {
-            description: 'Product B',
+            description: 'Fixed Door',
             materialCode: 'M002',
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
-            barMark: "BM111",
-            memberDetails: "P1",
+       
             dispatched: 160,
             packed: 140,
             plantCode: 'P2',
             deliveryDate: '2025-01-22',
         },
         {
-            description: 'Product C',
+            description: 'Fixed Window',
             materialCode: 'M003',
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
-            barMark: "BM111",
-            memberDetails: "P1",
+        
             dispatched: 120,
             packed: 110,
             plantCode: 'P3',
@@ -178,13 +175,12 @@ const closeModalPacking= () => {
             ],
         },
         {
-            description: 'Product D',
+            description: 'Facade',
             materialCode: 'M004',
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
-            barMark: "BM111",
-            memberDetails: "P1",
+          
             dispatched: 200,
             packed: 190,
             plantCode: 'P4',
@@ -197,13 +193,12 @@ const closeModalPacking= () => {
             ],
         },
         {
-            description: 'Product E',
+            description: 'Curtain wall',
             materialCode: 'M005',
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
-            barMark: "BM111",
-            memberDetails: "P1",
+        
             dispatched: 140,
             packed: 130,
             plantCode: 'P5',
@@ -351,7 +346,7 @@ const closeModalPacking= () => {
     const jobOrders = [
         {
             id: 1,
-            productName: "Product A",
+            productName: "Inward",
             uom: "Nos",
             poQuantity: 100,
             plannedQuantity: 90,
@@ -388,102 +383,6 @@ const closeModalPacking= () => {
         },
     ];
 
-
-
-    // const jobOrders = [
-    //     {
-    //         id: 1,
-    //         productName: "Product A",
-    //         uom: "Nos",
-    //         poQuantity: 100,
-    //         plannedQuantity: 90,
-    //         achievedQuantity: 80,
-    //         rejectedQuantity: 10,
-    //         semiFinishedTasks: [
-    //             {
-    //                 id: "SF101",
-    //                 name: "Semi Finished 1",
-    //                 file: null,
-    //                 remark: "Initial cutting process",
-    //                 steps: [
-    //                     {
-    //                         name: "Cutting",
-    //                         poQuantity: 30,
-    //                         plannedQuantity: 25,
-    //                         achievedQuantity: 22,
-    //                         rejectedQuantity: 3,
-    //                     },
-    //                     {
-    //                         name: "Machining",
-    //                         poQuantity: 40,
-    //                         plannedQuantity: 35,
-    //                         achievedQuantity: 33,
-    //                         rejectedQuantity: 2,
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 id: "SF102",
-    //                 name: "Semi Finished 2",
-    //                 file: null,
-    //                 remark: "Machining and Glazing",
-    //                 steps: [
-    //                     {
-    //                         name: "Assembling",
-    //                         poQuantity: 20,
-    //                         plannedQuantity: 18,
-    //                         achievedQuantity: 17,
-    //                         rejectedQuantity: 1,
-    //                     },
-    //                     {
-    //                         name: "Glass Fixing",
-    //                         poQuantity: 10,
-    //                         plannedQuantity: 8,
-    //                         achievedQuantity: 7,
-    //                         rejectedQuantity: 1,
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: 2,
-    //         productName: "Product B",
-    //         uom: "Nos",
-    //         poQuantity: 200,
-    //         plannedQuantity: 180,
-    //         achievedQuantity: 170,
-    //         rejectedQuantity: 10,
-    //         semiFinishedTasks: [
-    //             {
-    //                 id: "SF201",
-    //                 name: "Semi Finished 1",
-    //                 file: null,
-    //                 remark: "Complete all processes",
-    //                 steps: [
-    //                     {
-    //                         name: "Cutting",
-    //                         poQuantity: 50,
-    //                         plannedQuantity: 45,
-    //                         achievedQuantity: 42,
-    //                         rejectedQuantity: 3,
-    //                     },
-    //                     {
-    //                         name: "Machining",
-    //                         poQuantity: 60,
-    //                         plannedQuantity: 55,
-    //                         achievedQuantity: 50,
-    //                         rejectedQuantity: 5,
-    //                     },
-    //                 ],
-    //             },
-    //         ],
-    //     },
-    // ];
-
-
-
-
     const workOrder = {
         id: 'abc123',
         createdAt: '2025-01-10 10:30 AM',
@@ -510,7 +409,6 @@ const closeModalPacking= () => {
             serialNumber: 'BR001',
             productId: 'P101',
             workOrderId: 'WO111',
-
             quantity: 500,
             rejectedQuantity: 10,
             date: '2025-01-10 10:30 AM',
@@ -518,7 +416,6 @@ const closeModalPacking= () => {
         },
         {
             workOrderId: 'WO112',
-
             serialNumber: 'BR002',
             productId: 'P102',
             quantity: 450,
@@ -530,7 +427,6 @@ const closeModalPacking= () => {
             serialNumber: 'BR003',
             productId: 'P103',
             workOrderId: 'WO113',
-
             quantity: 600,
             rejectedQuantity: 15,
             date: '2025-01-12 09:45 AM',
@@ -548,84 +444,7 @@ const closeModalPacking= () => {
         },
     ];
 
-    // const dispatchData = [
-    //     {
-    //         dispatchId: 'D001',
-    //         products: [
-    //             {
-    //                 productName: 'Bricks A',
-    //                 quantity: 500,
-    //                 uom: 'Nos',
-    //                 rate: 10,
-    //                 amount: 5000,
-    //                 timestamp: '2025-01-15 10:30 AM',
-    //                 vehicleNumber: 'KA-01-1234',
-    //                 docketNumber: 'DOC001',
-    //             },
-    //             {
-    //                 productName: 'Bricks B',
-    //                 quantity: 300,
-    //                 uom: 'Nos',
-    //                 rate: 12,
-    //                 amount: 3600,
-    //                 timestamp: '2025-01-15 10:30 AM',
-    //                 vehicleNumber: 'KA-01-1234',
-    //                 docketNumber: 'DOC001',
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         dispatchId: 'D002',
-    //         products: [
-    //             {
-    //                 productName: 'Bricks C',
-    //                 quantity: 400,
-    //                 uom: 'Nos',
-    //                 rate: 15,
-    //                 amount: 6000,
-    //                 timestamp: '2025-01-16 11:00 AM',
-    //                 vehicleNumber: 'KA-02-5678',
-    //                 docketNumber: 'DOC002',
-    //             },
-    //         ],
-    //     },
-    // ];
-    // const mockAchievedLogs = [
-    //     {
-    //         timestamp: "2025-03-03T12:00:00Z",
-    //         quantityAchieved: 500,
-    //         createdBy: "John Doe",
-    //     },
-    //     {
-    //         timestamp: "2025-03-03T14:30:00Z",
-    //         quantityAchieved: 200,
-    //         createdBy: "Jane Smith",
-    //     },
-    //     {
-    //         timestamp: "2025-03-03T16:00:00Z",
-    //         quantityAchieved: 300,
-    //         createdBy: "Alice Brown",
-    //     },
-    // ];
-
-    // const mockRejectedLogs = [
-    //     {
-    //         timestamp: "2025-03-03T13:00:00Z",
-    //         quantityRejected: 50,
-    //         createdBy: "John Doe",
-    //     },
-    //     {
-    //         timestamp: "2025-03-03T15:00:00Z",
-    //         quantityRejected: 30,
-    //         createdBy: "Jane Smith",
-    //     },
-    //     {
-    //         timestamp: "2025-03-03T17:00:00Z",
-    //         quantityRejected: 100,
-    //         createdBy: "Alice Brown",
-    //     },
-    // ];
-
+   
 
     const filteredData = packingData.filter(
         (item) =>
@@ -729,8 +548,7 @@ const closeModalPacking= () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Description</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
-                                    <th className="px-4 py-2 text-left border border-gray-300">Bar Mark</th>
-                                    <th className="px-4 py-2 text-left border border-gray-300">Member Details</th>
+                                
                                     <th className="px-4 py-2 text-left border border-gray-300">PO Quantity</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Achieved</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Dispatched</th>
@@ -747,9 +565,7 @@ const closeModalPacking= () => {
                                         <td className="px-4 py-2 border border-gray-300">{product.description}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
-                                        <td className="px-4 py-2 border border-gray-300">{product.barMark}</td>
-
-                                        <td className="px-4 py-2 border border-gray-300">{product.memberDetails}</td>
+                                      
                                         <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.dispatched}</td>

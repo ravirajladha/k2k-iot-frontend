@@ -490,8 +490,8 @@ const ProductionPlanning = () => {
                       {/* Product Row */}
                       <tr className="bg-blue-200">
                         <td className="p-3 border">
-                        
-                          <Select
+                          <input type="text" className="form-input w-full" value={item.title} readOnly />
+                          {/* <Select
                               id="system"
                               value={formData.system ? { value: formData.system, label: formData.system } : null}
                               onChange={handleSystemChange}
@@ -501,13 +501,15 @@ const ProductionPlanning = () => {
                               placeholder="Select a System"
                               isClearable
                               required
-                            />
+                            /> */}
 
                         </td>
 
                         <td>
-                         
-                            <Select
+                          {/* <div className="flex items-center"> */}
+                            {/* <label htmlFor="system" className="w-1/4 pr-4">Select System</label> */}
+                                <input type="text" className="form-input w-full" value={item.title} readOnly />
+                            {/* <Select
                               id="system"
                               value={formData.system ? { value: formData.system, label: formData.system } : null}
                               onChange={handleSystemChange}
@@ -517,11 +519,28 @@ const ProductionPlanning = () => {
                               placeholder="Select a System"
                               isClearable
                               required
-                            />
-                         
+                            /> */}
+                          {/* </div> */}
+                          {/* {errors.system && <p className="text-red-500 text-sm">{errors.system}</p>} */}
                         </td>
-                        <td>          
+                        <td>
+                          {/* Select Product System */}
+                          {/* <div className="flex items-center"> */}
+                            {/* <label htmlFor="productSystem" className="w-1/4 pr-4">Select Product System</label> */}
                                 <input type="text" className="form-input w-full" value={item.title} readOnly />
+
+                            {/* <Select
+                              id="productSystem"
+                              value={formData.productSystem ? { value: formData.productSystem, label: formData.productSystem } : null}
+                              onChange={handleProductSystemChange}
+                              options={availableProductSystems}
+                              className="custom-select flex-1"
+                              classNamePrefix="custom-select"
+                              placeholder="Select a Product System"
+                              isClearable
+                              required
+                            /> */}
+                          {/* </div> */}
 
                         </td>
                         <td className="p-3 border">

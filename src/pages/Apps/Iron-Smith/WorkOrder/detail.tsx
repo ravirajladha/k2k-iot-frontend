@@ -48,7 +48,8 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
-      
+            barMark: "BM111",
+            memberDetails: "P1",
             dispatched: 70,
             packed: 60,
             plantCode: 'P1',
@@ -63,7 +64,8 @@ const WorkOrderPage = () => {
             description: 'Product B',
             materialCode: 'M002',
             uom: 'Nos',
-      
+            barMark: "BM111",
+            memberDetails: "P2",
             requiredQuantity: 200,
             achieved: 180,
             dispatched: 160,
@@ -75,7 +77,8 @@ const WorkOrderPage = () => {
             description: 'Product C',
             materialCode: 'M003',
             uom: 'Nos',
-        
+            barMark: "BM114",
+            memberDetails: "P4",
             requiredQuantity: 150,
             achieved: 130,
             dispatched: 120,
@@ -93,7 +96,8 @@ const WorkOrderPage = () => {
             description: 'Product D',
             materialCode: 'M004',
             uom: 'Nos',
-      
+            barMark: "BM112",
+            memberDetails: "P3",
             requiredQuantity: 250,
             achieved: 230,
             dispatched: 200,
@@ -112,7 +116,8 @@ const WorkOrderPage = () => {
             materialCode: 'M005',
             uom: 'Nos',
             requiredQuantity: 180,
-         
+            barMark: "BM111",
+            memberDetails: "P2",
             achieved: 150,
             dispatched: 140,
             packed: 130,
@@ -407,15 +412,15 @@ const WorkOrderPage = () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Description</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
-                                  
-
+                                    <th className="px-4 py-2 text-left border border-gray-300">Bar Mark</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Member Details</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">PO Quantity</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Achieved</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Dispatched</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Packed</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Plant Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">Delivery Date</th>
-                                    <th className="px-4 py-2 text-left border border-gray-300">Actions</th>
+                                    {/* <th className="px-4 py-2 text-left border border-gray-300">Actions</th> */}
 
                                 </tr>
                             </thead>
@@ -425,27 +430,27 @@ const WorkOrderPage = () => {
                                         <td className="px-4 py-2 border border-gray-300">{product.description}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
-                                  
+                                        <td className="px-4 py-2 border border-gray-300">{product.barMark}</td>
 
+                                        <td className="px-4 py-2 border border-gray-300">{product.memberDetails}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.dispatched}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.packed}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.plantCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.deliveryDate}</td>
-                                        <td className="px-4 py-2 border border-gray-300">
+                                        {/* <td className="px-4 py-2 border border-gray-300">
                                             <button
                                                 className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-700"
                                                 onClick={() => openModal(product)}
                                             >
                                                 <IconEye />                                    </button>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-
 
                     {/* Modal for Dimensions */}
                     {/* MODAL USING HEADLESS UI */}

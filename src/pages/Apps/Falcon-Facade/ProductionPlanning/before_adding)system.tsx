@@ -45,9 +45,6 @@ interface FormData {
   actualQuantity: string;
   rejectedQuantity: string;
   selectedMachines: string[];
-  system: string;
-  productSystem: string;
-  productName: string;
 }
 
 
@@ -64,11 +61,7 @@ const ProductionPlanning = () => {
     plannedQuantity: '',
     actualQuantity: '',
     rejectedQuantity: '',
-    selectedMachines: [], 
-    system: '',
-    productSystem: '',
-    productName: '',
-
+    selectedMachines: [], // New field for machine selection
 
 
   });
@@ -79,7 +72,24 @@ const ProductionPlanning = () => {
     { id: 'WO103', clientName: 'Client C', projectName: 'Project Z', poQuantity: 300 },
   ];
 
-
+  // const plants: Plant[] = [
+  //   {
+  //     id: 'plant1',
+  //     name: 'Plant 1',
+  //     factories: [
+  //       { id: 'factory1', name: 'Factory 1' },
+  //       { id: 'factory2', name: 'Factory 2' },
+  //     ],
+  //   },
+  //   {
+  //     id: 'plant2',
+  //     name: 'Plant 2',
+  //     factories: [
+  //       { id: 'factory3', name: 'Factory 3' },
+  //       { id: 'factory4', name: 'Factory 4' },
+  //     ],
+  //   },
+  // ];
 
   const plants: Plant[] = [
     { id: '1', name: "Plant1" },
@@ -98,7 +108,16 @@ const ProductionPlanning = () => {
     }));
   };
 
-
+  const handleMachineChange = (selectedOptions: any, id: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, selectedMachines: selectedOptions ? selectedOptions.map((option: any) => option.value) : [] }
+          : item
+      )
+    );
+  };
+  const [selectedMachines, setSelectedMachines] = useState<string>('');
 
   const [factories, setFactories] = useState<Factory[]>([]);
 
@@ -154,9 +173,6 @@ const ProductionPlanning = () => {
       {
         id: maxId + 1,
         title: `Product ${maxId + 1}`,
-        
-        system: '',
-        productSystem: '',
         plannedQuantity: 0,
         sfSteps: [
           {
@@ -341,13 +357,6 @@ const ProductionPlanning = () => {
       outline: 'none',
     }),
   };
-  const fakeSystems = [
-    { value: 'system1', label: 'System 1' },
-    { value: 'system2', label: 'System 2' },
-    { value: 'system3', label: 'System 3' },
-    { value: 'system4', label: 'System 4' },
-];
-
 
   const machineOptions = [
     { value: "machine1", label: "Cutting Process" },
@@ -357,37 +366,6 @@ const ProductionPlanning = () => {
     { value: "machine4", label: "Glass Fixing / Glazing" },
   ];
 
-  const fakeProductSystems = {
-    system1: [
-      { value: 'productSystem1', label: 'Product System 1' },
-      { value: 'productSystem2', label: 'Product System 2' },
-    ],
-    system2: [
-      { value: 'productSystem3', label: 'Product System 3' },
-      { value: 'productSystem4', label: 'Product System 4' },
-    ],
-    system3: [
-      { value: 'productSystem5', label: 'Product System 5' },
-      { value: 'productSystem6', label: 'Product System 6' },
-    ],
-    system4: [
-      { value: 'productSystem7', label: 'Product System 7' },
-      { value: 'productSystem8', label: 'Product System 8' },
-    ],
-  };
-
-  const [availableProductSystems, setAvailableProductSystems] = useState<any[]>([]);
-
-  // Handle changes in the system selection
-  const handleSystemChange = (selectedOption: any) => {
-    setFormData((prev) => ({ ...prev, system: selectedOption.value, productSystem: '' }));
-    setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
-  };
-
-  // Handle changes in the product system selection
-  const handleProductSystemChange = (selectedOption: any) => {
-    setFormData((prev) => ({ ...prev, productSystem: selectedOption.value }));
-  };
 
   return (
     <div>
@@ -469,8 +447,6 @@ const ProductionPlanning = () => {
                 <thead className="bg-gray-800 text-dark">
                   <tr>
                     <th className="p-2 border">Product</th>
-                    <th className="p-2 border">System</th>
-                    <th className="p-2 border">Product System</th>
                     <th className="p-2 border">Planned Quantity</th>
                     <th className="p-2 border"></th>
                   </tr>
@@ -479,7 +455,7 @@ const ProductionPlanning = () => {
                 <tbody>
                   {items.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="text-center font-semibold bg-gray-100 p-4">
+                      <td colSpan={3} className="text-center font-semibold bg-gray-100 p-4">
                         No Item Available
                       </td>
                     </tr>
@@ -490,39 +466,7 @@ const ProductionPlanning = () => {
                       {/* Product Row */}
                       <tr className="bg-blue-200">
                         <td className="p-3 border">
-                        
-                          <Select
-                              id="system"
-                              value={formData.system ? { value: formData.system, label: formData.system } : null}
-                              onChange={handleSystemChange}
-                              options={fakeSystems}
-                              className="custom-select flex-1"
-                              classNamePrefix="custom-select"
-                              placeholder="Select a System"
-                              isClearable
-                              required
-                            />
-
-                        </td>
-
-                        <td>
-                         
-                            <Select
-                              id="system"
-                              value={formData.system ? { value: formData.system, label: formData.system } : null}
-                              onChange={handleSystemChange}
-                              options={fakeSystems}
-                              className="custom-select flex-1"
-                              classNamePrefix="custom-select"
-                              placeholder="Select a System"
-                              isClearable
-                              required
-                            />
-                         
-                        </td>
-                        <td>          
-                                <input type="text" className="form-input w-full" value={item.title} readOnly />
-
+                          <input type="text" className="form-input w-full" value={item.title} readOnly />
                         </td>
                         <td className="p-3 border">
                           <input type="number" className="form-input w-32" min={0} value={item.plannedQuantity} />

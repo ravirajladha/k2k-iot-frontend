@@ -138,7 +138,7 @@ const Sidebar = () => {
 
                                 <AnimateHeight duration={300} height={currentMenu === 'dashboard' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
-                                    <li>
+                                        <li>
                                             <NavLink to="/overallDashboard">{t('Overall')}</NavLink>
                                         </li>
                                         <li>
@@ -187,7 +187,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li> */}
                                     <li className="nav-item">
-                                        <NavLink to={`${falconFacadeBasePath}/productionNew`}className="group">
+                                        <NavLink to={`${falconFacadeBasePath}/productionNew`} className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Production ')}</span>
@@ -229,8 +229,8 @@ const Sidebar = () => {
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Dispatch')}</span>
                                             </div>
                                         </NavLink>
-                                    </li>  
-                                     <li className="nav-item">
+                                    </li>
+                                    <li className="nav-item">
                                         <NavLink to={`${falconFacadeBasePath}/qc-check`} className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
@@ -264,7 +264,7 @@ const Sidebar = () => {
                                         </NavLink>
 
                                     </li> */}
-{/* 
+                                    {/* 
                                     <li className="nav-item">
                                         <NavLink to={`${falconFacadeBasePath}/inventories`} className="group">
                                             <div className="flex items-center">
@@ -296,89 +296,89 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-    <button
-        type="button"
-        className={`${currentMenu === 'helpers' ? 'active' : ''} nav-link group w-full`}
-        onClick={() => toggleMenu('helpers')}
-    >
-        <div className="flex items-center">
-            <IconMenuPages className="group-hover:!text-primary shrink-0" />
-            <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
-                {t('Master Data')}
-            </span>
-        </div>
-        <div className={currentMenu !== 'helpers' ? 'rtl:rotate-90 -rotate-90' : ''}>
-            <IconCaretDown />
-        </div>
-    </button>
+                                <button
+                                    type="button"
+                                    className={`${currentMenu === 'helpers' ? 'active' : ''} nav-link group w-full`}
+                                    onClick={() => toggleMenu('helpers')}
+                                >
+                                    <div className="flex items-center">
+                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('Master Data')}
+                                        </span>
+                                    </div>
+                                    <div className={currentMenu !== 'helpers' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                        <IconCaretDown />
+                                    </div>
+                                </button>
 
-    <AnimateHeight duration={300} height={currentMenu === 'helpers' ? 'auto' : 0}>
-        <ul className="sub-menu text-gray-500">
+                                <AnimateHeight duration={300} height={currentMenu === 'helpers' ? 'auto' : 0}>
+                                    <ul className="sub-menu text-gray-500">
 
-            {/* Clients Submenu */}
-            <li className="menu nav-item">
-                <button
-                    type="button"
-                    className={`${currentSubMenu === 'clients' ? 'active' : ''} nav-link group w-full`}
-                    onClick={() => toggleSubMenu('clients')}
-                >
-                    <div className="flex items-center">
-                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
-                            {t('Clients')}
-                        </span>
-                    </div>
-                    <div className={currentSubMenu !== 'clients' ? 'rtl:rotate-90 -rotate-90' : ''}>
-                        <IconCaretDown />
-                    </div>
-                </button>
+                                        {/* Clients Submenu */}
+                                        <li className="menu nav-item">
+                                            <button
+                                                type="button"
+                                                className={`${currentSubMenu === 'clients' ? 'active' : ''} nav-link group w-full`}
+                                                onClick={() => toggleSubMenu('clients')}
+                                            >
+                                                <div className="flex items-center">
+                                                    <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
+                                                        {t('Master Clients')}
+                                                    </span>
+                                                </div>
+                                                <div className={currentSubMenu !== 'clients' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                                    <IconCaretDown />
+                                                </div>
+                                            </button>
 
-                <AnimateHeight duration={300} height={currentSubMenu === 'clients' ? 'auto' : 0}>
-                    <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
-                        <li>
-                            <NavLink to={`${falconFacadeBasePath}/clients`}>{t('Clients')}</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={`${falconFacadeBasePath}/machines`}>{t('Machines')}</NavLink>
-                        </li>
-                    </ul>
-                </AnimateHeight>
-            </li>
+                                            <AnimateHeight duration={300} height={currentSubMenu === 'clients' ? 'auto' : 0}>
+                                                <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
+                                                    <li>
+                                                        <NavLink to={`${falconFacadeBasePath}/clients`}>{t('Clients')}</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink to={`${falconFacadeBasePath}/projects`}>{t('Projects')}</NavLink>
+                                                    </li>
+                                                </ul>
+                                            </AnimateHeight>
+                                        </li>
 
-            {/* Products Submenu */}
-            <li className="menu nav-item">
-                <button
-                    type="button"
-                    className={`${currentSubMenu === 'products' ? 'active' : ''} nav-link group w-full`}
-                    onClick={() => toggleSubMenu('products')}
-                >
-                    <div className="flex items-center">
-                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
-                            {t('Products')}
-                        </span>
-                    </div>
-                    <div className={currentSubMenu !== 'products' ? 'rtl:rotate-90 -rotate-90' : ''}>
-                        <IconCaretDown />
-                    </div>
-                </button>
+                                        {/* Products Submenu */}
+                                        <li className="menu nav-item">
+                                            <button
+                                                type="button"
+                                                className={`${currentSubMenu === 'products' ? 'active' : ''} nav-link group w-full`}
+                                                onClick={() => toggleSubMenu('products')}
+                                            >
+                                                <div className="flex items-center">
+                                                    <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">
+                                                        {t('Master Products')}
+                                                    </span>
+                                                </div>
+                                                <div className={currentSubMenu !== 'products' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                                    <IconCaretDown />
+                                                </div>
+                                            </button>
 
-                <AnimateHeight duration={300} height={currentSubMenu === 'products' ? 'auto' : 0}>
-                    <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
-                        <li>
-                            <NavLink to={`${falconFacadeBasePath}/systems`}>{t('Systems')}</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={`${falconFacadeBasePath}/product-systems`}>{t('Product System')}</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={`${falconFacadeBasePath}/products`}>{t('Products')}</NavLink>
-                        </li>
-                    </ul>
-                </AnimateHeight>
-            </li>
+                                            <AnimateHeight duration={300} height={currentSubMenu === 'products' ? 'auto' : 0}>
+                                                <ul className="sub-menu text-gray-500 pl-6"> {/* Added padding for nested items */}
+                                                    <li>
+                                                        <NavLink to={`${falconFacadeBasePath}/systems`}>{t('Systems')}</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink to={`${falconFacadeBasePath}/product-systems`}>{t('Product System')}</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink to={`${falconFacadeBasePath}/products`}>{t('Products')}</NavLink>
+                                                    </li>
+                                                </ul>
+                                            </AnimateHeight>
+                                        </li>
 
-        </ul>
-    </AnimateHeight>
-</li>
+                                    </ul>
+                                </AnimateHeight>
+                            </li>
 
 
 

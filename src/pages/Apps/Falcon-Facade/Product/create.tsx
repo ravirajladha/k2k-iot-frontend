@@ -148,7 +148,7 @@ const ProductCreationPage = () => {
                 </div>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     {/* Select System */}
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         <label htmlFor="system" className="w-1/4 pr-4">Select System</label>
                         <Select
                             id="system"
@@ -161,11 +161,11 @@ const ProductCreationPage = () => {
                             isClearable
                             required
                         />
-                    </div>
-                    {errors.system && <p className="text-red-500 text-sm">{errors.system}</p>}
+                    </div> */}
+                    {/* {errors.system && <p className="text-red-500 text-sm">{errors.system}</p>} */}
 
                     {/* Select Product System */}
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         <label htmlFor="productSystem" className="w-1/4 pr-4">Select Product System</label>
                         <Select
                             id="productSystem"
@@ -178,8 +178,8 @@ const ProductCreationPage = () => {
                             isClearable
                             required
                         />
-                    </div>
-                    {errors.productSystem && <p className="text-red-500 text-sm">{errors.productSystem}</p>}
+                    </div> */}
+                    {/* {errors.productSystem && <p className="text-red-500 text-sm">{errors.productSystem}</p>} */}
 
                     {/* Product Name */}
                     <div className="flex items-center">

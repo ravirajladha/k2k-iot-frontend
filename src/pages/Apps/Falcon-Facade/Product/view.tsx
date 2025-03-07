@@ -27,7 +27,7 @@ interface Product {
 
 const rowData: Product[] = [
     {
-        name: 'Concrete Blocks',
+        name: 'Inward Door',
         status: 'Active',
         system: 'System 1',
         product_system: 'Product System 1',
@@ -35,7 +35,7 @@ const rowData: Product[] = [
         created_at: '2024-02-17 14:30',
     },
     {
-        name: 'Cement Bags',
+        name: 'Fixed Door',
         status: 'Active',
         system: 'System 2',
         product_system: 'Product System 2',
@@ -43,7 +43,7 @@ const rowData: Product[] = [
         created_at: '2024-02-16 10:15',
     },
     {
-        name: 'Steel Rods',
+        name: 'Fixed Window',
         status: 'Inactive',
         system: 'System 3',
         product_system: 'Product System 3',
@@ -51,7 +51,7 @@ const rowData: Product[] = [
         created_at: '2024-02-15 12:45',
     },
     {
-        name: 'Bricks',
+        name: 'Facade',
         status: 'Active',
         system: 'System 4',
         product_system: 'Product System 4',
@@ -102,8 +102,6 @@ const ProductView = () => {
         setModal10(false);
     };
 
-
-
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '#', isActive: false },
@@ -120,29 +118,78 @@ const ProductView = () => {
         setRecordsData([...initialRecords.slice(from, to)]);
     }, [page, pageSize, initialRecords]);
 
+    // useEffect(() => {
+    //     setInitialRecords(() => {
+    //         return rowData.filter((item) => {
+    //             return (
+    //                 item.name.toLowerCase().includes(search.toLowerCase()) || // Search in name
+    //                 item.status.toLowerCase().includes(search.toLowerCase()) || // Search in status
+    //                 item.system.toLowerCase().includes(search.toLowerCase()) || // Search in system
+    //                 item.product_system.toLowerCase().includes(search.toLowerCase()) || // Search in product_system
+    //                 item.created_by.toLowerCase().includes(search.toLowerCase()) || // Search in created_by
+    //                 item.created_at.toLowerCase().includes(search.toLowerCase())
+    //             );
+    //         });
+    //     });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [search]);
+
+
     useEffect(() => {
-        setInitialRecords(() => {
+        setRecordsData(() => {
             return rowData.filter((item) => {
                 return (
-                    item.name.toLowerCase().includes(search.toLowerCase()) || // Search in name
-                    item.status.toLowerCase().includes(search.toLowerCase()) || // Search in status
-                    item.system.toLowerCase().includes(search.toLowerCase()) || // Search in system
-                    item.product_system.toLowerCase().includes(search.toLowerCase()) || // Search in product_system
-                    item.created_by.toLowerCase().includes(search.toLowerCase()) || // Search in created_by
+                    item.name.toLowerCase().includes(search.toLowerCase()) || 
+                    item.status.toLowerCase().includes(search.toLowerCase()) || 
+                    item.system.toLowerCase().includes(search.toLowerCase()) || 
+                    item.product_system.toLowerCase().includes(search.toLowerCase()) || 
+                    item.created_by.toLowerCase().includes(search.toLowerCase()) || 
                     item.created_at.toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
-    const cols = [
-        { accessor: 'name', title: 'Product Name', sortable: true },
-        { accessor: 'status', title: 'Status', sortable: true },
-        { accessor: 'system', title: 'System', sortable: true },
-        { accessor: 'product_system', title: 'Product System', sortable: true },
-        { accessor: 'created_by', title: 'Created By', sortable: true },
-        { accessor: 'created_at', title: 'Created At', sortable: true },
+//need to change the color of the status, not showing any colors
+    const columns = [
+        {
+            name: 'Name',
+            accessor: 'name',
+            sortable: true,
+        },
+        {
+            name: 'Status',
+            accessor: 'status',
+            sortable: true,
+            cell: (row:any) => {
+                // Apply different styles based on the status value
+                const statusStyle = row.status != 'Active'
+                    ? { color: 'green', fontWeight: 'bold' }
+                    : { color: 'red', fontWeight: 'bold' };
+    
+                return <span style={statusStyle}>{row.status}</span>;
+            },
+        },
+        // {
+        //     name: 'System',
+        //     accessor: 'system',
+        //     sortable: true,
+        // },
+        // {
+        //     name: 'Product System',
+        //     accessor: 'product_system',
+        //     sortable: true,
+        // },
+        {
+            name: 'Created By',
+            accessor: 'created_by',
+            sortable: true,
+        },
+        {
+            name: 'Created At',
+            accessor: 'created_at',
+            sortable: true,
+        },
         {
             accessor: 'action',
             title: 'Actions',
@@ -154,6 +201,7 @@ const ProductView = () => {
                 </div>
             ),
         },
+        
     ];
 
     useEffect(() => {
@@ -191,7 +239,7 @@ const ProductView = () => {
                                     }
                                 >
                                     <ul className="!min-w-[140px]">
-                                        {cols.map((col, i) => {
+                                        {columns.map((col, i) => {
                                             return (
                                                 <li
                                                     key={i}
@@ -231,7 +279,7 @@ const ProductView = () => {
                     <DataTable
                         className="whitespace-nowrap table-hover"
                         records={recordsData}
-                        columns={cols}
+                        columns={columns}
                         highlightOnHover
                         totalRecords={recordsData.length}
                         recordsPerPage={pageSize}
@@ -264,7 +312,7 @@ const ProductView = () => {
                                     <Dialog.Panel className="panel animate__animated animate__slideInDown my-8 w-full max-w-lg overflow-hidden rounded-lg border-0 p-0 text-black dark:text-white-dark bg-white dark:bg-gray-800">
                                         {/* Modal Header */}
                                         <div className="flex items-center justify-between bg-gray-100 px-5 py-3 dark:bg-[#121c2c]">
-                                            <h5 className="text-lg font-bold">{selectedProduct?.name}</h5>
+                                            <h5 className="text-lg font-bold">{selectedProduct?.name} ~ Product Details</h5>
                                             <button onClick={closeModal} type="button" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
                                                 <IconX />
                                             </button>
@@ -273,11 +321,11 @@ const ProductView = () => {
                                         {/* Modal Body */}
                                         <div>
                                             {/* Full-width Product Image */}
-                                            <img
+                                            {/* <img
                                                 src="/assets/images/profile-34.jpeg"
                                                 alt="Product"
                                                 className="w-full h-60 object-cover"
-                                            />
+                                            /> */}
 
                                             {/* Product Details */}
                                             <div className="p-5">
@@ -287,12 +335,12 @@ const ProductView = () => {
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.name || 'N/A'}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm text-gray-600 dark:text-gray-400">System:</p>
-                                                        <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.system || 'N/A'}</p>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400">Created By:</p>
+                                                        <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.created_by || 'N/A'}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm text-gray-600 dark:text-gray-400">Product System:</p>
-                                                        <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.product_system || 'N/A'}</p>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400">Created At:</p>
+                                                        <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.created_at || 'N/A'}</p>
                                                     </div>
 
                                                     <div>
