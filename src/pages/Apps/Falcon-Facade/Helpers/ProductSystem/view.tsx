@@ -17,7 +17,7 @@ import Breadcrumbs from "@/pages/Components/Breadcrumbs";
 const rowData = [
     {
         id: 1,
-        client: "Product system A",
+        client: "Schueco AS 32 SC NI",
         projectCount: 22,
         created_at: "2025-01-01",
         status: "In Progress",
@@ -25,7 +25,7 @@ const rowData = [
     },
     {
         id: 2,
-        client: "Product System B",
+        client: "YKK-I Win-S",
         projectCount: 22,
 
         created_at: "2025-01-05",

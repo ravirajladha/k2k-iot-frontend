@@ -17,7 +17,7 @@ import Breadcrumbs from "@/pages/Components/Breadcrumbs";
 const rowData = [
     {
         id: 1,
-        client: "System A",
+        client: "Schuco",
         projectCount: 22,
         created_at: "2025-01-01",
         status: "In Progress",
@@ -25,7 +25,7 @@ const rowData = [
     },
     {
         id: 2,
-        client: "System B",
+        client: "YKK",
         projectCount: 22,
 
         created_at: "2025-01-05",
