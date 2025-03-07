@@ -7,6 +7,7 @@ interface Product {
     achievedTillNow: number;
     rejectedQuantity: number;
     plannedQuantity: number;
+
     date: string;
 }
 
@@ -20,6 +21,8 @@ interface JobOrder {
     factoryName: string;
     clientName: string;
     projectName: string;
+    batchNumber:string;
+
     products: Product[];
 }
 
@@ -29,6 +32,7 @@ const rowData: JobOrder[] = [
         id: 1,
         jobOrderId: 'JO1234',
         workOrderId: 'WO5678',
+        batchNumber:"Batch001",
         fromDate: '2025-01-01',
         toDate: '2025-01-15',
         plantName: 'Plant A',
@@ -44,6 +48,8 @@ const rowData: JobOrder[] = [
         id: 2,
         jobOrderId: 'JO1235',
         workOrderId: 'WO5679',
+        batchNumber:"Batch002",
+
         fromDate: '2025-02-01',
         toDate: '2025-02-20',
         plantName: 'Plant B',

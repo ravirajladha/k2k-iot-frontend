@@ -10,7 +10,9 @@ export interface Report {
     UOM: string;
     POQuantity: number;
     plannedQuantity: number;
-balancedQuantity:number;
+    batchNumber: string;
+    
+    balancedQuantity: number;
     achievedTillNow: number;
     rejectQuantity: number;
     recycleQuantity: number;
@@ -27,7 +29,7 @@ export interface ProductionLog {
     numberOfBlocks: number;
 }
 
-export  interface DowntimeLog {
+export interface DowntimeLog {
     reason: string;
     startTime: string;
     endTime: string;
@@ -46,6 +48,7 @@ export const pastReports: Report[] = [
         productName: "Steel Rods",
         materialCode: "SR-98765",
         UOM: "Kg",
+        batchNumber: "Batch001",
         POQuantity: 2000,
         plannedQuantity: 1500,
         balancedQuantity: 350,
@@ -62,6 +65,8 @@ export const pastReports: Report[] = [
     {
         workOrderNumber: "WO-2002",
         jobOrderNumber: "JO-3002",
+        batchNumber: "Batch001",
+
         clientName: "Reliance Infra",
         projectName: "Bangalore Smart City",
         productName: "Concrete Mix",
@@ -88,6 +93,7 @@ export const currentReports: Report[] = [
         clientName: "ABC Constructions",
         projectName: "Metro Bridge",
         productName: "Concrete Blocks",
+        batchNumber: "Batch001",
         materialCode: "CB-56789",
         UOM: "Ton",
         POQuantity: 1000,
@@ -105,6 +111,8 @@ export const currentReports: Report[] = [
     {
         workOrderNumber: "WO-1002",
         jobOrderNumber: "JO-2002",
+        batchNumber: "Batch002",
+
         clientName: "XYZ Builders",
         projectName: "Highway Expansion",
         productName: "Cement Bags",
@@ -129,6 +137,8 @@ export const futureReports: Report[] = [
         workOrderNumber: "WO-3001",
         jobOrderNumber: "JO-4001",
         clientName: "Tata Projects",
+        batchNumber: "Batch001",
+
         projectName: "Delhi High-Speed Rail",
         productName: "Reinforced Cement Concrete",
         materialCode: "RCC-2025",
@@ -148,6 +158,8 @@ export const futureReports: Report[] = [
     {
         workOrderNumber: "WO-3002",
         jobOrderNumber: "JO-4002",
+        batchNumber: "Batch002",
+
         clientName: "GMR Infra",
         projectName: "Hyderabad Airport Expansion",
         productName: "Aluminum Frames",

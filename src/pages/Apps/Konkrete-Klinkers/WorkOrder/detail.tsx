@@ -90,6 +90,7 @@ const WorkOrderPage = () => {
             productName: 'Product A',
             uom: 'Kg',
             poQuantity: 100,
+            batchNumber:"Batch001",
             plannedQuantity: 90,
             achievedQuantity: 80,
             rejectedQuantity: 10,
@@ -120,6 +121,8 @@ const WorkOrderPage = () => {
             uom: 'Ltr',
             poQuantity: 200,
             plannedQuantity: 180,
+            batchNumber:"Batch002",
+
             achievedQuantity: 170,
             rejectedQuantity: 10,
             dailyReports: [
@@ -148,7 +151,7 @@ const WorkOrderPage = () => {
 
 
     const workOrder = {
-        id: 'abc123',
+        id: 'WO123',
         createdAt: '2025-01-10 10:30 AM',
         createdBy: {
             name: 'Bharath Kumar',
@@ -421,6 +424,8 @@ const WorkOrderPage = () => {
                     <p className="text-sm"><strong>Date:</strong> 20/02/2025 - 30-03-2025</p>
                 </div>
                 <div>
+                <p className="text-sm"><strong>Batch Number:</strong>Batch 001</p>
+
                     <p className="text-sm"><strong>Plant Name:</strong> Lorem, ipsum.</p>
                 </div>
             </div>

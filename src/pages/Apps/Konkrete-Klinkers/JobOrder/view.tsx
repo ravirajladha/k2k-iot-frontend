@@ -39,6 +39,7 @@ interface JobOrder {
     plantName: string;
     factoryName: string;
     clientName: string;
+    batchNumber:string;
     projectName: string;
     products: Product[];
 }
@@ -231,6 +232,12 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('workOrderId'),
                             },
                             {
+                                accessor: 'batchNumber',
+                                title: 'Batch No',
+                                sortable: true,
+                                hidden: hideCols.includes('batchNumber'),
+                            },
+                            {
                                 accessor: 'fromDate',
                                 title: 'From Date',
                                 sortable: true,
@@ -347,6 +354,10 @@ const ColumnChooser = () => {
                                                             <div>
                                                                 <p className="text-sm font-semibold">Project:</p>
                                                                 <p className="text-sm">{selectedJobOrder.projectName}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-semibold">Batch Number:</p>
+                                                                <p className="text-sm">{selectedJobOrder.batchNumber}</p>
                                                             </div>
                                                         </div>
 

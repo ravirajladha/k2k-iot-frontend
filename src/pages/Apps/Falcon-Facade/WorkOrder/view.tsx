@@ -21,6 +21,8 @@ const rowData = [
     {
         id: 1,
         client: "Client A",
+        work_order_number:"WO001",
+        plant_code:"PC001",
         project: "Project Alpha",
         created_at: "2025-01-01",
         status: "In Progress",
@@ -28,6 +30,8 @@ const rowData = [
     },
     {
         id: 2,
+        work_order_number:"WO002",
+        plant_code:"PC002",
         client: "Client B",
         project: "Project Beta",
         created_at: "2025-01-05",
@@ -81,6 +85,9 @@ const ColumnChooser = () => {
 
     const cols = [
         { accessor: 'id', title: 'ID' },
+        { accessor: 'work_order_number', title: 'Work Order Number' },
+        { accessor: 'plant_code', title: 'Plant Code' },
+
         { accessor: 'client', title: 'Client Name' },
         { accessor: 'project', title: 'Project Name' },
         { accessor: 'created_at', title: 'Created At' },
@@ -191,13 +198,6 @@ const ColumnChooser = () => {
                             <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                         </div>
 
-                        {/* <button
-                            className="btn btn-primary"
-                            onClick={() => setShowSearchPanel(!showSearchPanel)}
-                        >
-                            {showSearchPanel ? "Hide Filter" : <IconFilter/>}
-                        </button> */}
-
                         <button
                             className="btn btn-primary "
                             onClick={() => setShowSearchPanel(!showSearchPanel)}
@@ -205,7 +205,6 @@ const ColumnChooser = () => {
                         >
                             <IconFilter isHidden={!showSearchPanel} className="w-5 h-5 text-white-600 hover:text-orange-500" />
                         </button>
-
                     </div>
                 </div>
 
@@ -271,6 +270,12 @@ const ColumnChooser = () => {
                         columns={[
                             { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
                             {
+                                accessor: 'work_order_number',
+                                title: 'Work Order Number',
+                                sortable: true,
+                                hidden: hideCols.includes('work_order_number'),
+                            },
+                            {
                                 accessor: 'client',
                                 title: 'Client Name',
                                 sortable: true,
@@ -281,6 +286,12 @@ const ColumnChooser = () => {
                                 title: 'Project Name',
                                 sortable: true,
                                 hidden: hideCols.includes('project'),
+                            },
+                            {
+                                accessor: 'plant_code',
+                                title: 'Plant Code',
+                                sortable: true,
+                                hidden: hideCols.includes('plant_code'),
                             },
                             {
                                 accessor: 'created_at',

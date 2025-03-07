@@ -27,8 +27,8 @@ const rowData = [
 
       products: [
         {
-          productId: 'PRD001',
-          productName: 'Product1',
+          productId: 'Inward Window',
+          productName: 'Inward Window',
           uom: 'nos',
           semiFinishedProducts: [
             {
@@ -44,8 +44,8 @@ const rowData = [
           ],
         },
         {
-          productId: 'PRD002',
-          productName: 'Product2',
+          productId: 'Outward Window',
+          productName: 'Outward Window',
           uom: 'nos',
           semiFinishedProducts: [
             {
@@ -66,8 +66,8 @@ const rowData = [
       timestamp: "2025-02-25 10:30 AM",
       products: [
         {
-          productId: 'PRD003',
-          productName: 'Product3',
+          productId: 'Facade',
+          productName: 'Facade',
           uom: 'nos',
           semiFinishedProducts: [
             {
@@ -78,8 +78,8 @@ const rowData = [
           ],
         },
         {
-          productId: 'PRD004',
-          productName: 'Product4',
+          productId: 'Curtain Wall',
+          productName: 'Curtain Wall',
           uom: 'nos',
           semiFinishedProducts: [
             {

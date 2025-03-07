@@ -282,7 +282,7 @@ const ColumnChooser = () => {
                                 title: 'Actions',
                                 render: ({ sl_no }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/edit/${sl_no}`} className="flex hover:text-info">
+                                        <NavLink to={`#`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
                                         <NavLink to={`/view/${sl_no}`} className="flex hover:text-primary">
