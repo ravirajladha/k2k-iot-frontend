@@ -34,7 +34,10 @@ import {
     DailyProductionPlanningCreate,
     DailyProductionPlanningNewView,
     DailyProductionPlanningNewCreate,
-    JobOrderView,
+    // JobOrderView,
+    JobOrderViewNew,
+    JobOrderDetail,
+
     JobOrderCreate,
 
     InventoryView,
@@ -111,9 +114,19 @@ export const ironSmithRoutes = [
     },
     
     // Job Order
+    // {
+    //     path: `${basePath}/job-order/view`,
+    //     element: <JobOrderView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/job-order/view`,
-        element: <JobOrderView />,
+        element: <JobOrderViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/job-order/detail`,
+        element: <JobOrderDetail />,
         layout: 'admin',
     },
     {

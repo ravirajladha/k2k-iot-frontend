@@ -144,8 +144,6 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                         <button className="p-1 rounded-md bg-purple-500 text-white hover:bg-purple-600" onClick={() => setIsLogsModalOpen(true)} title="Production Logs Modal">
                             <FaHistory size={14} />
                         </button>
-                        <button>Update Quantity</button>
-
                         {report.status !== 'Finished' && (
                             <button
                                 className={`p-1 px-3 rounded-md text-white text-xs ${report.status === 'Running' ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}

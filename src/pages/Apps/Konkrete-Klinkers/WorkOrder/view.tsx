@@ -16,26 +16,25 @@ import IconFilter from '@/components/Icon/IconFilter';
 import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         id: 1,
-        client: "Client A",
-        project: "Project Alpha",
-        created_at: "2025-01-01",
-        status: "In Progress",
-        deadline: "2025-01-15",
+        client: 'Client A',
+        project: 'Project Alpha',
+        created_at: '2025-01-01',
+        status: 'In Progress',
+        deadline: '2025-01-15',
     },
     {
         id: 2,
-        client: "Client B",
-        project: "Project Beta",
-        created_at: "2025-01-05",
-        status: "Pending",
-        deadline: "2025-01-20",
+        client: 'Client B',
+        project: 'Project Beta',
+        created_at: '2025-01-05',
+        status: 'Pending',
+        deadline: '2025-01-20',
     },
 ];
-
 
 const ColumnChooser = () => {
     const dispatch = useDispatch();
@@ -61,15 +60,14 @@ const ColumnChooser = () => {
 
     const [showSearchPanel, setShowSearchPanel] = useState(false);
     // const [search, setSearch] = useState("");
-    const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
 
     const handleClear = () => {
-        setSearch("");
-        setFromDate("");
-        setToDate("");
+        setSearch('');
+        setFromDate('');
+        setToDate('');
     };
-
 
     const showHideColumns = (col: any, value: any) => {
         if (hideCols.includes(col)) {
@@ -113,8 +111,7 @@ const ColumnChooser = () => {
                     item.project.toLowerCase().includes(search.toLowerCase()) ||
                     item.created_at.toLowerCase().includes(search.toLowerCase()) ||
                     item.status.toLowerCase().includes(search.toLowerCase()) ||
-                    item.deadline.toString().toLowerCase().includes(search.toLowerCase()) 
-
+                    item.deadline.toString().toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
@@ -130,12 +127,12 @@ const ColumnChooser = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Work Order', link: '/konkrete-klinkers/work-order/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add Work Order',
+                    link: '/konkrete-klinkers/work-order/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
@@ -198,14 +195,9 @@ const ColumnChooser = () => {
                             {showSearchPanel ? "Hide Filter" : <IconFilter/>}
                         </button> */}
 
-                        <button
-                            className="btn btn-primary "
-                            onClick={() => setShowSearchPanel(!showSearchPanel)}
-                            aria-label="Toggle Filter"
-                        >
+                        <button className="btn btn-primary " onClick={() => setShowSearchPanel(!showSearchPanel)} aria-label="Toggle Filter">
                             <IconFilter isHidden={!showSearchPanel} className="w-5 h-5 text-white-600 hover:text-orange-500" />
                         </button>
-
                     </div>
                 </div>
 
@@ -215,27 +207,18 @@ const ColumnChooser = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {/* From Date */}
                             <div>
-                                <label htmlFor="fromDate" className="block mb-2 font-medium">From Date</label>
-                                <input
-                                    type="date"
-                                    id="fromDate"
-                                    className="form-input"
-                                    value={fromDate}
-                                    onChange={(e) => setFromDate(e.target.value)}
-                                />
+                                <label htmlFor="fromDate" className="block mb-2 font-medium">
+                                    From Date
+                                </label>
+                                <input type="date" id="fromDate" className="form-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
                             </div>
 
                             {/* To Date */}
                             <div>
-                                <label htmlFor="toDate" className="block mb-2 font-medium">To Date</label>
-                                <input
-                                    type="date"
-                                    id="toDate"
-                                    className="form-input"
-                                    value={toDate}
-                                    onChange={(e) => setToDate(e.target.value)}
-                                />
-
+                                <label htmlFor="toDate" className="block mb-2 font-medium">
+                                    To Date
+                                </label>
+                                <input type="date" id="toDate" className="form-input" value={toDate} onChange={(e) => setToDate(e.target.value)} />
                             </div>
                             {/* Toggle Search Panel */}
                             {/* <button
@@ -248,15 +231,12 @@ const ColumnChooser = () => {
 
                         {/* Action Buttons */}
                         <div className="flex gap-4 mt-4">
-                            <button
-                                className="btn btn-secondary"
-                                onClick={handleClear}
-                            >
+                            <button className="btn btn-secondary" onClick={handleClear}>
                                 Clear
                             </button>
                             <button
                                 className="btn btn-primary"
-                            // onClick={handleSubmit}
+                                // onClick={handleSubmit}
                             >
                                 Submit
                             </button>
@@ -296,14 +276,9 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('status'),
                                 render: ({ status }) => (
                                     <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
+                                        className={`${
+                                            status === 'In Progress' ? 'text-info' : status === 'Pending' ? 'text-warning' : status === 'Completed' ? 'text-success' : 'text-danger'
+                                        } capitalize`}
                                     >
                                         {status}
                                     </div>
@@ -316,7 +291,7 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('deadline'),
                                 render: ({ deadline }) => <div>{new Date(deadline).toLocaleDateString()}</div>,
                             },
-                           
+
                             {
                                 accessor: 'action',
                                 title: 'Actions',
@@ -344,11 +319,8 @@ const ColumnChooser = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
-
                 </div>
             </div>
         </div>
