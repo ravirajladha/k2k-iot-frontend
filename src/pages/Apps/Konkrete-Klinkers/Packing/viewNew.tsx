@@ -262,11 +262,7 @@ const ColumnChooser = () => {
                                 title: 'Actions',
                                 render: (row) => (
                                     <div className="c">
-                                        <NavLink
-                                            to="/konkrete-klinkers/packing/detail"
-                                            state={{ rowData: row }}
-                                            className="flex hover:text-primary"
-                                        >
+                                        <NavLink to="/konkrete-klinkers/packing/detail" state={{ rowData: row }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
                                     </div>
