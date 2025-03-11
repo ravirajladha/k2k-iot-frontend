@@ -13,88 +13,86 @@ import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import ViewDetailsModal from './viewModel';
 const rowData = [
     {
-      packing_id: 1,
-      workOrderId: 'WO12345',
-      jobOrder: 'JO98765',
-      status: 'Pending',  
-      createdBy: 'Pending',  
-      timestamp: "2025-02-25 10:30 AM",
+        packing_id: 1,
+        workOrderId: 'WO12345',
+        jobOrder: 'JO98765',
+        status: 'Pending',
+        createdBy: 'Pending',
+        timestamp: '2025-02-25 10:30 AM',
 
-
-      products: [
-        {
-          productId: 'Inward Window',
-          productName: 'Inward Window',
-          uom: 'nos',
-          semiFinishedProducts: [
+        products: [
             {
-              sfId: 'SF1',
-              quantity: 3,  // This means 3 QR codes will be generated for this SF
-              qrCodes: ['QR1', 'QR2', 'QR3'],
+                productId: 'Inward Window',
+                productName: 'Inward Window',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF1',
+                        quantity: 3, // This means 3 QR codes will be generated for this SF
+                        qrCodes: ['QR1', 'QR2', 'QR3'],
+                    },
+                    {
+                        sfId: 'SF2',
+                        quantity: 2, // This means 2 QR codes will be generated for SF2
+                        qrCodes: ['QR4', 'QR5'],
+                    },
+                ],
             },
             {
-              sfId: 'SF2',
-              quantity: 2,  // This means 2 QR codes will be generated for SF2
-              qrCodes: ['QR4', 'QR5'],
+                productId: 'Outward Window',
+                productName: 'Outward Window',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF3',
+                        quantity: 1, // 1 QR code for SF3
+                        qrCodes: ['QR6'],
+                    },
+                ],
             },
-          ],
-        },
-        {
-          productId: 'Outward Window',
-          productName: 'Outward Window',
-          uom: 'nos',
-          semiFinishedProducts: [
-            {
-              sfId: 'SF3',
-              quantity: 1,  // 1 QR code for SF3
-              qrCodes: ['QR6'],
-            },
-          ],
-        },
-      ],
+        ],
     },
     {
-      packing_id: 2,  // Added new row data
-      workOrderId: 'WO12346',
-      jobOrder: 'JO98766',
-      status: 'Completed', 
-      createdBy: 'Pending',  
-      timestamp: "2025-02-25 10:30 AM",
-      products: [
-        {
-          productId: 'Facade',
-          productName: 'Facade',
-          uom: 'nos',
-          semiFinishedProducts: [
+        packing_id: 2, // Added new row data
+        workOrderId: 'WO12346',
+        jobOrder: 'JO98766',
+        status: 'Completed',
+        createdBy: 'Pending',
+        timestamp: '2025-02-25 10:30 AM',
+        products: [
             {
-              sfId: 'SF4',
-              quantity: 4,  // This means 4 QR codes will be generated for SF4
-              qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
+                productId: 'Facade',
+                productName: 'Facade',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF4',
+                        quantity: 4, // This means 4 QR codes will be generated for SF4
+                        qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
+                    },
+                ],
             },
-          ],
-        },
-        {
-          productId: 'Curtain Wall',
-          productName: 'Curtain Wall',
-          uom: 'nos',
-          semiFinishedProducts: [
             {
-              sfId: 'SF5',
-              quantity: 5,  // This means 5 QR codes will be generated for SF5
-              qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
+                productId: 'Curtain Wall',
+                productName: 'Curtain Wall',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF5',
+                        quantity: 5, // This means 5 QR codes will be generated for SF5
+                        qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
+                    },
+                ],
             },
-          ],
-        },
-      ],
+        ],
     },
     // You can add more rows here as needed
-  ];
-  
-  
+];
+
 const Packing = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -108,9 +106,8 @@ const Packing = () => {
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
-    const [modalType, setModalType] = useState<"view" | null>(null);
+    const [modalType, setModalType] = useState<'view' | null>(null);
     const [selectedRowData, setSelectedRowData] = useState<any>(null);
-
 
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -138,21 +135,21 @@ const Packing = () => {
         }
     };
 
-    const openModal = (type: "view", packing_id: number) => {
+    const openModal = (type: 'view', packing_id: number) => {
         // Find the specific row using packing_id
-        const selectedRow = rowData.find(row => row.packing_id === packing_id);
-        
+        const selectedRow = rowData.find((row) => row.packing_id === packing_id);
+
         // Log the found row data for debugging
-        console.log(selectedRow, "selectedRowData");
-    
+        console.log(selectedRow, 'selectedRowData');
+
         // Set the row data to show in the modal
-        setSelectedRowData(selectedRow);  
+        setSelectedRowData(selectedRow);
         setModalType(type);
     };
-    
+
     const closeModal = () => {
-        setModalType(null);  // Close the modal
-        setSelectedRowData(null);  // Clear the selected row data
+        setModalType(null); // Close the modal
+        setSelectedRowData(null); // Clear the selected row data
     };
 
     const cols = [
@@ -184,34 +181,33 @@ const Packing = () => {
         setRecordsData([...initialRecords.slice(from, to)]);
     }, [page, pageSize, initialRecords]);
 
-  useEffect(() => {
-  setInitialRecords(() => {
-    return rowData.filter((item) => {
-      // Check against row-level properties like packing_id and workOrderId
-      const matchesRowData = 
-        item.packing_id.toString().includes(search.toLowerCase()) ||
-        item.workOrderId.toLowerCase().includes(search.toLowerCase()) ||
-        item.status.toLowerCase().includes(search.toLowerCase()) ||
-        item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-        item.timestamp.toLowerCase().includes(search.toLowerCase());
+    useEffect(() => {
+        setInitialRecords(() => {
+            return rowData.filter((item) => {
+                // Check against row-level properties like packing_id and workOrderId
+                const matchesRowData =
+                    item.packing_id.toString().includes(search.toLowerCase()) ||
+                    item.workOrderId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.status.toLowerCase().includes(search.toLowerCase()) ||
+                    item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
+                    item.timestamp.toLowerCase().includes(search.toLowerCase());
 
-      // Check against properties inside the products array
-      const matchesProductData = item.products.some(product =>
-        product.productId.toLowerCase().includes(search.toLowerCase()) ||
-     
-        product.semiFinishedProducts.some(sf =>
-          sf.sfId.toLowerCase().includes(search.toLowerCase()) ||  // Check SF id
-          sf.qrCodes.some(qrCode => qrCode.toLowerCase().includes(search.toLowerCase())) // Check qrCodes in SF
-        )
-      );
+                // Check against properties inside the products array
+                const matchesProductData = item.products.some(
+                    (product) =>
+                        product.productId.toLowerCase().includes(search.toLowerCase()) ||
+                        product.semiFinishedProducts.some(
+                            (sf) =>
+                                sf.sfId.toLowerCase().includes(search.toLowerCase()) || // Check SF id
+                                sf.qrCodes.some((qrCode) => qrCode.toLowerCase().includes(search.toLowerCase())) // Check qrCodes in SF
+                        )
+                );
 
-      // Return true if any condition matches
-      return matchesRowData || matchesProductData;
-    });
-  });
-}, [search]);
-
-      
+                // Return true if any condition matches
+                return matchesRowData || matchesProductData;
+            });
+        });
+    }, [search]);
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
@@ -222,15 +218,14 @@ const Packing = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Packing', link: '/falcon-facade/packing/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add Packing',
+                    link: '/falcon-facade/packing/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
-
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
@@ -286,102 +281,91 @@ const Packing = () => {
                     </div>
                 </div>
                 <div className="datatables">
-                <DataTable
-  className="whitespace-nowrap table-hover"
-  records={rowData}
-  columns={[
-    {
-      accessor: 'packing_id',
-      title: 'Packing ID',
-      sortable: true,
-    },
-    {
-      accessor: 'workOrderId',
-      title: 'Work Order ID',
-      sortable: true,
-    },
-    {
-      accessor: 'status',
-      title: 'Status',
-      sortable: true,
-    },
-    {
-      accessor: 'productId',
-      title: 'Product ID',
-      render: ({ products }) => products.map(product => product.productId).join(', '),
-      sortable: true,
-    },
-    {
-      accessor: 'qrCode',
-      title: 'QR Codes',
-      render: ({ products }) => {
-        // Concatenate all QR codes for each product
-        const qrCodes = products.flatMap(product => 
-          product.semiFinishedProducts.flatMap(sf => sf.qrCodes)
-        );
-        return qrCodes.join(', ');
-      },
-      sortable: true,
-    },
-    {
-      accessor: 'rejectedQuantity',
-      title: 'Rejected Quantity',
-      render: ({ products }) => products.reduce((total, product) => total + product.semiFinishedProducts.reduce((sfTotal, sf) => sfTotal + sf.quantity, 0), 0),
-      sortable: true,
-    },
-    {
-      accessor: 'createdBy',
-      title: 'Created By',
-      sortable: true,
-    },
-    {
-      accessor: 'timestamp',
-      title: 'Timestamp',
-      sortable: true,
-      render: ({ timestamp }) => new Date(timestamp).toLocaleString(),
-    },
-    {
-      accessor: 'action',
-      title: 'Actions',
-      render: ({ packing_id }) => (
-        <div className="flex gap-4 items-center w-max mx-auto">
-          {/* <NavLink to={`/edit/${packing_id}`} className="flex hover:text-info">
+                    <DataTable
+                        className="whitespace-nowrap table-hover"
+                        records={rowData}
+                        columns={[
+                            {
+                                accessor: 'packing_id',
+                                title: 'Packing ID',
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'workOrderId',
+                                title: 'Work Order ID',
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'status',
+                                title: 'Status',
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'productId',
+                                title: 'Product ID',
+                                render: ({ products }) => products.map((product) => product.productId).join(', '),
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'qrCode',
+                                title: 'QR Codes',
+                                render: ({ products }) => {
+                                    // Concatenate all QR codes for each product
+                                    const qrCodes = products.flatMap((product) => product.semiFinishedProducts.flatMap((sf) => sf.qrCodes));
+                                    return qrCodes.join(', ');
+                                },
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'rejectedQuantity',
+                                title: 'Rejected Quantity',
+                                render: ({ products }) => products.reduce((total, product) => total + product.semiFinishedProducts.reduce((sfTotal, sf) => sfTotal + sf.quantity, 0), 0),
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'createdBy',
+                                title: 'Created By',
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'timestamp',
+                                title: 'Timestamp',
+                                sortable: true,
+                                render: ({ timestamp }) => new Date(timestamp).toLocaleString(),
+                            },
+                            {
+                                accessor: 'action',
+                                title: 'Actions',
+                                render: ({ packing_id }) => (
+                                    <div className="flex gap-4 items-center w-max mx-auto">
+                                        {/* <NavLink to={`/edit/${packing_id}`} className="flex hover:text-info">
             <IconEdit className="w-4.5 h-4.5" />
           </NavLink> */}
-          <button
-            onClick={() => openModal("view", packing_id)} // Pass packing_id to openModal
-            className="flex hover:text-primary"
-          >
-            <IconEye className="w-4.5 h-4.5" />
-            View Details
-          </button>
-        </div>
-      ),
-    },
-  ]}
-  highlightOnHover
-  totalRecords={rowData.length}
-  recordsPerPage={pageSize}
-  page={page}
-  onPageChange={(p) => setPage(p)}
-  recordsPerPageOptions={PAGE_SIZES}
-  onRecordsPerPageChange={setPageSize}
-  sortStatus={sortStatus}
-  onSortStatusChange={setSortStatus}
-  minHeight={200}
-  paginationText={({ from, to, totalRecords }) =>
-    `Showing ${from} to ${to} of ${totalRecords} entries`
-  }
-/>
+                                        <button
+                                            onClick={() => openModal('view', packing_id)} // Pass packing_id to openModal
+                                            className="flex hover:text-primary"
+                                        >
+                                            <IconEye className="w-4.5 h-4.5" />
+                                            View Details
+                                        </button>
+                                    </div>
+                                ),
+                            },
+                        ]}
+                        highlightOnHover
+                        totalRecords={rowData.length}
+                        recordsPerPage={pageSize}
+                        page={page}
+                        onPageChange={(p) => setPage(p)}
+                        recordsPerPageOptions={PAGE_SIZES}
+                        onRecordsPerPageChange={setPageSize}
+                        sortStatus={sortStatus}
+                        onSortStatusChange={setSortStatus}
+                        minHeight={200}
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
+                    />
 
-
-                    {modalType === "view" && selectedRowData && (
-                        <ViewDetailsModal
-                            isOpen={modalType === "view"}
-                            closeModal={closeModal}
-                            data={selectedRowData}
-                        />
-                    )}
+                    {modalType === 'view' && selectedRowData && <ViewDetailsModal isOpen={modalType === 'view'} closeModal={closeModal} data={selectedRowData} />}
                 </div>
             </div>
         </div>

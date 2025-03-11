@@ -153,7 +153,8 @@ const ColumnChooser = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Job Order', link: '/iron-smith/job-order/create',
+                    label: 'Add Job Order', 
+                    link: '/iron-smith/job-order/create',
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />

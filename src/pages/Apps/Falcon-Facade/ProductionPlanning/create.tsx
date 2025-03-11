@@ -507,6 +507,7 @@ const ProductionPlanning = () => {
                               classNamePrefix="custom-select"
                               placeholder="Select a System"
                               isClearable
+                              menuPortalTarget={document.body}
                               required
                             />
 
@@ -523,6 +524,7 @@ const ProductionPlanning = () => {
                               classNamePrefix="custom-select"
                               placeholder="Select a System"
                               isClearable
+                              menuPortalTarget={document.body}
                               required
                             />
                          

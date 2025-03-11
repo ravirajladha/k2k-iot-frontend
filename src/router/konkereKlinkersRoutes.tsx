@@ -25,7 +25,10 @@ import {
     ProductCreate,
     InventoryView,
 
-    PackingView,
+    // PackingView,
+    PackingViewNew, ////
+    PackingDetail, /////
+
     PackingCreate,
     DispatchView,
     DispatchCreate,
@@ -177,9 +180,20 @@ export const konkereKlinkersRoutes = [
     },
     
     // Packing
+    // {
+    //     path: `${basePath}/packing/view`,
+    //     element: <PackingView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/packing/view`,
-        element: <PackingView />,
+        element: <PackingViewNew />,
+        layout: 'admin',
+    },
+
+    {
+        path: `${basePath}/packing/detail`,
+        element: <PackingDetail />,
         layout: 'admin',
     },
     {

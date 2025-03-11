@@ -140,7 +140,6 @@ const Create = () => {
                     ? {
                           ...item,
                           product: selectedOption,
-                          // Do not set uom here
                       }
                     : item
             )
@@ -158,13 +157,14 @@ const Create = () => {
                 item.id === id
                     ? {
                           ...item,
-                          uom: selectedOption.value,
-                          quantity: selectedOption.value === 'sqmt' ? 0.0 : 0,
+                          uom: selectedOption ? selectedOption.value : '',
+                          quantity: selectedOption ? (selectedOption.value === 'sqmt' ? 0.0 : 0) : 0,
                       }
                     : item
             )
         );
     };
+    
 
     const handleProjectChange = (selectedOption: Project | null) => {
         setSelectedProject(selectedOption);
@@ -192,7 +192,9 @@ const Create = () => {
     };
 
     const removeItem = (id: number) => {
+        
         setItems(items.filter((item) => item.id !== id));
+        console.log("id",id);
     };
 
     const [showTooltip, setShowTooltip] = useState(false);

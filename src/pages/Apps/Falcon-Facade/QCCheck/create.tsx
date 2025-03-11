@@ -9,6 +9,7 @@ interface FormData {
     jobOrder: string;
     productId: string;
     rejectedQuantity: string;
+    recycledQuantity: string;
     sfId:string;
     rejectionReason: string;
 }
@@ -27,6 +28,7 @@ const QcCheckForm: React.FC = () => {
         sfId:"",
         productId: '',
         rejectedQuantity: '',
+        recycledQuantity: '',
         rejectionReason: '',
     });
 
@@ -189,14 +191,14 @@ const QcCheckForm: React.FC = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="rejectedQuantity">Recycled Quantity</label>
+                            <label htmlFor="recycledQuantity">Recycled Quantity</label>
                             <input
-                                id="rejectedQuantity"
-                                name="rejectedQuantity"
+                                id="recycledQuantity"
+                                name="recycledQuantity"
                                 type="number"
                                 placeholder="Enter Recycled Quantity"
                                 className="form-input"
-                                value={formData.rejectedQuantity}
+                                value={formData.recycledQuantity}
                                 onChange={handleInputChange}
                             />
                         </div>

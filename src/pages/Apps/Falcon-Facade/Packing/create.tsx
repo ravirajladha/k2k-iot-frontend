@@ -341,15 +341,15 @@ const Create = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="workOrderDate">Plant Code</label>
+                            <label htmlFor="plantCode">Plant Code</label>
                             <input
-                                id="workOrderDate"
-                                name="workOrderDate"
+                                id="plantCode"
+                                name="plantCode"
                                 type="text"
                                 className="form-input"
                                 placeholder="Enter Plant Code"
 
-                                value={formData.workOrderDate}
+                                value={formData.plantCode}
                                 // min={new Date().toISOString().split("T")[0]} // Today's date
                                 // max={new Date(new Date().setDate(new Date().getDate() + 15))
                                 //     .toISOString()

@@ -5,12 +5,13 @@ import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import IconFile from '@/components/Icon/IconFile';
-import logo from '../../../../../public/assets/images/logo-iron-smith.png'
+import logo from '../../../../../public/assets/images/logo-iron-smith.png';
 
 const JobOrderPage = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const { jobOrder } = location.state || {};
+    console.log('jobOrder', jobOrder);
 
     React.useEffect(() => {
         dispatch(setPageTitle('Work Order Detail'));
@@ -89,7 +90,7 @@ const JobOrderPage = () => {
                                             <div>
                                                 <strong>BBS NO:</strong>
                                             </div>
-                                            <div className='font-semibold'>CAM-01-00011</div>
+                                            <div className="font-semibold">CAM-01-00011</div>
                                             <div>
                                                 <strong>Member:</strong>
                                             </div>
@@ -109,7 +110,7 @@ const JobOrderPage = () => {
                                             <div>
                                                 <strong>Dia:</strong>
                                             </div>
-                                            <div className='font-semibold'>8</div>
+                                            <div className="font-semibold">8</div>
                                             <div>
                                                 <strong>CL:</strong>
                                             </div>
@@ -117,11 +118,11 @@ const JobOrderPage = () => {
                                             <div>
                                                 <strong>Qty:</strong>
                                             </div>
-                                            <div className='font-semibold'>{product.poQuantity}</div>
+                                            <div className="font-semibold">{product.poQuantity}</div>
                                             <div>
                                                 <strong>Wt / Kgs:</strong>
                                             </div>
-                                            <div className='font-semibold'>117.91</div>
+                                            <div className="font-semibold">117.91</div>
                                         </div>
                                     </div>
 

@@ -6,7 +6,7 @@ import IconSave from '@/components/Icon/IconSave';
 // IconSend
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconChecks from '@/components/Icon/IconChecks';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Select from 'react-select';
 import Flatpickr from 'react-flatpickr';
@@ -46,7 +46,6 @@ interface FormData {
     selectedMachines: string[];
 }
 
-
 const ProductionPlanning = () => {
     const [formData, setFormData] = useState<FormData>({
         workOrderNumber: '',
@@ -61,8 +60,6 @@ const ProductionPlanning = () => {
         actualQuantity: '',
         rejectedQuantity: '',
         selectedMachines: [], // New field for machine selection
-
-
     });
 
     const workOrders = [
@@ -103,16 +100,9 @@ const ProductionPlanning = () => {
     };
 
     const handleMachineChange = (selectedOptions: any, id: number) => {
-        setItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id
-                    ? { ...item, selectedMachines: selectedOptions ? selectedOptions.map((option: any) => option.value) : [] }
-                    : item
-            )
-        );
+        setItems((prevItems) => prevItems.map((item) => (item.id === id ? { ...item, selectedMachines: selectedOptions ? selectedOptions.map((option: any) => option.value) : [] } : item)));
     };
     const [selectedMachines, setSelectedMachines] = useState<string>('');
-
 
     const [selectedPlant, setSelectedPlant] = useState<string>('');
     const [factories, setFactories] = useState<Factory[]>([]);
@@ -129,7 +119,6 @@ const ProductionPlanning = () => {
         setSelectedFactory(selectedOption.value);
     };
 
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -140,11 +129,7 @@ const ProductionPlanning = () => {
         console.log('Form Data:', formData);
     };
 
-
-    const [items, setItems] = useState<any>([
-        { id: 1, title: 'Product 1', uom: 'KG', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 },
-
-    ]);
+    const [items, setItems] = useState<any>([{ id: 1, title: 'Product 1', uom: 'KG', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 }]);
 
     const addItem = () => {
         let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
@@ -153,12 +138,12 @@ const ProductionPlanning = () => {
             {
                 id: maxId + 1,
                 product: null,
-                uom: "",
+                uom: '',
                 quantity: 0,
-                plantCode: "",
-                deliveryDate: "",
+                plantCode: '',
+                deliveryDate: '',
                 plannedQuantity: 0,
-                scheduleDate: "",
+                scheduleDate: '',
                 selectedMachines: [], // Ensure machine selection resets
             },
         ]);
@@ -169,18 +154,12 @@ const ProductionPlanning = () => {
     };
 
     const updateField = (id: number, field: string, value: number) => {
-        setItems((prevItems: any) =>
-            prevItems.map((item: any) =>
-                item.id === id ? { ...item, [field]: value } : item
-            )
-        );
+        setItems((prevItems: any) => prevItems.map((item: any) => (item.id === id ? { ...item, [field]: value } : item)));
     };
 
-
-
-    const workOrderOptions = workOrders.map(wo => ({ value: wo.id, label: `${wo.id} - ${wo.clientName} - ${wo.projectName}` }));
-    const plantOptions = plants.map(plant => ({ value: plant.id, label: plant.name }));
-    const factoryOptions = factories.map(factory => ({ value: factory.id, label: factory.name }));
+    const workOrderOptions = workOrders.map((wo) => ({ value: wo.id, label: `${wo.id} - ${wo.clientName} - ${wo.projectName}` }));
+    const plantOptions = plants.map((plant) => ({ value: plant.id, label: plant.name }));
+    const factoryOptions = factories.map((factory) => ({ value: factory.id, label: factory.name }));
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
@@ -208,20 +187,16 @@ const ProductionPlanning = () => {
     };
 
     const machineOptions = [
-        { value: "machine1", label: "Machine 1 - Bending" },
-        { value: "machine2", label: "Machine 2 - Cutting" },
-        { value: "machine3", label: "Machine 3 - Welding" },
-        { value: "machine4", label: "Machine 4 - Drilling" },
-        { value: "machine5", label: "Machine 5 - Grinding" },
+        { value: 'machine1', label: 'Machine 1 - Bending' },
+        { value: 'machine2', label: 'Machine 2 - Cutting' },
+        { value: 'machine3', label: 'Machine 3 - Welding' },
+        { value: 'machine4', label: 'Machine 4 - Drilling' },
+        { value: 'machine5', label: 'Machine 5 - Grinding' },
     ];
-
 
     return (
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/iron-smith/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/iron-smith/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
 
             <div className="panel">
                 <div className="mb-5">
@@ -239,7 +214,7 @@ const ProductionPlanning = () => {
                                 name="workOrderNumber"
                                 options={workOrderOptions}
                                 onChange={handleWorkOrderChange}
-                                value={workOrderOptions.find(option => option.value === formData.workOrderNumber)}
+                                value={workOrderOptions.find((option) => option.value === formData.workOrderNumber)}
                                 className="form-input"
                                 placeholder="Select Work Order"
                                 isSearchable
@@ -276,7 +251,9 @@ const ProductionPlanning = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="date">Range Date (from and to) <span className="text-red-700">*</span></label>
+                            <label htmlFor="date">
+                                Range Date (from and to) <span className="text-red-700">*</span>
+                            </label>
 
                             <Flatpickr
                                 options={{
@@ -307,7 +284,9 @@ const ProductionPlanning = () => {
                                 <tbody>
                                     {items.length <= 0 && (
                                         <tr>
-                                            <td colSpan={5} className="!text-center font-semibold">No Item Available</td>
+                                            <td colSpan={5} className="!text-center font-semibold">
+                                                No Item Available
+                                            </td>
                                         </tr>
                                     )}
                                     {items.map((item: any) => (
@@ -315,13 +294,7 @@ const ProductionPlanning = () => {
                                             {/* Table Row: Editable Fields */}
                                             <tr>
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        className="form-input min-w-[200px]"
-                                                        placeholder="Enter Item Name"
-                                                        defaultValue={item.title}
-                                                        readOnly
-                                                    />
+                                                    <input type="text" className="form-input min-w-[200px]" placeholder="Enter Item Name" defaultValue={item.title} readOnly />
                                                 </td>
                                                 <td>
                                                     <input
@@ -334,21 +307,16 @@ const ProductionPlanning = () => {
                                                     />
                                                 </td>
                                                 <td>
-
                                                     <input
                                                         id="date"
                                                         name="date"
                                                         type="date"
                                                         className="form-input"
                                                         value={item.plannedQuantity}
-                                                        min={new Date().toISOString().split("T")[0]} // Today's date
-                                                        max={new Date(new Date().setDate(new Date().getDate() + 15))
-                                                            .toISOString()
-                                                            .split("T")[0]} // 7 days from today
-                                                        onChange={(e) =>
-                                                            updateField(item.id, 'plannedQuantity', Number(e.target.value))
-                                                        } />
-
+                                                        min={new Date().toISOString().split('T')[0]} // Today's date
+                                                        max={new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().split('T')[0]} // 7 days from today
+                                                        onChange={(e) => updateField(item.id, 'plannedQuantity', Number(e.target.value))}
+                                                    />
                                                 </td>
                                                 <td>
                                                     <Select
@@ -356,15 +324,13 @@ const ProductionPlanning = () => {
                                                         name="machineSelection"
                                                         options={machineOptions}
                                                         onChange={(selectedOptions) => handleMachineChange(selectedOptions, item.id)}
-                                                        value={machineOptions.filter(option => (item.selectedMachines || []).includes(option.value))} // ✅ Safe check
+                                                        value={machineOptions.filter((option) => (item.selectedMachines || []).includes(option.value))} // ✅ Safe check
                                                         className="form-input"
                                                         placeholder="Select Machines"
                                                         isSearchable
                                                         isMulti
                                                         styles={customStyles}
                                                     />
-
-
                                                 </td>
 
                                                 <td>
@@ -382,43 +348,28 @@ const ProductionPlanning = () => {
                                                         <div className="flex space-x-6">
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">UOM:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">
-                                                                    {item.product ? item.uom : "--"}
-                                                                </p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.uom : '--'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">PO Quantity:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">
-                                                                    {item.product ? item.poQuantity : "--"}
-                                                                </p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.poQuantity : '--'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">Achieved:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">
-                                                                    {item.product ? item.achievedQuantity : "--"}
-                                                                </p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.achievedQuantity : '--'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">Rejected:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">
-                                                                    {item.product ? item.rejectedQuantity : "--"}
-                                                                </p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.rejectedQuantity : '--'}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-
                                         </React.Fragment>
                                     ))}
                                 </tbody>
                             </table>
-
-
-
-
-
-
                         </div>
                         <div className="flex justify-between sm:flex-row flex-col mt-6 px-4">
                             <div className="sm:mb-0 mb-6 ml-auto">
@@ -429,7 +380,6 @@ const ProductionPlanning = () => {
                             </div>
                         </div>
                     </div>
-
 
                     {/* Submit Button */}
                     <div className="flex gap-4">
@@ -442,11 +392,9 @@ const ProductionPlanning = () => {
                             Cancel
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>
-
     );
 };
 
