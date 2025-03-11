@@ -33,8 +33,6 @@ export  interface DowntimeLog {
     actionTaken: string;
 }
 
-
-
 export const pastReports: Report[] = [
     {
         workOrderNumber: "WO-2001",

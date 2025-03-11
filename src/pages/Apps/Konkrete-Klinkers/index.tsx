@@ -28,9 +28,8 @@ export { default as PackingViewNew } from './Packing/viewNew'; /////////// New
 export { default as PackingDetail } from './Packing/detail';  //////////
 export { default as PackingCreate } from './Packing/create';
 
-
-export { default as BufferStockManagementView } from './BufferStockManagement/view';
-export { default as BufferStockManagementCreate } from './BufferStockManagement/create';
+export { default as StockManagementView } from './BufferStockManagement/view';
+export { default as StockManagementCreate } from './BufferStockManagement/create';
 
 export { default as DispatchView } from './Dispatch/view';
 export { default as DispatchCreate } from './Dispatch/create';

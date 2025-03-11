@@ -42,15 +42,8 @@ const Sidebar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    // const toggleMenu = (value: string) => {
-    //     setCurrentMenu((oldValue) => {
-    //         return oldValue === value ? '' : value;
-    //     });
-    // };
-    // const [currentMenu, setCurrentMenu] = useState<string | null>(null);
+
     const [currentSubMenu, setCurrentSubMenu] = useState<string | null>(null);
-
-
 
     const toggleMenu = (menu: string) => {
         setCurrentMenu((prevMenu) => (prevMenu === menu ? null : menu));
@@ -61,20 +54,7 @@ const Sidebar = () => {
         setCurrentSubMenu((prevSubMenu) => (prevSubMenu === subMenu ? null : subMenu));
     };
 
-
     const falconFacadeBasePath = "/falcon-facade"; // Change this value to switch environments
-
-
-    const dispatchData = {
-        workOrderNumber: 'WO101',
-        clientName: 'Client A',
-        projectName: 'Project X',
-        productId: 'Product A',
-        uom: 'Box',
-        dispatchQuantity: 10,
-        invoiceSto: 'INV-12345',
-        vehicleNumber: 'KA-01-1234',
-    };
 
     useEffect(() => {
         const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
@@ -196,8 +176,6 @@ const Sidebar = () => {
                                     </li>
 
                                     {/* <li className="nav-item">
-
-
                                         <NavLink to={`${falconFacadeBasePath}/production-planning-new/view`} className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
@@ -275,7 +253,7 @@ const Sidebar = () => {
                                     </li> */}
 
                                     {/* <li className="nav-item">
-                                        <NavLink to="/iron-smith/bufferStockManagement" className="group">
+                                        <NavLink to="/iron-smith/stockManagement" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Buffer Stock Management')}</span>
@@ -283,6 +261,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                      */}
+
                                     {/* <li className="nav-item">
                                         <NavLink to={`${falconFacadeBasePath}/products`} className="group">
                                             <div className="flex items-center">
@@ -291,7 +270,6 @@ const Sidebar = () => {
                                             </div>
                                         </NavLink>
                                     </li> */}
-
                                 </ul>
                             </li>
 
@@ -379,8 +357,6 @@ const Sidebar = () => {
                                     </ul>
                                 </AnimateHeight>
                             </li>
-
-
 
                             <h2 className="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
                                 <IconMinus className="w-4 h-5 flex-none hidden" />
@@ -470,7 +446,6 @@ const Sidebar = () => {
                                                 </span>
                                             </div>
                                         </NavLink>
-
                                     </li>
 
                                     <li className="nav-item">
@@ -483,10 +458,10 @@ const Sidebar = () => {
                                     </li>
 
                                     <li className="nav-item">
-                                        <NavLink to="/konkrete-klinkers/bufferStockManagement" className="group">
+                                        <NavLink to="/konkrete-klinkers/stockManagement" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
-                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Buffer Stock Management')}</span>
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Stock Management')}</span>
                                             </div>
                                         </NavLink>
                                     </li>
@@ -699,7 +674,7 @@ const Sidebar = () => {
                                     </li>
 
                                     {/* <li className="nav-item">
-                                        <NavLink to="/iron-smith/bufferStockManagement" className="group">
+                                        <NavLink to="/iron-smith/stockManagement" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Buffer Stock Management')}</span>
@@ -707,6 +682,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                      */}
+
                                     <li className="nav-item">
                                         <NavLink to="/iron-smith/products" className="group">
                                             <div className="flex items-center">

@@ -195,18 +195,6 @@ export const ironSmithRoutes = [
         layout: 'admin',
     },
     
-    // Buffer Stock Management
-    // {
-    //     path: `${basePath}/bufferStockManagement`,
-    //     element: <BufferStockManagementView />,
-    //     layout: 'admin',
-    // },
-    // {
-    //     path: `${basePath}/bufferStockManagement/create`,
-    //     element: <BufferStockManagementCreate />,
-    //     layout: 'admin',
-    // },
-    
     // Packing
     {
         path: `${basePath}/packing/view`,

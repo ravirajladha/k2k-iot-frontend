@@ -69,7 +69,7 @@ const ColumnChooser = () => {
 
     const [hideCols, setHideCols] = useState<any>(['plantName', 'clientName']);
     const [isJobRunning, setIsJobRunning] = useState(false); // Tracks job status
-    const [showCompletionConfirm, setShowCompletionConfirm] = useState(false); 
+    const [showCompletionConfirm, setShowCompletionConfirm] = useState(false);
     const formatDate = (date: any) => {
         if (date) {
             const dt = new Date(date);
@@ -87,18 +87,18 @@ const ColumnChooser = () => {
             setHideCols([...hideCols, col]);
         }
     };
-// start, stop and complete in job order modal functions
+    // start, stop and complete in job order modal functions
 
     const handleStartJob = (jobOrderId) => {
         setIsJobRunning(true);
         alert(`Job with ID ${jobOrderId} started.`);
     };
-    
+
     const handleStopJob = (jobOrderId) => {
         setIsJobRunning(false);
         alert(`Job with ID ${jobOrderId} stopped.`);
     };
-    
+
     const handleCompleteJob = (jobOrderId) => {
         if (isJobRunning) {
             setShowCompletionConfirm(true);
@@ -107,7 +107,6 @@ const ColumnChooser = () => {
             setIsJobRunning(false);
         }
     };
-
 
     // data table modal 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -183,7 +182,6 @@ const ColumnChooser = () => {
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />
-
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
@@ -305,7 +303,7 @@ const ColumnChooser = () => {
                                         </button>
                                         <NavLink to={`/falcon-facade/productionNew`} className="flex hover:text-primary">
                                             <IconLayoutGrid className="w-6 h-6" />
-                                    
+
                                         </NavLink>
                                     </div>
                                 ),
@@ -328,121 +326,121 @@ const ColumnChooser = () => {
 
                     {/* Job Order Details Modal */}
                     <Transition appear show={isModalOpen} as={Fragment}>
-            <Dialog as="div" open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
-                <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-                    <div className="fixed inset-0 bg-black/60" />
-                </Transition.Child>
-                <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center px-4 py-8">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-2xl text-black dark:text-white-dark">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 dark:hover:text-gray-600 outline-none"
-                                >
-                                    ×
-                                </button>
-                                <div className="text-lg font-medium bg-gray-100 dark:bg-gray-900 p-5 flex justify-between">
-                                    Job Order Details
-                                    <button className="bg-blue-500 text-white px-6 py-1 mr-10 rounded-md" onClick={() => window.print()}>
-                                        Print
-                                    </button>
-                                </div>
-                                <div className="p-5">
-                                    {selectedJobOrder ? (
-                                        <>
-                                            {/* Job Order Details */}
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <p className="text-sm font-semibold">Work Order:</p>
-                                                    <p className="text-sm">{selectedJobOrder.workOrderId}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-semibold">Job Order:</p>
-                                                    <p className="text-sm">{selectedJobOrder.jobOrderId}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-semibold">Client:</p>
-                                                    <p className="text-sm">{selectedJobOrder.clientName}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-semibold">Project:</p>
-                                                    <p className="text-sm">{selectedJobOrder.projectName}</p>
-                                                </div>
-                                            </div>
-
-                                            {/* Product Details */}
-                                            <h3 className="mt-4 text-lg font-semibold">Product Details</h3>
-                                            <table className="w-full border mt-2">
-                                                <thead>
-                                                    <tr className="bg-gray-100">
-                                                        <th className="p-2 border">Product ID</th>
-                                                        <th className="p-2 border">UOM</th>
-                                                        <th className="p-2 border">PO Qty</th>
-                                                        <th className="p-2 border">Achieved</th>
-                                                        <th className="p-2 border">Rejected</th>
-                                                        <th className="p-2 border">Planned</th>
-                                                        <th className="p-2 border">Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {selectedJobOrder.products.map((product, index) => (
-                                                        <tr key={index} className="border">
-                                                            <td className="p-2 border">{product.productId}</td>
-                                                            <td className="p-2 border">{product.uom}</td>
-                                                            <td className="p-2 border">{product.poQuantity}</td>
-                                                            <td className="p-2 border">{product.achievedTillNow}</td>
-                                                            <td className="p-2 border">{product.rejectedQuantity}</td>
-                                                            <td className="p-2 border">{product.plannedQuantity}</td>
-                                                            <td className="p-2 border">{product.date}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-
-                                            {/* Action Buttons */}
-                                            <div className="flex justify-end gap-4 mt-6">
-                                                <button 
-                                                    onClick={handleStartJob} 
-                                                    className="btn btn-success flex items-center gap-1"
-                                                >
-                                                    <FaPlayCircle className="text-xl" /> Start
-                                                </button>
-
-                                                <button 
-                                                    onClick={handleStopJob} 
-                                                    className="btn btn-warning flex items-center gap-1"
-                                                >
-                                                    <FaPauseCircle className="text-xl" /> Stop
-                                                </button>
-
-                                                <button 
-                                                    onClick={handleCompleteJob} 
-                                                    className="btn btn-success flex items-center gap-1"
-                                                >
-                                                    <FaCheckCircle className="text-xl" /> Complete
+                        <Dialog as="div" open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                <div className="fixed inset-0 bg-black/60" />
+                            </Transition.Child>
+                            <div className="fixed inset-0 overflow-y-auto">
+                                <div className="flex min-h-full items-center justify-center px-4 py-8">
+                                    <Transition.Child
+                                        as={Fragment}
+                                        enter="ease-out duration-300"
+                                        enterFrom="opacity-0 scale-95"
+                                        enterTo="opacity-100 scale-100"
+                                        leave="ease-in duration-200"
+                                        leaveFrom="opacity-100 scale-100"
+                                        leaveTo="opacity-0 scale-95"
+                                    >
+                                        <Dialog.Panel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-2xl text-black dark:text-white-dark">
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsModalOpen(false)}
+                                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 dark:hover:text-gray-600 outline-none"
+                                            >
+                                                ×
+                                            </button>
+                                            <div className="text-lg font-medium bg-gray-100 dark:bg-gray-900 p-5 flex justify-between">
+                                                Job Order Details
+                                                <button className="bg-blue-500 text-white px-6 py-1 mr-10 rounded-md" onClick={() => window.print()}>
+                                                    Print
                                                 </button>
                                             </div>
-                                        </>
-                                    ) : (
-                                        <p className="text-sm text-gray-500">No job order selected.</p>
-                                    )}
+                                            <div className="p-5">
+                                                {selectedJobOrder ? (
+                                                    <>
+                                                        {/* Job Order Details */}
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <div>
+                                                                <p className="text-sm font-semibold">Work Order:</p>
+                                                                <p className="text-sm">{selectedJobOrder.workOrderId}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-semibold">Job Order:</p>
+                                                                <p className="text-sm">{selectedJobOrder.jobOrderId}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-semibold">Client:</p>
+                                                                <p className="text-sm">{selectedJobOrder.clientName}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-semibold">Project:</p>
+                                                                <p className="text-sm">{selectedJobOrder.projectName}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Product Details */}
+                                                        <h3 className="mt-4 text-lg font-semibold">Product Details</h3>
+                                                        <table className="w-full border mt-2">
+                                                            <thead>
+                                                                <tr className="bg-gray-100">
+                                                                    <th className="p-2 border">Product ID</th>
+                                                                    <th className="p-2 border">UOM</th>
+                                                                    <th className="p-2 border">PO Qty</th>
+                                                                    <th className="p-2 border">Achieved</th>
+                                                                    <th className="p-2 border">Rejected</th>
+                                                                    <th className="p-2 border">Planned</th>
+                                                                    <th className="p-2 border">Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {selectedJobOrder.products.map((product, index) => (
+                                                                    <tr key={index} className="border">
+                                                                        <td className="p-2 border">{product.productId}</td>
+                                                                        <td className="p-2 border">{product.uom}</td>
+                                                                        <td className="p-2 border">{product.poQuantity}</td>
+                                                                        <td className="p-2 border">{product.achievedTillNow}</td>
+                                                                        <td className="p-2 border">{product.rejectedQuantity}</td>
+                                                                        <td className="p-2 border">{product.plannedQuantity}</td>
+                                                                        <td className="p-2 border">{product.date}</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+
+                                                        {/* Action Buttons */}
+                                                        <div className="flex justify-end gap-4 mt-6">
+                                                            <button
+                                                                onClick={handleStartJob}
+                                                                className="btn btn-success flex items-center gap-1"
+                                                            >
+                                                                <FaPlayCircle className="text-xl" /> Start
+                                                            </button>
+
+                                                            <button
+                                                                onClick={handleStopJob}
+                                                                className="btn btn-warning flex items-center gap-1"
+                                                            >
+                                                                <FaPauseCircle className="text-xl" /> Stop
+                                                            </button>
+
+                                                            <button
+                                                                onClick={handleCompleteJob}
+                                                                className="btn btn-success flex items-center gap-1"
+                                                            >
+                                                                <FaCheckCircle className="text-xl" /> Complete
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <p className="text-sm text-gray-500">No job order selected.</p>
+                                                )}
+                                            </div>
+                                        </Dialog.Panel>
+                                    </Transition.Child>
                                 </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
-                </div>
-            </Dialog>
-        </Transition>
+                            </div>
+                        </Dialog>
+                    </Transition>
 
 
                 </div>

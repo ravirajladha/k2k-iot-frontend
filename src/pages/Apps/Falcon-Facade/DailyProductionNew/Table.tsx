@@ -88,6 +88,7 @@ const rowData: WorkOrder[] = [
         createdBy: "user4",
     },
 ];
+
 const ProductView = () => {
     const dispatch = useDispatch();
     useEffect(() => {

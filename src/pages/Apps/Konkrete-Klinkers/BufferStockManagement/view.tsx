@@ -48,17 +48,14 @@ const rowData: BufferStockRecord[] = [
     },
 ];
 
-
 const BufferStockManagement = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Buffer Stock Management'));
+        dispatch(setPageTitle('Stock Management'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
     const [modal10, setModal10] = useState(false);
-    // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-    // show/hide
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
@@ -109,7 +106,7 @@ const BufferStockManagement = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '#', isActive: false },
-        { label: 'Buffer Stock Managemenet', link: '/konkrete-klinkers/bufferStockManagement', isActive: true },
+        { label: 'Stock Managemenet', link: '/konkrete-klinkers/stockManagement', isActive: true },
     ];
 
     useEffect(() => {
@@ -147,7 +144,7 @@ const BufferStockManagement = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Add', link: '/konkrete-klinkers/bufferStockManagement/create',
+                addButton={{ label: 'Add', link: '/konkrete-klinkers/stockManagement/create',
                     icon: <IconPlusCircle className="text-4xl" /> }}
                 />
 

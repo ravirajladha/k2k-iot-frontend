@@ -43,10 +43,8 @@ import {
     HelperFactoryCreate,
     HelperMachines,
     HelperMachineCreate,
-    BufferStockManagementView,
-    BufferStockManagementCreate,
-    Helper1,
-    Helper2
+    StockManagementView,
+    StockManagementCreate,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -169,13 +167,14 @@ export const konkereKlinkersRoutes = [
     
     // Buffer Stock Management
     {
-        path: `${basePath}/bufferStockManagement`,
-        element: <BufferStockManagementView />,
+        path: `${basePath}/stockManagement`,
+        element: <StockManagementView />,
         layout: 'admin',
     },
+    
     {
-        path: `${basePath}/bufferStockManagement/create`,
-        element: <BufferStockManagementCreate />,
+        path: `${basePath}/stockManagement/create`,
+        element: <StockManagementCreate />,
         layout: 'admin',
     },
     
