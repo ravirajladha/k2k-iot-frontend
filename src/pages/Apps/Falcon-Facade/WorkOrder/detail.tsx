@@ -27,11 +27,13 @@ const WorkOrderPage = () => {
     const [selectedRejectedLogs, setSelectedRejectedData] = useState([]);
     const [modalTitle, setModalTitle] = useState("");
     // packing modal
-    const [selectedPackingData, setSelectedPackingData] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [selectedPackingData, setSelectedPackingData] = useState(null);
+    // const [isModalOpen1, setIsModalOpen1] = useState(false);
+    // const [isModalOpen2, setIsModalOpen2] = useState(false);
 
-    const [selectedDispatch, setSelectedDispatch] = useState(null);
-    const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
+
+    // const [selectedDispatch, setSelectedDispatch] = useState(null);
+    // const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
 
     const dispatchData = [
         {
@@ -51,30 +53,82 @@ const WorkOrderPage = () => {
                     timestamp: "2025-03-04 10:30 AM",
                     qrCodes: ["QR001", "QR002", "QR003"],
                 },
+                {
+                    productId: "P002",
+                    productName: "Outward Window",
+                    uom: "Nos",
+                    quantity: 150,
+                    vehicleNumber: "V1234",
+                    docketNumber: "DN001",
+                    timestamp: "2025-03-04 10:30 AM",
+                    qrCodes: ["QR004", "QR005", "QR006"],
+                },
+            ],
+        },
+        {
+            dispatchId: "D002",
+            workOrderId: "WO001",
+            jobOrderId: "JO001",
+            vehicleNumber: "V1234",
+            docketNumber: "DN001",
+            products: [
+                {
+                    productId: "P001",
+                    productName: "Inward Window",
+                    uom: "Nos",
+                    quantity: 50,
+                    vehicleNumber: "V1234",
+                    docketNumber: "DN001",
+                    timestamp: "2025-03-04 10:30 AM",
+                    qrCodes: ["QR001", "QR002", "QR003"],
+                },
+                {
+                    productId: "P002",
+                    productName: "Outward Window",
+                    uom: "Nos",
+                    quantity: 150,
+                    vehicleNumber: "V1234",
+                    docketNumber: "DN001",
+                    timestamp: "2025-03-04 10:30 AM",
+                    qrCodes: ["QR004", "QR005", "QR006"],
+                },
             ],
         },
         // Other dispatch entries
     ];
-    const openDispatchDetailsModal = (dispatch) => {
-        setSelectedDispatch(dispatch);
-        setIsModalOpen(true);
+    const [isPackingModalOpen, setIsPackingModalOpen] = useState(false);
+    const [selectedPackingData, setSelectedPackingData] = useState(null);
+
+    const [isDispatchModalOpen, setIsDispatchModalOpen] = useState(false);
+    const [selectedDispatch, setSelectedDispatch] = useState(null);
+
+    // Open Packing Modal
+    const openPackingDetailsModal = (data) => {
+        console.log("Opening Packing Modal with data:", data);
+
+        setSelectedPackingData(data);
+        setIsPackingModalOpen(true);
     };
 
-    const closeModalDispatch = () => {
-        setIsModalOpen(false);
+    // Close Packing Modal
+    const closePackingModal = () => {
+        console.log("Closing Packing Modal");
+        setIsPackingModalOpen(false);
+        setSelectedPackingData(null);
+    };
+
+    // Open Dispatch Modal
+    const openDispatchDetailsModal = (dispatch) => {
+        setSelectedDispatch(dispatch);
+        setIsDispatchModalOpen(true);
+    };
+
+    // Close Dispatch Modal
+    const closeDispatchModal = () => {
+        setIsDispatchModalOpen(false);
         setSelectedDispatch(null);
     };
 
-
-    const openPackingDetailsModal = (data) => {
-        setSelectedPackingData(data);
-        setIsModalOpen(true);
-    };
-
-    const closeModalPacking = () => {
-        setIsModalOpen(false);
-        setSelectedPackingData(null);
-    };
 
 
     const closeAchievedModal = () => setShowAchievedModal(false);
@@ -869,12 +923,29 @@ const WorkOrderPage = () => {
                     ))}
                 </div>
 
-                <PackingTable
+                <PackingTable rowData={rowData} openPackingDetailsModal={openPackingDetailsModal} />
+
+                <ViewPackingDetailsModal
+                    isOpen={isPackingModalOpen}
+                    closePackingModal={closePackingModal}
+                    data={selectedPackingData}
+                />
+
+                <DispatchTable dispatchData={dispatchData} openDispatchDetailsModal={openDispatchDetailsModal} />
+
+                <DispatchDetailsModal
+                    isOpen={isDispatchModalOpen}
+                    closeDispatchModal={closeDispatchModal}
+                    dispatch={selectedDispatch}
+                />
+
+
+                {/* <PackingTable
                     rowData={rowData} // Pass your row data here
                     openPackingDetailsModal={openPackingDetailsModal}
                 />
                 <ViewPackingDetailsModal
-                    isOpen={isModalOpen}
+                    isOpen={isModalOpen1}
                     closeModal={closeModalPacking}
                     data={selectedPackingData}
                 />
@@ -885,11 +956,11 @@ const WorkOrderPage = () => {
                 />
 
                 <DispatchDetailsModal
-                    isOpen={isModalOpen}
+                    isOpen={isModalOpen2}
                     closeModal={closeModal}
                     dispatch={selectedDispatch}
-                />
-                
+                /> */}
+
             </div>
         </div>
 

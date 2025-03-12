@@ -2,11 +2,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import IconFile from "@/components/Icon/IconFile";
 
-const DispatchDetailsModal = ({ isOpen, closeModal, dispatch }) => {
+const DispatchDetailsModal = ({ isOpen, closeDispatchModal, dispatch }) => {
+  console.log(dispatch, "inside the dispatch modal");
   return (
+<>
+    {isOpen && (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 z-50" onClose={closeModal}>
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+<Dialog as="div" className="fixed inset-0 z-50" onClose={closeDispatchModal}>
+<div className="fixed inset-0 bg-black/50" aria-hidden="true" />
 
         <div className="flex items-center justify-center min-h-screen px-4 text-center">
           <Transition.Child
@@ -79,7 +82,7 @@ const DispatchDetailsModal = ({ isOpen, closeModal, dispatch }) => {
                 <button
                   type="button"
                   className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                  onClick={closeModal}
+                  onClick={closeDispatchModal}
                 >
                   Close
                 </button>
@@ -89,6 +92,8 @@ const DispatchDetailsModal = ({ isOpen, closeModal, dispatch }) => {
         </div>
       </Dialog>
     </Transition>
+    )}
+   </>
   );
 };
 
