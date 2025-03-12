@@ -27,8 +27,8 @@ const WorkOrderPage = () => {
 
     const products = [
         {
-            description: 'Product A',
-            materialCode: 'M001',
+            description: 'Paver Black 200*200*60',
+            materialCode: '1000010188',
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
@@ -38,8 +38,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-20',
         },
         {
-            description: 'Product B',
-            materialCode: 'M002',
+            description: 'Paver Dark Grey 200*200*60',
+            materialCode: '1000010184',
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
@@ -49,8 +49,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-22',
         },
         {
-            description: 'Product C',
-            materialCode: 'M003',
+            description: 'Paver Yellow 200*200*60',
+            materialCode: '1000010186',
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
@@ -60,8 +60,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-25',
         },
         {
-            description: 'Product D',
-            materialCode: 'M004',
+            description: 'Pavers Dark Brown 200*100*60',
+            materialCode: '1000011464',
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
@@ -71,8 +71,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-28',
         },
         {
-            description: 'Product E',
-            materialCode: 'M005',
+            description: 'Paver Grey 200*100*60',
+            materialCode: '1000010180',
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
@@ -87,7 +87,7 @@ const WorkOrderPage = () => {
     const jobOrders = [
         {
             id: 1,
-            productName: 'Product A',
+            productName: 'Paver Black 200*200*60',
             uom: 'Kg',
             poQuantity: 100,
             batchNumber: "Batch001",
@@ -117,8 +117,8 @@ const WorkOrderPage = () => {
         },
         {
             id: 2,
-            productName: 'Product B',
-            uom: 'Ltr',
+            productName: 'Paver Grey 200*200*60',
+            uom: 'nos',
             poQuantity: 200,
             plannedQuantity: 180,
             batchNumber: "Batch002",
@@ -379,9 +379,9 @@ const WorkOrderPage = () => {
     );
 
     const downtimeDetails = [
-        { serialNumber: 1, description: "Machine maintenance", numberOfHours: 4, remarks: "Scheduled maintenance" },
-        { serialNumber: 2, description: "Power outage", numberOfHours: 2, remarks: "Unexpected" },
-        { serialNumber: 3, description: "Operator error", numberOfHours: 1.5, remarks: "Resolved" },
+        { serialNumber: 1, description: "Machine maintenance", numberOfHours: 75, remarks: "Scheduled maintenance" },
+        { serialNumber: 2, description: "Power outage", numberOfHours: 80, remarks: "Unexpected" },
+        { serialNumber: 3, description: "Operator error", numberOfHours:90, remarks: "Resolved" },
     ];
 
     const breadcrumbItems = [
@@ -615,7 +615,7 @@ const WorkOrderPage = () => {
                                             <tr>
                                                 <th className="px-4 py-2 border">Sl. No.</th>
                                                 <th className="px-4 py-2 border">Description</th>
-                                                <th className="px-4 py-2 border">Hours</th>
+                                                <th className="px-4 py-2 border">Minutes</th>
                                                 <th className="px-4 py-2 border">Remarks</th>
                                             </tr>
                                         </thead>
