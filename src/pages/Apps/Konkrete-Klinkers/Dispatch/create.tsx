@@ -10,28 +10,12 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconFile from '@/components/Icon/IconFile';
 
 import Select from 'react-select'
-interface WorkOrder {
-    id: string;
-    plantCode: string;
-    clientName: string;
-    projectName: string;
-}
 interface QRCodeData {
     workOrder: string;
     product: string;
     uom: string;
+    batchId: string;
     quantity: number;
-}
-interface FormData {
-    clientName: string;
-    projectName: string;
-    workOrderNumber: string;
-    workOrderDate: string;
-    productId: string;
-    uom: string;
-    orderQuantity: string;
-    plantCode: string;
-    files: ImageListType;
 }
 
 
@@ -49,6 +33,7 @@ const DispatchCreation = () => {
         projectName: '',
         productId: '',
         uom: '',
+        batchId: '',
         dispatchQuantity: '',
         dispatchDate: '',
         invoiceSto: '',
@@ -66,8 +51,8 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        "QR123456": { workOrder: "WO101", product: "Cement Blocks", uom: "Nos", quantity: 50 },
-        "QR654321": { workOrder: "WO101", product: "Concrete Bricks", uom: "Nos", quantity: 30 },
+        "QR123456": { workOrder: "WO101", product: "Cement Blocks", uom: "Nos", batchId: "Batch001", quantity: 50 },
+        "QR654321": { workOrder: "WO101", product: "Concrete Bricks", uom: "Nos", batchId: "Batch001", quantity: 30 },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({
@@ -121,6 +106,7 @@ const DispatchCreation = () => {
                 title: qrData.product,
                 uom: qrData.uom,
                 dispatchQuantity: qrData.quantity,
+                batchId: qrData.batchId,
             },
         ]);
 
@@ -164,7 +150,7 @@ const DispatchCreation = () => {
     // };
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: 'Product 1', uom: 'Nos', dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
+        { id: 1, title: 'Product 1', uom: 'Nos', batchId: "Batch001", dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
 
     ]);
 
@@ -262,6 +248,7 @@ const DispatchCreation = () => {
                                             <tr className="bg-gray-200">
                                                 <th className="border border-gray-300 px-4 py-2">Product</th>
                                                 <th className="border border-gray-300 px-4 py-2">UOM</th>
+                                                <th className="border border-gray-300 px-4 py-2">Batch ID</th>
                                                 <th className="border border-gray-300 px-4 py-2">Dispatch Quantity</th>
                                                 <th className="border border-gray-300 px-4 py-2">Action</th>
                                             </tr>
@@ -271,6 +258,7 @@ const DispatchCreation = () => {
                                                 <tr key={item.id} className="text-center">
                                                     <td className="border border-gray-300 px-4 py-2">{item.title}</td>
                                                     <td className="border border-gray-300 px-4 py-2">{item.uom}</td>
+                                                    <td className="border border-gray-300 px-4 py-2">{item.batchId}</td>
                                                     <td className="border border-gray-300 px-4 py-2">{item.dispatchQuantity}</td>
                                                     <td className="border border-gray-300 px-4 py-2">
                                                         <button type="button" onClick={() => removeItem(item.id)}>

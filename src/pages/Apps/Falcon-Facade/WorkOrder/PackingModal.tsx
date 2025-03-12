@@ -2,7 +2,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-const ViewPackingDetailsModal = ({ isOpen, closeModal, data }) => {
+const ViewPackingDetailsModal = ({ isOpen, closePackingModal, data }) => {
+  console.log(data, "inside the packing modal");
+
   const statusColors = {
     Pending: "bg-yellow-500 text-white",
     Completed: "bg-blue-500 text-white",
@@ -10,9 +12,13 @@ const ViewPackingDetailsModal = ({ isOpen, closeModal, data }) => {
   };
 
   return (
+
+<>
+    {isOpen && data && (
+
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 z-50" onClose={closeModal}>
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+<Dialog as="div" className="fixed inset-0 z-50" onClose={closePackingModal}>
+<div className="fixed inset-0 bg-black/50" aria-hidden="true" />
 
         <div className="flex items-center justify-center min-h-screen px-4 text-center">
           <Transition.Child
@@ -26,7 +32,7 @@ const ViewPackingDetailsModal = ({ isOpen, closeModal, data }) => {
           >
             <Dialog.Panel className="w-full max-w-lg p-6 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-md">
               <Dialog.Title className="text-xl font-semibold text-white py-3 px-4 bg-indigo-600 rounded-t-md">
-                {`Packing Detailszzz- ${data?.packing_id}`}
+                {`Packing Details- ${data?.packing_id}`}
               </Dialog.Title>
 
               <div className="mt-4">
@@ -101,7 +107,7 @@ const ViewPackingDetailsModal = ({ isOpen, closeModal, data }) => {
                 <button
                   type="button"
                   className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                  onClick={closeModal}
+                  onClick={closePackingModal}
                 >
                   Close
                 </button>
@@ -111,7 +117,8 @@ const ViewPackingDetailsModal = ({ isOpen, closeModal, data }) => {
         </div>
       </Dialog>
     </Transition>
+         )}           
+</>
   );
 };
-
 export default ViewPackingDetailsModal;
