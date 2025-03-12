@@ -191,7 +191,7 @@ const BufferStockTransferForm: React.FC = () => {
                 </div>
 
                 <div className="flex justify-end gap-4">
-                    <button type="submit" className="btn btn-success" disabled={showPopup || errorMessage}>
+                    <button type="submit" className="btn btn-success" disabled={showPopup || !!errorMessage}>
                         <IconSave className="mr-2" />
                         Transfer
                     </button>

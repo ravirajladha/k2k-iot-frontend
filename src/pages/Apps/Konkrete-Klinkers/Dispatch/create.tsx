@@ -9,7 +9,7 @@ import IconInfoCircle from '@/components/Icon/IconInfoCircle';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconFile from '@/components/Icon/IconFile';
 
-import Select from 'react-select'
+import Select from 'react-select';
 interface QRCodeData {
     workOrder: string;
     product: string;
@@ -49,8 +49,8 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        "QR123456": { workOrder: "WO101", product: "Cement Blocks", uom: "Nos", batchId: "Batch001", quantity: 50 },
-        "QR654321": { workOrder: "WO101", product: "Concrete Bricks", uom: "Nos", batchId: "Batch001", quantity: 30 },
+        QR123456: { workOrder: 'WO101', product: 'Cement Blocks', uom: 'Nos', batchId: 'Batch001', quantity: 50 },
+        QR654321: { workOrder: 'WO101', product: 'Concrete Bricks', uom: 'Nos', batchId: 'Batch001', quantity: 30 },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({
@@ -145,8 +145,7 @@ const DispatchCreation = () => {
     // };
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: 'Product 1', uom: 'Nos', batchId: "Batch001", dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
-
+        { id: 1, title: 'Product 1', uom: 'Nos', batchId: 'Batch001', dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
     ]);
 
     // Get today's date
