@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
+
 import { DataTable } from 'mantine-datatable';
 import AnimateHeight from 'react-animate-height';
 import IconFile from '@/components/Icon/IconFile';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-import PackingTable from "./PackingTable"; // Import PackingTable
-import ViewPackingDetailsModal from "./PackingModal";
+
 const WorkOrderPage = () => {
     const dispatch = useDispatch();
 
@@ -27,8 +27,8 @@ const WorkOrderPage = () => {
 
     const products = [
         {
-            description: 'Paver Black 200*200*60',
-            materialCode: '1000010188',
+            description: 'Product A',
+            materialCode: 'M001',
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
@@ -38,8 +38,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-20',
         },
         {
-            description: 'Paver Dark Grey 200*200*60',
-            materialCode: '1000010184',
+            description: 'Product B',
+            materialCode: 'M002',
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
@@ -49,8 +49,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-22',
         },
         {
-            description: 'Paver Yellow 200*200*60',
-            materialCode: '1000010186',
+            description: 'Product C',
+            materialCode: 'M003',
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
@@ -60,8 +60,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-25',
         },
         {
-            description: 'Pavers Dark Brown 200*100*60',
-            materialCode: '1000011464',
+            description: 'Product D',
+            materialCode: 'M004',
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
@@ -71,8 +71,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-28',
         },
         {
-            description: 'Paver Grey 200*100*60',
-            materialCode: '1000010180',
+            description: 'Product E',
+            materialCode: 'M005',
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
@@ -80,17 +80,15 @@ const WorkOrderPage = () => {
             packed: 130,
             plantCode: 'P5',
             deliveryDate: '2025-01-30',
-        }
+        },
     ];
-
 
     const jobOrders = [
         {
             id: 1,
-            productName: 'Paver Black 200*200*60',
+            productName: 'Product A',
             uom: 'Kg',
             poQuantity: 100,
-            batchNumber: "Batch001",
             plannedQuantity: 90,
             achievedQuantity: 80,
             rejectedQuantity: 10,
@@ -117,12 +115,10 @@ const WorkOrderPage = () => {
         },
         {
             id: 2,
-            productName: 'Paver Grey 200*200*60',
-            uom: 'nos',
+            productName: 'Product B',
+            uom: 'Ltr',
             poQuantity: 200,
             plannedQuantity: 180,
-            batchNumber: "Batch002",
-
             achievedQuantity: 170,
             rejectedQuantity: 10,
             dailyReports: [
@@ -148,88 +144,8 @@ const WorkOrderPage = () => {
         },
     ];
 
-
-    const packingData = [
-        {
-          packing_id: 1,
-          workOrderId: "WO12345",
-          jobOrder: "JO98765",
-          status: "Pending",
-          createdBy: "John Doe",
-          timestamp: "2025-02-25 10:30 AM",
-          products: [
-            {
-              productId: "PRD001",
-              productName: "Product A",
-              uom: "nos",
-              semiFinishedProducts: [
-                {
-                  sfId: "Batch-101",
-                  quantity: 3,
-                  qrCodes: ["QR-001", "QR-002", "QR-003"],
-                },
-                {
-                  sfId: "Batch-102",
-                  quantity: 2,
-                  qrCodes: ["QR-004", "QR-005"],
-                },
-              ],
-            },
-            {
-              productId: "PRD002",
-              productName: "Product B",
-              uom: "nos",
-              semiFinishedProducts: [
-                {
-                  sfId: "Batch-103",
-                  quantity: 4,
-                  qrCodes: ["QR-006", "QR-007", "QR-008", "QR-009"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          packing_id: 2,
-          workOrderId: "WO12346",
-          jobOrder: "JO98766",
-          status: "Completed",
-          createdBy: "Alice Smith",
-          timestamp: "2025-02-26 11:45 AM",
-          products: [
-            {
-              productId: "PRD003",
-              productName: "Product C",
-              uom: "nos",
-              semiFinishedProducts: [
-                {
-                  sfId: "Batch-201",
-                  quantity: 5,
-                  qrCodes: ["QR-010", "QR-011", "QR-012", "QR-013", "QR-014"],
-                },
-              ],
-            },
-            {
-              productId: "PRD004",
-              productName: "Product D",
-              uom: "nos",
-              semiFinishedProducts: [
-                {
-                  sfId: "Batch-202",
-                  quantity: 3,
-                  qrCodes: ["QR-015", "QR-016", "QR-017"],
-                },
-              ],
-            },
-          ],
-        },
-      ];
-      
-    //   export default packingData;
-      
-
     const workOrder = {
-        id: 'WO123',
+        id: 'abc123',
         createdAt: '2025-01-10 10:30 AM',
         createdBy: {
             name: 'Bharath Kumar',
@@ -238,7 +154,7 @@ const WorkOrderPage = () => {
         deadline: '2025-01-20',
         status: 'In Progress',
         // priority: 'High',
-        bufferStock: "False",
+        bufferStock: 'False',
     };
 
     const [search, setSearch] = useState('');
@@ -246,69 +162,50 @@ const WorkOrderPage = () => {
     const [pageSize, setPageSize] = useState(5);
 
     const PAGE_SIZES = [5, 10, 20];
-    // const packingData = [
-    //     {
-    //         serialNumber: 'BR001',
-    //         productId: 'P101',
-    //         workOrderId: 'WO111',
 
-    //         quantity: 500,
-    //         rejectedQuantity: 10,
-    //         date: '2025-01-10 10:30 AM',
-    //         createdBy: 'Bharath',
-    //     },
-    //     {
-    //         workOrderId: 'WO112',
+    const packingData = [
+        {
+            serialNumber: 'BR001',
+            productId: 'P101',
+            workOrderId: 'WO111',
 
-    //         serialNumber: 'BR002',
-    //         productId: 'P102',
-    //         quantity: 450,
-    //         rejectedQuantity: 5,
-    //         date: '2025-01-11 11:15 AM',
-    //         createdBy: 'Samira',
-    //     },
-    //     {
-    //         serialNumber: 'BR003',
-    //         productId: 'P103',
-    //         workOrderId: 'WO113',
+            quantity: 500,
+            rejectedQuantity: 10,
+            date: '2025-01-10 10:30 AM',
+            createdBy: 'Bharath',
+        },
+        {
+            workOrderId: 'WO112',
 
-    //         quantity: 600,
-    //         rejectedQuantity: 15,
-    //         date: '2025-01-12 09:45 AM',
-    //         createdBy: 'ALisha',
-    //     },
-    //     {
-    //         serialNumber: 'BR004',
-    //         productId: 'P104',
-    //         workOrderId: 'WO114',
+            serialNumber: 'BR002',
+            productId: 'P102',
+            quantity: 450,
+            rejectedQuantity: 5,
+            date: '2025-01-11 11:15 AM',
+            createdBy: 'Samira',
+        },
+        {
+            serialNumber: 'BR003',
+            productId: 'P103',
+            workOrderId: 'WO113',
 
-    //         quantity: 550,
-    //         rejectedQuantity: 20,
-    //         date: '2025-01-13 02:20 PM',
-    //         createdBy: 'Ravi ',
-    //     },
-    // ];
-    const [isPackingModalOpen, setIsPackingModalOpen] = useState(false);
-    const [selectedPackingData, setSelectedPackingData] = useState(null);
+            quantity: 600,
+            rejectedQuantity: 15,
+            date: '2025-01-12 09:45 AM',
+            createdBy: 'ALisha',
+        },
+        {
+            serialNumber: 'BR004',
+            productId: 'P104',
+            workOrderId: 'WO114',
 
+            quantity: 550,
+            rejectedQuantity: 20,
+            date: '2025-01-13 02:20 PM',
+            createdBy: 'Ravi ',
+        },
+    ];
 
-
-    // Open Packing Modal
-    const openPackingDetailsModal = (data) => {
-        console.log("Opening Packing Modal with data:", data);
-
-        setSelectedPackingData(data);
-        setIsPackingModalOpen(true);
-    };
-
-    // Close Packing Modal
-    const closePackingModal = () => {
-        console.log("Closing Packing Modal");
-        setIsPackingModalOpen(false);
-        setSelectedPackingData(null);
-    };
-
-  
     const dispatchData = [
         {
             dispatchId: 'D001',
@@ -316,7 +213,7 @@ const WorkOrderPage = () => {
                 {
                     productName: 'Bricks A',
                     quantity: 500,
-                    uom: 'Pieces',
+                    uom: 'Nos',
                     rate: 10,
                     amount: 5000,
                     timestamp: '2025-01-15 10:30 AM',
@@ -326,7 +223,7 @@ const WorkOrderPage = () => {
                 {
                     productName: 'Bricks B',
                     quantity: 300,
-                    uom: 'Pieces',
+                    uom: 'Nos',
                     rate: 12,
                     amount: 3600,
                     timestamp: '2025-01-15 10:30 AM',
@@ -341,7 +238,7 @@ const WorkOrderPage = () => {
                 {
                     productName: 'Bricks C',
                     quantity: 400,
-                    uom: 'Pieces',
+                    uom: 'Nos',
                     rate: 15,
                     amount: 6000,
                     timestamp: '2025-01-16 11:00 AM',
@@ -352,12 +249,7 @@ const WorkOrderPage = () => {
         },
     ];
 
-
-    // const filteredData = packingData.filter(
-    //     (item) =>
-    //         item.serialNumber.toLowerCase().includes(search.toLowerCase()) ||
-    //         item.productId.toLowerCase().includes(search.toLowerCase())
-    // );
+    const filteredData = packingData.filter((item) => item.serialNumber.toLowerCase().includes(search.toLowerCase()) || item.productId.toLowerCase().includes(search.toLowerCase()));
 
     const [expandedJobOrders, setExpandedJobOrders] = useState(jobOrders.map((job) => job.id));
 
@@ -368,20 +260,15 @@ const WorkOrderPage = () => {
             setExpandedJobOrders((prev) => [...prev, id]);
         }
     };
-
     // Filter data based on search
     const filteredData1 = dispatchData.filter((dispatch) =>
-        dispatch.products.some(
-            (product) =>
-                product.productName.toLowerCase().includes(search.toLowerCase()) ||
-                product.vehicleNumber.toLowerCase().includes(search.toLowerCase())
-        )
+        dispatch.products.some((product) => product.productName.toLowerCase().includes(search.toLowerCase()) || product.vehicleNumber.toLowerCase().includes(search.toLowerCase()))
     );
 
     const downtimeDetails = [
-        { serialNumber: 1, description: "Machine maintenance", numberOfHours: 75, remarks: "Scheduled maintenance" },
-        { serialNumber: 2, description: "Power outage", numberOfHours: 80, remarks: "Unexpected" },
-        { serialNumber: 3, description: "Operator error", numberOfHours:90, remarks: "Resolved" },
+        { serialNumber: 1, description: 'Machine maintenance', numberOfHours: 4, remarks: 'Scheduled maintenance' },
+        { serialNumber: 2, description: 'Power outage', numberOfHours: 2, remarks: 'Unexpected' },
+        { serialNumber: 3, description: 'Operator error', numberOfHours: 1.5, remarks: 'Resolved' },
     ];
 
     const breadcrumbItems = [
@@ -392,16 +279,9 @@ const WorkOrderPage = () => {
     ];
 
     return (
-
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
-            <button
-                onClick={() => window.print()}
-                className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right"
-            >
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
             <div className="p-4 pt-10">
@@ -413,44 +293,61 @@ const WorkOrderPage = () => {
                         {/* Left Section: Client Details */}
                         <div className="bg-yellow-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
-                            <p className="text-sm"><strong>Client Name:</strong> {clientDetails.clientName}</p>
-                            <p className="text-sm"><strong>Project Name:</strong> Lorem, ipsum.</p>
-                            <p className="text-sm"><strong>Address:</strong> {clientDetails.address}</p>
+                            <p className="text-sm">
+                                <strong>Client Name:</strong> {clientDetails.clientName}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Project Name:</strong> Lorem, ipsum.
+                            </p>
+                            <p className="text-sm">
+                                <strong>Address:</strong> {clientDetails.address}
+                            </p>
                         </div>
 
                         {/* Right Section: Work Order Details */}
                         <div className="bg-blue-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
-                            <p className="text-sm"><strong>Work Order Number:</strong> {workOrder.id}</p>
-                            <p className="text-sm"><strong>Created At:</strong> {workOrder.createdAt}</p>
-                            <p className="text-sm"><strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})</p>
+                            <p className="text-sm">
+                                <strong>Work Order Number:</strong> {workOrder.id}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created At:</strong> {workOrder.createdAt}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})
+                            </p>
 
                             <div className="flex items-center gap-2 mt-2">
                                 <strong>Files:</strong>
                                 <IconFile className="text-gray-600" />
                             </div>
 
-                            <p className="text-sm mt-2"><strong>Dates:</strong> {workOrder.deadline}</p>
+                            <p className="text-sm mt-2">
+                                <strong>Dates:</strong> {workOrder.deadline}
+                            </p>
 
-                            <p className="text-sm"><strong>Status:</strong>
-                                <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
-                    ${workOrder.status === 'In Progress' ? 'text-blue-500' :
-                                        workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}>
+                            <p className="text-sm">
+                                <strong>Status:</strong>
+                                <span
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                    ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
+                                >
                                     {workOrder.status}
                                 </span>
                             </p>
 
-                            <p className="text-sm"><strong>Buffer Stock:</strong>
-                                <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
-                    ${workOrder.bufferStock === 'False' ? 'text-red-500' :
-                                        workOrder.bufferStock === 'True' ? 'text-yellow-500' : 'text-green-500'}`}>
+                            <p className="text-sm">
+                                <strong>Buffer Stock:</strong>
+                                <span
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                    ${workOrder.bufferStock === 'False' ? 'text-red-500' : workOrder.bufferStock === 'True' ? 'text-yellow-500' : 'text-green-500'}`}
+                                >
                                     {workOrder.bufferStock}
                                 </span>
                             </p>
                         </div>
                     </div>
                 </div>
-
 
                 {/* Products Section */}
                 <div className="panel mb-6 bg-blue-100">
@@ -487,8 +384,6 @@ const WorkOrderPage = () => {
                             </tbody>
                         </table>
                     </div>
-
-
                 </div>
 
                 {/* progress section */}
@@ -508,20 +403,22 @@ const WorkOrderPage = () => {
                     {jobOrders.map((jobOrder) => (
                         <div key={jobOrder.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
                             {/* Job Order Header */}
-                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">
-                                Job Order - {jobOrder.id}
-                            </h2>
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Job Order - {jobOrder.id}</h2>
 
                             {/* Job Order Details Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
                                 <div>
-                                    <p className="text-sm"><strong>Sales Order Number:</strong> Lorem, ipsum.</p>
-                                    <p className="text-sm"><strong>Date:</strong> 20/02/2025 - 30-03-2025</p>
+                                    <p className="text-sm">
+                                        <strong>Sales Order Number:</strong> Lorem, ipsum.
+                                    </p>
+                                    <p className="text-sm">
+                                        <strong>Date:</strong> 20/02/2025 - 30-03-2025
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-sm"><strong>Batch Number:</strong>Batch 001</p>
-
-                                    <p className="text-sm"><strong>Plant Name:</strong> Lorem, ipsum.</p>
+                                    <p className="text-sm">
+                                        <strong>Plant Name:</strong> Lorem, ipsum.
+                                    </p>
                                 </div>
                             </div>
 
@@ -555,24 +452,14 @@ const WorkOrderPage = () => {
 
                             {/* Toggle Button for Production Reports */}
                             <div className="mt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => toggleJobOrder(jobOrder.id)}
-                                    className="flex items-center text-primary font-semibold transition-all hover:text-blue-600"
-                                >
-                                    <span className={`mr-2 transition-transform ${expandedJobOrders.includes(jobOrder.id) ? 'rotate-180' : ''}`}>
-                                        ▼
-                                    </span>
+                                <button type="button" onClick={() => toggleJobOrder(jobOrder.id)} className="flex items-center text-primary font-semibold transition-all hover:text-blue-600">
+                                    <span className={`mr-2 transition-transform ${expandedJobOrders.includes(jobOrder.id) ? 'rotate-180' : ''}`}>▼</span>
                                     {expandedJobOrders.includes(jobOrder.id) ? 'Hide Production Reports' : 'Show Production Reports'}
                                 </button>
                             </div>
 
                             {/* Expandable Daily Production Reports */}
-                            <AnimateHeight
-                                duration={300}
-                                height={expandedJobOrders.includes(jobOrder.id) ? 'auto' : 0}
-                                className="bg-gray-50 dark:bg-gray-900 rounded mt-3"
-                            >
+                            <AnimateHeight duration={300} height={expandedJobOrders.includes(jobOrder.id) ? 'auto' : 0} className="bg-gray-50 dark:bg-gray-900 rounded mt-3">
                                 <ul className="text-gray-600 dark:text-gray-300">
                                     {jobOrder.dailyReports.map((report, index) => (
                                         <li key={index} className="p-3 border border-gray-200 rounded mb-3">
@@ -615,7 +502,7 @@ const WorkOrderPage = () => {
                                             <tr>
                                                 <th className="px-4 py-2 border">Sl. No.</th>
                                                 <th className="px-4 py-2 border">Description</th>
-                                                <th className="px-4 py-2 border">Minutes</th>
+                                                <th className="px-4 py-2 border">Hours</th>
                                                 <th className="px-4 py-2 border">Remarks</th>
                                             </tr>
                                         </thead>
@@ -636,18 +523,11 @@ const WorkOrderPage = () => {
                     ))}
                 </div>
 
-
                 {/* Packing Section */}
-                {/* <div className="panel  bg-slate-50">
+                <div className="panel  bg-slate-50">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Packing Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Serial Number or Product ID..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
+                        <input type="text" className="form-input w-auto" placeholder="Search by Serial Number or Product ID..." value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="datatables">
                         <DataTable
@@ -663,7 +543,6 @@ const WorkOrderPage = () => {
                                 { accessor: 'quantity', title: 'Quantity' },
                                 { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
                                 { accessor: 'createdBy', title: 'Created By' },
-
                             ]}
                             totalRecords={filteredData.length}
                             recordsPerPage={pageSize}
@@ -672,33 +551,16 @@ const WorkOrderPage = () => {
                             recordsPerPageOptions={PAGE_SIZES}
                             onRecordsPerPageChange={setPageSize}
                             minHeight={200}
-                            paginationText={({ from, to, totalRecords }) =>
-                                `Showing ${from} to ${to} of ${totalRecords} entries`
-                            }
+                            paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                         />
                     </div>
-                </div> */}
-<PackingTable 
-  packingData={packingData} // ✅ Changed from rowData to packingData
-  openPackingDetailsModal={openPackingDetailsModal} 
-/>
+                </div>
 
-<ViewPackingDetailsModal
-    isOpen={isPackingModalOpen}
-    closePackingModal={closePackingModal}
-    data={selectedPackingData}
-/>
                 {/* Dispatch Section */}
                 <div className="panel mt-4 bg-slate-50">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Dispatch Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Product Name or Vehicle Number..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
+                        <input type="text" className="form-input w-auto" placeholder="Search by Product Name or Vehicle Number..." value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="datatables">
                         <div className="overflow-x-auto">
@@ -724,13 +586,14 @@ const WorkOrderPage = () => {
                                             {/* Dispatch Header */}
                                             <tr className="bg-gray-100 font-bold">
                                                 <td colSpan={7}>Dispatch ID: {dispatch.dispatchId}</td>
-                                                <td><IconFile /></td>
+                                                <td>
+                                                    <IconFile />
+                                                </td>
                                             </tr>
                                             {/* Products under Dispatch */}
                                             {dispatch.products.map((product, index) => (
                                                 <tr key={index}>
                                                     <td></td> {/* Empty cell for Dispatch ID */}
-
                                                     <td>{product.productName}</td>
                                                     <td>{product.quantity}</td>
                                                     <td>{product.uom}</td>
@@ -750,7 +613,6 @@ const WorkOrderPage = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
