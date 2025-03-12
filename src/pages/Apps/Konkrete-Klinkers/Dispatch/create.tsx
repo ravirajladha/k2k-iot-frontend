@@ -3,7 +3,7 @@ import IconX from '@/components/Icon/IconX';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconChecks from '@/components/Icon/IconChecks';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import IconInfoCircle from '@/components/Icon/IconInfoCircle';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
@@ -18,9 +18,7 @@ interface QRCodeData {
     quantity: number;
 }
 
-
 const DispatchCreation = () => {
-
     const [selectedWorkOrder, setSelectedWorkOrder] = useState<string | null>(null);
     const [scannedQRCodes, setScannedQRCodes] = useState<string[]>([]);
     const [qrCodeInput, setQrCodeInput] = useState<string>('');
@@ -70,9 +68,6 @@ const DispatchCreation = () => {
         setItems([]);
     };
 
-
-
-
     const handleFileChange = (imageList: ImageListType) => {
         setFormData((prev) => ({ ...prev, files: imageList }));
     };
@@ -81,19 +76,19 @@ const DispatchCreation = () => {
 
         // Prevent duplicate scans
         if (scannedQRCodes.includes(qrCodeInput)) {
-            alert("This QR Code is already scanned.");
+            alert('This QR Code is already scanned.');
             return;
         }
 
         const qrData = QR_CODE_DATA[qrCodeInput];
 
         if (!qrData) {
-            alert("Invalid QR Code. No product found.");
+            alert('Invalid QR Code. No product found.');
             return;
         }
 
         if (selectedWorkOrder && qrData.workOrder !== selectedWorkOrder) {
-            alert("Scanned QR Code does not belong to the selected Work Order.");
+            alert('Scanned QR Code does not belong to the selected Work Order.');
             return;
         }
 
@@ -122,7 +117,7 @@ const DispatchCreation = () => {
         e.preventDefault();
 
         if (items.length === 0) {
-            alert("Please scan at least one QR Code before submitting.");
+            alert('Please scan at least one QR Code before submitting.');
             return;
         }
 
@@ -161,7 +156,10 @@ const DispatchCreation = () => {
     const nextWeek = new Date();
     nextWeek.setDate(today.getDate() + 7);
 
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
 
+    const minDate = sevenDaysAgo.toISOString().split('T')[0];
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
@@ -194,8 +192,7 @@ const DispatchCreation = () => {
                         </span>
                         {showTooltip && (
                             <div className="absolute top-0 right-full ml-2 w-64 bg-gray-800 text-white text-sm p-3 rounded shadow-lg z-50">
-                                Currenlty the QR code string will check the exisiting work order , and provide the products scanned while packing.
-                                QR-CODE-STRING: QR123456,QR654321
+                                Currenlty the QR code string will check the exisiting work order , and provide the products scanned while packing. QR-CODE-STRING: QR123456,QR654321
                             </div>
                         )}
                     </button>
@@ -206,17 +203,11 @@ const DispatchCreation = () => {
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
                         {/* Work Order Number */}
-                        <div  >
+                        <div>
                             <label htmlFor="workOrderNumber" className="block text-sm font-medium text-bold">
                                 <strong> Work Order Number</strong>
                             </label>
-                            <Select
-                                id="workOrderNumber"
-                                options={workOrderOptions}
-                                onChange={handleWorkOrderChange}
-                                placeholder="Select Work Order"
-                                isSearchable
-                            />
+                            <Select id="workOrderNumber" options={workOrderOptions} onChange={handleWorkOrderChange} placeholder="Select Work Order" isSearchable />
                         </div>
                         <div className="flex items-center space-x-2">
                             <label htmlFor="workOrderNumber" className="block text-sm font-medium text-bold">
@@ -224,15 +215,8 @@ const DispatchCreation = () => {
                                 <hr />
                                 <div></div>
                                 <span className="text-sm text-slate-600"> (***a/c to work order)</span>
-
                             </label>
-                            <input
-                                type="text"
-                                placeholder="Enter QR Code"
-                                className="form-input"
-                                value={qrCodeInput}
-                                onChange={(e) => setQrCodeInput(e.target.value)}
-                            />
+                            <input type="text" placeholder="Enter QR Code" className="form-input" value={qrCodeInput} onChange={(e) => setQrCodeInput(e.target.value)} />
                             <button type="button" className="btn btn-primary" onClick={handleQRCodeInput}>
                                 Scan
                             </button>
@@ -302,12 +286,10 @@ const DispatchCreation = () => {
                                 name="date"
                                 type="date"
                                 className="form-input"
-                                value={formData.invoiceSto}
-                                // min={new Date().toISOString().split("T")[0]}
-                                // max={new Date(new Date().setDate(new Date().getDate() + 7))
-                                //     .toISOString()
-                                //     .split("T")[0]} 
-                                onChange={(e) => setFormData({ ...formData, invoiceSto: e.target.value })}
+                                value={formData.dispatchDate}
+                                min={minDate}
+                                max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
+                                onChange={(e) => setFormData({ ...formData, dispatchDate: e.target.value })}
                             />
                         </div>
                         {/* Invoice/STO */}
@@ -321,7 +303,7 @@ const DispatchCreation = () => {
                                 placeholder="Enter Invoice or STO"
                                 className="form-input"
                                 value={formData.invoiceSto}
-                            // onChange={handleInputChange}
+                                onChange={(e) => setFormData({ ...formData, invoiceSto: e.target.value })}
                             />
                         </div>
                         {/* </div> */}
@@ -336,11 +318,9 @@ const DispatchCreation = () => {
                                 placeholder="Enter Vehicle Number"
                                 className="form-input"
                                 value={formData.vehicleNumber}
-                            // onChange={handleInputChange}
+                                onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
                             />
                         </div>
-
-
 
                         {/* File Upload */}
                         <div className="mb-6">
@@ -350,11 +330,7 @@ const DispatchCreation = () => {
                                     Upload Invoice <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative flex items-center">
-                                    <button
-                                        onMouseEnter={() => setShowTooltip(true)}
-                                        onMouseLeave={() => setShowTooltip(false)}
-                                        className="text-gray-500 hover:text-gray-700"
-                                    >
+                                    <button onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} className="text-gray-500 hover:text-gray-700">
                                         <IconInfoCircle className="h-5 w-5" />
                                     </button>
                                     {showTooltip && (
@@ -370,31 +346,19 @@ const DispatchCreation = () => {
                                 multiple
                                 value={null}
                                 onChange={handleFileChange}
-                            // maxNumber={maxNumber}
+                                // maxNumber={maxNumber}
                             >
                                 {({ imageList, onImageUpload, onImageRemove }) => (
                                     <div>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary mb-2 flex items-center space-x-2"
-                                            onClick={onImageUpload}
-                                        >
+                                        <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
                                             <IconFile className="shrink-0" />
                                             <span>Upload Invoice</span>
                                         </button>
                                         <div className="grid gap-4 sm:grid-cols-3 grid-cols-1">
                                             {imageList.map((image, index) => (
                                                 <div key={index} className="relative">
-                                                    <img
-                                                        src={image.dataURL}
-                                                        alt="uploaded"
-                                                        className="w-full h-32 object-cover rounded"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-                                                        onClick={() => onImageRemove(index)}
-                                                    >
+                                                    <img src={image.dataURL} alt="uploaded" className="w-full h-32 object-cover rounded" />
+                                                    <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full" onClick={() => onImageRemove(index)}>
                                                         ×
                                                     </button>
                                                 </div>
@@ -404,8 +368,6 @@ const DispatchCreation = () => {
                                 )}
                             </ImageUploading>
                         </div>
-
-
                     </div>
 
                     {/* Submit Button */}
@@ -422,7 +384,6 @@ const DispatchCreation = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 

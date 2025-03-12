@@ -22,7 +22,7 @@ const JobOrderPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'Work Order', link: '/konkrete-klinkers/packing/view', isActive: false },
+        { label: 'Packing', link: '/konkrete-klinkers/packing/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -40,74 +40,313 @@ const JobOrderPage = () => {
                 Print Page
             </button>
             <div className="p-4 pt-10">
-                {/* Packing Details Section */}
-                <div className="panel mb-6 p-4 rounded-lg shadow-md flex flex-col items-center">
-                    <div>
-                    <h2 className="text-lg font-semibold mb-4 w-full text-center">Packing Details</h2>
+                {/* Client Details Section */}
+                <div className="panel mb-6 p-4 rounded-lg">
+                    <h2 className="text-lg font-semibold mb-4">Packing Details</h2>
+
+                    <div className="bg-white p-4 w-full flex flex-row gap-4">
+                        {/* Left Section: Client Details */}
+                        <div className="bg-yellow-50 p-4 rounded-md shadow flex-1">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
+                            <p className="text-sm">
+                                <strong>Client Name:</strong> {rowData.clientName || 'Client Alpha'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Project Name:</strong> {rowData.projectName || 'Project Phoenix'}
+                            </p>
+                        </div>
+
+                        {/* Right Section: Work Order Details */}
+                        <div className="bg-blue-50 p-4 flex flex-col flex-1 rounded-lg shadow-md">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
+                            <p className="text-sm">
+                                <strong>Work Order Id:</strong> {rowData.workOrder || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Job Order ID:</strong> {rowData.jobOrder || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Status:</strong> {rowData.status || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> {rowData.createdBy || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Timestamp:</strong> {new Date(rowData.timestamp).toLocaleString() || 'N/A'}
+                            </p>
+                        </div>
                     </div>
+                </div>
 
-                    {/* <div className="flex flex-col md:flex-row gap-6 "> */}
-                        {/* Client Details Section */}
-                        {/* <div className="bg-white p-4 border border-gray-800 w-full md:w-1/2  flex items-center justify-center"> */}
-                        <div className="bg-white p-4 border border-gray-800 w-full md:w-1/2 justify-center">
-                            <div className="bg-blue-50 p-4 flex flex-col items-center text-center w-full md:w-2/3 lg:w-3/4">
-                                {/* <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3> */}
-                                <p className="text-sm">
-                                    <strong>Work Order Id:</strong> {rowData.workOrder || 'N/A'}
-                                </p>
-                                <p className="text-sm">
-                                    <strong>Job Order ID:</strong> {rowData.jobOrder || 'N/A'}
-                                </p>
-                                <p className="text-sm">
-                                    <strong>Status:</strong> {rowData.status || 'N/A'}
-                                </p>
-                                <p className="text-sm">
-                                    <strong>Created By:</strong> {rowData.createdBy || 'N/A'}
-                                </p>
-                                <p className="text-sm">
-                                    <strong>Timestamp:</strong> {new Date(rowData.timestamp).toLocaleString() || 'N/A'}
-                                </p>
+                <div className="panel mb-6 border ">
+                    <div className="flex flex-row gap-6 justify-center">
+                        {/* First Product Card */}
+                        <div className="product-card bg-gray-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 1</span>
                             </div>
-                            {/* </div> */}
 
-                            {/* Product Details Section */}
-                            <div className="product-card flex flex-col w-full overflow-hidden relative">
-                                {/* Logo in the left corner */}
-                                <div className="logo absolute left-0 top-0 p-1">{/* <img src={logo} alt="Logo" className="w-30 h-7" /> */}</div>
-
-                                {/* S.No in the right corner */}
-                                <div className="serial-number absolute right-0 top-0 p-1 text-right">
-                                    <span className="font-semibold text-xs">S.No: {rowData.sl_no}</span>
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
                                 </div>
 
-                                <div className="product-header border-b border-gray-400 pb-1 mb-1 text-center w-full mt-6">
-                                    <h3 className="text-sm font-semibold">Project Phoenix: CAM-01-00011</h3>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    {/* Key-Value Data */}
-                                    <div className="product-details flex-1 p-2 text-xs">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="font-semibold">Batch No:</div>
-                                            <div>{rowData.sl_no}</div>
-                                            <div>
-                                                <strong>Qty:</strong>
-                                            </div>
-                                            <div className="font-semibold">10</div>
-                                        </div>
-                                    </div>
-
-                                    {/* QR Code, Bar Image, and Table */}
-                                    <div className="qr-code-container flex flex-col items-center ml-8 w-[10rem]">
-                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mb-4" />
-                                        <div className="flex items-center justify-center">
-                                            <strong className="mr-1">QR Id:</strong>
-                                            <span className="font-semibold">{rowData.qrCode}</span>
-                                        </div>
-                                    </div>
+                                {/* QR Code */}
+                                <div className="flex items-center justify-center  flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <div>QR123</div>
                                 </div>
                             </div>
                         </div>
-                    {/* </div> */}
+
+                        {/* Second Product Card */}
+                        <div className="product-card bg-blue-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 2</span>
+                            </div>
+
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
+                                </div>
+
+                                {/* QR Code */}
+                                <div className="flex items-center justify-center  flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <div>QR123</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-row gap-6 mt-6 justify-center">
+                        {/* Third Product Card */}
+                        <div className="product-card bg-green-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 3</span>
+                            </div>
+
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details  p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
+                                </div>
+
+                                {/* QR Code */}
+                                <div className="flex items-center justify-center  flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <div>QR123</div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Fourth Product Card */}
+                        <div className="product-card bg-gray-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 4</span>
+                            </div>
+
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
+                                </div>
+
+                                {/* QR Code Input */}
+                                <div className="flex items-center justify-center flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-row gap-6 mt-6 justify-center">
+                        {/* Fifth Product Card */}
+                        <div className="product-card bg-blue-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 5</span>
+                            </div>
+
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
+                                </div>
+
+                                {/* QR Code Input */}
+                                <div className="flex items-center justify-center flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Sixth Product Card */}
+                        <div className="product-card bg-green-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            {/* S.No in the right corner */}
+                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                <span className="font-semibold text-xs">S.No: 6</span>
+                            </div>
+
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                                <h3 className="text-sm font-semibold">Product: Paver Black</h3>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Key-Value Data */}
+                                <div className="product-details  p-2 text-xs">
+                                    <div className="grid grid-cols-2 gap-1">
+                                        <div className="font-semibold">Work Order Id</div>
+                                        <div>: {rowData.workOrder}</div>
+                                        <div className="font-semibold">Job Order Id</div>
+                                        <div>: {rowData.jobOrder}</div>
+                                        <div className="font-semibold">Client Name</div>
+                                        <div>: Client Alpha</div>
+                                        <div className="font-semibold">Project Name</div>
+                                        <div>: Project Phoenix</div>
+                                        <div className="font-semibold">Batch No</div>
+                                        <div>: 1</div>
+                                        <div>
+                                            <strong>Qty</strong>
+                                        </div>
+                                        <div>: 10</div>
+                                        <div>
+                                            <strong>Created By</strong>
+                                        </div>
+                                        <div>: Admin</div>
+                                    </div>
+                                </div>
+
+                                {/* QR Code Input */}
+                                <div className="flex items-center justify-center flex flex-col">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
+
+                                    <strong className="mr-1">QR Id:</strong>
+                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
