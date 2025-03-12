@@ -175,6 +175,10 @@ const DispatchCreation = () => {
     const nextWeek = new Date();
     nextWeek.setDate(today.getDate() + 7);
 
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    const minDate = sevenDaysAgo.toISOString().split('T')[0];
 
 
     const breadcrumbItems = [
@@ -314,12 +318,10 @@ const DispatchCreation = () => {
                                 name="date"
                                 type="date"
                                 className="form-input"
-                                value={formData.invoiceSto}
-                                min={new Date().toISOString().split("T")[0]} // Today's date
-                                max={new Date(new Date().setDate(new Date().getDate() + 7))
-                                    .toISOString()
-                                    .split("T")[0]} // 7 days from today
-                                onChange={(e) => setFormData({ ...formData, invoiceSto: e.target.value })}
+                                value={formData.dispatchDate}
+                                min={minDate}
+                                max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
+                                onChange={(e) => setFormData({ ...formData, dispatchDate: e.target.value })}
                             />
                         </div>
                         {/* Invoice/STO */}
@@ -333,7 +335,8 @@ const DispatchCreation = () => {
                                 placeholder="Enter Invoice or STO"
                                 className="form-input"
                                 value={formData.invoiceSto}
-                            // onChange={handleInputChange}
+                                onChange={(e) => setFormData({ ...formData, invoiceSto: e.target.value })}
+
                             />
                         </div>
                         {/* </div> */}
@@ -348,7 +351,8 @@ const DispatchCreation = () => {
                                 placeholder="Enter Vehicle Number"
                                 className="form-input"
                                 value={formData.vehicleNumber}
-                            // onChange={handleInputChange}
+                                onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
+
                             />
                         </div>
 

@@ -12,6 +12,7 @@ const PackingCreation = () => {
         productName: '',
         totalBricks: '',
         totalBatches: '',
+        uom:'',
         batchInputs: [] as number[],
     });
 
@@ -21,6 +22,7 @@ const PackingCreation = () => {
 
     const products = ['Product A', 'Product B', 'Product C'];
     const workOrders = ["Work Order A", "Work Order B", "Work Order C"];
+    const uoms = ["sqmt", "nos"];
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -81,6 +83,10 @@ const PackingCreation = () => {
         value: product,
         label: product,
     }));
+    const uomOptions = uoms.map((uom) => ({
+        value: uom,
+        label: uom,
+    }));
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
@@ -134,7 +140,7 @@ const PackingCreation = () => {
 
                         <div>
                             <label htmlFor="totalBricks" className="block text-sm font-medium text-gray-700">
-                                Total Bricks to Pack
+                                Total Quantity
                             </label>
                             <input
                                 id="totalBricks"
@@ -149,7 +155,7 @@ const PackingCreation = () => {
 
                         <div>
                             <label htmlFor="totalBatches" className="block text-sm font-medium text-gray-700">
-                                Number of Batches
+                                Total Bundles
                             </label>
                             <input
                                 id="totalBatches"
@@ -160,6 +166,18 @@ const PackingCreation = () => {
                                 value={formData.totalBatches}
                                 onChange={handleInputChange}
                                 onBlur={generateBatchInputs}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="uom" className="block text-sm font-medium text-gray-700">
+                                UOM
+                            </label>
+                            <Select
+                                options={uomOptions}
+                                value={uomOptions.find(option => option.value === formData.uom)}
+                                onChange={handleSelectChange('uom')}
+                                placeholder="Select Product"
+                                isSearchable
                             />
                         </div>
                     </div>
@@ -182,7 +200,7 @@ const PackingCreation = () => {
                         {formData.batchInputs.map((value, index) => (
                             <div key={index}>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Batch {index + 1}
+                                    Bundle {index + 1}
                                 </label>
                                 <input
                                     type="number"
