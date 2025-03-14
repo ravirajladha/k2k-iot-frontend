@@ -19,7 +19,9 @@ import {
     DailyProductionPlanningCreate,
     DailyProductionPlanningNewView,
     DailyProductionPlanningNewCreate,
-    JobOrderView,
+    // JobOrderView,
+    JobOrderViewNew, /////New
+    JobOrderDetail, /////New
     JobOrderCreate,
     ProductView,
     ProductCreate,
@@ -31,6 +33,7 @@ import {
 
     PackingCreate,
     DispatchView,
+    DispatchEditDetail, //////////
     DispatchCreate,
     DipatchInvoiceView,
     HelperClients,
@@ -94,9 +97,19 @@ export const konkereKlinkersRoutes = [
     },
     
     // Job Order
+    // {
+    //     path: `${basePath}/job-order/view`,
+    //     element: <JobOrderView />,
+    //     layout: 'admin',
+    // },
     {
-        path: `${basePath}/job-order/view`,
-        element: <JobOrderView />,
+        path: `${basePath}/job-order/view`, ////////New
+        element: <JobOrderViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/job-order/detail`, ////////New
+        element: <JobOrderDetail />,
         layout: 'admin',
     },
     {
@@ -205,6 +218,11 @@ export const konkereKlinkersRoutes = [
     {
         path: `${basePath}/dispatch/view`,
         element: <DispatchView />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/editDetail`,
+        element: <DispatchEditDetail />,
         layout: 'admin',
     },
     {

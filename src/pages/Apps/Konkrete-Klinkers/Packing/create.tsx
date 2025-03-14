@@ -20,7 +20,7 @@ const PackingCreation = () => {
     const [balancedQuantity, setBalancedQuantity] = useState(0);
     const [isGenerated, setIsGenerated] = useState(false);
 
-    const products = ['Product A', 'Product B', 'Product C'];
+    const products = ['Paver Black', 'Paver Grey', 'Paver Dark', 'Paver Red','Paver Yellow'];
     const workOrders = ["Work Order A", "Work Order B", "Work Order C"];
     const uoms = ["sqmt", "nos"];
 
@@ -101,7 +101,7 @@ const PackingCreation = () => {
                 items={breadcrumbItems}
                 addButton={{
                     label: 'Back',
-                    link: '/konkrete-klinkers/job-order/view',
+                    link: '/konkrete-klinkers/packing/view',
                     icon: <IconArrowBackward className="text-4xl" />,
                 }}
             />
@@ -165,7 +165,7 @@ const PackingCreation = () => {
                                 className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
                                 value={formData.totalBatches}
                                 onChange={handleInputChange}
-                                onBlur={generateBatchInputs}
+                                // onBlur={generateBatchInputs}
                             />
                         </div>
                         <div>

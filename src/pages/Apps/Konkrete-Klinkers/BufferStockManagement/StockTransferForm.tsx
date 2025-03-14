@@ -25,9 +25,9 @@ interface WorkOrderDetails {
 // Mock Data
 const workOrders = ['Work Order 1', 'Work Order 2', 'Work Order 3'];
 const products: Product[] = [
-    { id: 'P1', name: 'Product A', bufferQuantity: 100 },
-    { id: 'P2', name: 'Product B', bufferQuantity: 200 },
-    { id: 'P3', name: 'Product C', bufferQuantity: 150 },
+    { id: 'P1', name: 'Paver Black', bufferQuantity: 100 },
+    { id: 'P2', name: 'Paver Grey', bufferQuantity: 200 },
+    { id: 'P3', name: 'Paver Red', bufferQuantity: 150 },
 ];
 
 const StockTransferForm: React.FC = () => {

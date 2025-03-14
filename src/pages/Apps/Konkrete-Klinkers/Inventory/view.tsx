@@ -37,8 +37,8 @@ interface Product {
 
 const rowData = [
     {
-        materialCode: 101,
-        productDescription: 'Concrete Blocks',
+        materialCode: 1000010188,
+        productDescription: 'Paver Black',
         quantity: 500,
         bufferQuantity: 100,
         requiredQuantity: 300,
@@ -50,8 +50,8 @@ const rowData = [
         status: 'Active',
     },
     {
-        materialCode: 102,
-        productDescription: 'Cement Bags',
+        materialCode: 1000010184,
+        productDescription: 'Paver Grey',
         quantity: 250,
         bufferQuantity: 100,
         requiredQuantity: 200,
@@ -63,8 +63,8 @@ const rowData = [
         status: 'Active',
     },
     {
-        materialCode: 103,
-        productDescription: 'Steel Rods',
+        materialCode: 1000010189,
+        productDescription: 'Pavers Dark Grey',
         quantity: 100,
         bufferQuantity: 100,
         requiredQuantity: 80,
@@ -76,8 +76,8 @@ const rowData = [
         status: 'Inactive',
     },
     {
-        materialCode: 104,
-        productDescription: 'Bricks',
+        materialCode: 1000010464,
+        productDescription: 'Paver Yellow',
         quantity: 1000,
         bufferQuantity: 100,
         requiredQuantity: 900,

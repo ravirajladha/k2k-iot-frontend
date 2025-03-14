@@ -123,7 +123,7 @@ const QcCheckForm: React.FC = () => {
         <div>
         <Breadcrumbs
             items={breadcrumbItems}
-            addButton={{ label: 'Back', link: '/konkrete-klinkers/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
+            addButton={{ label: 'Back', link: '/konkrete-klinkers/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }}
         />
 
         <div className="panel">

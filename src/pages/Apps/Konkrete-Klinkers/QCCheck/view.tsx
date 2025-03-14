@@ -39,7 +39,7 @@ const rowData = [
         productId: 'PRD002',
         rejectedQuantity: 2,
         recycledQuantity: 1,
-        remark:"Brick broken due to excess water",
+        remark:"Base material is not properly compacted",
 
         createdBy: 'User1',
         timestamp: '2025-01-28T11:30:00Z',
@@ -51,7 +51,7 @@ const rowData = [
         productId: 'PRD003',
         rejectedQuantity: 8,
         recycledQuantity: 5,
-        remark:"Brick broken due to excess water",
+        remark:"Extreme temperature change leading to cracks. ",
         createdBy: 'Manager',
         timestamp: '2025-01-28T12:45:00Z',
     },

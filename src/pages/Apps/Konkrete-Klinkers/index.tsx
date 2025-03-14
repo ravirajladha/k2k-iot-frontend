@@ -11,7 +11,9 @@ export { default as DailyProductionPlanningCreate } from './DailyProductionRepor
 export { default as DailyProductionPlanningNewView } from './DailyProductionReportNew/view';
 export { default as DailyProductionPlanningNewCreate } from './DailyProductionReportNew/create';
 
-export { default as JobOrderView } from './JobOrder/view';
+// export { default as JobOrderView } from './JobOrder/view';
+export { default as JobOrderViewNew } from './JobOrder/viewNew'; ////////////////////////
+export { default as JobOrderDetail } from './JobOrder/detail'; ////////////////////////
 export { default as JobOrderCreate } from './JobOrder/create';
 
 export { default as ProductView } from './Product/view';
@@ -32,6 +34,7 @@ export { default as StockManagementView } from './BufferStockManagement/view';
 export { default as StockManagementCreate } from './BufferStockManagement/create';
 
 export { default as DispatchView } from './Dispatch/view';
+export { default as DispatchEditDetail } from './Dispatch/detail'; ///////////////
 export { default as DispatchCreate } from './Dispatch/create';
 export { default as DipatchInvoiceView } from './Dispatch/invoice';
 
