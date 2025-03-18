@@ -188,7 +188,7 @@ const DispatchDetailPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
                                 <div>
                                     <p className="text-sm">
-                                        <strong>Sales Order Number:</strong> SL123
+                                        <strong>Sales Order Number:</strong> SL-123
                                     </p>
                                     <p className="text-sm">
                                         <strong>Date:</strong> {`${rowData.fromDate} - ${rowData.toDate}`}
@@ -218,7 +218,7 @@ const DispatchDetailPage = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {rowData.products.map((product, index) =>(
                                                <tr className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                               <td className="px-4 py-2 border">{product.productId}</td>
+                                               <td className="px-4 py-2 border">{product.productName}</td>
                                                <td className="px-4 py-2 border">{product.uom}</td>
                                                <td className="px-4 py-2 border">{product.poQuantity}</td>
                                                <td className="px-4 py-2 border">{product.plannedQuantity}</td>

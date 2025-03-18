@@ -13,8 +13,8 @@ const InventoryDetailPage = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const { rowData, materialCode } = location.state || {}; // Access the rowData and materialCode passed from the previous component
-    console.log('rowData', rowData);
-    console.log('materialCode', materialCode);
+    // console.log('rowData', rowData);
+    // console.log('materialCode', materialCode);
 
     useEffect(() => {
         dispatch(setPageTitle('Job Order Detail'));

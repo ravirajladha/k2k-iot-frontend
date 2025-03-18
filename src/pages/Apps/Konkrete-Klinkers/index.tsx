@@ -39,6 +39,7 @@ export { default as StockManagmentEditDetail } from './BufferStockManagement/edi
 
 export { default as DispatchView } from './Dispatch/view';
 export { default as DispatchEditDetail } from './Dispatch/detail'; ///////////////
+export { default as DispatchViewDetail } from './Dispatch/dispatchViewDetail'; ///////////////
 export { default as DispatchCreate } from './Dispatch/create';
 export { default as DipatchInvoiceView } from './Dispatch/invoice';
 

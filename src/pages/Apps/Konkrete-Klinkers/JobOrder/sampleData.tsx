@@ -38,9 +38,9 @@ const rowData: JobOrder[] = [
         clientName: 'Client Alpha',
         projectName: 'Project Phoenix',
         products: [
-            { productId: 'P-001',productName:'Paver Black', uom: 'No', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
-            { productId: 'P-001',productName:'Paver Grey', uom: 'No', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
-            { productId: 'P-002',productName:'Paver Red', uom: 'No', poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' },
+            { productId: 'P-001',productName:'1000010188/Paver Black 200*200*60', uom: 'Nos', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
+            { productId: 'P-001',productName:'1000010184/Paver Grey 200*200*60', uom: 'Nos', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
+            { productId: 'P-002',productName:'1000010186/Paver Red 200*200*60', uom: 'Nos', poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' },
         ],
     },
     {
@@ -55,7 +55,7 @@ const rowData: JobOrder[] = [
         factoryName: 'Factory Y',
         clientName: 'Client Beta',
         projectName: 'Project Pegasus',
-        products: [{ productId: 'P-003',productName:'Paver Yellow', uom: 'No', poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }],
+        products: [{ productId: 'P-003',productName:'1000010464/Paver Yellow 200*200*60', uom: 'Nos', poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }],
     },
 ];
 

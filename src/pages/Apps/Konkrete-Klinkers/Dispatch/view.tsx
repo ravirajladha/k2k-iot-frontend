@@ -20,8 +20,8 @@ const rowData = [
         projectName:'Project Phoenix',
         jobOrder: 'JO12345',
         products: [
-            { productId: 'PRD001',productName:'Paver Red', quantity: 10 },
-            { productId: 'PRD002',productName:'Paver Black', quantity: 5 },
+            { productId: 'PRD001',productName:'1000010186/Paver Red 200*200*60', quantity: 10 },
+            { productId: 'PRD002',productName:'1000010188/Paver Black 200*200*60', quantity: 5 },
         ],
         invoiceNo: 'INV123456',
         rejectedQuantity: '22',
@@ -36,8 +36,8 @@ const rowData = [
         projectName:'Project Abc',
         jobOrder: 'JO12346',
         products: [
-            { productId: 'PRD003',productName:'Paver Yellow', quantity: 8 },
-            { productId: 'PRD004',productName:'Paver Red',quantity: 12 },
+            { productId: 'PRD003',productName:'1000010464/Paver Yellow 200*200*60', quantity: 8 },
+            { productId: 'PRD004',productName:'1000010186/Paver Red 200*200*60',quantity: 12 },
         ],
         invoiceNo: 'INV123457',
         rejectedQuantity: '22',
@@ -53,9 +53,9 @@ const rowData = [
         projectName:'Project Beta',
         jobOrder: 'JO12347',
         products: [
-            { productId: 'PRD005',productName:'Paver Grey', quantity: 15 },
-            { productId: 'PRD006',productName:'Paver Dark Grey', quantity: 7 },
-            { productId: 'PRD007',productName:'Paver red', quantity: 3 },
+            { productId: 'PRD005',productName:'1000010184/Paver Grey 200*200*60', quantity: 15 },
+            { productId: 'PRD006',productName:'1000010185/Paver Dark Grey 200*200*60', quantity: 7 },
+            { productId: 'PRD007',productName:'1000010186/Paver Red 200*200*60', quantity: 3 },
         ],
         invoiceNo: 'INV123458',
         rejectedQuantity: '22',
@@ -286,7 +286,7 @@ const ColumnChooser = () => {
                                         <NavLink to ={`/konkrete-klinkers/dispatch/editDetail`} state={{ rowData: row }} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`/view/${row.sl_no}`} className="flex hover:text-primary">
+                                        <NavLink to={`/konkrete-klinkers/dispatch/detail`} state={{ rowData: row }} className="flex hover:text-primary">
                                             <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>

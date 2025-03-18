@@ -35,12 +35,12 @@ interface Product {
 const rowData = [
     {
         materialCode: 1000010188,
-        productDescription: 'Paver Black',
+        productDescription: 'Paver Black 200*200*60',
         quantity: 500,
         bufferQuantity: 100,
         requiredQuantity: 300,
         balanceQuantity: 200,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 5,
         qtyInBundle: 6.4,
         qtyInNoPerBundle: 160,
@@ -48,12 +48,12 @@ const rowData = [
     },
     {
         materialCode: 1000010184,
-        productDescription: 'Paver Grey',
+        productDescription: 'Paver Grey 200*200*60',
         quantity: 250,
         bufferQuantity: 100,
         requiredQuantity: 200,
         balanceQuantity: 50,
-        unitOfMeasurement: 'nos',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 10,
         qtyInBundle: 25,
         qtyInNoPerBundle: 25,
@@ -61,12 +61,12 @@ const rowData = [
     },
     {
         materialCode: 1000010189,
-        productDescription: 'Pavers Dark Grey',
+        productDescription: 'Paver Dark Grey 200*200*60',
         quantity: 100,
         bufferQuantity: 100,
         requiredQuantity: 80,
         balanceQuantity: 20,
-        unitOfMeasurement: 'nos',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 2,
         qtyInBundle: 20,
         qtyInNoPerBundle: 20,
@@ -74,12 +74,12 @@ const rowData = [
     },
     {
         materialCode: 1000010464,
-        productDescription: 'Paver Yellow',
+        productDescription: 'Paver Yellow 200*200*60',
         quantity: 1000,
         bufferQuantity: 100,
         requiredQuantity: 900,
         balanceQuantity: 100,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 8,
         qtyInBundle: 8.32,
         qtyInNoPerBundle: 208,
@@ -303,7 +303,7 @@ const ColumnChooser = () => {
                                             <IconEye />
                                         </NavLink>
 
-                                        <div>
+                                        {/* <div>
                                             <button
                                                 onClick={() => {
                                                     const product = rowData.find((item) => item.materialCode === materialCode);
@@ -315,7 +315,7 @@ const ColumnChooser = () => {
                                             >
                                                 View
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 ),
                             },

@@ -64,7 +64,7 @@ export const pastReports: Report[] = [
         startedAt: "07:45 AM",
         stoppedAt: "06:30 PM",
         status: "Running",
-        date: "2024-12-20"
+        date: "2025-03-17"
     },
     {
         workOrderNumber: "WO-2002",
@@ -88,7 +88,32 @@ export const pastReports: Report[] = [
         startedAt: "08:00 AM",
         stoppedAt: "07:00 PM",
         status: "Finished",
-        date: "2024-12-18"
+        date: "2025-03-16"
+    }
+    ,
+    {
+        workOrderNumber: "WO-2002",
+        jobOrderNumber: "JO-3002",
+        batchNumber: "Batch001",
+
+        clientName: "Reliance Infra",
+        projectName: "Bangalore Smart City",
+        productName: "Paver Red",
+        plantName: "Plant 2",
+        salesOrder: "SL-456",
+        materialCode: "1000010186",
+        UOM: "Nos",
+        POQuantity: 1000,
+        plannedQuantity: 800,
+        balancedQuantity: 50,
+        achievedTillNow: 750,
+        rejectQuantity: 10,
+        recycleQuantity: 20,
+        startedBy: "Pooja Mehta",
+        startedAt: "08:00 AM",
+        stoppedAt: "07:00 PM",
+        status: "Finished",
+        date: "2025-03-15"
     }
 ];
 
@@ -114,7 +139,7 @@ export const currentReports: Report[] = [
         startedAt: "08:30 AM",
         stoppedAt: null,
         status: "Running",
-        date: "2025-01-10"
+        date: "2025-03-18"
     },
     {
         workOrderNumber: "WO-1002",
@@ -138,7 +163,7 @@ export const currentReports: Report[] = [
         startedAt: "09:00 AM",
         stoppedAt: null,
         status: "Stopped",
-        date: "2025-01-12"
+        date: "2025-03-18"
     }
 ];
 
@@ -165,7 +190,7 @@ export const futureReports: Report[] = [
         startedAt: null,
         stoppedAt: null,
         status: "Not Started",
-        date: "2025-02-15"
+        date: "2025-03-20"
     },
     {
         workOrderNumber: "WO-3002",
@@ -189,7 +214,7 @@ export const futureReports: Report[] = [
         startedAt: null,
         stoppedAt: null,
         status: "Not Started",
-        date: "2025-03-10"
+        date: "2025-03-21"
     }
 ];
 

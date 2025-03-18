@@ -128,7 +128,7 @@ const ProductionPlanning = () => {
 
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: 'Product 1', uom: 'KG', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 },
+        { id: 1, title: '1000010464/Paver Yellow 200*200*60', uom: 'Nos', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 },
 
     ]);
 

@@ -25,6 +25,7 @@ const rowData = [
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
+        productName: '1000010188/Paver Black 200*200*60',
         rejectedQuantity: 5,
         recycledQuantity: 3,
         remark:"Brick broken due to excess water",
@@ -37,6 +38,7 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
+        productName: '1000010184/Paver Grey 200*200*60',
         rejectedQuantity: 2,
         recycledQuantity: 1,
         remark:"Base material is not properly compacted",
@@ -49,6 +51,7 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
+        productName: '1000010186/Paver Red 200*200*60',
         rejectedQuantity: 8,
         recycledQuantity: 5,
         remark:"Extreme temperature change leading to cracks. ",
@@ -93,6 +96,7 @@ const ColumnChooser = () => {
         { accessor: 'workOrder', title: 'Work Order' },
         { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'productName', title: 'Product Name' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
         { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
         { accessor: 'remark', title: 'Remark' },
@@ -135,6 +139,7 @@ const ColumnChooser = () => {
                     item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
                     item.jobOrder.toLowerCase().includes(search.toLowerCase()) ||
                     item.productId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productName.toLowerCase().includes(search.toLowerCase()) ||
                     item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
                     item.recycledQuantity.toString().includes(search.toLowerCase()) ||
                     item.remark.toString().includes(search.toLowerCase()) ||
@@ -234,9 +239,13 @@ const ColumnChooser = () => {
                                 accessor: 'jobOrder', title: 'Job Order', sortable: true,
                                 hidden: hideCols.includes('jobOrder'),
                             },
+                            // {
+                            //     accessor: 'productId', title: 'Product ID', sortable: true,
+                            //     hidden: hideCols.includes('productId'),
+                            // },
                             {
-                                accessor: 'productId', title: 'Product ID', sortable: true,
-                                hidden: hideCols.includes('productId'),
+                                accessor: 'productName', title: 'Product Name', sortable: true,
+                                hidden: hideCols.includes('Product Name'),
                             },
                             {
                                 accessor: 'rejectedQuantity', title: 'Rejected Quantity', sortable: true,
@@ -345,8 +354,8 @@ const ColumnChooser = () => {
                                                         <p className="text-sm">{selectedQCCheck.jobOrder}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-semibold">Product ID:</p>
-                                                        <p className="text-sm">{selectedQCCheck.productId}</p>
+                                                        <p className="text-sm font-semibold">Product Name:</p>
+                                                        <p className="text-sm">{selectedQCCheck.productName}</p>
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-semibold">Rejected Quantity:</p>
@@ -366,7 +375,7 @@ const ColumnChooser = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-semibold">Remark:</p>
-                                                        <p className="text-sm">Brick broken due to excess water.</p>
+                                                        <p className="text-sm">{selectedQCCheck.remark}</p>
                                                     </div>
                                                 </div>
                                             ) : (

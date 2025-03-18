@@ -36,6 +36,7 @@ import {
     PackingCreate,
     DispatchView,
     DispatchEditDetail, //////////
+    DispatchViewDetail, //////////
     DispatchCreate,
     DipatchInvoiceView,
     HelperClients,
@@ -247,6 +248,11 @@ export const konkereKlinkersRoutes = [
     {
         path: `${basePath}/dispatch/editDetail`,
         element: <DispatchEditDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/detail`,
+        element: <DispatchViewDetail />,
         layout: 'admin',
     },
     {

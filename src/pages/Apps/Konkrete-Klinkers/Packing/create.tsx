@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BarcodeScannerComponent from 'react-qr-barcode-scanner';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Select from 'react-select';
 
@@ -12,17 +12,18 @@ const PackingCreation = () => {
         productName: '',
         totalBricks: '',
         totalBatches: '',
-        uom:'',
+        uom: '',
         batchInputs: [] as number[],
     });
+    console.log('formData', formData);
 
     const [isScannerOpen, setIsScannerOpen] = useState(false);
     const [balancedQuantity, setBalancedQuantity] = useState(0);
     const [isGenerated, setIsGenerated] = useState(false);
 
-    const products = ['Paver Black', 'Paver Grey', 'Paver Dark', 'Paver Red','Paver Yellow'];
-    const workOrders = ["Work Order A", "Work Order B", "Work Order C"];
-    const uoms = ["sqmt", "nos"];
+    const products = ['Paver Black', 'Paver Grey', 'Paver Dark', 'Paver Red', 'Paver Yellow'];
+    const workOrders = ['Work Order A', 'Work Order B', 'Work Order C'];
+    const uoms = ['sqmt', 'nos'];
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -43,8 +44,13 @@ const PackingCreation = () => {
         if (isNaN(totalBricks) || isNaN(totalBatches) || totalBatches === 0) return;
 
         let baseBlocks = Math.floor(totalBricks / totalBatches);
+        console.log('baseBlocks', baseBlocks);
+
         let remainder = totalBricks % totalBatches;
+        console.log('remainder', remainder);
+
         let batchValues = new Array(totalBatches).fill(baseBlocks);
+        console.log('batchValues', batchValues);
 
         for (let i = 0; i < remainder; i++) {
             batchValues[i] += 1;
@@ -118,7 +124,7 @@ const PackingCreation = () => {
                             </label>
                             <Select
                                 options={workOrderOptions}
-                                value={workOrderOptions.find(option => option.value === formData.workOrder)}
+                                value={workOrderOptions.find((option) => option.value === formData.workOrder)}
                                 onChange={handleSelectChange('workOrder')}
                                 placeholder="Select Work Order"
                                 isSearchable
@@ -131,7 +137,7 @@ const PackingCreation = () => {
                             </label>
                             <Select
                                 options={productOptions}
-                                value={productOptions.find(option => option.value === formData.productName)}
+                                value={productOptions.find((option) => option.value === formData.productName)}
                                 onChange={handleSelectChange('productName')}
                                 placeholder="Select Product"
                                 isSearchable
@@ -146,7 +152,7 @@ const PackingCreation = () => {
                                 id="totalBricks"
                                 name="totalBricks"
                                 type="number"
-                                placeholder="Enter Total Bricks"
+                                placeholder="Enter Total Quantity"
                                 className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
                                 value={formData.totalBricks}
                                 onChange={handleInputChange}
@@ -174,7 +180,7 @@ const PackingCreation = () => {
                             </label>
                             <Select
                                 options={uomOptions}
-                                value={uomOptions.find(option => option.value === formData.uom)}
+                                value={uomOptions.find((option) => option.value === formData.uom)}
                                 onChange={handleSelectChange('uom')}
                                 placeholder="Select Product"
                                 isSearchable
@@ -187,11 +193,7 @@ const PackingCreation = () => {
                             <h5 className="font-semibold text-lg">Packing Details</h5>
                             <p className="text-gray-600">Balanced Quantity: {balancedQuantity}</p>
                         </div>
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={generateBatchInputs}
-                        >
+                        <button type="button" className="btn btn-primary" onClick={generateBatchInputs}>
                             Generate
                         </button>
                     </div>
@@ -199,9 +201,7 @@ const PackingCreation = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-2">
                         {formData.batchInputs.map((value, index) => (
                             <div key={index}>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Bundle {index + 1}
-                                </label>
+                                <label className="block text-sm font-medium text-gray-700">Bundle {index + 1}</label>
                                 <input
                                     type="number"
                                     className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
@@ -213,9 +213,6 @@ const PackingCreation = () => {
                     </div>
 
                     <div className="flex gap-4">
-
-
-
                         <button type="submit" className="btn btn-success w-1/2">
                             <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
                             Submit
@@ -225,10 +222,9 @@ const PackingCreation = () => {
                             Cancel
                         </button>
                     </div>
-
                 </form>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 
