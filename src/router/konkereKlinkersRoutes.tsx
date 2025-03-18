@@ -26,6 +26,8 @@ import {
     ProductView,
     ProductCreate,
     InventoryView,
+    InventoryViewNew,
+    InventoryViewDetail,
 
     // PackingView,
     PackingViewNew, ////
@@ -48,6 +50,8 @@ import {
     HelperMachineCreate,
     StockManagementView,
     StockManagementCreate,
+    StockManagmentViewDetail,
+    StockManagmentEditDetail
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -167,9 +171,19 @@ export const konkereKlinkersRoutes = [
     },
     
     // Inventory
+    // {
+    //     path: `${basePath}/inventories`,
+    //     element: <InventoryView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/inventories`,
-        element: <InventoryView />,
+        element: <InventoryViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/inventory/detail`,
+        element: <InventoryViewDetail />,
         layout: 'admin',
     },
     {
@@ -188,6 +202,16 @@ export const konkereKlinkersRoutes = [
     {
         path: `${basePath}/stockManagement/create`,
         element: <StockManagementCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/stockManagement/detail`,
+        element: <StockManagmentViewDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/stockManagement/editDetail`,
+        element: <StockManagmentEditDetail />,
         layout: 'admin',
     },
     

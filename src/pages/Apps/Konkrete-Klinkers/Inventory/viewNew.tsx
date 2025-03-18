@@ -1,6 +1,6 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
@@ -141,7 +141,7 @@ const ColumnChooser = () => {
         { accessor: 'qtyInBundle', title: 'Quantity in Bundle' },
         { accessor: 'qtyInNoPerBundle', title: 'Quantity in No. Per Bundle' },
         { accessor: 'status', title: 'Status' },
-        { accessor: 'action', title: 'Actions' }, // Placeholder for actions like edit/delete.
+        { accessor: 'action', title: 'Actions' }, //Placeholder for actions like edit/delete.
     ];
 
     const breadcrumbItems = [
@@ -297,16 +297,17 @@ const ColumnChooser = () => {
                                         <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`/view/${materialCode}`} className="flex hover:text-primary">
+
+                                        {/* Pass the entire rowData array */}
+                                        <NavLink to={`/konkrete-klinkers/inventory/detail`} state={{ rowData, materialCode }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
 
-                                        {/* SlideIn Down */}
                                         <div>
                                             <button
                                                 onClick={() => {
                                                     const product = rowData.find((item) => item.materialCode === materialCode);
-                                                    setSelectedProduct(product || null); // Handle undefined case by setting null
+                                                    setSelectedProduct(product || null);
                                                     setModal10(true);
                                                 }}
                                                 type="button"

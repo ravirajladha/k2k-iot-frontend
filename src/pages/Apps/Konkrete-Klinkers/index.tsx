@@ -20,6 +20,8 @@ export { default as ProductView } from './Product/view';
 export { default as ProductCreate } from './Product/create';
 
 export { default as InventoryView } from './Inventory/view';
+export { default as InventoryViewNew } from './Inventory/viewNew';
+export { default as InventoryViewDetail } from './Inventory/detail';
 export { default as InventoryCreate } from './Inventory/create';
 
 // export { default as InventoryView } from './Inventory/view';
@@ -27,24 +29,26 @@ export { default as InventoryCreate } from './Inventory/create';
 
 // export { default as PackingView } from './Packing/view';
 export { default as PackingViewNew } from './Packing/viewNew'; /////////// New
-export { default as PackingDetail } from './Packing/detail';  //////////
+export { default as PackingDetail } from './Packing/detail'; //////////
 export { default as PackingCreate } from './Packing/create';
 
 export { default as StockManagementView } from './BufferStockManagement/view';
 export { default as StockManagementCreate } from './BufferStockManagement/create';
+export { default as StockManagmentViewDetail } from './BufferStockManagement/detail'; /////New
+export { default as StockManagmentEditDetail } from './BufferStockManagement/editStockDetail'; /////New
 
 export { default as DispatchView } from './Dispatch/view';
 export { default as DispatchEditDetail } from './Dispatch/detail'; ///////////////
 export { default as DispatchCreate } from './Dispatch/create';
 export { default as DipatchInvoiceView } from './Dispatch/invoice';
 
-export { default as HelperClients} from './Helpers/Clients/view';
+export { default as HelperClients } from './Helpers/Clients/view';
 export { default as HelperClientCreate } from './Helpers/Clients/create';
 
-export { default as HelperProjects} from './Helpers/Projects/view';
+export { default as HelperProjects } from './Helpers/Projects/view';
 export { default as HelperProjectCreate } from './Helpers/Projects/create';
 
-export { default as HelperPlants} from './Helpers/Plants/view';
+export { default as HelperPlants } from './Helpers/Plants/view';
 export { default as HelperPlantCreate } from './Helpers/Plants/create';
 
 export { default as HelperFactories } from './Helpers/Factories/view';

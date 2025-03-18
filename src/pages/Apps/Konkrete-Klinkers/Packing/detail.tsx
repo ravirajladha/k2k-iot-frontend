@@ -69,6 +69,12 @@ const JobOrderPage = () => {
                                 <strong>Status:</strong> {rowData.status || 'N/A'}
                             </p>
                             <p className="text-sm">
+                                <strong>Total Quantity:</strong> {rowData.totalQuantity || 'N/A'}
+                            </p>
+                            <p className="text-sm">
+                                <strong>UOM:</strong> Nos
+                            </p>
+                            <p className="text-sm">
                                 <strong>Created By:</strong> {rowData.createdBy || 'N/A'}
                             </p>
                             <p className="text-sm">
@@ -102,7 +108,7 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
+                                        <div className="font-semibold">Bundle No</div>
                                         <div>: 1</div>
                                         <div>
                                             <strong>Qty</strong>
@@ -146,8 +152,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
-                                        <div>: 1</div>
+                                        <div className="font-semibold">Bundle No</div>
+                                        <div>: 2</div>
                                         <div>
                                             <strong>Qty</strong>
                                         </div>
@@ -192,8 +198,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
-                                        <div>: 1</div>
+                                        <div className="font-semibold">Bundle No</div>
+                                        <div>: 3</div>
                                         <div>
                                             <strong>Qty</strong>
                                         </div>
@@ -235,8 +241,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
-                                        <div>: 1</div>
+                                        <div className="font-semibold">Bundle No</div>
+                                        <div>: 4</div>
                                         <div>
                                             <strong>Qty</strong>
                                         </div>
@@ -280,8 +286,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
-                                        <div>: 1</div>
+                                        <div className="font-semibold">Bundle No</div>
+                                        <div>: 5</div>
                                         <div>
                                             <strong>Qty</strong>
                                         </div>
@@ -324,8 +330,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
-                                        <div className="font-semibold">Batch No</div>
-                                        <div>: 1</div>
+                                        <div className="font-semibold">Bundle No</div>
+                                        <div>: 6</div>
                                         <div>
                                             <strong>Qty</strong>
                                         </div>

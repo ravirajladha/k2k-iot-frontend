@@ -14,18 +14,20 @@ interface Report {
     clientName: string;
     projectName: string;
     productName: string;
+    plantName: string;
+    salesOrder: string;
     materialCode: string;
     UOM: string;
     POQuantity: number;
     plannedQuantity: number;
-    balancedQuantity:number;
+    balancedQuantity: number;
     achievedTillNow: number;
     rejectQuantity: number;
     recycleQuantity: number;
     startedBy: string;
     startedAt: string | null;
     stoppedAt: string | null;
-    status: "Running" | "Stopped" | "Not Started" | "Finished";
+    status: 'Running' | 'Stopped' | 'Not Started' | 'Finished';
 }
 
 const DPR = () => {
@@ -43,13 +45,7 @@ const DPR = () => {
     // ✅ **Ensure correct work order number is used**
     const handleStartStop = (workOrderNumber: string) => {
         console.log(`Toggling status for Work Order: ${workOrderNumber}`);
-        setReports((prevReports) =>
-            prevReports.map((report) =>
-                report.workOrderNumber === workOrderNumber
-                    ? { ...report, status: report.status === "Running" ? "Stopped" : "Running" }
-                    : report
-            )
-        );  
+        setReports((prevReports) => prevReports.map((report) => (report.workOrderNumber === workOrderNumber ? { ...report, status: report.status === 'Running' ? 'Stopped' : 'Running' } : report)));
     };
 
     // useEffect(() => {
@@ -58,33 +54,27 @@ const DPR = () => {
 
     const handleComplete = (workOrderNumber: string) => {
         console.log(`Completing Work Order: ${workOrderNumber}`);
-        setReports((prevReports) =>
-            prevReports.map((report) =>
-                report.workOrderNumber === workOrderNumber
-                    ? { ...report, status: "Finished" }
-                    : report
-            )
-        );
+        setReports((prevReports) => prevReports.map((report) => (report.workOrderNumber === workOrderNumber ? { ...report, status: 'Finished' } : report)));
     };
 
     const handleRefresh = () => {
-        console.log("Refreshing Data...");
+        console.log('Refreshing Data...');
         setReports([...currentReports]); // Reset reports
     };
 
     // ✅ **Ensure correct colors are applied**
-    const getStatusColor = (status: Report["status"]) => {
+    const getStatusColor = (status: Report['status']) => {
         switch (status) {
-            case "Running":
-                return "bg-green-500 text-white";
-            case "Stopped":
-                return "bg-red-500 text-white";
-            case "Not Started":
-                return "bg-gray-500 text-white";
-            case "Finished":
-                return "bg-blue-500 text-white";
+            case 'Running':
+                return 'bg-green-500 text-white';
+            case 'Stopped':
+                return 'bg-red-500 text-white';
+            case 'Not Started':
+                return 'bg-gray-500 text-white';
+            case 'Finished':
+                return 'bg-blue-500 text-white';
             default:
-                return "bg-gray-400 text-white";
+                return 'bg-gray-400 text-white';
         }
     };
 
@@ -93,20 +83,16 @@ const DPR = () => {
             <h5 className="text-lg font-semibold mb-4">Production Planning</h5>
 
             {/* TABS FOR PAST, CURRENT, FUTURE DPR */}
-            <Tab.Group defaultIndex={1} >  {/* Set 'Current DPR' as default (index 1) */}
+            <Tab.Group defaultIndex={1}>
+                {' '}
+                {/* Set 'Current DPR' as default (index 1) */}
                 <Tab.List className="flex gap-2">
-                    {["Past DPR", "Current DPR", "Future DPR"].map((tab, index) => (
+                    {["Yesterday's DPR", "Today's DPR", 'Future DPR'].map((tab, index) => (
                         <Tab key={index} as={Fragment}>
-                            {({ selected }) => (
-                                <button className={`p-3 rounded ${selected ? 'bg-warning text-white' : ''} hover:bg-warning hover:text-white`}>
-                                    {tab}
-                                </button>
-                            )}
+                            {({ selected }) => <button className={`p-3 rounded ${selected ? 'bg-warning text-white' : ''} hover:bg-warning hover:text-white`}>{tab}</button>}
                         </Tab>
                     ))}
                 </Tab.List>
-
-
                 <Tab.Panels>
                     {/* Past DPR */}
                     <Tab.Panel>
@@ -160,11 +146,7 @@ const DPR = () => {
             />
 
             {/* Production Logs Modal */}
-            <ProductionLogsModal
-                isOpen={isLogsModalOpen}
-                setShowLogs={setIsLogsModalOpen}
-                productionLogs={sampleProductionLogs}
-            />
+            <ProductionLogsModal isOpen={isLogsModalOpen} setShowLogs={setIsLogsModalOpen} productionLogs={sampleProductionLogs} />
         </div>
     );
 };

@@ -16,6 +16,8 @@ const rowData = [
     {
         sl_no: 1,
         workOrder: 'WO12345',
+        clientName:'Client Alpha',
+        projectName:'Project Phoenix',
         jobOrder: 'JO12345',
         products: [
             { productId: 'PRD001',productName:'Paver Red', quantity: 10 },
@@ -30,6 +32,8 @@ const rowData = [
     {
         sl_no: 2,
         workOrder: 'WO12346',
+        clientName:'ABC Corp',
+        projectName:'Project Abc',
         jobOrder: 'JO12346',
         products: [
             { productId: 'PRD003',productName:'Paver Yellow', quantity: 8 },
@@ -45,6 +49,8 @@ const rowData = [
     {
         sl_no: 3,
         workOrder: 'WO12347',
+        clientName:'Client Beta',
+        projectName:'Project Beta',
         jobOrder: 'JO12347',
         products: [
             { productId: 'PRD005',productName:'Paver Grey', quantity: 15 },
@@ -102,6 +108,8 @@ const ColumnChooser = () => {
     const cols = [
         { accessor: 'sl_no', title: 'SL No' },
         { accessor: 'workOrder', title: 'Work Order' },
+        { accessor: 'clientName', title: 'Client Name' },
+        { accessor: 'projectName', title: 'project Name' },
         { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
         { accessor: 'productName', title: 'Product Name' },
@@ -225,6 +233,18 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('workOrder'),
                             },
                             {
+                                accessor: 'clientName',
+                                title: 'Client Name',
+                                sortable: true,
+                                hidden: hideCols.includes('clientName'),
+                            },
+                            {
+                                accessor: 'projectName',
+                                title: 'Project Name',
+                                sortable: true,
+                                hidden: hideCols.includes('projectName'),
+                            },
+                            {
                                 accessor: 'products',
                                 title: 'Products',
                                 sortable: false,
@@ -239,12 +259,12 @@ const ColumnChooser = () => {
                                     </div>
                                 ),
                             },
-                            {
-                                accessor: 'rejectedQuantity',
-                                title: 'Rejected Quantity',
-                                sortable: true,
-                                hidden: hideCols.includes('rejectedQuantity'),
-                            },
+                            // {
+                            //     accessor: 'rejectedQuantity',
+                            //     title: 'Rejected Quantity',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('rejectedQuantity'),
+                            // },
                             {
                                 accessor: 'createdBy',
                                 title: 'Created By',

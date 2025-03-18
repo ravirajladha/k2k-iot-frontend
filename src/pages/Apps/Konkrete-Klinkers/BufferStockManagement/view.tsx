@@ -13,35 +13,39 @@ import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 
 interface BufferStockRecord {
     workOrderId: string;
+    jobOrderId: string;
     product_id: string;
     quantity: number;
     to_work_order_id: string;
+    to_job_order_id: string;
     status: string;
     timestamp: string;
     createdBy: string;
 }
 
-
 const rowData: BufferStockRecord[] = [
     {
         workOrderId: 'WO1234',
+        jobOrderId: 'JO1234',
         product_id: 'P1234',
         quantity: 500,
         to_work_order_id: 'WO5678',
+        to_job_order_id: 'JO5678',
         status: 'Active',
         timestamp: '2025-01-01 10:30 AM',
         createdBy: 'Bharath',
     },
     {
         workOrderId: 'WO5678',
+        jobOrderId: 'JO5678',
         product_id: 'P5678',
         quantity: 200,
         to_work_order_id: 'WO1234',
+        to_job_order_id: 'JO1234',
         status: 'Completed',
         timestamp: '2025-01-02 11:00 AM',
         createdBy: 'Kunal',
@@ -102,7 +106,6 @@ const BufferStockManagement = () => {
         { accessor: 'action', title: 'Actions' }, // Placeholder for actions like edit/delete.
     ];
 
-
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '#', isActive: false },
@@ -123,15 +126,11 @@ const BufferStockManagement = () => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
                 // Check all object values for a match with the search string
-                return Object.values(item).some((value) =>
-                    value.toString().toLowerCase().includes(search.toLowerCase())
-                );
+                return Object.values(item).some((value) => value.toString().toLowerCase().includes(search.toLowerCase()));
             });
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
-
-
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
@@ -142,11 +141,7 @@ const BufferStockManagement = () => {
 
     return (
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Add', link: '/konkrete-klinkers/stockManagement/create',
-                    icon: <IconPlusCircle className="text-4xl" /> }}
-                />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Add', link: '/konkrete-klinkers/stockManagement/create', icon: <IconPlusCircle className="text-4xl" /> }} />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
@@ -232,12 +227,9 @@ const BufferStockManagement = () => {
                                 sortable: true,
                                 render: ({ status }) => (
                                     <span
-                                        className={`px-2 py-1 text-sm font-medium rounded ${status === 'Active'
-                                                ? 'bg-green-100 text-green-700'
-                                                : status === 'Completed'
-                                                    ? 'bg-blue-100 text-blue-700'
-                                                    : 'bg-red-100 text-red-700'
-                                            }`}
+                                        className={`px-2 py-1 text-sm font-medium rounded ${
+                                            status === 'Active' ? 'bg-green-100 text-green-700' : status === 'Completed' ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'
+                                        }`}
                                     >
                                         {status}
                                     </span>
@@ -256,12 +248,12 @@ const BufferStockManagement = () => {
                             {
                                 accessor: 'actions',
                                 title: 'Actions',
-                                render: ({ workOrderId }) => (
+                                render: (recordsData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/edit/${workOrderId}`} className="flex hover:text-info">
+                                        <NavLink to={`/konkrete-klinkers/stockManagement/editDetail`} state={{ rowData: recordsData }} className="flex hover:text-info">
                                             <span className="btn btn-sm btn-outline-primary">Edit</span>
                                         </NavLink>
-                                        <NavLink to={`/view/${workOrderId}`} className="flex hover:text-primary">
+                                        <NavLink to={`/konkrete-klinkers/stockManagement/detail`} state={{ rowData: recordsData }} className="flex hover:text-primary">
                                             <span className="btn btn-sm btn-outline-secondary">View</span>
                                         </NavLink>
                                     </div>
@@ -278,15 +270,8 @@ const BufferStockManagement = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
-
-
-
-
-
                 </div>
             </div>
         </div>

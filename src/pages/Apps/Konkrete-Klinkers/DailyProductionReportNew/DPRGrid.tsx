@@ -13,6 +13,8 @@ interface Report {
     clientName: string;
     projectName: string;
     productName: string;
+    plantName: string;
+    salesOrder: string;
     materialCode: string;
     UOM: string;
     POQuantity: number;
@@ -74,6 +76,12 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Job Order No:</span> <span>{report.jobOrderNumber}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-semibold">Sales Order No:</span> <span>{report.salesOrder}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-semibold">Plant Name:</span> <span>{report.plantName}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Batch No:</span> <span>{report.batchNumber}</span>
