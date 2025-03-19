@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import IconSave from '@/components/Icon/IconSave';
+import IconTrashLines from '@/components/Icon/IconTrashLines';
 
 const JobOrderPage = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    const { rowData } = location.state || {}; // Access the rowData passed from the previous component
+    const { rowData, mode } = location.state || {};
     console.log('rowData', rowData);
 
     React.useEffect(() => {
@@ -39,13 +41,10 @@ const JobOrderPage = () => {
             <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
-            <div className="p-4 pt-10">
-                {/* Client Details Section */}
+            <div className="p-4 pt-10 border">
                 <div className="panel mb-6 p-4 rounded-lg">
                     <h2 className="text-lg font-semibold mb-4">Packing Details</h2>
-
                     <div className="bg-white p-4 w-full flex flex-row gap-4">
-                        {/* Left Section: Client Details */}
                         <div className="bg-yellow-50 p-4 rounded-md shadow flex-1">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
                             <p className="text-sm">
@@ -55,12 +54,10 @@ const JobOrderPage = () => {
                                 <strong>Project Name:</strong> {rowData.projectName || 'Project Phoenix'}
                             </p>
                         </div>
-
-                        {/* Right Section: Work Order Details */}
                         <div className="bg-blue-50 p-4 flex flex-col flex-1 rounded-lg shadow-md">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
                             <p className="text-sm">
-                                <strong>Work Order Id:</strong> {rowData.workOrder || 'N/A'}
+                                <strong>Work Order Id:</strong> {rowData.workOrder}
                             </p>
                             <p className="text-sm">
                                 <strong>Job Order ID:</strong> {rowData.jobOrder || 'N/A'}
@@ -84,20 +81,16 @@ const JobOrderPage = () => {
                     </div>
                 </div>
 
-                <div className="panel mb-6 border ">
+                <div className="panel mb-6 border">
                     <div className="flex flex-row gap-6 justify-center">
-                        {/* First Product Card */}
-                        <div className="product-card bg-gray-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
+                        <div className="product-card bg-gray-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 1</span>
                             </div>
-
                             <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
                                 <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
@@ -120,28 +113,25 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code */}
-                                <div className="flex items-center justify-center  flex flex-col">
+                                <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    <div>QR123</div>
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-
-                        {/* Second Product Card */}
-                        <div className="product-card bg-blue-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
+                        <div className="product-card bg-blue-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 2</span>
                             </div>
-
-                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
                                 <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
@@ -164,31 +154,28 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code */}
-                                <div className="flex items-center justify-center  flex flex-col">
+                                <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    <div>QR123</div>
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div className="flex flex-row gap-6 mt-6 justify-center">
-                        {/* Third Product Card */}
                         <div className="product-card bg-green-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 3</span>
                             </div>
-
                             <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
-                                <div className="product-details  p-2 text-xs">
+                                <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
                                         <div>: {rowData.workOrder}</div>
@@ -210,27 +197,25 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code */}
-                                <div className="flex items-center justify-center  flex flex-col">
+                                <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    <div>QR123</div>
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                        {/* Fourth Product Card */}
-                        <div className="product-card bg-gray-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
+                        <div className="product-card bg-gray-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 4</span>
                             </div>
-
-                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
                                 <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
@@ -253,29 +238,27 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code Input */}
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-row gap-6 mt-6 justify-center">
-                        {/* Fifth Product Card */}
-                        <div className="product-card bg-blue-100 border rounded-lg  shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
+                        <div className="product-card bg-blue-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 5</span>
                             </div>
-
-                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
                                 <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
@@ -298,29 +281,26 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code Input */}
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-
-                        {/* Sixth Product Card */}
                         <div className="product-card bg-green-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative">
-                            {/* S.No in the right corner */}
                             <div className="serial-number absolute left-0 top-0 p-1 text-right">
                                 <span className="font-semibold text-xs">S.No: 6</span>
                             </div>
-
-                            <div className="product-header border-b border-gray-400 pb-1 mb-1  w-full mt-6">
+                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
                                 <h3 className="text-sm font-semibold">Product: Paver Black</h3>
                             </div>
                             <div className="flex items-center justify-between">
-                                {/* Key-Value Data */}
-                                <div className="product-details  p-2 text-xs">
+                                <div className="product-details p-2 text-xs">
                                     <div className="grid grid-cols-2 gap-1">
                                         <div className="font-semibold">Work Order Id</div>
                                         <div>: {rowData.workOrder}</div>
@@ -342,18 +322,32 @@ const JobOrderPage = () => {
                                         <div>: Admin</div>
                                     </div>
                                 </div>
-
-                                {/* QR Code Input */}
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
-
                                     <strong className="mr-1">QR Id:</strong>
-                                    <input type="text" className="form-input px-2 py-1 w-48" />
+                                    {mode === 'create' ? (
+                                        <input type="text" className="form-input px-2 py-1 w-48" />
+                                    ) : (
+                                        <div>QR123</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {mode === 'create' && (
+                    <div className="flex gap-4">
+                        <button type="submit" className="btn btn-success w-1/2">
+                            <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                            Submit
+                        </button>
+                        <button type="button" className="btn btn-danger w-1/2">
+                            <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                            Cancel
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

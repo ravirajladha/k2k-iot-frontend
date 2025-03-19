@@ -128,13 +128,13 @@ const ProductionPlanning = () => {
 
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: '1000010464/Paver Yellow 200*200*60', uom: 'Nos', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 },
+        { id: 1, title: '1000010464/Paver Yellow 200*200*60',machineName:'', uom: 'Nos', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 },
 
     ]);
 
     const addItem = () => {
         const maxId = items.length ? Math.max(...items.map((item: any) => item.id)) : 0;
-        setItems([...items, { id: maxId + 1, title: '', uom: '', plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 }]);
+        setItems([...items, { id: maxId + 1, title: '',machineName:'', uom: '', plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 }]);
     };
 
     const removeItem = (item: any) => {
@@ -294,6 +294,7 @@ const ProductionPlanning = () => {
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>Machine Name</th>
                                         <th className="w-1">UOM (autofetch)</th>
                                         <th className="w-1">PO Quantity (autofetch)</th>
                                         <th className="w-1">Achieved Till Now (autofetch)</th>
@@ -322,6 +323,15 @@ const ProductionPlanning = () => {
                                                     className="form-input min-w-[200px]"
                                                     placeholder="Enter Item Name"
                                                     defaultValue={item.title}
+                                                    readOnly
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    className="form-input min-w-[200px]"
+                                                    placeholder="Enter Machine Name"
+                                                    defaultValue={item.machineName}
                                                     readOnly
                                                 />
                                             </td>

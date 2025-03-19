@@ -30,7 +30,8 @@ export { default as InventoryCreate } from './Inventory/create';
 // export { default as PackingView } from './Packing/view';
 export { default as PackingViewNew } from './Packing/viewNew'; /////////// New
 export { default as PackingDetail } from './Packing/detail'; //////////
-export { default as PackingCreate } from './Packing/create';
+// export { default as PackingCreate } from './Packing/create';
+export { default as PackingCreateNew } from './Packing/createNew';
 
 export { default as StockManagementView } from './BufferStockManagement/view';
 export { default as StockManagementCreate } from './BufferStockManagement/create';

@@ -74,7 +74,7 @@ const DPR = () => {
 
             <Tab.Group defaultIndex={1} onChange={handleTabChange}>
                 <Tab.List className="flex gap-2">
-                    {["Yesterday's DPR", "Today's DPR", 'Future DPR'].map((tab, index) => (
+                    {["Past DPR", "Today's DPR", 'Future DPR'].map((tab, index) => (
                         <Tab key={index} as={Fragment}>
                             {({ selected }) => <button className={`p-3 rounded ${selected ? 'bg-warning text-white' : ''} hover:bg-warning hover:text-white`}>{tab}</button>}
                         </Tab>

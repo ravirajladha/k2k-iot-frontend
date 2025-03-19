@@ -32,8 +32,11 @@ import {
     // PackingView,
     PackingViewNew, ////
     PackingDetail, /////
+    PackingCreateNew, ////////
+    // PackingCreate,
 
-    PackingCreate,
+
+
     DispatchView,
     DispatchEditDetail, //////////
     DispatchViewDetail, //////////
@@ -234,10 +237,15 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/packing/create`,
-        element: <PackingCreate />,
+        path: `${basePath}/packing/create`,   /////
+        element: <PackingCreateNew />,
         layout: 'admin',
     },
+    // {
+    //     path: `${basePath}/packing/create`,
+    //     element: <PackingCreate />,
+    //     layout: 'admin',
+    // },
     
     // Dispatch
     {

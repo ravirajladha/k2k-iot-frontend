@@ -6,6 +6,7 @@ export interface Report {
     clientName: string;
     projectName: string;
     plantName: string;
+    machineName: string;
     salesOrder: string;
     productName: string;
     materialCode: string;
@@ -49,6 +50,7 @@ export const pastReports: Report[] = [
         projectName: "Mumbai Metro Expansion",
         productName: "Paver Black",
         plantName: "Plant 1",
+        machineName: "Machine 1",
         salesOrder: "SL-123",
         materialCode: "1000010188",
         UOM: "Nos",
@@ -64,7 +66,7 @@ export const pastReports: Report[] = [
         startedAt: "07:45 AM",
         stoppedAt: "06:30 PM",
         status: "Running",
-        date: "2025-03-17"
+        date: "2025-03-18"
     },
     {
         workOrderNumber: "WO-2002",
@@ -75,6 +77,33 @@ export const pastReports: Report[] = [
         projectName: "Bangalore Smart City",
         productName: "Paver Red",
         plantName: "Plant 2",
+        machineName: "Machine 2",
+        salesOrder: "SL-456",
+        materialCode: "1000010186",
+        UOM: "Nos",
+        POQuantity: 1000,
+        plannedQuantity: 800,
+        balancedQuantity: 50,
+        achievedTillNow: 750,
+        rejectQuantity: 10,
+        recycleQuantity: 20,
+        startedBy: "Pooja Mehta",
+        startedAt: "08:00 AM",
+        stoppedAt: "07:00 PM",
+        status: "Finished",
+        date: "2025-03-17"
+    }
+    ,
+    {
+        workOrderNumber: "WO-2002",
+        jobOrderNumber: "JO-3002",
+        batchNumber: "Batch001",
+
+        clientName: "Reliance Infra",
+        projectName: "Bangalore Smart City",
+        productName: "Paver Red",
+        plantName: "Plant 2",
+        machineName: "Machine 3",
         salesOrder: "SL-456",
         materialCode: "1000010186",
         UOM: "Nos",
@@ -90,31 +119,6 @@ export const pastReports: Report[] = [
         status: "Finished",
         date: "2025-03-16"
     }
-    ,
-    {
-        workOrderNumber: "WO-2002",
-        jobOrderNumber: "JO-3002",
-        batchNumber: "Batch001",
-
-        clientName: "Reliance Infra",
-        projectName: "Bangalore Smart City",
-        productName: "Paver Red",
-        plantName: "Plant 2",
-        salesOrder: "SL-456",
-        materialCode: "1000010186",
-        UOM: "Nos",
-        POQuantity: 1000,
-        plannedQuantity: 800,
-        balancedQuantity: 50,
-        achievedTillNow: 750,
-        rejectQuantity: 10,
-        recycleQuantity: 20,
-        startedBy: "Pooja Mehta",
-        startedAt: "08:00 AM",
-        stoppedAt: "07:00 PM",
-        status: "Finished",
-        date: "2025-03-15"
-    }
 ];
 
 export const currentReports: Report[] = [
@@ -125,6 +129,7 @@ export const currentReports: Report[] = [
         projectName: "Metro Bridge",
         productName: "Paver Grey",
         plantName: "Plant 2",
+        machineName: "Machine 4",
         salesOrder: "SL-789",
         batchNumber: "Batch001",
         materialCode: "1000010184",
@@ -139,7 +144,7 @@ export const currentReports: Report[] = [
         startedAt: "08:30 AM",
         stoppedAt: null,
         status: "Running",
-        date: "2025-03-18"
+        date: "2025-03-19"
     },
     {
         workOrderNumber: "WO-1002",
@@ -150,6 +155,7 @@ export const currentReports: Report[] = [
         projectName: "Highway Expansion",
         productName: "Paver Dark Grey",
         plantName: "Plant 1",
+        machineName: "Machine 4",
         salesOrder: "SL-121",
         materialCode: "1000010185",
         UOM: "Nos",
@@ -163,7 +169,7 @@ export const currentReports: Report[] = [
         startedAt: "09:00 AM",
         stoppedAt: null,
         status: "Stopped",
-        date: "2025-03-18"
+        date: "2025-03-19"
     }
 ];
 
@@ -177,6 +183,7 @@ export const futureReports: Report[] = [
         projectName: "Delhi High-Speed Rail",
         productName: "Paver Grey",
         plantName: "Plant 3",
+        machineName: "Machine 5",
         salesOrder: "SL-122",
         materialCode: "1000010184",
         UOM: "Nos",
@@ -201,6 +208,7 @@ export const futureReports: Report[] = [
         projectName: "Hyderabad Airport Expansion",
         productName: "Paver Black",
         plantName: "Plant 1",
+        machineName: "Machine 6",
         salesOrder: "SL-124",
         materialCode: "1000010188",
         UOM: "Nos",

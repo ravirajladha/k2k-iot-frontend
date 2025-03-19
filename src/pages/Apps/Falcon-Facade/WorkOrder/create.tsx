@@ -40,12 +40,15 @@ interface FormData {
     uom: string;
     quantity: number;
     plantCode: string;
+    remarks: string;
     deliveryDate: string;
     dimensionA: string;
     dimensionB: string;
     projectName: string;
     workOrderNumber: string;
     workOrderDate: string;
+    prodReqDate: string;
+    prodReqrDate: string;
     productId: string;
     orderQuantity: string;
     files: any[]; // Added files property (adjust type if needed)
@@ -70,12 +73,15 @@ const Create = () => {
         uom: '',
         quantity: 0, // Default numeric value
         plantCode: '',
+        remarks: '',
         deliveryDate: '',
         dimensionA: '',
         dimensionB: '',
         projectName: '',
         workOrderNumber: '',
         workOrderDate: '',
+        prodReqDate: '',
+        prodReqrDate: '',
         productId: '',
         orderQuantity: '',
         files: [], // Ensure it's correctly initialized as an array
@@ -84,10 +90,11 @@ const Create = () => {
 
     const maxNumber = 5;
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    
 
     const handleFileChange = (imageList: ImageListType) => {
         setFormData((prev) => ({ ...prev, files: imageList }));
@@ -115,8 +122,9 @@ const Create = () => {
                 quantity: 0,
                 plantCode: "",
                 deliveryDate: "",
-                barMark: "", // Initialize Bar Mark
-                memberDetails: "", // Initialize Member Details
+                colorCode: "", // Initialize Bar Mark
+                width: "", // Initialize Member Details
+                height: "", // Initialize Member Details
                 shapes: [], // Ensure shapes is always an array
             },
         ]);
@@ -326,23 +334,6 @@ const Create = () => {
                             />
                         </div>
 
-
-                        {/* Work Order Date */}
-                        <div>
-                            <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input
-                                id="workOrderDate"
-                                name="workOrderDate"
-                                type="date"
-                                className="form-input"
-                                value={formData.workOrderDate}
-                                // min={new Date().toISOString().split("T")[0]} // Today's date
-                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
-                                //     .toISOString()
-                                //     .split("T")[0]} // 7 days from today
-                                onChange={handleInputChange}
-                            />
-                        </div>
                         <div>
                             <label htmlFor="plantCode">Plant Code</label>
                             <input
@@ -360,6 +351,68 @@ const Create = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        {/* Work Order Date */}
+                        <div>
+                            <label htmlFor="workOrderDate">Work Order Date</label>
+                            <input
+                                id="workOrderDate"
+                                name="workOrderDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.workOrderDate}
+                                // min={new Date().toISOString().split("T")[0]} // Today's date
+                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
+                                //     .toISOString()
+                                //     .split("T")[0]} // 7 days from today
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                       
+                       
+
+                        <div>
+                            <label htmlFor="prodReqDate">Production Request Date</label>
+                            <input
+                                id="prodReqDate"
+                                name="prodReqDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqDate}
+                                // min={new Date().toISOString().split("T")[0]} // Today's date
+                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
+                                //     .toISOString()
+                                //     .split("T")[0]} // 7 days from today
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                       
+
+                        <div>
+                            <label htmlFor="prodReqrDate">Production Requirement Date</label>
+                            <input
+                                id="prodReqrDate"
+                                name="prodReqrDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqrDate}
+                                // min={new Date().toISOString().split("T")[0]} // Today's date
+                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
+                                //     .toISOString()
+                                //     .split("T")[0]} // 7 days from today
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="plantCode">Remarks</label>
+                              <textarea
+                                id="remarks"
+                                name="remarks"
+                                placeholder="Enter Remarks"
+                                className="form-input"
+                                value={formData.remarks}
+                                onChange={handleInputChange}
+                            ></textarea>
+                        </div>
 
 
 
@@ -370,12 +423,14 @@ const Create = () => {
         <table>
             <thead>
                 <tr>
-                    <th>Shape Code</th>
+                    <th>Product Name</th>
                     <th>UOM</th>
                     <th>PO Quantity</th>
-                    <th>Delivery Date (optional)</th>
-                    <th>Bar Mark</th> {/* New Bar Mark column */}
-                    <th>Member Details</th> {/* New Member Details column */}
+                    {/* <th>Delivery Date (optional)</th> */}
+                    <th>Color Code</th> {/* New Bar Mark column */}
+                    <th>Width</th>
+                    <th>Height</th>
+                     {/* New Member Details column */}
                     <th></th>
                 </tr>
             </thead>
@@ -402,6 +457,10 @@ const Create = () => {
                                     menuPosition="absolute" // Prevents dropdown clipping inside the table
                                     menuPlacement="auto" // Adjusts position dynamically
                                     styles={{
+                                        control: (base) => ({
+                                            ...base,
+                                            width: '200px', // Set the desired width here
+                                        }),
                                         menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
                                         menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
                                     }}
@@ -426,23 +485,23 @@ const Create = () => {
                             </td>
 
                             {/* Delivery Date */}
-                            <td>
+                            {/* <td>
                                 <input
                                     type="date"
                                     className="form-input w-40"
                                     value={item.deliveryDate}
                                     onChange={(e) => handleChange(item.id, "deliveryDate", e.target.value)}
                                 />
-                            </td>
+                            </td> */}
 
                             {/* Bar Mark (New Field) */}
                             <td>
                                 <input
                                     type="text"
                                     className="form-input w-32"
-                                    placeholder="Bar Mark"
-                                    value={item.barMark}
-                                    onChange={(e) => handleChange(item.id, "barMark", e.target.value)}
+                                    placeholder="Enter Code"
+                                    value={item.colorCode}
+                                    onChange={(e) => handleChange(item.id, "colorCode", e.target.value)}
                                 />
                             </td>
 
@@ -451,9 +510,18 @@ const Create = () => {
                                 <input
                                     type="text"
                                     className="form-input w-32"
-                                    placeholder="Member Details"
-                                    value={item.memberDetails}
-                                    onChange={(e) => handleChange(item.id, "memberDetails", e.target.value)}
+                                    placeholder="Entre Width"
+                                    value={item.width}
+                                    onChange={(e) => handleChange(item.id, "width", e.target.value)}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="form-input w-32"
+                                    placeholder="Entre Height"
+                                    value={item.height}
+                                    onChange={(e) => handleChange(item.id, "height", e.target.value)}
                                 />
                             </td>
 
