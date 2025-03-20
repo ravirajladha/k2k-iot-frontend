@@ -87,6 +87,7 @@ const ProductionPlanning = () => {
         { id: '2', name: 'Plant2' },
         { id: '3', name: 'Plant3' },
     ];
+    console.log('formData', formData.jobOrderNumber);
 
     const handleWorkOrderChange = (selectedOption: any) => {
         const selectedWorkOrder = workOrders.find((wo) => wo.id === selectedOption.value);
@@ -164,7 +165,7 @@ const ProductionPlanning = () => {
     const addItem = () => {
         let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
         // console.log("maxId",maxId);
-        
+
         setItems([
             ...items,
             {
@@ -208,8 +209,8 @@ const ProductionPlanning = () => {
     };
 
     const addSFStep = (productId: number) => {
-      console.log("productId",productId);
-      
+        console.log('productId', productId);
+
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === productId
@@ -536,6 +537,36 @@ const ProductionPlanning = () => {
                         </div>
 
                         <div>
+                            <label htmlFor="date">Production Requirement Date(autofetch)</label>
+                            <input type="text" className="form-input" value="2025-01-02" disabled />
+
+                            {/* <Flatpickr
+                                options={{
+                                    mode: 'range',
+                                    dateFormat: 'Y-m-d',
+                                    position: 'auto right',
+                                }}
+                                value={date3}
+                                className="form-input"
+                                // onChange={(date3) => setDate3(date3)}
+                            /> */}
+                        </div>
+                        <div>
+                            <label htmlFor="date">RProduction Request Date(autofetch)</label>
+                            <input type="text" className="form-input" value="2025-01-03" disabled />
+
+                            {/* <Flatpickr
+                                options={{
+                                    mode: 'range',
+                                    dateFormat: 'Y-m-d',
+                                    position: 'auto right',
+                                }}
+                                value={date3}
+                                className="form-input"
+                                // onChange={(date3) => setDate3(date3)}
+                            /> */}
+                        </div>
+                        <div>
                             <label htmlFor="date">
                                 Range Date (from and to) <span className="text-red-700">*</span>
                             </label>
@@ -556,13 +587,14 @@ const ProductionPlanning = () => {
                             <table className="w-full border-collapse">
                                 <thead className="bg-gray-800 text-dark">
                                     <tr>
-                                        <th className="p-2 border w-48">Product</th>
+                                        <th className="p-2 border w-48">Product Type</th>
                                         {/* <th className="p-2 border w-48">System</th> */}
                                         <th className="p-2 border w-48">Product System</th>
                                         <th className="p-2 border">Planned Quantity</th>
+                                        <th className="p-2 border">Code (autofetch)</th>
                                         <th className="p-2 border">Color Code (autofetch)</th>
-                                        <th className="p-2 border">Production Req Date (autofetch)</th>
-                                        <th className="p-2 border">Production Reqr Date (autofetch)</th>
+                                        <th className="p-2 border">Height (autofetch)</th>
+                                        <th className="p-2 border">Width (autofetch)</th>
                                         <th className="p-2 border"></th>
                                     </tr>
                                 </thead>
@@ -615,13 +647,16 @@ const ProductionPlanning = () => {
                                                     <input type="number" className="form-input w-32" min={0} value={item.plannedQuantity} />
                                                 </td>
                                                 <td className="p-3 border">
+                                                    <input type="text" className="form-input w-32" value="TYPE-P5(T)" disabled />
+                                                </td>
+                                                <td className="p-3 border">
                                                     <input type="text" className="form-input w-32" value="RAL 9092" disabled />
                                                 </td>
                                                 <td className="p-3 border">
-                                                    <input type="text" className="form-input w-32" value="2025-01-02" disabled />
+                                                    <input type="text" className="form-input w-32" value="1047" disabled />
                                                 </td>
                                                 <td className="p-3 border">
-                                                    <input type="text" className="form-input w-32" value="2025-01-03" disabled />
+                                                    <input type="text" className="form-input w-32" value="1025" disabled />
                                                 </td>
                                                 <td className="p-3 border text-center">
                                                     <button type="button" onClick={() => removeItem(item.id)} className="text-red-600 hover:text-red-800">
@@ -639,7 +674,6 @@ const ProductionPlanning = () => {
                                                                 ❌ Remove SF Step
                                                             </button>
                                                         </div>
-
 
                                                         <div className="mt-4 grid grid-cols-2 gap-4">
                                                             <div className="relative inline-block">
@@ -659,7 +693,6 @@ const ProductionPlanning = () => {
                                                                 <textarea placeholder="Remark" className="form-textarea w-full mt-2"></textarea>
                                                             </div>
                                                         </div>
-
 
                                                         <div className="mt-4 grid grid-cols-2 gap-2">
                                                             {['Cutting Process', 'Machining', 'Assembling', 'Glass Fixing / Glazing'].map((step, index) => (

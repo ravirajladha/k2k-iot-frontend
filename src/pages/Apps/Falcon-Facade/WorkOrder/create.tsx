@@ -39,6 +39,7 @@ interface Project {
 interface FormData {
     id: number;
     product: Product | null;
+    code: string;
     uom: string;
     quantity: number;
     plantCode: string;
@@ -70,6 +71,7 @@ const Create = () => {
     const [formData, setFormData] = useState<FormData>({
         id: 0, // Default ID value
         product: null, // Default value for product
+        code:'',
         uom: '',
         quantity: 0, // Default numeric value
         plantCode: '',
@@ -114,6 +116,7 @@ const Create = () => {
             {
                 id: maxId + 1,
                 product: null,
+                code:'',
                 uom: '',
                 quantity: 0,
                 plantCode: '',
@@ -412,7 +415,8 @@ const Create = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Product Name</th>
+                                        <th>Description</th>
+                                        <th>Code</th>
                                         <th>UOM</th>
                                         <th>PO Quantity</th>
                                         {/* <th>Delivery Date (optional)</th> */}
@@ -448,24 +452,27 @@ const Create = () => {
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
-                                                                width: '200px', // Set the desired width here
+                                                                width: '400px', // Set the desired width here
                                                             }),
                                                             menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensures dropdown stays on top
                                                             menu: (base) => ({ ...base, zIndex: 9999 }), // Keeps dropdown above other elements
                                                         }}
                                                     />
                                                 </td>
-
+                                                
+                                                <td>
+                                                    <input type="text" className="form-input w-28" placeholder="Code" value={item.code} readOnly />
+                                                </td>
                                                 {/* UOM */}
                                                 <td>
-                                                    <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
+                                                    <input type="text" className="form-input w-24" placeholder="UOM" value={item.uom} readOnly />
                                                 </td>
 
                                                 {/* PO Quantity */}
                                                 <td>
                                                     <input
                                                         type="number"
-                                                        className="form-input w-32"
+                                                        className="form-input w-24"
                                                         placeholder="Quantity"
                                                         min={0}
                                                         value={item.quantity}
@@ -487,8 +494,8 @@ const Create = () => {
                                                 <td>
                                                     <input
                                                         type="text"
-                                                        className="form-input w-32"
-                                                        placeholder="Enter Code"
+                                                        className="form-input w-24"
+                                                        placeholder="Color Code"
                                                         value={item.colorCode}
                                                         onChange={(e) => handleChange(item.id, 'colorCode', e.target.value)}
                                                     />
@@ -498,8 +505,8 @@ const Create = () => {
                                                 <td>
                                                     <input
                                                         type="text"
-                                                        className="form-input w-32"
-                                                        placeholder="Entre Width"
+                                                        className="form-input w-24"
+                                                        placeholder="Width"
                                                         value={item.width}
                                                         onChange={(e) => handleChange(item.id, 'width', e.target.value)}
                                                     />
@@ -507,8 +514,8 @@ const Create = () => {
                                                 <td>
                                                     <input
                                                         type="text"
-                                                        className="form-input w-32"
-                                                        placeholder="Entre Height"
+                                                        className="form-input w-24"
+                                                        placeholder="Height"
                                                         value={item.height}
                                                         onChange={(e) => handleChange(item.id, 'height', e.target.value)}
                                                     />

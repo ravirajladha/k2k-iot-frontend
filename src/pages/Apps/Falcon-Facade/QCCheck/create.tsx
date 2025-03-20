@@ -10,12 +10,11 @@ interface FormData {
     productId: string;
     rejectedQuantity: string;
     recycledQuantity: string;
-    sfId:string;
+    sfId: string;
     rejectionReason: string;
 }
 
 const QcCheckForm: React.FC = () => {
-
     //tooltip
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -25,7 +24,7 @@ const QcCheckForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         workOrder: '',
         jobOrder: '',
-        sfId:"",
+        sfId: '',
         productId: '',
         rejectedQuantity: '',
         recycledQuantity: '',
@@ -35,13 +34,13 @@ const QcCheckForm: React.FC = () => {
     const workOrders = ['Work Order 1', 'Work Order 2', 'Work Order 3'];
 
     const jobOrdersMap: { [key: string]: { jobOrders: string[]; workOrder: string } } = {
-        "WO-001": { workOrder: "WO-001", jobOrders: ["JO-1001", "JO-1002"] },
-        "WO-002": { workOrder: "WO-002", jobOrders: ["JO-2001", "JO-2002"] },
-        "WO-003": { workOrder: "WO-003", jobOrders: ["JO-3001", "JO-3002"] },
+        'WO-001': { workOrder: 'WO-001', jobOrders: ['JO-1001', 'JO-1002'] },
+        'WO-002': { workOrder: 'WO-002', jobOrders: ['JO-2001', 'JO-2002'] },
+        'WO-003': { workOrder: 'WO-003', jobOrders: ['JO-3001', 'JO-3002'] },
     };
 
-    const products = ['Product A - PR1', 'Product B - PR2', 'Product C PR3'];
-    const sfs = ['SF i - PR1', 'SF 2', 'SF 3'];
+    const products = ['Product A - PR1 [1047 x 1205]', 'Product B - PR2 [722 x 1205]', 'Product C - PR3 [1047 x 3520]'];
+    const sfs = ['SF - PR1', 'SF 2', 'SF 3'];
 
     const handleJobOrderChange = (selectedOption: any) => {
         if (!selectedOption) return;
@@ -95,10 +94,7 @@ const QcCheckForm: React.FC = () => {
     }));
 
     return (
-
         <div>
-
-
             <div className="panel">
                 <div className="mb-5 flex items-center justify-between">
                     <h5 className="font-semibold text-lg dark:text-white-light">QC Check Form</h5>
@@ -112,7 +108,8 @@ const QcCheckForm: React.FC = () => {
                         </span>
                         {showTooltip && (
                             <div className="absolute top-0 right-full ml-2 w-64 bg-gray-800 text-white text-sm p-3 rounded shadow-lg z-50">
-                                This form is used for QC checks. Select the appropriate job order, work order will  be autofetched on the basis of Job order, and select product ID. Fill out the rejected quantity or recycled quantity and reason for rejection.
+                                This form is used for QC checks. Select the appropriate job order, work order will be autofetched on the basis of Job order, and select product ID. Fill out the
+                                rejected quantity or recycled quantity and reason for rejection.
                             </div>
                         )}
                     </button>
@@ -135,13 +132,7 @@ const QcCheckForm: React.FC = () => {
                         {/* Work Order (Auto-Filled) */}
                         <div>
                             <label htmlFor="workOrder">Work Order</label>
-                            <input
-                                id="workOrder"
-                                type="text"
-                                className="form-input"
-                                value={formData.workOrder}
-                                readOnly
-                            />
+                            <input id="workOrder" type="text" className="form-input" value={formData.workOrder} readOnly />
                         </div>
 
                         {/* Product Selection */}
@@ -151,31 +142,33 @@ const QcCheckForm: React.FC = () => {
                                 id="productId"
                                 options={productOptions}
                                 value={productOptions.find((option) => option.value === formData.productId)}
-                                onChange={(selectedOption) => setFormData((prev) => ({
-                                    ...prev,
-                                    productId: selectedOption ? selectedOption.value : '',
-                                }))}
+                                onChange={(selectedOption) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        productId: selectedOption ? selectedOption.value : '',
+                                    }))
+                                }
                                 placeholder="Select Product"
                                 isSearchable
                             />
                         </div>
                         {/* SF DROPDOWN */}
                         <div>
-    <label htmlFor="sfId">Semi Finished Id</label>
-    <Select
-        id="sfId"
-        options={sfOptions}
-        value={sfOptions.find((option) => option.value === formData.sfId)}
-        onChange={(selectedOption) => setFormData((prev) => ({
-            ...prev,
-            sfId: selectedOption ? selectedOption.value : '',
-        }))}
-        placeholder="Select Semi Finished Product"
-        isSearchable
-    />
-</div>
-
-
+                            <label htmlFor="sfId">Semi Finished Id</label>
+                            <Select
+                                id="sfId"
+                                options={sfOptions}
+                                value={sfOptions.find((option) => option.value === formData.sfId)}
+                                onChange={(selectedOption) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        sfId: selectedOption ? selectedOption.value : '',
+                                    }))
+                                }
+                                placeholder="Select Semi Finished Product"
+                                isSearchable
+                            />
+                        </div>
 
                         {/* Rejected Quantity */}
                         <div>
@@ -214,7 +207,6 @@ const QcCheckForm: React.FC = () => {
                                 value={formData.rejectionReason}
                                 onChange={handleInputChange}
                             ></textarea>
-
                         </div>
                     </div>
 
@@ -232,7 +224,6 @@ const QcCheckForm: React.FC = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 
