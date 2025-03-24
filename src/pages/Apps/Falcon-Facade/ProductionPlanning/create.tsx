@@ -142,7 +142,7 @@ const ProductionPlanning = () => {
         const sfId = items.length + 1;
 
         const semiFinishedId = `${productNumber}-(1/${sfId})`;
-        // console.log("semiFinishedId",semiFinishedId);
+        console.log('semiFinishedId', semiFinishedId);
 
         setItems([
             ...items,
@@ -188,10 +188,12 @@ const ProductionPlanning = () => {
 
     const addSFStep = (productId: number) => {
         const product = items.find((item) => item.id === productId);
+        console.log('product');
+
         const sfId = product?.sfSteps.length ? product.sfSteps.length + 1 : 1;
-        console.log("sfId",sfId);
-        
-        const semiFinishedId = `${product.title}-(1/${String(sfId)})`;                      //.padStart(2, '0')
+        console.log('sfId', sfId);
+
+        const semiFinishedId = `${product.title}-(1/${String(sfId)})`; //.padStart(2, '0')
         console.log('semiFinishedId', semiFinishedId);
 
         setItems((prevItems) =>

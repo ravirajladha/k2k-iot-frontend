@@ -79,6 +79,8 @@ const Create = () => {
     };
 
     const [items, setItems] = useState<any[]>([]);
+    console.log('items', items);
+
     const [selectedClient, setSelectedClient] = useState<Client | null>(null);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -111,8 +113,6 @@ const Create = () => {
         { label: '1000010189/Pavers Dark Grey 200*100*60', value: 'Pavers_Dark_Grey_200_100_60', uom: 'nos' },
     ];
 
-    
- 
     const plantCodes = ['Plant 101', 'Plant 102', 'Plant 103'];
 
     const addItem = () => {
@@ -207,6 +207,7 @@ const Create = () => {
             })
         );
     };
+
     const handleProjectChange = (selectedOption: Project | null) => {
         setSelectedProject(selectedOption);
     };
@@ -323,7 +324,7 @@ const Create = () => {
                                     <tr>
                                         <th>Product Name / Material Code</th>
                                         <th>UOM</th>
-                                        <th>PO Quantity</th>
+                                        <th>{items.some((item) => item.uom === 'sqmt') ? 'PO Quantity (sqmt)' : 'PO Quantity'}</th>
                                         <th>Quantity in Nos</th>
                                         <th>Plant Code</th>
                                         <th>Delivery Date (optional)</th>
@@ -397,7 +398,7 @@ const Create = () => {
                                             </td>
                                             <td>
                                                 {item.uom === 'sqmt' ? (
-                                                    <input type="text" className="form-input w-32" value={item.convertedQuantity ? `${item.convertedQuantity} nos` : ''} readOnly />
+                                                    <input type="text" className="form-input w-32" value={item.convertedQuantity ? `${item.convertedQuantity}` : ''} readOnly />
                                                 ) : (
                                                     ''
                                                 )}
