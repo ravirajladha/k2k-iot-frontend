@@ -69,6 +69,7 @@ const ProductionPlanning = () => {
         productSystem: '',
         productName: '',
     });
+    console.log('formData', formData);
 
     const jobOrders = [
         { id: 'JO100', name: 'Job Order 100' },
@@ -87,7 +88,6 @@ const ProductionPlanning = () => {
         { id: '2', name: 'Plant2' },
         { id: '3', name: 'Plant3' },
     ];
-    console.log('formData', formData.jobOrderNumber);
 
     const handleWorkOrderChange = (selectedOption: any) => {
         const selectedWorkOrder = workOrders.find((wo) => wo.id === selectedOption.value);
@@ -130,54 +130,32 @@ const ProductionPlanning = () => {
         console.log('Form Data:', formData);
     };
 
-    const [items, setItems] = useState<any>([
-        {
-            id: 1,
-            title: 'Product 1',
-            plannedQuantity: 0,
-            scheduleDate: '',
-            sfSteps: [
-                {
-                    id: 1,
-                    name: 'Semi Finished 1',
-                    image: null,
-                    remark: '',
-                    processes: {
-                        cutting: false,
-                        assembling: false,
-                        machining: false,
-                        glazing: false,
-                    },
-                    processRemarks: {
-                        cutting: '',
-                        assembling: '',
-                        machining: '',
-                        glazing: '',
-                    },
-                    checkedSteps: {},
-                    remarks: {},
-                    images: {},
-                },
-            ],
-        },
-    ]);
+    const [items, setItems] = useState<any>([]);
 
     const addItem = () => {
-        let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
-        // console.log("maxId",maxId);
+        const productId = items.length + 1;
+        console.log('jo', formData.jobOrderNumber);
+
+        const productNumber = `${formData.jobOrderNumber}-${productId}`;
+        // console.log("productNumber",productNumber);
+
+        const sfId = items.length + 1;
+
+        const semiFinishedId = `${productNumber}-(1/${sfId})`;
+        // console.log("semiFinishedId",semiFinishedId);
 
         setItems([
             ...items,
             {
-                id: maxId + 1,
-                title: `Product ${maxId + 1}`,
+                id: productId,
+                title: productNumber,
                 system: '',
                 productSystem: '',
                 plannedQuantity: 0,
                 sfSteps: [
                     {
-                        id: 1,
-                        name: 'Semi Finished 1',
+                        id: semiFinishedId,
+                        name: semiFinishedId,
                         scheduleDate: '',
                         plantId: plants[0].id,
                         plantName: plants[0].name,
@@ -209,7 +187,12 @@ const ProductionPlanning = () => {
     };
 
     const addSFStep = (productId: number) => {
-        console.log('productId', productId);
+        const product = items.find((item) => item.id === productId);
+        const sfId = product?.sfSteps.length ? product.sfSteps.length + 1 : 1;
+        console.log("sfId",sfId);
+        
+        const semiFinishedId = `${product.title}-(1/${String(sfId)})`;                      //.padStart(2, '0')
+        console.log('semiFinishedId', semiFinishedId);
 
         setItems((prevItems) =>
             prevItems.map((item) =>
@@ -219,8 +202,8 @@ const ProductionPlanning = () => {
                           sfSteps: [
                               ...item.sfSteps,
                               {
-                                  id: item.sfSteps.length + 1,
-                                  name: `Semi Finished ${item.sfSteps.length + 1}`,
+                                  id: semiFinishedId,
+                                  name: `Semi Finished ${semiFinishedId}`,
                                   scheduleDate: '',
                                   plantId: plants[0].id,
                                   plantName: plants[0].name,
@@ -249,7 +232,7 @@ const ProductionPlanning = () => {
         );
     };
 
-    const removeSFStep = (productId: number, sfId: number) => {
+    const removeSFStep = (productId: number, sfId: string) => {
         setItems(
             items.map((item) =>
                 item.id === productId
@@ -262,7 +245,7 @@ const ProductionPlanning = () => {
         );
     };
 
-    const updateSFProcess = (productId: number, sfId: number, process: string, value: boolean) => {
+    const updateSFProcess = (productId: number, sfId: string, process: string, value: boolean) => {
         setItems(
             items.map((item) =>
                 item.id === productId
@@ -282,7 +265,7 @@ const ProductionPlanning = () => {
         );
     };
 
-    const updateSFRemark = (productId: number, sfId: number, process: string, value: string) => {
+    const updateSFRemark = (productId: number, sfId: string, process: string, value: string) => {
         setItems(
             items.map((item) =>
                 item.id === productId
@@ -302,7 +285,7 @@ const ProductionPlanning = () => {
         );
     };
 
-    const handleImageUpload = (productId: number, sfId: number, file: File) => {
+    const handleImageUpload = (productId: number, sfId: string, file: File) => {
         const reader = new FileReader();
         reader.onloadend = () => {
             setItems(
@@ -405,7 +388,7 @@ const ProductionPlanning = () => {
         setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
     };
 
-    const handleCheckboxChange = (sfId, step, isChecked) => {
+    const handleCheckboxChange = (sfId: string, step: string, isChecked: boolean) => {
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.sfSteps.some((sf) => sf.id === sfId)
@@ -428,7 +411,7 @@ const ProductionPlanning = () => {
         );
     };
 
-    const handleCheckboxImageUpload = (sfId, step, file) => {
+    const handleCheckboxImageUpload = (sfId: string, step: string, file: File) => {
         const reader = new FileReader();
         reader.onloadend = () => {
             setItems((prevItems) =>
@@ -455,7 +438,7 @@ const ProductionPlanning = () => {
         reader.readAsDataURL(file);
     };
 
-    const handleRemarksChange = (sfId, step, value) => {
+    const handleRemarksChange = (sfId: string, step: string, value: string) => {
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.sfSteps.some((sf) => sf.id === sfId)
@@ -537,34 +520,12 @@ const ProductionPlanning = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="date">Production Requirement Date(autofetch)</label>
+                            <label htmlFor="date">Production Requirement Date (autofetch)</label>
                             <input type="text" className="form-input" value="2025-01-02" disabled />
-
-                            {/* <Flatpickr
-                                options={{
-                                    mode: 'range',
-                                    dateFormat: 'Y-m-d',
-                                    position: 'auto right',
-                                }}
-                                value={date3}
-                                className="form-input"
-                                // onChange={(date3) => setDate3(date3)}
-                            /> */}
                         </div>
                         <div>
-                            <label htmlFor="date">RProduction Request Date(autofetch)</label>
+                            <label htmlFor="date">Production Request Date (autofetch)</label>
                             <input type="text" className="form-input" value="2025-01-03" disabled />
-
-                            {/* <Flatpickr
-                                options={{
-                                    mode: 'range',
-                                    dateFormat: 'Y-m-d',
-                                    position: 'auto right',
-                                }}
-                                value={date3}
-                                className="form-input"
-                                // onChange={(date3) => setDate3(date3)}
-                            /> */}
                         </div>
                         <div>
                             <label htmlFor="date">
@@ -588,7 +549,6 @@ const ProductionPlanning = () => {
                                 <thead className="bg-gray-800 text-dark">
                                     <tr>
                                         <th className="p-2 border w-48">Product Type</th>
-                                        {/* <th className="p-2 border w-48">System</th> */}
                                         <th className="p-2 border w-48">Product System</th>
                                         <th className="p-2 border">Planned Quantity</th>
                                         <th className="p-2 border">Code (autofetch)</th>
@@ -625,23 +585,8 @@ const ProductionPlanning = () => {
                                                         required
                                                     />
                                                 </td>
-
-                                                {/* <td>
-                                                    <Select
-                                                        id="system"
-                                                        value={formData.system ? { value: formData.system, label: formData.system } : null}
-                                                        onChange={handleSystemChange}
-                                                        options={fakeSystems}
-                                                        className="custom-select flex-1"
-                                                        classNamePrefix="custom-select"
-                                                        placeholder="Select a System"
-                                                        isClearable
-                                                        menuPortalTarget={document.body}
-                                                        required
-                                                    />
-                                                </td> */}
                                                 <td>
-                                                    <input type="text" className="form-input w-full" value={item.title} readOnly />
+                                                    <input type="text" className="form-input w-full" value={'Product 1'} readOnly />
                                                 </td>
                                                 <td className="p-3 border">
                                                     <input type="number" className="form-input w-32" min={0} value={item.plannedQuantity} />
@@ -729,7 +674,7 @@ const ProductionPlanning = () => {
                                                                         </div>
                                                                         <div className="mt-2">
                                                                             <textarea
-                                                                                placeholder="Remark"
+                                                                                placeholder="Remarks"
                                                                                 className="form-textarea w-full mt-2"
                                                                                 value={sf.remarks[step] || ''}
                                                                                 onChange={(e) => handleRemarksChange(sf.id, step, e.target.value)}

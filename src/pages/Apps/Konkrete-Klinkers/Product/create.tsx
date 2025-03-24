@@ -198,7 +198,7 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                     {formData.uom === 'Square Metre' && (
                         <>
                             {/* Length */}
-                            <div>
+                            {/* <div>
                                 <label htmlFor="length">Length (meters)</label>
                                 <input
                                     id="length"
@@ -209,11 +209,23 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                                     value={formData.length}
                                     onChange={handleInputChange}
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Breadth */}
-                            <div>
+                            {/* <div>
                                 <label htmlFor="breadth">Breadth (meters)</label>
+                                <input
+                                    id="breadth"
+                                    name="breadth"
+                                    type="number"
+                                    placeholder="Enter Breadth"
+                                    className="form-input"
+                                    value={formData.breadth}
+                                    onChange={handleInputChange}
+                                />
+                            </div> */}
+                            <div>
+                                <label htmlFor="breadth">Area per Unit (Sqmt)</label>
                                 <input
                                     id="breadth"
                                     name="breadth"
@@ -242,7 +254,7 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                     </div>
 
                     {/* Qty in Nos Per Bundle */}
-                    <div>
+                    {/* <div>
                         <label htmlFor="qtyInNosPerBundle">Qty in Nos per Bundle</label>
                         <input
                             id="qtyInNosPerBundle"
@@ -253,7 +265,7 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                             value={formData.qtyInNosPerBundle}
                             onChange={handleInputChange}
                         />
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Submit Button */}

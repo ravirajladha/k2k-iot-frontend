@@ -1,18 +1,18 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from '@headlessui/react';
 import IconEye from '@/components/Icon/IconEye';
 
 import { DataTable } from 'mantine-datatable';
 import AnimateHeight from 'react-animate-height';
 import IconFile from '@/components/Icon/IconFile';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import IconArrowLeft from '@/components/Icon/IconArrowLeft';
 import IconMultipleForwardRight from '@/components/Icon/IconMultipleForwardRight';
-import PackingTable from "./PackingTable"; // Import PackingTable
-import ViewPackingDetailsModal from "./PackingModal";
+import PackingTable from './PackingTable'; // Import PackingTable
+import ViewPackingDetailsModal from './PackingModal';
 import DispatchDetailsModal from './DispatchDetailsModal';
 import DispatchTable from './DispatchTable';
 const WorkOrderPage = () => {
@@ -25,72 +25,71 @@ const WorkOrderPage = () => {
     const [showRejectedModal, setShowRejectedModal] = useState(false);
     const [selectedAchievedLogs, setSelectedAchievedData] = useState([]);
     const [selectedRejectedLogs, setSelectedRejectedData] = useState([]);
-    const [modalTitle, setModalTitle] = useState("");
+    const [modalTitle, setModalTitle] = useState('');
     // packing modal
     // const [selectedPackingData, setSelectedPackingData] = useState(null);
     // const [isModalOpen1, setIsModalOpen1] = useState(false);
     // const [isModalOpen2, setIsModalOpen2] = useState(false);
-
 
     // const [selectedDispatch, setSelectedDispatch] = useState(null);
     // const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
 
     const dispatchData = [
         {
-            dispatchId: "D001",
-            workOrderId: "WO001",
-            jobOrderId: "JO001",
-            vehicleNumber: "V1234",
-            docketNumber: "DN001",
+            dispatchId: 'D001',
+            workOrderId: 'WO001',
+            jobOrderId: 'JO001',
+            vehicleNumber: 'V1234',
+            docketNumber: 'DN001',
             products: [
                 {
-                    productId: "P001",
-                    productName: "Inward Window",
-                    uom: "Nos",
+                    productId: 'P001',
+                    productName: 'Inward Window',
+                    uom: 'Nos',
                     quantity: 50,
-                    vehicleNumber: "V1234",
-                    docketNumber: "DN001",
-                    timestamp: "2025-03-04 10:30 AM",
-                    qrCodes: ["QR001", "QR002", "QR003"],
+                    vehicleNumber: 'V1234',
+                    docketNumber: 'DN001',
+                    timestamp: '2025-03-04 10:30 AM',
+                    qrCodes: ['QR001', 'QR002', 'QR003'],
                 },
                 {
-                    productId: "P002",
-                    productName: "Outward Window",
-                    uom: "Nos",
+                    productId: 'P002',
+                    productName: 'Outward Window',
+                    uom: 'Nos',
                     quantity: 150,
-                    vehicleNumber: "V1234",
-                    docketNumber: "DN001",
-                    timestamp: "2025-03-04 10:30 AM",
-                    qrCodes: ["QR004", "QR005", "QR006"],
+                    vehicleNumber: 'V1234',
+                    docketNumber: 'DN001',
+                    timestamp: '2025-03-04 10:30 AM',
+                    qrCodes: ['QR004', 'QR005', 'QR006'],
                 },
             ],
         },
         {
-            dispatchId: "D002",
-            workOrderId: "WO001",
-            jobOrderId: "JO001",
-            vehicleNumber: "V1234",
-            docketNumber: "DN001",
+            dispatchId: 'D002',
+            workOrderId: 'WO001',
+            jobOrderId: 'JO001',
+            vehicleNumber: 'V1234',
+            docketNumber: 'DN001',
             products: [
                 {
-                    productId: "P001",
-                    productName: "Inward Window",
-                    uom: "Nos",
+                    productId: 'P001',
+                    productName: 'Inward Window',
+                    uom: 'Nos',
                     quantity: 50,
-                    vehicleNumber: "V1234",
-                    docketNumber: "DN001",
-                    timestamp: "2025-03-04 10:30 AM",
-                    qrCodes: ["QR001", "QR002", "QR003"],
+                    vehicleNumber: 'V1234',
+                    docketNumber: 'DN001',
+                    timestamp: '2025-03-04 10:30 AM',
+                    qrCodes: ['QR001', 'QR002', 'QR003'],
                 },
                 {
-                    productId: "P002",
-                    productName: "Outward Window",
-                    uom: "Nos",
+                    productId: 'P002',
+                    productName: 'Outward Window',
+                    uom: 'Nos',
                     quantity: 150,
-                    vehicleNumber: "V1234",
-                    docketNumber: "DN001",
-                    timestamp: "2025-03-04 10:30 AM",
-                    qrCodes: ["QR004", "QR005", "QR006"],
+                    vehicleNumber: 'V1234',
+                    docketNumber: 'DN001',
+                    timestamp: '2025-03-04 10:30 AM',
+                    qrCodes: ['QR004', 'QR005', 'QR006'],
                 },
             ],
         },
@@ -104,7 +103,7 @@ const WorkOrderPage = () => {
 
     // Open Packing Modal
     const openPackingDetailsModal = (data) => {
-        console.log("Opening Packing Modal with data:", data);
+        console.log('Opening Packing Modal with data:', data);
 
         setSelectedPackingData(data);
         setIsPackingModalOpen(true);
@@ -112,7 +111,7 @@ const WorkOrderPage = () => {
 
     // Close Packing Modal
     const closePackingModal = () => {
-        console.log("Closing Packing Modal");
+        console.log('Closing Packing Modal');
         setIsPackingModalOpen(false);
         setSelectedPackingData(null);
     };
@@ -129,21 +128,19 @@ const WorkOrderPage = () => {
         setSelectedDispatch(null);
     };
 
-
-
     const closeAchievedModal = () => setShowAchievedModal(false);
     const closeRejectedModal = () => setShowRejectedModal(false);
 
     const openAchievedModal = (step) => {
         // If it's the jobOrder's achieved quantity
-        if (step.hasOwnProperty("achievedLogs")) {
+        if (step.hasOwnProperty('achievedLogs')) {
             setSelectedAchievedData(
-                step.achievedLogs || []  // Fetch all logs if it's the jobOrder's level
+                step.achievedLogs || [] // Fetch all logs if it's the jobOrder's level
             );
-            setModalTitle("Achieved Quantity Logs for Job Order");
+            setModalTitle('Achieved Quantity Logs for Job Order');
         } else {
-            console.log(step, "inside the else block of achived modal");
-            setSelectedAchievedData(step.achievedLogs || []);  // Fetch specific step's logs
+            console.log(step, 'inside the else block of achived modal');
+            setSelectedAchievedData(step.achievedLogs || []); // Fetch specific step's logs
             setModalTitle(`Achieved Logs for ${step.name} Step`);
         }
         setShowAchievedModal(true);
@@ -151,13 +148,13 @@ const WorkOrderPage = () => {
 
     const openRejectedModal = (step) => {
         // If it's the jobOrder's rejected quantity
-        if (step.hasOwnProperty("rejectedLogs")) {
+        if (step.hasOwnProperty('rejectedLogs')) {
             setSelectedRejectedData(
-                step.rejectedLogs || []  // Fetch all logs if it's the jobOrder's level
+                step.rejectedLogs || [] // Fetch all logs if it's the jobOrder's level
             );
-            setModalTitle("Rejected Quantity Logs for Job Order");
+            setModalTitle('Rejected Quantity Logs for Job Order');
         } else {
-            setSelectedRejectedData(step.rejectedLogs || []);  // Fetch specific step's logs
+            setSelectedRejectedData(step.rejectedLogs || []); // Fetch specific step's logs
             setModalTitle(`Rejected Logs for ${step.name} Step`);
         }
         setShowRejectedModal(true);
@@ -189,15 +186,18 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
-
+            colorCode: 'RAL 9092',
+            code: 'TYPE-P1(T)',
+            height: 1047,
+            width: 1025,
             dispatched: 70,
             packed: 60,
             plantCode: 'P1',
             deliveryDate: '2025-01-20',
             dimensions: [
-                { name: "A", value: "8cm" },
-                { name: "B", value: "10cm" },
-                { name: "C", value: "12cm" },
+                { name: 'A', value: '8cm' },
+                { name: 'B', value: '10cm' },
+                { name: 'C', value: '12cm' },
             ],
         },
         {
@@ -206,7 +206,10 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
-
+            colorCode: 'RAL 9093',
+            code: 'TYPE-P2(T)',
+            height: 1057,
+            width: 1035,
             dispatched: 160,
             packed: 140,
             plantCode: 'P2',
@@ -218,16 +221,19 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
-
+            colorCode: 'RAL 9094',
+            code: 'TYPE-P3(T)',
+            height: 1055,
+            width: 1055,
             dispatched: 120,
             packed: 110,
             plantCode: 'P3',
             deliveryDate: '2025-01-25',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
         },
         {
@@ -236,16 +242,19 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
-
+            colorCode: 'RAL 9095',
+            code: 'TYPE-P4(T)',
+            height: 1047,
+            width: 1025,
             dispatched: 200,
             packed: 190,
             plantCode: 'P4',
             deliveryDate: '2025-01-28',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
         },
         {
@@ -254,18 +263,21 @@ const WorkOrderPage = () => {
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
-
+            colorCode: 'RAL 9096',
+            code: 'TYPE-P5(T)',
+            height: 1047,
+            width: 1025,
             dispatched: 140,
             packed: 130,
             plantCode: 'P5',
             deliveryDate: '2025-01-30',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
-        }
+        },
     ];
 
     const rowData = [
@@ -275,8 +287,7 @@ const WorkOrderPage = () => {
             jobOrder: 'JO98765',
             status: 'Pending',
             createdBy: 'Pending',
-            timestamp: "2025-02-25 10:30 AM",
-
+            timestamp: '2025-02-25 10:30 AM',
 
             products: [
                 {
@@ -286,12 +297,12 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF1',
-                            quantity: 3,  // This means 3 QR codes will be generated for this SF
+                            quantity: 3, // This means 3 QR codes will be generated for this SF
                             qrCodes: ['QR1', 'QR2', 'QR3'],
                         },
                         {
                             sfId: 'SF2',
-                            quantity: 2,  // This means 2 QR codes will be generated for SF2
+                            quantity: 2, // This means 2 QR codes will be generated for SF2
                             qrCodes: ['QR4', 'QR5'],
                         },
                     ],
@@ -303,7 +314,7 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF3',
-                            quantity: 1,  // 1 QR code for SF3
+                            quantity: 1, // 1 QR code for SF3
                             qrCodes: ['QR6'],
                         },
                     ],
@@ -311,12 +322,12 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            packing_id: 2,  // Added new row data
+            packing_id: 2, // Added new row data
             workOrderId: 'WO12346',
             jobOrder: 'JO98766',
             status: 'Completed',
             createdBy: 'Pending',
-            timestamp: "2025-02-25 10:30 AM",
+            timestamp: '2025-02-25 10:30 AM',
             products: [
                 {
                     productId: 'PRD003',
@@ -325,7 +336,7 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF4',
-                            quantity: 4,  // This means 4 QR codes will be generated for SF4
+                            quantity: 4, // This means 4 QR codes will be generated for SF4
                             qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
                         },
                     ],
@@ -337,7 +348,7 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF5',
-                            quantity: 5,  // This means 5 QR codes will be generated for SF5
+                            quantity: 5, // This means 5 QR codes will be generated for SF5
                             qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
                         },
                     ],
@@ -347,91 +358,90 @@ const WorkOrderPage = () => {
         // You can add more rows here as needed
     ];
 
-
     const mockAchievedLogs1 = [
         {
-            timestamp: "2025-03-03T12:00:00Z",
+            timestamp: '2025-03-03T12:00:00Z',
             quantityAchieved: 22,
-            createdBy: "John Doe",
+            createdBy: 'John Doe',
         },
         {
-            timestamp: "2025-03-03T14:30:00Z",
+            timestamp: '2025-03-03T14:30:00Z',
             quantityAchieved: 33,
-            createdBy: "Jane Smith",
+            createdBy: 'Jane Smith',
         },
     ];
 
     const mockRejectedLogs1 = [
         {
-            timestamp: "2025-03-03T13:00:00Z",
+            timestamp: '2025-03-03T13:00:00Z',
             quantityRejected: 3,
-            createdBy: "John Doe",
+            createdBy: 'John Doe',
         },
         {
-            timestamp: "2025-03-03T15:00:00Z",
+            timestamp: '2025-03-03T15:00:00Z',
             quantityRejected: 2,
-            createdBy: "Alice Brown",
+            createdBy: 'Alice Brown',
         },
     ];
     const mockAchievedLogs2 = [
         {
-            timestamp: "2025-03-03T12:00:00Z",
+            timestamp: '2025-03-03T12:00:00Z',
             quantityAchieved: 22,
-            createdBy: "Hasna",
+            createdBy: 'Hasna',
         },
         {
-            timestamp: "2025-03-03T14:30:00Z",
+            timestamp: '2025-03-03T14:30:00Z',
             quantityAchieved: 33,
-            createdBy: "Kaavish",
+            createdBy: 'Kaavish',
         },
     ];
 
     const mockRejectedLogs2 = [
         {
-            timestamp: "2025-03-03T13:00:00Z",
+            timestamp: '2025-03-03T13:00:00Z',
             quantityRejected: 3,
-            createdBy: "Ravi ",
+            createdBy: 'Ravi ',
         },
         {
-            timestamp: "2025-03-03T15:00:00Z",
+            timestamp: '2025-03-03T15:00:00Z',
             quantityRejected: 2,
-            createdBy: "Raj",
+            createdBy: 'Raj',
         },
     ];
 
     const jobOrders = [
         {
             id: 1,
-            productName: "Inward",
-            uom: "Nos",
+            productName: 'Inward',
+            uom: 'Nos',
             poQuantity: 100,
             plannedQuantity: 90,
             achievedQuantity: 80,
             rejectedQuantity: 10,
             semiFinishedTasks: [
                 {
-                    id: "SF101",
-                    name: "Semi Finished 1",
+                    id: 'SF101',
+                    name: 'Semi Finished 1',
                     file: null,
-                    remark: "Initial cutting process",
+                    remark: 'Initial cutting process',
                     steps: [
                         {
-                            name: "Cutting",
+                            name: 'Cutting',
                             poQuantity: 30,
                             plannedQuantity: 25,
                             achievedQuantity: 22,
                             rejectedQuantity: 3,
-                            achievedLogs: mockAchievedLogs1,  // Logs for the Cutting step
-                            rejectedLogs: mockRejectedLogs1,  // Logs for the Cutting step
+                            achievedLogs: mockAchievedLogs1, // Logs for the Cutting step
+                            rejectedLogs: mockRejectedLogs1, // Logs for the Cutting step
                         },
                         {
-                            name: "Machining",
+                            name: 'Machining',
                             poQuantity: 40,
                             plannedQuantity: 35,
                             achievedQuantity: 33,
                             rejectedQuantity: 2,
-                            achievedLogs: mockAchievedLogs2,  // Logs for the Machining step
-                            rejectedLogs: mockRejectedLogs2,  // Logs for the Machining step
+                            achievedLogs: mockAchievedLogs2, // Logs for the Machining step
+                            rejectedLogs: mockRejectedLogs2, // Logs for the Machining step
                         },
                     ],
                 },
@@ -446,19 +456,22 @@ const WorkOrderPage = () => {
             name: 'Bharath Kumar',
             role: 'Manager',
         },
-        deadline: '2025-01-20',
+        plantCode: '123',
+        prodReqDate: '2025-01-21',
+        prodReqrDate: '2025-01-22',
+        deadline: '2025-01-30',
+        issuedBy: 'V Gouda',
+        recievedBy: 'M R Bhaske',
         status: 'In Progress',
         // priority: 'High',
-        bufferStock: "False",
+        bufferStock: 'False',
     };
-
 
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
 
     const PAGE_SIZES = [5, 10, 20];
-
 
     const packingData = [
         {
@@ -500,20 +513,12 @@ const WorkOrderPage = () => {
         },
     ];
 
-
-
-    const filteredData = packingData.filter(
-        (item) =>
-            item.serialNumber.toLowerCase().includes(search.toLowerCase()) ||
-            item.productId.toLowerCase().includes(search.toLowerCase())
-    );
-
+    const filteredData = packingData.filter((item) => item.serialNumber.toLowerCase().includes(search.toLowerCase()) || item.productId.toLowerCase().includes(search.toLowerCase()));
 
     // Filter data based on search
     const filteredData1 = dispatchData.filter((dispatch) =>
         dispatch.products.some(
-            (product) =>
-                product.productName.toLowerCase().includes(search.toLowerCase())
+            (product) => product.productName.toLowerCase().includes(search.toLowerCase())
             // product.vehicleNumber.toLowerCase().includes(search.toLowerCase())
         )
     );
@@ -526,16 +531,9 @@ const WorkOrderPage = () => {
     ];
 
     return (
-
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
-            <button
-                onClick={() => window.print()}
-                className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right"
-            >
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
             <div className="p-4 pt-10">
@@ -547,18 +545,47 @@ const WorkOrderPage = () => {
                         {/* Left Section: Client Details */}
                         <div className="bg-yellow-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
-                            <p className="text-sm"><strong>Client Name:</strong> {clientDetails.clientName}</p>
-                            <p className="text-sm"><strong>Project Name:</strong> Lorem, ipsum.</p>
-                            <p className="text-sm"><strong>Address:</strong> {clientDetails.address}</p>
+                            <p className="text-sm">
+                                <strong>Client Name:</strong> {clientDetails.clientName}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Project Name:</strong> Lorem, ipsum.
+                            </p>
+                            <p className="text-sm">
+                                <strong>Address:</strong> {clientDetails.address}
+                            </p>
                         </div>
 
                         {/* Right Section: Work Order Details */}
                         <div className="bg-blue-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
-                            <p className="text-sm"><strong>Work Order Number:</strong> {workOrder.id}</p>
-                            <p className="text-sm"><strong>Created At:</strong> {workOrder.createdAt}</p>
-                            <p className="text-sm"><strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})</p>
-                            <p className="text-sm mt-2"><strong>Dates:</strong> {workOrder.deadline}</p>
+                            <p className="text-sm">
+                                <strong>Work Order Number:</strong> {workOrder.id}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Plant Code:</strong> {workOrder.plantCode}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Production Request Date:</strong> {workOrder.prodReqDate}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Production Requirement Date:</strong> {workOrder.prodReqrDate}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Issued By:</strong> {workOrder.issuedBy}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Recieved By:</strong> {workOrder.recievedBy}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created At:</strong> {workOrder.createdAt}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})
+                            </p>
+                            <p className="text-sm mt-2">
+                                <strong>Date:</strong> {workOrder.deadline}
+                            </p>
                             <div className="flex items-center gap-2 mt-2">
                                 <strong>Files:</strong>
                                 <IconFile className="text-gray-600" />
@@ -567,20 +594,27 @@ const WorkOrderPage = () => {
 
                         <div className="bg-gray-300 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Job Order Details</h3>
-                            <p className="text-sm"><strong>Job Order Id:</strong> JO1</p>
-                            <p className="text-sm"><strong>Created By:</strong> Bharath (Manager)</p>
-                            <p className="text-sm"><strong>Created At:</strong> 28/02/2025 12:24:23</p>
-                            <p className="text-sm"><strong>Status:</strong>
-                                <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
-                    ${workOrder.status === 'In Progress' ? 'text-blue-500' :
-                                        workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}>
+                            <p className="text-sm">
+                                <strong>Job Order Id:</strong> JO1
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> Bharath (Manager)
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created At:</strong> 28/02/2025 12:24:23
+                            </p>
+                            <p className="text-sm">
+                                <strong>Status:</strong>
+                                <span
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                    ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
+                                >
                                     {workOrder.status}
                                 </span>
                             </p>
                         </div>
                     </div>
                 </div>
-
 
                 {/* progress section */}
                 <div className="panel mb-4 bg-gray-100" id="labeled">
@@ -604,7 +638,10 @@ const WorkOrderPage = () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Description</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
-
+                                    <th className="px-4 py-2 text-left border border-gray-300">Code</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Color Code</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Height</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Width</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">PO Quantity</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Achieved</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Dispatched</th>
@@ -612,13 +649,16 @@ const WorkOrderPage = () => {
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Plant Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">Delivery Date</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Actions</th> */}
-
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 {products.map((product, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
                                         <td className="px-4 py-2 border border-gray-300">{product.description}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.code}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.colorCode}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.height}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.width}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
 
@@ -640,7 +680,6 @@ const WorkOrderPage = () => {
                             </tbody>
                         </table>
                     </div>
-
 
                     {/* Modal for Dimensions */}
                     {/* MODAL USING HEADLESS UI */}
@@ -683,11 +722,7 @@ const WorkOrderPage = () => {
                                             )}
                                         </div>
                                         <div className="mt-5 flex justify-end">
-                                            <button
-                                                type="button"
-                                                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                                                onClick={closeModal}
-                                            >
+                                            <button type="button" className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600" onClick={closeModal}>
                                                 Close
                                             </button>
                                         </div>
@@ -739,11 +774,7 @@ const WorkOrderPage = () => {
                                             )}
                                         </div>
                                         <div className="mt-5 flex justify-end">
-                                            <button
-                                                type="button"
-                                                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                                                onClick={closeModal}
-                                            >
+                                            <button type="button" className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600" onClick={closeModal}>
                                                 Close
                                             </button>
                                         </div>
@@ -795,11 +826,7 @@ const WorkOrderPage = () => {
                                             )}
                                         </div>
                                         <div className="mt-5 flex justify-end">
-                                            <button
-                                                type="button"
-                                                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                                                onClick={closeModal}
-                                            >
+                                            <button type="button" className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600" onClick={closeModal}>
                                                 Close
                                             </button>
                                         </div>
@@ -816,44 +843,43 @@ const WorkOrderPage = () => {
                 <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
                     {jobOrders.map((jobOrder) => (
                         <div key={jobOrder.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
-                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">
-                                Job Order - {jobOrder.id}
-                            </h2>
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Job Order - {jobOrder.id}</h2>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
                                 <div>
-                                    <p className="text-sm"><strong>Product Name:</strong> {jobOrder.productName}</p>
-                                    <p className="text-sm"><strong>System:</strong>Schuco</p>
-                                    <p className="text-sm"><strong>Product System:</strong>Casement Window 45 Series</p>
+                                    <p className="text-sm">
+                                        <strong>Product Name:</strong> {jobOrder.productName}
+                                    </p>
+                                    <p className="text-sm">
+                                        <strong>System:</strong>Schuco
+                                    </p>
+                                    <p className="text-sm">
+                                        <strong>Product System:</strong>Casement Window 45 Series
+                                    </p>
 
-                                    <p className="text-sm"><strong>UOM:</strong> {jobOrder.uom}</p>
-                                    <p className="text-sm"><strong>PO Quantity:</strong> {jobOrder.poQuantity}</p>
-
+                                    <p className="text-sm">
+                                        <strong>UOM:</strong> {jobOrder.uom}
+                                    </p>
+                                    <p className="text-sm">
+                                        <strong>PO Quantity:</strong> {jobOrder.poQuantity}
+                                    </p>
                                 </div>
                                 <div>
                                     {/* <p className="text-sm"><strong>Planned Quantity:</strong> {jobOrder.plannedQuantity}</p> */}
                                     <p className="text-sm">
                                         <strong>Achieved Quantity:</strong>
-                                        <span
-                                            className="text-green-600 font-semibold cursor-pointer flex items-center"
-                                            onClick={() => openAchievedModal(jobOrder)}
-                                        >
+                                        <span className="text-green-600 font-semibold cursor-pointer flex items-center" onClick={() => openAchievedModal(jobOrder)}>
                                             {jobOrder.achievedQuantity}
                                             <IconMultipleForwardRight className="ml-2" />
                                         </span>
                                     </p>
                                     <p className="text-sm">
                                         <strong>Rejected Quantity:</strong>
-                                        <span
-                                            className="text-red-500 font-semibold cursor-pointer flex items-center"
-                                            onClick={() => openRejectedModal(jobOrder)}
-                                        >
+                                        <span className="text-red-500 font-semibold cursor-pointer flex items-center" onClick={() => openRejectedModal(jobOrder)}>
                                             {jobOrder.rejectedQuantity}
                                             <IconMultipleForwardRight className="ml-2" />
                                         </span>
                                     </p>
-
-
                                 </div>
                             </div>
 
@@ -866,11 +892,7 @@ const WorkOrderPage = () => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
                                                 <p className="text-sm font-semibold">File:</p>
-                                                {sf.file ? (
-                                                    <p className="text-green-600">File Uploaded</p>
-                                                ) : (
-                                                    <p className="text-gray-500">No file uploaded</p>
-                                                )}
+                                                {sf.file ? <p className="text-green-600">File Uploaded</p> : <p className="text-gray-500">No file uploaded</p>}
                                             </div>
                                             <div>
                                                 <p className="text-sm font-semibold">Remarks:</p>
@@ -896,18 +918,12 @@ const WorkOrderPage = () => {
                                                             <td className="px-4 py-2 border">{step.poQuantity}</td>
                                                             <td className="px-4 py-2 border">{step.plannedQuantity}</td>
                                                             <td className="px-4 py-2 border text-blue-500 font-semibold">
-                                                                <span
-                                                                    className="cursor-pointer"
-                                                                    onClick={() => openAchievedModal(step)}
-                                                                >
+                                                                <span className="cursor-pointer" onClick={() => openAchievedModal(step)}>
                                                                     {step.achievedQuantity}
                                                                 </span>
                                                             </td>
                                                             <td className="px-4 py-2 border text-red-500 font-semibold">
-                                                                <span
-                                                                    className="cursor-pointer"
-                                                                    onClick={() => openRejectedModal(step)}
-                                                                >
+                                                                <span className="cursor-pointer" onClick={() => openRejectedModal(step)}>
                                                                     {step.rejectedQuantity}
                                                                 </span>
                                                             </td>
@@ -925,20 +941,11 @@ const WorkOrderPage = () => {
 
                 <PackingTable rowData={rowData} openPackingDetailsModal={openPackingDetailsModal} />
 
-                <ViewPackingDetailsModal
-                    isOpen={isPackingModalOpen}
-                    closePackingModal={closePackingModal}
-                    data={selectedPackingData}
-                />
+                <ViewPackingDetailsModal isOpen={isPackingModalOpen} closePackingModal={closePackingModal} data={selectedPackingData} />
 
                 <DispatchTable dispatchData={dispatchData} openDispatchDetailsModal={openDispatchDetailsModal} />
 
-                <DispatchDetailsModal
-                    isOpen={isDispatchModalOpen}
-                    closeDispatchModal={closeDispatchModal}
-                    dispatch={selectedDispatch}
-                />
-
+                <DispatchDetailsModal isOpen={isDispatchModalOpen} closeDispatchModal={closeDispatchModal} dispatch={selectedDispatch} />
 
                 {/* <PackingTable
                     rowData={rowData} // Pass your row data here
@@ -960,10 +967,8 @@ const WorkOrderPage = () => {
                     closeModal={closeModal}
                     dispatch={selectedDispatch}
                 /> */}
-
             </div>
         </div>
-
     );
 };
 
