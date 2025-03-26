@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import { IRootState } from '@/store/store';
-
+import { v4 as uuidv4 } from 'uuid';
 interface AuthState {
     user: any | null;
     isAuthenticated: boolean;
@@ -82,31 +82,52 @@ export const registerUser = createAsyncThunk(
     }
 );
 
-export const loginUser = createAsyncThunk('auth/loginUser', async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
+// store/slices/authSlice.ts
+// import { createAsyncThunk } from '@reduxjs/toolkit';
+
+export const loginUser = createAsyncThunk(
+  'auth/loginUser',
+  async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/users/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-            credentials: 'include',
-        });
+      // Simulate backend login by checking credentials
+      if (username !== 'admin@gmail.com' || password !== 'admin') {
+        throw new Error('Invalid email or password');
+      }
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Login failed');
-        }
+      // Simulate a user object
+      const mockUser = {
+        _id: 'mock-user-id',
+        username: 'admin@gmail.com',
+        email: 'admin@gmail.com',
+        fullName: 'Admin User',
+        type: 'admin',
+      };
 
-        const data = await response.json();
-        // if (!data.accessToken) {
-        //     throw new Error('Access token missing in response');
-        // }
+      // Generate mock tokens (you can use a library like uuid or hardcode them)
+      const mockAccessToken = `mock-access-token-${uuidv4()}`; // e.g., "mock-access-token-1234"
+      const mockRefreshToken = `mock-refresh-token-${uuidv4()}`; // e.g., "mock-refresh-token-5678"
 
-        console.log('user data with accesstoken', { user: data.data.user, accessToken: data.data.accessToken, data: data });
-        return { user: data.data.user, accessToken: data.data.accessToken ,refreshToken: data.data.refreshToken}; // Include token explicitly
+      // Store tokens in localStorage
+      localStorage.setItem('accessToken', mockAccessToken);
+      localStorage.setItem('refreshToken', mockRefreshToken);
+      localStorage.setItem('user', JSON.stringify(mockUser));
+
+      console.log('Simulated login successful:', {
+        user: mockUser,
+        accessToken: mockAccessToken,
+        refreshToken: mockRefreshToken,
+      });
+
+      return {
+        user: mockUser,
+        accessToken: mockAccessToken,
+        refreshToken: mockRefreshToken,
+      };
     } catch (error) {
-        return rejectWithValue(error instanceof Error ? error.message : 'Unexpected error');
+      return rejectWithValue(error instanceof Error ? error.message : 'Unexpected error');
     }
-});
+  }
+);
 
 // Fetch User Details Thunk
 export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async (_, { rejectWithValue }) => {
@@ -194,86 +215,70 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        resetError(state) {
-            state.error = null;
-        },
-        //recently added to clear the data
-        clearUser(state) {
-            state.user = null;
-            state.isAuthenticated = false;
-        },
+      resetError(state) {
+        state.error = null;
+      },
+      clearUser(state) {
+        state.user = null;
+        state.isAuthenticated = false;
+      },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(refreshAccessToken.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(refreshAccessToken.fulfilled, (state, action) => {
-                state.user.accessToken = action.payload.accessToken;
-                state.isAuthenticated = true;
-                state.isLoading = false;
-            })
-            .addCase(refreshAccessToken.rejected, (state, action) => {
-                state.error = action.payload as string;
-                state.isLoading = false;
-                state.isAuthenticated = false;
-            })
-            .addCase(registerUser.pending, (state) => {
-                state.isLoading = true;
-                state.error = null; // Reset error on new request
-            })
-            .addCase(registerUser.fulfilled, (state, action) => {
-                state.user = action.payload;
-
-              
-
-                state.isAuthenticated = true;
-                state.isLoading = false;
-            })
-            .addCase(registerUser.rejected, (state: any, action) => {
-                state.error = action.payload; // Store error message
-                state.isLoading = false;
-            })
-
-            .addCase(loginUser.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(loginUser.fulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
-                state.isLoading = false;
-            })
-            .addCase(loginUser.rejected, (state, action) => {
-                state.error = action.payload as string;
-                state.isLoading = false;
-            })
-            .addCase(fetchUserDetails.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(fetchUserDetails.fulfilled, (state, action) => {
-                state.user = action.payload;
-                state.isAuthenticated = true;
-                state.isLoading = false;
-            })
-            .addCase(fetchUserDetails.rejected, (state, action) => {
-                state.error = action.payload as string;
-                state.isLoading = false;
-                state.isAuthenticated = false;
-            })
-            .addCase(logoutUser.fulfilled, (state) => {
-                state.user = null;
-
-                state.isAuthenticated = false;
-                state.error = null;
-            })
-            .addCase(logoutUser.rejected, (state, action) => {
-                state.error = action.payload as string;
-            });
+      builder
+        .addCase(registerUser.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+        .addCase(registerUser.fulfilled, (state, action) => {
+          state.user = action.payload.user;
+          state.isAuthenticated = true;
+          state.isLoading = false;
+        })
+        .addCase(registerUser.rejected, (state, action) => {
+          state.error = action.payload as string;
+          state.isLoading = false;
+        })
+        .addCase(loginUser.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+        .addCase(loginUser.fulfilled, (state, action) => {
+          state.user = {
+            ...action.payload.user,
+            accessToken: action.payload.accessToken,
+            refreshToken: action.payload.refreshToken,
+          };
+          state.isAuthenticated = true;
+          state.isLoading = false;
+        })
+        .addCase(loginUser.rejected, (state, action) => {
+          state.error = action.payload as string;
+          state.isLoading = false;
+        })
+        .addCase(fetchUserDetails.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+        .addCase(fetchUserDetails.fulfilled, (state, action) => {
+          state.user = action.payload;
+          state.isAuthenticated = true;
+          state.isLoading = false;
+        })
+        .addCase(fetchUserDetails.rejected, (state, action) => {
+          state.error = action.payload as string;
+          state.isLoading = false;
+          state.isAuthenticated = false;
+        })
+        .addCase(logoutUser.fulfilled, (state) => {
+          state.user = null;
+          state.isAuthenticated = false;
+          state.error = null;
+        })
+        .addCase(logoutUser.rejected, (state, action) => {
+          state.error = action.payload as string;
+        });
     },
-});
-
-export const { resetError, clearUser } = authSlice.actions;
-export default authSlice.reducer;
+  });
+  
+  export const { resetError, clearUser } = authSlice.actions;
+  export default authSlice.reducer;
