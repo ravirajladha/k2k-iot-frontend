@@ -11,67 +11,88 @@ import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import ViewDetailsModal from './viewModel';
 
 const rowData = [
     {
-        sl_no: 1,
-        workOrder: 'WO12345',
-        clientName:'Client Alpha',
-        projectName:'Project Phoenix',
-        jobOrder: 'JO12345',
+        packing_id: 1,
+        workOrderId: 'WO12345',
+        jobOrder: 'JO98765',
+        status: 'Pending',
+        createdBy: 'Pending',
+        timestamp: '2025-02-25 10:30 AM',
         products: [
-            { productId: 'PRD001',productName:'1000010186/Paver Red 200*200*60', quantity: 10 },
-            { productId: 'PRD002',productName:'1000010188/Paver Black 200*200*60', quantity: 5 },
+            {
+                productId: 'Inward Window',
+                productName: 'Inward Window',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF1',
+                        quantity: 3,
+                        qrCodes: ['QR1', 'QR2', 'QR3'],
+                    },
+                    {
+                        sfId: 'SF2',
+                        quantity: 2,
+                        qrCodes: ['QR4', 'QR5'],
+                    },
+                ],
+            },
+            {
+                productId: 'Outward Window',
+                productName: 'Outward Window',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF3',
+                        quantity: 1,
+                        qrCodes: ['QR6'],
+                    },
+                ],
+            },
         ],
-        invoiceNo: 'INV123456',
-        rejectedQuantity: '22',
-        vehicleNumber: 'KA-01-MC-1234',
-        createdBy: 'Admin',
-        timestamp: '2025-01-28T10:25:00Z',
     },
     {
-        sl_no: 2,
-        workOrder: 'WO12346',
-        clientName:'ABC Corp',
-        projectName:'Project Abc',
-        jobOrder: 'JO12346',
+        packing_id: 2,
+        workOrderId: 'WO12346',
+        jobOrder: 'JO98766',
+        status: 'Completed',
+        createdBy: 'Pending',
+        timestamp: '2025-02-25 10:30 AM',
         products: [
-            { productId: 'PRD003',productName:'1000010464/Paver Yellow 200*200*60', quantity: 8 },
-            { productId: 'PRD004',productName:'1000010186/Paver Red 200*200*60',quantity: 12 },
+            {
+                productId: 'Facade',
+                productName: 'Facade',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF4',
+                        quantity: 4,
+                        qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
+                    },
+                ],
+            },
+            {
+                productId: 'Curtain Wall',
+                productName: 'Curtain Wall',
+                uom: 'nos',
+                semiFinishedProducts: [
+                    {
+                        sfId: 'SF5',
+                        quantity: 5,
+                        qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
+                    },
+                ],
+            },
         ],
-        invoiceNo: 'INV123457',
-        rejectedQuantity: '22',
-
-        vehicleNumber: 'KA-02-MC-5678',
-        createdBy: 'User1',
-        timestamp: '2025-01-28T11:30:00Z',
-    },
-    {
-        sl_no: 3,
-        workOrder: 'WO12347',
-        clientName:'Client Beta',
-        projectName:'Project Beta',
-        jobOrder: 'JO12347',
-        products: [
-            { productId: 'PRD005',productName:'1000010184/Paver Grey 200*200*60', quantity: 15 },
-            { productId: 'PRD006',productName:'1000010185/Paver Dark Grey 200*200*60', quantity: 7 },
-            { productId: 'PRD007',productName:'1000010186/Paver Red 200*200*60', quantity: 3 },
-        ],
-        invoiceNo: 'INV123458',
-        rejectedQuantity: '22',
-
-        vehicleNumber: 'KA-03-MC-9101',
-        createdBy: 'Manager',
-        timestamp: '2025-01-28T12:45:00Z',
     },
 ];
 
-
-
-const ColumnChooser = () => {
+const Packing = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Dispatch'));
+        dispatch(setPageTitle('Packing'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
@@ -80,11 +101,15 @@ const ColumnChooser = () => {
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
+    const [modalType, setModalType] = useState<'view' | null>(null);
+    const [selectedRowData, setSelectedRowData] = useState<any>(null);
+
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
         columnAccessor: 'id',
         direction: 'asc',
     });
+
     const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
     const formatDate = (date: any) => {
@@ -105,15 +130,24 @@ const ColumnChooser = () => {
         }
     };
 
+    const openModal = (type: 'view', packing_id: number) => {
+        const selectedRow = rowData.find((row) => row.packing_id === packing_id);
+        setSelectedRowData(selectedRow);
+        setModalType(type);
+    };
+
+    const closeModal = () => {
+        setModalType(null);
+        setSelectedRowData(null);
+    };
+
     const cols = [
-        { accessor: 'sl_no', title: 'SL No' },
+        { accessor: 'packing_id', title: 'SL No' },
         { accessor: 'workOrder', title: 'Work Order' },
-        { accessor: 'clientName', title: 'Client Name' },
-        { accessor: 'projectName', title: 'project Name' },
-        { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
-        { accessor: 'productName', title: 'Product Name' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
+        { accessor: 'qrCode', title: 'QR Code String' },
+        { accessor: 'status', title: 'Status' },
         { accessor: 'createdBy', title: 'Created By' },
         { accessor: 'timestamp', title: 'Timestamp' },
         { accessor: 'action', title: 'Actions' },
@@ -121,8 +155,8 @@ const ColumnChooser = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '#', isActive: false },
-        { label: 'Dispatch', link: '/konkrete-klinkers/dispatch/view', isActive: true },
+        { label: 'Falcon Facade', link: '#', isActive: false },
+        { label: 'Packing', link: '/falcon-facade/packing/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -138,16 +172,24 @@ const ColumnChooser = () => {
     useEffect(() => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
-                const productMatches = item.products.some((product) => product.productId.toLowerCase().includes(search.toLowerCase()) || product.quantity.toString().includes(search.toLowerCase()));
-
-                return (
-                    item.sl_no.toString().includes(search.toLowerCase()) ||
-                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
-                    productMatches ||
-                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
+                const matchesRowData =
+                    item.packing_id.toString().includes(search.toLowerCase()) ||
+                    item.workOrderId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.status.toLowerCase().includes(search.toLowerCase()) ||
                     item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-                    item.timestamp.toLowerCase().includes(search.toLowerCase())
+                    item.timestamp.toLowerCase().includes(search.toLowerCase());
+
+                const matchesProductData = item.products.some(
+                    (product) =>
+                        product.productId.toLowerCase().includes(search.toLowerCase()) ||
+                        product.semiFinishedProducts.some(
+                            (sf) =>
+                                sf.sfId.toLowerCase().includes(search.toLowerCase()) ||
+                                sf.qrCodes.some((qrCode) => qrCode.toLowerCase().includes(search.toLowerCase()))
+                        )
                 );
+
+                return matchesRowData || matchesProductData;
             });
         });
     }, [search]);
@@ -160,11 +202,18 @@ const ColumnChooser = () => {
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Add Dispatch', link: '/konkrete-klinkers/dispatch/create', icon: <IconPlusCircle className="text-4xl" /> }} />
+            <Breadcrumbs
+                items={breadcrumbItems}
+                addButton={{
+                    label: 'Add Packing',
+                    link: '/falcon-facade/packing/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
+                }}
+            />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Dispatch</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Packing</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -221,76 +270,65 @@ const ColumnChooser = () => {
                         records={rowData}
                         columns={[
                             {
-                                accessor: 'sl_no',
-                                title: 'SL No',
+                                accessor: 'packing_id',
+                                title: 'Packing ID',
                                 sortable: true,
-                                hidden: hideCols.includes('sl_no'),
                             },
                             {
-                                accessor: 'workOrder',
-                                title: 'Work Order',
+                                accessor: 'workOrderId',
+                                title: 'Work Order ID',
                                 sortable: true,
-                                hidden: hideCols.includes('workOrder'),
                             },
                             {
-                                accessor: 'clientName',
-                                title: 'Client Name',
+                                accessor: 'status',
+                                title: 'Status',
                                 sortable: true,
-                                hidden: hideCols.includes('clientName'),
                             },
                             {
-                                accessor: 'projectName',
-                                title: 'Project Name',
+                                accessor: 'productId',
+                                title: 'Product Name',
+                                render: ({ products }) => products.map((product) => product.productId).join(', '),
                                 sortable: true,
-                                hidden: hideCols.includes('projectName'),
                             },
                             {
-                                accessor: 'products',
-                                title: 'Products',
-                                sortable: false,
-                                hidden: hideCols.includes('products'),
-                                render: ({ products }) => (
-                                    <div>
-                                        {products.map((product, index) => (
-                                            <div key={index}>
-                                                {product.productName} - {product.quantity}
-                                            </div>
-                                        ))}
-                                    </div>
-                                ),
+                                accessor: 'qrCode',
+                                title: 'QR Codes',
+                                render: ({ products }) => {
+                                    const qrCodes = products.flatMap((product) => product.semiFinishedProducts.flatMap((sf) => sf.qrCodes));
+                                    return qrCodes.join(', ');
+                                },
+                                sortable: true,
                             },
-                            // {
-                            //     accessor: 'rejectedQuantity',
-                            //     title: 'Rejected Quantity',
-                            //     sortable: true,
-                            //     hidden: hideCols.includes('rejectedQuantity'),
-                            // },
+                            {
+                                accessor: 'rejectedQuantity',
+                                title: 'Rejected Quantity',
+                                render: ({ products }) => products.reduce((total, product) => total + product.semiFinishedProducts.reduce((sfTotal, sf) => sfTotal + sf.quantity, 0), 0),
+                                sortable: true,
+                            },
                             {
                                 accessor: 'createdBy',
                                 title: 'Created By',
                                 sortable: true,
-                                hidden: hideCols.includes('createdBy'),
                             },
                             {
                                 accessor: 'timestamp',
                                 title: 'Timestamp',
                                 sortable: true,
-                                hidden: hideCols.includes('timestamp'),
-                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
+                                render: ({ timestamp }) => new Date(timestamp).toLocaleString(),
                             },
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                render: (row) => (
-                                    <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to ={`/konkrete-klinkers/dispatch/editDetail`} state={{ rowData: row }} className="flex hover:text-info">
-                                            <IconEdit className="w-4.5 h-4.5" />
-                                        </NavLink>
-                                        <NavLink to={`/konkrete-klinkers/dispatch/detail`} state={{ rowData: row }} className="flex hover:text-primary">
-                                            <IconEye className="w-4.5 h-4.5" />
-                                        </NavLink>
-                                    </div>
-                                ),
+                                render: ({ packing_id }) => {
+                                    const selectedRow = rowData.find((row) => row.packing_id === packing_id); 
+                                    return (
+                                        <div className="flex gap-4 items-center w-max mx-auto">
+                                            <NavLink to={`/falcon-facade/packing/detail`} state={{ rowData: selectedRow }} className="flex hover:text-info">
+                                                <IconEye className="w-4.5 h-4.5" />
+                                            </NavLink>
+                                        </div>
+                                    );
+                                },
                             },
                         ]}
                         highlightOnHover
@@ -311,4 +349,4 @@ const ColumnChooser = () => {
     );
 };
 
-export default ColumnChooser;
+export default Packing;

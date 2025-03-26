@@ -19,18 +19,24 @@ import {
     DailyProductionPlanningCreate,
     DailyProductionPlanningNewView,
     DailyProductionPlanningNewCreate,
-    JobOrderView,
+    // JobOrderView,
+    JobOrderViewNew, /////New
+    JobOrderDetail, /////New
     JobOrderCreate,
     ProductView,
     ProductCreate,
     InventoryView,
+    InventoryViewNew,
+    InventoryViewDetail,
 
     // PackingView,
     PackingViewNew, ////
     PackingDetail, /////
-
-    PackingCreate,
+    PackingCreateNew, ////////
+    // PackingCreate,
     DispatchView,
+    DispatchEditDetail, //////////
+    DispatchViewDetail, //////////
     DispatchCreate,
     DipatchInvoiceView,
     HelperClients,
@@ -45,6 +51,8 @@ import {
     HelperMachineCreate,
     StockManagementView,
     StockManagementCreate,
+    StockManagmentViewDetail,
+    StockManagmentEditDetail,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -92,11 +100,21 @@ export const konkereKlinkersRoutes = [
         element: <WorkOrderDetail />,
         layout: 'admin',
     },
-    
+
     // Job Order
+    // {
+    //     path: `${basePath}/job-order/view`,
+    //     element: <JobOrderView />,
+    //     layout: 'admin',
+    // },
     {
-        path: `${basePath}/job-order/view`,
-        element: <JobOrderView />,
+        path: `${basePath}/job-order/view`, ////////New
+        element: <JobOrderViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/job-order/detail`, ////////New
+        element: <JobOrderDetail />,
         layout: 'admin',
     },
     {
@@ -104,7 +122,7 @@ export const konkereKlinkersRoutes = [
         element: <JobOrderCreate />,
         layout: 'admin',
     },
-    
+
     // Daily Production Report
     {
         path: `${basePath}/production-planning/view`,
@@ -116,7 +134,7 @@ export const konkereKlinkersRoutes = [
         element: <DailyProductionPlanningCreate />,
         layout: 'admin',
     },
-    
+
     // Daily Production Report New
     {
         path: `${basePath}/production-planning-new/view`,
@@ -128,7 +146,7 @@ export const konkereKlinkersRoutes = [
         element: <DailyProductionPlanningNewView />,
         layout: 'admin',
     },
-    
+
     // QC Check
     {
         path: `${basePath}/qc-check/view`,
@@ -140,7 +158,7 @@ export const konkereKlinkersRoutes = [
         element: <QCCheckCreate />,
         layout: 'admin',
     },
-    
+
     // Product
     {
         path: `${basePath}/products`,
@@ -152,11 +170,21 @@ export const konkereKlinkersRoutes = [
         element: <ProductCreate />,
         layout: 'admin',
     },
-    
+
     // Inventory
+    // {
+    //     path: `${basePath}/inventories`,
+    //     element: <InventoryView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/inventories`,
-        element: <InventoryView />,
+        element: <InventoryViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/inventory/detail`,
+        element: <InventoryViewDetail />,
         layout: 'admin',
     },
     {
@@ -164,20 +192,30 @@ export const konkereKlinkersRoutes = [
         element: <InventoryView />,
         layout: 'admin',
     },
-    
+
     // Buffer Stock Management
     {
         path: `${basePath}/stockManagement`,
         element: <StockManagementView />,
         layout: 'admin',
     },
-    
+
     {
         path: `${basePath}/stockManagement/create`,
         element: <StockManagementCreate />,
         layout: 'admin',
     },
-    
+    {
+        path: `${basePath}/stockManagement/detail`,
+        element: <StockManagmentViewDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/stockManagement/editDetail`,
+        element: <StockManagmentEditDetail />,
+        layout: 'admin',
+    },
+
     // Packing
     // {
     //     path: `${basePath}/packing/view`,
@@ -196,15 +234,30 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/packing/create`,
-        element: <PackingCreate />,
+        path: `${basePath}/packing/create`, /////
+        element: <PackingCreateNew />,
         layout: 'admin',
     },
-    
+    // {
+    //     path: `${basePath}/packing/create`,
+    //     element: <PackingCreate />,
+    //     layout: 'admin',
+    // },
+
     // Dispatch
     {
         path: `${basePath}/dispatch/view`,
         element: <DispatchView />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/editDetail`,
+        element: <DispatchEditDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/detail`,
+        element: <DispatchViewDetail />,
         layout: 'admin',
     },
     {
@@ -217,7 +270,6 @@ export const konkereKlinkersRoutes = [
         element: <DipatchInvoiceView />,
         layout: 'admin',
     },
-    
 
     //HELPERS CLIENTS
     // clients
@@ -327,14 +379,9 @@ export const konkereKlinkersRoutes = [
         element: <Error />,
         layout: 'blank',
     },
-
-
-
 ];
 
 // export { protectedRoutes };
-
-
 
 // its pretty unlikeyly
 // you are the lawyer

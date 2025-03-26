@@ -16,17 +16,20 @@ import IconEye from '@/components/Icon/IconEye';
 import IconX from '@/components/Icon/IconX';
 import IconLayoutGrid from '@/components/Icon/IconLayoutGrid';
 
-import { FaPlayCircle, FaPauseCircle, FaCheckCircle } from "react-icons/fa";
+import { FaPlayCircle, FaPauseCircle, FaCheckCircle } from 'react-icons/fa';
 
 import { rowData } from './sampleData';
 
-
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 interface Product {
     productId: string;
     uom: string;
+    code: string;
+    colorCode: string;
+    width: string;
+    height: string;
     poQuantity: number;
     achievedTillNow: number;
     rejectedQuantity: number;
@@ -60,6 +63,7 @@ const ColumnChooser = () => {
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
+    console.log('recordsData', recordsData);
 
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -108,7 +112,7 @@ const ColumnChooser = () => {
         }
     };
 
-    // data table modal 
+    // data table modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedJobOrder, setSelectedJobOrder] = useState<JobOrder | null>(null);
 
@@ -174,12 +178,12 @@ const ColumnChooser = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Job Order', link: '/falcon-facade/job-order/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add Job Order',
+                    link: '/falcon-facade/job-order/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
@@ -296,14 +300,18 @@ const ColumnChooser = () => {
                                 accessor: 'action',
                                 title: 'Actions',
                                 sortable: false,
-                                render: (jobOrder) => (
+                                render: (recordsData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <button className="flex hover:text-primary" onClick={() => handleViewDetails(jobOrder)}>
+                                        {/* <button className="flex hover:text-primary" onClick={() => handleViewDetails(jobOrder)}>
                                             <IconEye />
-                                        </button>
+                                        </button> */}
+
+                                        <NavLink to={`/falcon-facade/job-order/detail`} state={{recordsData}} className="flex hover:text-primary">
+                                            <IconEye />
+                                        </NavLink>
+
                                         <NavLink to={`/falcon-facade/productionNew`} className="flex hover:text-primary">
                                             <IconLayoutGrid className="w-6 h-6" />
-
                                         </NavLink>
                                     </div>
                                 ),
@@ -319,15 +327,21 @@ const ColumnChooser = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
 
                     {/* Job Order Details Modal */}
                     <Transition appear show={isModalOpen} as={Fragment}>
                         <Dialog as="div" open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
-                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0"
+                                enterTo="opacity-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                            >
                                 <div className="fixed inset-0 bg-black/60" />
                             </Transition.Child>
                             <div className="fixed inset-0 overflow-y-auto">
@@ -409,24 +423,15 @@ const ColumnChooser = () => {
 
                                                         {/* Action Buttons */}
                                                         <div className="flex justify-end gap-4 mt-6">
-                                                            <button
-                                                                onClick={handleStartJob}
-                                                                className="btn btn-success flex items-center gap-1"
-                                                            >
+                                                            <button onClick={handleStartJob} className="btn btn-success flex items-center gap-1">
                                                                 <FaPlayCircle className="text-xl" /> Start
                                                             </button>
 
-                                                            <button
-                                                                onClick={handleStopJob}
-                                                                className="btn btn-warning flex items-center gap-1"
-                                                            >
+                                                            <button onClick={handleStopJob} className="btn btn-warning flex items-center gap-1">
                                                                 <FaPauseCircle className="text-xl" /> Stop
                                                             </button>
 
-                                                            <button
-                                                                onClick={handleCompleteJob}
-                                                                className="btn btn-success flex items-center gap-1"
-                                                            >
+                                                            <button onClick={handleCompleteJob} className="btn btn-success flex items-center gap-1">
                                                                 <FaCheckCircle className="text-xl" /> Complete
                                                             </button>
                                                         </div>
@@ -441,10 +446,7 @@ const ColumnChooser = () => {
                             </div>
                         </Dialog>
                     </Transition>
-
-
                 </div>
-
             </div>
         </div>
     );

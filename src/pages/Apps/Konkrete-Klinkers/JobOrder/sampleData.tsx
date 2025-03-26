@@ -1,7 +1,6 @@
-
-
 interface Product {
     productId: string;
+    productName: string;
     uom: string;
     poQuantity: number;
     achievedTillNow: number;
@@ -21,18 +20,17 @@ interface JobOrder {
     factoryName: string;
     clientName: string;
     projectName: string;
-    batchNumber:string;
+    batchNumber: string;
 
     products: Product[];
 }
-
 
 const rowData: JobOrder[] = [
     {
         id: 1,
         jobOrderId: 'JO1234',
         workOrderId: 'WO5678',
-        batchNumber:"Batch001",
+        batchNumber: 'Batch001',
         fromDate: '2025-01-01',
         toDate: '2025-01-15',
         plantName: 'Plant A',
@@ -40,15 +38,16 @@ const rowData: JobOrder[] = [
         clientName: 'Client Alpha',
         projectName: 'Project Phoenix',
         products: [
-            { productId: 'P-001', uom: 'Kg', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
-            { productId: 'P-002', uom: 'Ton', poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' }
-        ]
+            { productId: 'P-001',productName:'1000010188/Paver Black 200*200*60', uom: 'Nos', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
+            { productId: 'P-001',productName:'1000010184/Paver Grey 200*200*60', uom: 'Nos', poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
+            { productId: 'P-002',productName:'1000010186/Paver Red 200*200*60', uom: 'Nos', poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' },
+        ],
     },
     {
         id: 2,
         jobOrderId: 'JO1235',
         workOrderId: 'WO5679',
-        batchNumber:"Batch002",
+        batchNumber: 'Batch002',
 
         fromDate: '2025-02-01',
         toDate: '2025-02-20',
@@ -56,10 +55,8 @@ const rowData: JobOrder[] = [
         factoryName: 'Factory Y',
         clientName: 'Client Beta',
         projectName: 'Project Pegasus',
-        products: [
-            { productId: 'P-003', uom: 'Kg', poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }
-        ]
-    }
+        products: [{ productId: 'P-003',productName:'1000010464/Paver Yellow 200*200*60', uom: 'Nos', poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }],
+    },
 ];
 
 export { rowData };

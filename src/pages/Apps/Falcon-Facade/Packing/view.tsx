@@ -302,7 +302,7 @@ const Packing = () => {
                             },
                             {
                                 accessor: 'productId',
-                                title: 'Product ID',
+                                title: 'Product Name',
                                 render: ({ products }) => products.map((product) => product.productId).join(', '),
                                 sortable: true,
                             },
@@ -346,7 +346,7 @@ const Packing = () => {
                                             className="flex hover:text-primary"
                                         >
                                             <IconEye className="w-4.5 h-4.5" />
-                                            View Details
+                                           
                                         </button>
                                     </div>
                                 ),

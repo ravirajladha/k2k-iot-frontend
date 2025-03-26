@@ -1,6 +1,6 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
@@ -35,12 +35,12 @@ interface Product {
 const rowData = [
     {
         materialCode: 1000010188,
-        productDescription: 'Paver Black',
+        productDescription: 'Paver Black 200*200*60',
         quantity: 500,
         bufferQuantity: 100,
         requiredQuantity: 300,
         balanceQuantity: 200,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 5,
         qtyInBundle: 6.4,
         qtyInNoPerBundle: 160,
@@ -48,12 +48,12 @@ const rowData = [
     },
     {
         materialCode: 1000010184,
-        productDescription: 'Paver Grey',
+        productDescription: 'Paver Grey 200*200*60',
         quantity: 250,
         bufferQuantity: 100,
         requiredQuantity: 200,
         balanceQuantity: 50,
-        unitOfMeasurement: 'nos',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 10,
         qtyInBundle: 25,
         qtyInNoPerBundle: 25,
@@ -61,12 +61,12 @@ const rowData = [
     },
     {
         materialCode: 1000010189,
-        productDescription: 'Pavers Dark Grey',
+        productDescription: 'Paver Dark Grey 200*200*60',
         quantity: 100,
         bufferQuantity: 100,
         requiredQuantity: 80,
         balanceQuantity: 20,
-        unitOfMeasurement: 'nos',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 2,
         qtyInBundle: 20,
         qtyInNoPerBundle: 20,
@@ -74,12 +74,12 @@ const rowData = [
     },
     {
         materialCode: 1000010464,
-        productDescription: 'Paver Yellow',
+        productDescription: 'Paver Yellow 200*200*60',
         quantity: 1000,
         bufferQuantity: 100,
         requiredQuantity: 900,
         balanceQuantity: 100,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'Nos',
         noOfPiecesPerPunch: 8,
         qtyInBundle: 8.32,
         qtyInNoPerBundle: 208,
@@ -141,7 +141,7 @@ const ColumnChooser = () => {
         { accessor: 'qtyInBundle', title: 'Quantity in Bundle' },
         { accessor: 'qtyInNoPerBundle', title: 'Quantity in No. Per Bundle' },
         { accessor: 'status', title: 'Status' },
-        { accessor: 'action', title: 'Actions' }, // Placeholder for actions like edit/delete.
+        { accessor: 'action', title: 'Actions' }, //Placeholder for actions like edit/delete.
     ];
 
     const breadcrumbItems = [
@@ -297,16 +297,17 @@ const ColumnChooser = () => {
                                         <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`/view/${materialCode}`} className="flex hover:text-primary">
+
+                                        {/* Pass the entire rowData array */}
+                                        <NavLink to={`/konkrete-klinkers/inventory/detail`} state={{ rowData, materialCode }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
 
-                                        {/* SlideIn Down */}
-                                        <div>
+                                        {/* <div>
                                             <button
                                                 onClick={() => {
                                                     const product = rowData.find((item) => item.materialCode === materialCode);
-                                                    setSelectedProduct(product || null); // Handle undefined case by setting null
+                                                    setSelectedProduct(product || null);
                                                     setModal10(true);
                                                 }}
                                                 type="button"
@@ -314,7 +315,7 @@ const ColumnChooser = () => {
                                             >
                                                 View
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 ),
                             },

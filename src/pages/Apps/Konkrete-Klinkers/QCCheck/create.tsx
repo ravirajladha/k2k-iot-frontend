@@ -39,7 +39,7 @@ const QcCheckForm: React.FC = () => {
         "WO-003": { workOrder: "WO-003", jobOrders: ["JO-3001", "JO-3002"] },
     };
 
-    const products = ['Product A - PR1', 'Product B - PR2', 'Product C PR3'];
+    const products = ['1000010188/Paver Black 200*200*60', '1000010184/Paver Grey 200*200*60', '1000010186/Paver Red 200*200*60'];
     const handleJobOrderChange = (selectedOption: any) => {
         if (!selectedOption) return;
         const selectedJobOrder = selectedOption.value;
@@ -123,7 +123,7 @@ const QcCheckForm: React.FC = () => {
         <div>
         <Breadcrumbs
             items={breadcrumbItems}
-            addButton={{ label: 'Back', link: '/konkrete-klinkers/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }}
+            addButton={{ label: 'Back', link: '/konkrete-klinkers/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }}
         />
 
         <div className="panel">

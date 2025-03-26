@@ -16,30 +16,39 @@ import IconFilter from '@/components/Icon/IconFilter';
 import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         id: 1,
-        client: "Client A",
-        work_order_number:"WO001",
-        plant_code:"PC001",
-        project: "Project Alpha",
-        created_at: "2025-01-01",
-        status: "In Progress",
-        deadline: "2025-01-15",
+        client: 'Client A',
+        work_order_number: 'WO001',
+        plant_code: 'PC001',
+        project: 'Project Alpha',
+        approvedBy: 'V Gouda',
+        receivedBy: 'M R Bhaske',
+        prodReqDate: '2025-01-02',
+        prodReqrDate: '2025-01-03',
+        remarks: 'Initiating for next step',
+        created_at: '2025-01-01',
+        status: 'In Progress',
+        deadline: '2025-01-15',
     },
     {
         id: 2,
-        work_order_number:"WO002",
-        plant_code:"PC002",
-        client: "Client B",
-        project: "Project Beta",
-        created_at: "2025-01-05",
-        status: "Pending",
-        deadline: "2025-01-20",
+        work_order_number: 'WO002',
+        plant_code: 'PC002',
+        client: 'Client B',
+        project: 'Project Beta',
+        approvedBy: 'V Gouda',
+        receivedBy: 'M R Bhaske',
+        prodReqDate: '2025-01-06',
+        prodReqrDate: '2025-01-07',
+        remarks: 'Follow up the flow',
+        created_at: '2025-01-05',
+        status: 'Pending',
+        deadline: '2025-01-20',
     },
 ];
-
 
 const ColumnChooser = () => {
     const dispatch = useDispatch();
@@ -65,15 +74,14 @@ const ColumnChooser = () => {
 
     const [showSearchPanel, setShowSearchPanel] = useState(false);
     // const [search, setSearch] = useState("");
-    const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
 
     const handleClear = () => {
-        setSearch("");
-        setFromDate("");
-        setToDate("");
+        setSearch('');
+        setFromDate('');
+        setToDate('');
     };
-
 
     const showHideColumns = (col: any, value: any) => {
         if (hideCols.includes(col)) {
@@ -90,6 +98,11 @@ const ColumnChooser = () => {
 
         { accessor: 'client', title: 'Client Name' },
         { accessor: 'project', title: 'Project Name' },
+        { accessor: 'approvedBy', title: 'Approved By' },
+        { accessor: 'receivedBy', title: 'Received By' },
+        { accessor: 'prodReqDate', title: 'Production Request Date' },
+        { accessor: 'prodReqrDate', title: 'Production Requiremnet Date' },
+        { accessor: 'remarks', title: 'Remarks' },
         { accessor: 'created_at', title: 'Created At' },
         { accessor: 'status', title: 'Status' },
         { accessor: 'deadline', title: 'Date' },
@@ -121,7 +134,6 @@ const ColumnChooser = () => {
                     item.created_at.toLowerCase().includes(search.toLowerCase()) ||
                     item.status.toLowerCase().includes(search.toLowerCase()) ||
                     item.deadline.toString().toLowerCase().includes(search.toLowerCase())
-
                 );
             });
         });
@@ -137,12 +149,12 @@ const ColumnChooser = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Work Order', link: '/falcon-facade/work-order/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add Work Order',
+                    link: '/falcon-facade/work-order/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
@@ -198,11 +210,7 @@ const ColumnChooser = () => {
                             <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                         </div>
 
-                        <button
-                            className="btn btn-primary "
-                            onClick={() => setShowSearchPanel(!showSearchPanel)}
-                            aria-label="Toggle Filter"
-                        >
+                        <button className="btn btn-primary " onClick={() => setShowSearchPanel(!showSearchPanel)} aria-label="Toggle Filter">
                             <IconFilter isHidden={!showSearchPanel} className="w-5 h-5 text-white-600 hover:text-orange-500" />
                         </button>
                     </div>
@@ -214,27 +222,18 @@ const ColumnChooser = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {/* From Date */}
                             <div>
-                                <label htmlFor="fromDate" className="block mb-2 font-medium">From Date</label>
-                                <input
-                                    type="date"
-                                    id="fromDate"
-                                    className="form-input"
-                                    value={fromDate}
-                                    onChange={(e) => setFromDate(e.target.value)}
-                                />
+                                <label htmlFor="fromDate" className="block mb-2 font-medium">
+                                    From Date
+                                </label>
+                                <input type="date" id="fromDate" className="form-input" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
                             </div>
 
                             {/* To Date */}
                             <div>
-                                <label htmlFor="toDate" className="block mb-2 font-medium">To Date</label>
-                                <input
-                                    type="date"
-                                    id="toDate"
-                                    className="form-input"
-                                    value={toDate}
-                                    onChange={(e) => setToDate(e.target.value)}
-                                />
-
+                                <label htmlFor="toDate" className="block mb-2 font-medium">
+                                    To Date
+                                </label>
+                                <input type="date" id="toDate" className="form-input" value={toDate} onChange={(e) => setToDate(e.target.value)} />
                             </div>
                             {/* Toggle Search Panel */}
                             {/* <button
@@ -247,15 +246,12 @@ const ColumnChooser = () => {
 
                         {/* Action Buttons */}
                         <div className="flex gap-4 mt-4">
-                            <button
-                                className="btn btn-secondary"
-                                onClick={handleClear}
-                            >
+                            <button className="btn btn-secondary" onClick={handleClear}>
                                 Clear
                             </button>
                             <button
                                 className="btn btn-primary"
-                            // onClick={handleSubmit}
+                                // onClick={handleSubmit}
                             >
                                 Submit
                             </button>
@@ -288,6 +284,36 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('project'),
                             },
                             {
+                                accessor: 'approvedBy',
+                                title: 'Approved By',
+                                sortable: true,
+                                hidden: hideCols.includes('approvedBy'),
+                            },
+                            {
+                                accessor: 'receivedBy',
+                                title: 'Received By',
+                                sortable: true,
+                                hidden: hideCols.includes('receivedBy'),
+                            },
+                            {
+                                accessor: 'prodReqDate',
+                                title: 'Production Request Date',
+                                sortable: true,
+                                hidden: hideCols.includes('prodReqDate'),
+                            },
+                            {
+                                accessor: 'prodReqrDate',
+                                title: 'Production Requirement Date',
+                                sortable: true,
+                                hidden: hideCols.includes('prodReqDate'),
+                            },
+                            {
+                                accessor: 'remarks',
+                                title: 'Remarks',
+                                sortable: true,
+                                hidden: hideCols.includes('remarks'),
+                            },
+                            {
                                 accessor: 'plant_code',
                                 title: 'Plant Code',
                                 sortable: true,
@@ -307,14 +333,9 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('status'),
                                 render: ({ status }) => (
                                     <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
+                                        className={`${
+                                            status === 'In Progress' ? 'text-info' : status === 'Pending' ? 'text-warning' : status === 'Completed' ? 'text-success' : 'text-danger'
+                                        } capitalize`}
                                     >
                                         {status}
                                     </div>
@@ -355,11 +376,8 @@ const ColumnChooser = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
-
                 </div>
             </div>
         </div>

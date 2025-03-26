@@ -27,8 +27,8 @@ const WorkOrderPage = () => {
 
     const products = [
         {
-            description: 'Product A',
-            materialCode: 'M001',
+            description: 'Paver Black',
+            materialCode: '1000010188',
             uom: 'Nos',
             requiredQuantity: 100,
             achieved: 80,
@@ -38,8 +38,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-20',
         },
         {
-            description: 'Product B',
-            materialCode: 'M002',
+            description: 'Paver Grey',
+            materialCode: '1000010184',
             uom: 'Nos',
             requiredQuantity: 200,
             achieved: 180,
@@ -49,8 +49,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-22',
         },
         {
-            description: 'Product C',
-            materialCode: 'M003',
+            description: 'Paver Dark',
+            materialCode: '1000010185',
             uom: 'Nos',
             requiredQuantity: 150,
             achieved: 130,
@@ -60,8 +60,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-25',
         },
         {
-            description: 'Product D',
-            materialCode: 'M004',
+            description: 'Paver Red',
+            materialCode: '1000010186',
             uom: 'Nos',
             requiredQuantity: 250,
             achieved: 230,
@@ -71,8 +71,8 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-28',
         },
         {
-            description: 'Product E',
-            materialCode: 'M005',
+            description: 'Paver Yellow',
+            materialCode: '1000010464',
             uom: 'Nos',
             requiredQuantity: 180,
             achieved: 150,
@@ -86,8 +86,8 @@ const WorkOrderPage = () => {
     const jobOrders = [
         {
             id: 1,
-            productName: 'Product A',
-            uom: 'Kg',
+            productName: 'Paver Black',
+            uom: 'Nos',
             poQuantity: 100,
             plannedQuantity: 90,
             achievedQuantity: 80,
@@ -115,8 +115,8 @@ const WorkOrderPage = () => {
         },
         {
             id: 2,
-            productName: 'Product B',
-            uom: 'Ltr',
+            productName: 'Paver Grey',
+            uom: 'Nos',
             poQuantity: 200,
             plannedQuantity: 180,
             achievedQuantity: 170,
@@ -211,7 +211,7 @@ const WorkOrderPage = () => {
             dispatchId: 'D001',
             products: [
                 {
-                    productName: 'Bricks A',
+                    productName: 'Paver Yellow',
                     quantity: 500,
                     uom: 'Nos',
                     rate: 10,
@@ -221,7 +221,7 @@ const WorkOrderPage = () => {
                     docketNumber: 'DOC001',
                 },
                 {
-                    productName: 'Bricks B',
+                    productName: 'Paver Red',
                     quantity: 300,
                     uom: 'Nos',
                     rate: 12,
@@ -236,7 +236,7 @@ const WorkOrderPage = () => {
             dispatchId: 'D002',
             products: [
                 {
-                    productName: 'Bricks C',
+                    productName: 'Paver Grey',
                     quantity: 400,
                     uom: 'Nos',
                     rate: 15,

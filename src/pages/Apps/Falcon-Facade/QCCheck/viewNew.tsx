@@ -1,32 +1,35 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { Dialog, Transition } from '@headlessui/react';
+
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
 import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
+import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconEdit from '@/components/Icon/IconEdit';
-import IconEye from '@/components/Icon/IconEye';
-import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import IconTrash from '@/components/Icon/IconTrash';
 
+import IconEye from '@/components/Icon/IconEye';
+import IconX from '@/components/Icon/IconX';
+
+// import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
+// import { Breadcrumbs } from '@mantine/core';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         sl_no: 1,
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
-        productName: '1000010186/Paver Black 200*200*60',
-        totalQuantity: 100,
-        totalBundles: 10,
-        uom: 'Nos',
         rejectedQuantity: 5,
         recycledQuantity: 3,
-        qrCode: 'QR123',
+        remark: 'Glass glazing fix',
+
         createdBy: 'Admin',
-        status: 'Pending',
         timestamp: '2025-01-28T10:25:00Z',
     },
     {
@@ -34,14 +37,10 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
-        productName: '1000010184/Paver Grey 200*200*60',
-        totalQuantity: 300,
-        totalBundles: 10,
-        uom: 'Nos',
         rejectedQuantity: 2,
         recycledQuantity: 1,
-        qrCode: 'QR123',
-        status: 'Dispatched',
+        remark: 'Cutting issue',
+
         createdBy: 'User1',
         timestamp: '2025-01-28T11:30:00Z',
     },
@@ -50,14 +49,9 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
-        productName: '1000010188/Paver Red 200*200*60',
-        totalQuantity: 200,
-        totalBundles: 10,
-        uom: 'Nos',
         rejectedQuantity: 8,
         recycledQuantity: 5,
-        qrCode: 'QR123',
-        status: 'Dispatched',
+        remark: 'Assembling mismatch a/c to documents',
         createdBy: 'Manager',
         timestamp: '2025-01-28T12:45:00Z',
     },
@@ -66,33 +60,24 @@ const rowData = [
 const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Packing'));
+        dispatch(setPageTitle('Quality Control Check'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
+    // show/hide
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'sl_no'));
+    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
 
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-        columnAccessor: 'sl_no',
+        columnAccessor: 'id',
         direction: 'asc',
     });
 
-    const [hideCols, setHideCols] = useState<any>([]);
-
-    const formatDate = (date: any) => {
-        if (date) {
-            const dt = new Date(date);
-            const month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
-            const day = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
-            return day + '/' + month + '/' + dt.getFullYear();
-        }
-        return '';
-    };
+    const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
     const showHideColumns = (col: any, value: any) => {
         if (hideCols.includes(col)) {
@@ -105,23 +90,28 @@ const ColumnChooser = () => {
     const cols = [
         { accessor: 'sl_no', title: 'SL No' },
         { accessor: 'workOrder', title: 'Work Order' },
+        { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
-        { accessor: 'productName', title: 'Product Name' },
-        { accessor: 'totalQuantity', title: 'Total Quantity' },
-        { accessor: 'totalBundles', title: 'Total Bundles' },
-        { accessor: 'uom', title: 'UOM' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
-        { accessor: 'qrCode', title: 'QR Code String' },
-        { accessor: 'status', title: 'Status' },
+        { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
+        { accessor: 'remark', title: 'Remark' },
         { accessor: 'createdBy', title: 'Created By' },
         { accessor: 'timestamp', title: 'Timestamp' },
         { accessor: 'action', title: 'Actions' },
     ];
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedQCCheck, setSelectedQCCheck] = useState<any | null>(null); // Selected QC Check Data
+
+    const handleViewDetails = (qcCheck: any) => {
+        setSelectedQCCheck(qcCheck);
+        setIsModalOpen(true);
+    };
+
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '#', isActive: false },
-        { label: 'Packing', link: '/konkrete-klinkers/packing/view', isActive: true },
+        { label: 'Falcon Facade', link: '#', isActive: false },
+        { label: 'QC Check', link: '/falcon-facade/qc-check/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -140,37 +130,42 @@ const ColumnChooser = () => {
                 return (
                     item.sl_no.toString().includes(search.toLowerCase()) ||
                     item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
+                    item.jobOrder.toLowerCase().includes(search.toLowerCase()) ||
                     item.productId.toLowerCase().includes(search.toLowerCase()) ||
                     item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
-                    item.status.toString().includes(search.toLowerCase()) ||
-                    item.qrCode.toLowerCase().includes(search.toLowerCase()) ||
+                    item.recycledQuantity.toString().includes(search.toLowerCase()) ||
+                    item.remark.toString().includes(search.toLowerCase()) ||
                     item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
                     item.timestamp.toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
         setPage(1);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
+    console.log("Inside qc-check view");
+    
 
     return (
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Packing',
-                    link: '/konkrete-klinkers/packing/create',
+                    label: 'Add QC Check',
+                    link: '/falcon-facade/qc-check/create',
                     icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Packing</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">QC Check</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -185,31 +180,33 @@ const ColumnChooser = () => {
                                     }
                                 >
                                     <ul className="!min-w-[140px]">
-                                        {cols.map((col, i) => (
-                                            <li
-                                                key={i}
-                                                className="flex flex-col"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                            >
-                                                <div className="flex items-center px-4 py-1">
-                                                    <label className="cursor-pointer mb-0">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={!hideCols.includes(col.accessor)}
-                                                            className="form-checkbox"
-                                                            defaultValue={col.accessor}
-                                                            onChange={(event: any) => {
-                                                                setHideCols(event.target.value);
-                                                                showHideColumns(col.accessor, event.target.checked);
-                                                            }}
-                                                        />
-                                                        <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                        ))}
+                                        {cols.map((col, i) => {
+                                            return (
+                                                <li
+                                                    key={i}
+                                                    className="flex flex-col"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                    }}
+                                                >
+                                                    <div className="flex items-center px-4 py-1">
+                                                        <label className="cursor-pointer mb-0">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!hideCols.includes(col.accessor)}
+                                                                className="form-checkbox"
+                                                                defaultValue={col.accessor}
+                                                                onChange={(event: any) => {
+                                                                    setHideCols(event.target.value);
+                                                                    showHideColumns(col.accessor, event.target.checked);
+                                                                }}
+                                                            />
+                                                            <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            );
+                                        })}
                                     </ul>
                                 </Dropdown>
                             </div>
@@ -236,41 +233,17 @@ const ColumnChooser = () => {
                                 sortable: true,
                                 hidden: hideCols.includes('workOrder'),
                             },
-                            // {
-                            //     accessor: 'productId',
-                            //     title: 'Product ID',
-                            //     sortable: true,
-                            //     hidden: hideCols.includes('productId'),
-                            // },
                             {
-                                accessor: 'productName',
-                                title: 'Product Name',
+                                accessor: 'jobOrder',
+                                title: 'Job Order',
                                 sortable: true,
-                                hidden: hideCols.includes('productName'),
+                                hidden: hideCols.includes('jobOrder'),
                             },
                             {
-                                accessor: 'totalQuantity',
-                                title: 'Total Quantity',
+                                accessor: 'productId',
+                                title: 'Product ID',
                                 sortable: true,
-                                hidden: hideCols.includes('totalQuantity'),
-                            },
-                            {
-                                accessor: 'totalBundles',
-                                title: 'Total Bundles',
-                                sortable: true,
-                                hidden: hideCols.includes('totalBundles'),
-                            },
-                            {
-                                accessor: 'uom',
-                                title: 'UOM',
-                                sortable: true,
-                                hidden: hideCols.includes('uom'),
-                            },
-                            {
-                                accessor: 'qrCode',
-                                title: 'QR Code',
-                                sortable: true,
-                                hidden: hideCols.includes('qrCode'),
+                                hidden: hideCols.includes('productId'),
                             },
                             {
                                 accessor: 'rejectedQuantity',
@@ -279,10 +252,16 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('rejectedQuantity'),
                             },
                             {
-                                accessor: 'status',
-                                title: 'Status',
+                                accessor: 'recycledQuantity',
+                                title: 'Recycled Quantity',
                                 sortable: true,
-                                hidden: hideCols.includes('status'),
+                                hidden: hideCols.includes('recycledQuantity'),
+                            },
+                            {
+                                accessor: 'remark',
+                                title: 'Remark',
+                                sortable: true,
+                                hidden: hideCols.includes('remark'),
                             },
                             {
                                 accessor: 'createdBy',
@@ -300,10 +279,13 @@ const ColumnChooser = () => {
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                render: (row) => (
-                                    <div className="c">
-                                        <NavLink to="/konkrete-klinkers/packing/detail" state={{ rowData: row }} className="flex hover:text-primary">
-                                            <IconEye />
+                                render: (rowData) => (
+                                    <div className="flex gap-4 items-center w-max mx-auto">
+                                        {/* <NavLink to={`/edit/${qcCheck.sl_no}`} className="flex hover:text-info">
+                                            <IconEdit className="w-4.5 h-4.5" />
+                                        </NavLink> */}
+                                        <NavLink to={`/falcon-facade/qc-check/detail`} state={rowData} className="flex hover:text-info">
+                                            <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>
                                 ),

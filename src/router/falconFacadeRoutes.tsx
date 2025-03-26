@@ -2,6 +2,8 @@ const basePath = '/falcon-facade';
 
 import {
     QCCheckView,
+    QCCheckViewNew,  //New
+    QCCheckViewDetail,  //New
     QCCheckCreate,
     WorkOrderView,
     WorkOrderCreate,
@@ -31,10 +33,13 @@ import {
     ProductSystems,
     ProductSystemCreate,
     JobOrderView,
+    JobOrderDetail, //New
     JobOrderCreate,
     InventoryView,
     PackingView,
     PackingCreate,
+    PackingDetail, //New
+    PackingViewNew, //New
     DispatchView,
     DispatchCreate,
     DispatchChallanView,
@@ -48,6 +53,16 @@ export const falconFacadeRoutes = [
     {
         path: `${basePath}/qc-check`,
         element: <QCCheckView />,
+        layout: 'admin',
+    },
+    // {
+    //     path: `${basePath}/qc-check`,
+    //     element: <QCCheckViewNew />,
+    //     layout: 'admin',
+    // },
+    {
+        path: `${basePath}/qc-check/detail`,
+        element: <QCCheckViewDetail />,
         layout: 'admin',
     },
     {
@@ -75,6 +90,11 @@ export const falconFacadeRoutes = [
     {
         path: `${basePath}/job-order`,
         element: <JobOrderView />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/job-order/detail`,
+        element: <JobOrderDetail />,
         layout: 'admin',
     },
     {
@@ -141,14 +161,24 @@ export const falconFacadeRoutes = [
     },
 
     // Packing Routes
+    // {
+    //     path: `${basePath}/packing`,
+    //     element: <PackingView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/packing`,
-        element: <PackingView />,
+        element: <PackingViewNew />,
         layout: 'admin',
     },
     {
         path: `${basePath}/packing/create`,
         element: <PackingCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/packing/detail`,
+        element: <PackingDetail />,
         layout: 'admin',
     },
 

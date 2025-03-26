@@ -5,6 +5,7 @@ import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Select from 'react-select';
+import { NavLink } from 'react-router-dom';
 
 const PackingCreation = () => {
     const [formData, setFormData] = useState({
@@ -171,7 +172,6 @@ const PackingCreation = () => {
                                 className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
                                 value={formData.totalBatches}
                                 onChange={handleInputChange}
-                                // onBlur={generateBatchInputs}
                             />
                         </div>
                         <div>
@@ -212,16 +212,17 @@ const PackingCreation = () => {
                         ))}
                     </div>
 
-                    <div className="flex gap-4">
-                        <button type="submit" className="btn btn-success w-1/2">
-                            <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                            Submit
-                        </button>
-                        <button type="button" className="btn btn-danger w-1/2">
-                            <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                            Cancel
-                        </button>
-                    </div>
+                    {isGenerated && (
+                        <div className="flex justify-center mt-4">
+                            <NavLink
+                                to="/konkrete-klinkers/packing/detail"
+                                state={{ rowData: formData, mode: 'create' }}
+                                className="btn btn-success w-1/2 flex items-center justify-center"
+                            >
+                                Create
+                            </NavLink>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>

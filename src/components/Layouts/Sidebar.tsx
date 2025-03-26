@@ -422,7 +422,7 @@ const Sidebar = () => {
                                             </div>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <NavLink
                                             to="/konkrete-klinkers/dispatch/invoice/view"
                                             state={{
@@ -446,7 +446,7 @@ const Sidebar = () => {
                                                 </span>
                                             </div>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
                                     <li className="nav-item">
                                         <NavLink to="/konkrete-klinkers/inventories" className="group">

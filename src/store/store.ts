@@ -3,15 +3,13 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Default storage (localStorage for web)
 import themeConfigSlice from './slices/themeConfigSlice';
 import authReducer from './slices/authSlice';
-import alertReducer from "./slices/alertSlice";
-
+import alertReducer from './slices/alertSlice';
 
 // Combine reducers
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
     auth: authReducer,
     alerts: alertReducer,
-
 });
 
 // Persist configuration

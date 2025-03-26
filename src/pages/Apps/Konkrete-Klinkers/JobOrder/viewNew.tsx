@@ -1,91 +1,65 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
 import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
-import IconEdit from '@/components/Icon/IconEdit';
+import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconEye from '@/components/Icon/IconEye';
+import { rowData } from './sampleData';
+
+// import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
+// import { Breadcrumbs } from '@mantine/core';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+interface Product {
+    productId: string;
+    productName: string;
+    uom: string;
+    poQuantity: number;
+    achievedTillNow: number;
+    rejectedQuantity: number;
+    plannedQuantity: number;
+    date: string;
+}
 
-const rowData = [
-    {
-        sl_no: 1,
-        workOrder: 'WO12345',
-        clientName:'Client Alpha',
-        projectName:'Project Phoenix',
-        jobOrder: 'JO12345',
-        products: [
-            { productId: 'PRD001',productName:'1000010186/Paver Red 200*200*60', quantity: 10 },
-            { productId: 'PRD002',productName:'1000010188/Paver Black 200*200*60', quantity: 5 },
-        ],
-        invoiceNo: 'INV123456',
-        rejectedQuantity: '22',
-        vehicleNumber: 'KA-01-MC-1234',
-        createdBy: 'Admin',
-        timestamp: '2025-01-28T10:25:00Z',
-    },
-    {
-        sl_no: 2,
-        workOrder: 'WO12346',
-        clientName:'ABC Corp',
-        projectName:'Project Abc',
-        jobOrder: 'JO12346',
-        products: [
-            { productId: 'PRD003',productName:'1000010464/Paver Yellow 200*200*60', quantity: 8 },
-            { productId: 'PRD004',productName:'1000010186/Paver Red 200*200*60',quantity: 12 },
-        ],
-        invoiceNo: 'INV123457',
-        rejectedQuantity: '22',
-
-        vehicleNumber: 'KA-02-MC-5678',
-        createdBy: 'User1',
-        timestamp: '2025-01-28T11:30:00Z',
-    },
-    {
-        sl_no: 3,
-        workOrder: 'WO12347',
-        clientName:'Client Beta',
-        projectName:'Project Beta',
-        jobOrder: 'JO12347',
-        products: [
-            { productId: 'PRD005',productName:'1000010184/Paver Grey 200*200*60', quantity: 15 },
-            { productId: 'PRD006',productName:'1000010185/Paver Dark Grey 200*200*60', quantity: 7 },
-            { productId: 'PRD007',productName:'1000010186/Paver Red 200*200*60', quantity: 3 },
-        ],
-        invoiceNo: 'INV123458',
-        rejectedQuantity: '22',
-
-        vehicleNumber: 'KA-03-MC-9101',
-        createdBy: 'Manager',
-        timestamp: '2025-01-28T12:45:00Z',
-    },
-];
-
-
+interface JobOrder {
+    id: number;
+    jobOrderId: string;
+    workOrderId: string;
+    fromDate: string;
+    toDate: string;
+    plantName: string;
+    factoryName: string;
+    clientName: string;
+    batchNumber: string;
+    projectName: string;
+    products: Product[];
+}
 
 const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Dispatch'));
+        dispatch(setPageTitle('Job Order / Planning'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
+    // show/hide
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
+
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
         columnAccessor: 'id',
         direction: 'asc',
     });
-    const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
+
+    const [hideCols, setHideCols] = useState<any>(['plantName', 'clientName']);
 
     const formatDate = (date: any) => {
         if (date) {
@@ -105,24 +79,32 @@ const ColumnChooser = () => {
         }
     };
 
+    // data table modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedJobOrder, setSelectedJobOrder] = useState<JobOrder | null>(null);
+
+    const handleViewDetails = (jobOrder: JobOrder) => {
+        setSelectedJobOrder(jobOrder);
+        setIsModalOpen(true);
+    };
+
     const cols = [
-        { accessor: 'sl_no', title: 'SL No' },
-        { accessor: 'workOrder', title: 'Work Order' },
+        { accessor: 'id', title: 'Serial Number' },
+        { accessor: 'jobOrderId', title: 'Job Order ID' },
+        { accessor: 'workOrderId', title: 'Work Order ID' },
+        { accessor: 'fromDate', title: 'From Date' },
+        { accessor: 'toDate', title: 'To Date' },
+        { accessor: 'plantName', title: 'Plant Name' },
+        // { accessor: 'factoryName', title: 'Factory Name' },
         { accessor: 'clientName', title: 'Client Name' },
-        { accessor: 'projectName', title: 'project Name' },
-        { accessor: 'jobOrder', title: 'Job Order' },
-        { accessor: 'productId', title: 'Product ID' },
-        { accessor: 'productName', title: 'Product Name' },
-        { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
-        { accessor: 'createdBy', title: 'Created By' },
-        { accessor: 'timestamp', title: 'Timestamp' },
+        { accessor: 'projectName', title: 'Project Name' },
         { accessor: 'action', title: 'Actions' },
     ];
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '#', isActive: false },
-        { label: 'Dispatch', link: '/konkrete-klinkers/dispatch/view', isActive: true },
+        { label: 'Job Order / Planning', link: '/konkrete-klinkers/job-order/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -138,33 +120,43 @@ const ColumnChooser = () => {
     useEffect(() => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
-                const productMatches = item.products.some((product) => product.productId.toLowerCase().includes(search.toLowerCase()) || product.quantity.toString().includes(search.toLowerCase()));
-
                 return (
-                    item.sl_no.toString().includes(search.toLowerCase()) ||
-                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
-                    productMatches ||
-                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
-                    item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-                    item.timestamp.toLowerCase().includes(search.toLowerCase())
+                    item.id.toString().includes(search.toLowerCase()) ||
+                    item.jobOrderId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.workOrderId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.fromDate.toLowerCase().includes(search.toLowerCase()) ||
+                    item.toDate.toLowerCase().includes(search.toLowerCase()) ||
+                    item.plantName.toLowerCase().includes(search.toLowerCase()) ||
+                    // item.factoryName.toLowerCase().includes(search.toLowerCase()) ||
+                    item.clientName.toLowerCase().includes(search.toLowerCase()) ||
+                    item.projectName.toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
         setPage(1);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Add Dispatch', link: '/konkrete-klinkers/dispatch/create', icon: <IconPlusCircle className="text-4xl" /> }} />
+            <Breadcrumbs
+                items={breadcrumbItems}
+                addButton={{
+                    label: 'Add Job Order',
+                    link: '/konkrete-klinkers/job-order/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
+                }}
+            />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Dispatch</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Job Order / Planning</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -218,20 +210,53 @@ const ColumnChooser = () => {
                 <div className="datatables">
                     <DataTable
                         className="whitespace-nowrap table-hover"
-                        records={rowData}
+                        records={recordsData}
                         columns={[
+                            { accessor: 'id', title: 'Serial Number', sortable: true, hidden: hideCols.includes('id') },
                             {
-                                accessor: 'sl_no',
-                                title: 'SL No',
+                                accessor: 'jobOrderId',
+                                title: 'Job Order ID',
                                 sortable: true,
-                                hidden: hideCols.includes('sl_no'),
+                                hidden: hideCols.includes('jobOrderId'),
                             },
                             {
-                                accessor: 'workOrder',
-                                title: 'Work Order',
+                                accessor: 'workOrderId',
+                                title: 'Work Order ID',
                                 sortable: true,
-                                hidden: hideCols.includes('workOrder'),
+                                hidden: hideCols.includes('workOrderId'),
                             },
+                            {
+                                accessor: 'batchNumber',
+                                title: 'Batch No',
+                                sortable: true,
+                                hidden: hideCols.includes('batchNumber'),
+                            },
+                            {
+                                accessor: 'fromDate',
+                                title: 'From Date',
+                                sortable: true,
+                                hidden: hideCols.includes('fromDate'),
+                                render: ({ fromDate }) => <div>{formatDate(fromDate)}</div>,
+                            },
+                            {
+                                accessor: 'toDate',
+                                title: 'To Date',
+                                sortable: true,
+                                hidden: hideCols.includes('toDate'),
+                                render: ({ toDate }) => <div>{formatDate(toDate)}</div>,
+                            },
+                            {
+                                accessor: 'plantName',
+                                title: 'Plant Name',
+                                sortable: true,
+                                hidden: hideCols.includes('plantName'),
+                            },
+                            // {
+                            //     accessor: 'factoryName',
+                            //     title: 'Factory Name',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('factoryName'),
+                            // },
                             {
                                 accessor: 'clientName',
                                 title: 'Client Name',
@@ -245,48 +270,15 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('projectName'),
                             },
                             {
-                                accessor: 'products',
-                                title: 'Products',
-                                sortable: false,
-                                hidden: hideCols.includes('products'),
-                                render: ({ products }) => (
-                                    <div>
-                                        {products.map((product, index) => (
-                                            <div key={index}>
-                                                {product.productName} - {product.quantity}
-                                            </div>
-                                        ))}
-                                    </div>
-                                ),
-                            },
-                            // {
-                            //     accessor: 'rejectedQuantity',
-                            //     title: 'Rejected Quantity',
-                            //     sortable: true,
-                            //     hidden: hideCols.includes('rejectedQuantity'),
-                            // },
-                            {
-                                accessor: 'createdBy',
-                                title: 'Created By',
-                                sortable: true,
-                                hidden: hideCols.includes('createdBy'),
-                            },
-                            {
-                                accessor: 'timestamp',
-                                title: 'Timestamp',
-                                sortable: true,
-                                hidden: hideCols.includes('timestamp'),
-                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
-                            },
-                            {
                                 accessor: 'action',
                                 title: 'Actions',
-                                render: (row) => (
+                                sortable: false,
+                                render: (jobOrder) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to ={`/konkrete-klinkers/dispatch/editDetail`} state={{ rowData: row }} className="flex hover:text-info">
-                                            <IconEdit className="w-4.5 h-4.5" />
-                                        </NavLink>
-                                        <NavLink to={`/konkrete-klinkers/dispatch/detail`} state={{ rowData: row }} className="flex hover:text-primary">
+                                        {/* <button className="flex hover:text-primary" onClick={() => handleViewDetails(jobOrder)}>
+                                            <IconEye />
+                                        </button> */}
+                                        <NavLink to={`/konkrete-klinkers/job-order/detail`} state={{ rowData: jobOrder }} className="flex hover:text-info">
                                             <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>
@@ -294,7 +286,7 @@ const ColumnChooser = () => {
                             },
                         ]}
                         highlightOnHover
-                        totalRecords={rowData.length}
+                        totalRecords={initialRecords.length}
                         recordsPerPage={pageSize}
                         page={page}
                         onPageChange={(p) => setPage(p)}
