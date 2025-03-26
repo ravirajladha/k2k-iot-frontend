@@ -136,6 +136,11 @@ const ProductionPlanning = () => {
         const productId = items.length + 1;
         console.log('jo', formData.jobOrderNumber);
 
+        if(formData.jobOrderNumber.length <= 0){
+            alert("Please select Job Order first!")
+            return;
+        }
+
         const productNumber = `${formData.jobOrderNumber}-${productId}`;
         // console.log("productNumber",productNumber);
 

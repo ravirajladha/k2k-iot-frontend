@@ -412,7 +412,7 @@ const WorkOrderPage = () => {
     const jobOrders = [
         {
             id: 1,
-            productName: 'Inward',
+            productName: 'Inward Door',
             uom: 'Nos',
             poQuantity: 100,
             plannedQuantity: 90,
@@ -525,8 +525,8 @@ const WorkOrderPage = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'Work Order', link: '/konkrete-klinkers/work-order/view', isActive: false },
+        { label: 'Falcon Facade', link: '/', isActive: false },
+        { label: 'Work Order', link: '/falcon-facade/work-order/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -655,12 +655,12 @@ const WorkOrderPage = () => {
                                 {products.map((product, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
                                         <td className="px-4 py-2 border border-gray-300">{product.description}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.code}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.colorCode}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.height}</td>
-                                        <td className="px-4 py-2 border border-gray-300">{product.width}</td>
                                         {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
-                                        <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.width}</td>
 
                                         <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
@@ -851,6 +851,9 @@ const WorkOrderPage = () => {
                                         <strong>Product Name:</strong> {jobOrder.productName}
                                     </p>
                                     <p className="text-sm">
+                                        <strong>Sales Order Number :</strong> SL-123
+                                    </p>
+                                    <p className="text-sm">
                                         <strong>System:</strong>Schuco
                                     </p>
                                     <p className="text-sm">
@@ -862,6 +865,9 @@ const WorkOrderPage = () => {
                                     </p>
                                     <p className="text-sm">
                                         <strong>PO Quantity:</strong> {jobOrder.poQuantity}
+                                    </p>
+                                    <p className="text-sm">
+                                        <strong>Range Date:</strong> 2025-07-05 to 2025-07-10
                                     </p>
                                 </div>
                                 <div>

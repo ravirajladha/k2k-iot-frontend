@@ -314,7 +314,7 @@ const WorkOrderPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order', isActive: false },
+        { label: 'Production', link: '/falcon-facade/work-order', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -323,7 +323,7 @@ const WorkOrderPage = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/falcon-facade/productionNew', icon: <IconArrowBackward className="text-4xl" /> }}
             />
             <button
                 onClick={() => window.print()}
@@ -368,7 +368,7 @@ const WorkOrderPage = () => {
 
                             <p className="text-sm"><strong>Product System:</strong> {productDetails.productSystem}</p>
 
-                            <p className="text-sm"><strong>Project Name:</strong> Lorem, ipsum.</p>
+                            <p className="text-sm"><strong>Project Name:</strong> </p>
                             <p className="text-sm"><strong>Deadline Range:</strong> 16-02-2025 to 21-02-2025</p>
                             <p className="text-sm"><strong>Schedule Date:</strong> 11-02-2025</p>
                         </div>

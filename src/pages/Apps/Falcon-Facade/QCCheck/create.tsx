@@ -3,6 +3,8 @@ import IconInfoCircle from '@/components/Icon/IconInfoCircle';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Select from 'react-select';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 
 interface FormData {
     workOrder: string;
@@ -92,9 +94,16 @@ const QcCheckForm: React.FC = () => {
         value: sf,
         label: sf,
     }));
+    const breadcrumbItems = [
+        { label: 'Home', link: '/', isActive: false },
+        { label: 'Falcon Facade', link: '/', isActive: false },
+        { label: 'Qc Check', link: '/falcon-facade/qc-check', isActive: true },
+        // { label: 'Create', link: '#', isActive: true },
+    ];
 
     return (
         <div>
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/qc-check', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5 flex items-center justify-between">
                     <h5 className="font-semibold text-lg dark:text-white-light">QC Check Form</h5>

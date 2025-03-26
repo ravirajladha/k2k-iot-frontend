@@ -1,113 +1,71 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useEffect, useState, Fragment } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Dialog, Transition } from '@headlessui/react';
 
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
 import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
+import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconEdit from '@/components/Icon/IconEdit';
+import IconTrash from '@/components/Icon/IconTrash';
+
 import IconEye from '@/components/Icon/IconEye';
-// import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
-// import { Breadcrumbs } from '@mantine/core';
+import IconX from '@/components/Icon/IconX';
+
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
-import ViewDetailsModal from './viewModel';
+
 const rowData = [
     {
-        packing_id: 1,
-        workOrderId: 'WO12345',
+        sl_no: 1,
+        workOrder: 'WO12345',
         jobOrder: 'JO98765',
-        status: 'Pending',
-        createdBy: 'Pending',
-        timestamp: '2025-02-25 10:30 AM',
-
-        products: [
-            {
-                productId: 'Inward Window',
-                productName: 'Inward Window',
-                uom: 'nos',
-                semiFinishedProducts: [
-                    {
-                        sfId: 'SF1',
-                        quantity: 3, // This means 3 QR codes will be generated for this SF
-                        qrCodes: ['QR1', 'QR2', 'QR3'],
-                    },
-                    {
-                        sfId: 'SF2',
-                        quantity: 2, // This means 2 QR codes will be generated for SF2
-                        qrCodes: ['QR4', 'QR5'],
-                    },
-                ],
-            },
-            {
-                productId: 'Outward Window',
-                productName: 'Outward Window',
-                uom: 'nos',
-                semiFinishedProducts: [
-                    {
-                        sfId: 'SF3',
-                        quantity: 1, // 1 QR code for SF3
-                        qrCodes: ['QR6'],
-                    },
-                ],
-            },
-        ],
+        productId: 'PRD001',
+        rejectedQuantity: 5,
+        recycledQuantity: 3,
+        remark: 'Glass glazing fix',
+        createdBy: 'Admin',
+        timestamp: '2025-01-28T10:25:00Z',
     },
     {
-        packing_id: 2, // Added new row data
-        workOrderId: 'WO12346',
+        sl_no: 2,
+        workOrder: 'WO12346',
         jobOrder: 'JO98766',
-        status: 'Completed',
-        createdBy: 'Pending',
-        timestamp: '2025-02-25 10:30 AM',
-        products: [
-            {
-                productId: 'Facade',
-                productName: 'Facade',
-                uom: 'nos',
-                semiFinishedProducts: [
-                    {
-                        sfId: 'SF4',
-                        quantity: 4, // This means 4 QR codes will be generated for SF4
-                        qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
-                    },
-                ],
-            },
-            {
-                productId: 'Curtain Wall',
-                productName: 'Curtain Wall',
-                uom: 'nos',
-                semiFinishedProducts: [
-                    {
-                        sfId: 'SF5',
-                        quantity: 5, // This means 5 QR codes will be generated for SF5
-                        qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
-                    },
-                ],
-            },
-        ],
+        productId: 'PRD002',
+        rejectedQuantity: 2,
+        recycledQuantity: 1,
+        remark: 'Cutting issue',
+        createdBy: 'User1',
+        timestamp: '2025-01-28T11:30:00Z',
     },
-    // You can add more rows here as needed
+    {
+        sl_no: 3,
+        workOrder: 'WO12347',
+        jobOrder: 'JO98767',
+        productId: 'PRD003',
+        rejectedQuantity: 8,
+        recycledQuantity: 5,
+        remark: 'Assembling mismatch a/c to documents',
+        createdBy: 'Manager',
+        timestamp: '2025-01-28T12:45:00Z',
+    },
 ];
 
-const Packing = () => {
+const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Packing'));
+        dispatch(setPageTitle('Quality Control Check'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
-    // show/hide
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
     const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
     const [recordsData, setRecordsData] = useState(initialRecords);
-    const [modalType, setModalType] = useState<'view' | null>(null);
-    const [selectedRowData, setSelectedRowData] = useState<any>(null);
 
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -117,16 +75,6 @@ const Packing = () => {
 
     const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
-    const formatDate = (date: any) => {
-        if (date) {
-            const dt = new Date(date);
-            const month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
-            const day = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
-            return day + '/' + month + '/' + dt.getFullYear();
-        }
-        return '';
-    };
-
     const showHideColumns = (col: any, value: any) => {
         if (hideCols.includes(col)) {
             setHideCols((col: any) => hideCols.filter((d: any) => d !== col));
@@ -135,40 +83,31 @@ const Packing = () => {
         }
     };
 
-    const openModal = (type: 'view', packing_id: number) => {
-        // Find the specific row using packing_id
-        const selectedRow = rowData.find((row) => row.packing_id === packing_id);
-
-        // Log the found row data for debugging
-        console.log(selectedRow, 'selectedRowData');
-
-        // Set the row data to show in the modal
-        setSelectedRowData(selectedRow);
-        setModalType(type);
-    };
-
-    const closeModal = () => {
-        setModalType(null); // Close the modal
-        setSelectedRowData(null); // Clear the selected row data
-    };
-
     const cols = [
-        { accessor: 'packing_id', title: 'SL No' },
+        { accessor: 'sl_no', title: 'SL No' },
         { accessor: 'workOrder', title: 'Work Order' },
-        // { accessor: 'jobOrder', title: 'Job Order' },
+        { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
-        { accessor: 'qrCode', title: 'QR Code String' },
-        { accessor: 'status', title: 'Status' },
+        { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
+        { accessor: 'remark', title: 'Remark' },
         { accessor: 'createdBy', title: 'Created By' },
         { accessor: 'timestamp', title: 'Timestamp' },
         { accessor: 'action', title: 'Actions' },
     ];
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedQCCheck, setSelectedQCCheck] = useState<any | null>(null);
+
+    const handleViewDetails = (qcCheck: any) => {
+        setSelectedQCCheck(qcCheck);
+        setIsModalOpen(true);
+    };
+
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '#', isActive: false },
-        { label: 'Packing', link: '/falcon-facade/packing/view', isActive: true },
+        { label: 'QC Check', link: '/falcon-facade/qc-check/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -184,29 +123,20 @@ const Packing = () => {
     useEffect(() => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
-                // Check against row-level properties like packing_id and workOrderId
-                const matchesRowData =
-                    item.packing_id.toString().includes(search.toLowerCase()) ||
-                    item.workOrderId.toLowerCase().includes(search.toLowerCase()) ||
-                    item.status.toLowerCase().includes(search.toLowerCase()) ||
+                return (
+                    item.sl_no.toString().includes(search.toLowerCase()) ||
+                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
+                    item.jobOrder.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
+                    item.recycledQuantity.toString().includes(search.toLowerCase()) ||
+                    item.remark.toString().includes(search.toLowerCase()) ||
                     item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-                    item.timestamp.toLowerCase().includes(search.toLowerCase());
-
-                // Check against properties inside the products array
-                const matchesProductData = item.products.some(
-                    (product) =>
-                        product.productId.toLowerCase().includes(search.toLowerCase()) ||
-                        product.semiFinishedProducts.some(
-                            (sf) =>
-                                sf.sfId.toLowerCase().includes(search.toLowerCase()) || // Check SF id
-                                sf.qrCodes.some((qrCode) => qrCode.toLowerCase().includes(search.toLowerCase())) // Check qrCodes in SF
-                        )
+                    item.timestamp.toLowerCase().includes(search.toLowerCase())
                 );
-
-                // Return true if any condition matches
-                return matchesRowData || matchesProductData;
             });
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
     useEffect(() => {
@@ -215,21 +145,23 @@ const Packing = () => {
         setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
+    console.log("Inside qc-check view");
+
 
     return (
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Packing',
-                    link: '/falcon-facade/packing/create',
+                    label: 'Add QC Check',
+                    link: '/falcon-facade/qc-check/create',
                     icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Packing</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">QC Check</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -286,68 +218,68 @@ const Packing = () => {
                         records={rowData}
                         columns={[
                             {
-                                accessor: 'packing_id',
-                                title: 'Packing ID',
+                                accessor: 'sl_no',
+                                title: 'SL No',
                                 sortable: true,
+                                hidden: hideCols.includes('sl_no'),
                             },
                             {
-                                accessor: 'workOrderId',
-                                title: 'Work Order ID',
+                                accessor: 'workOrder',
+                                title: 'Work Order',
                                 sortable: true,
+                                hidden: hideCols.includes('workOrder'),
                             },
                             {
-                                accessor: 'status',
-                                title: 'Status',
+                                accessor: 'jobOrder',
+                                title: 'Job Order',
                                 sortable: true,
+                                hidden: hideCols.includes('jobOrder'),
                             },
                             {
                                 accessor: 'productId',
-                                title: 'Product Name',
-                                render: ({ products }) => products.map((product) => product.productId).join(', '),
+                                title: 'Product ID',
                                 sortable: true,
-                            },
-                            {
-                                accessor: 'qrCode',
-                                title: 'QR Codes',
-                                render: ({ products }) => {
-                                    // Concatenate all QR codes for each product
-                                    const qrCodes = products.flatMap((product) => product.semiFinishedProducts.flatMap((sf) => sf.qrCodes));
-                                    return qrCodes.join(', ');
-                                },
-                                sortable: true,
+                                hidden: hideCols.includes('productId'),
                             },
                             {
                                 accessor: 'rejectedQuantity',
                                 title: 'Rejected Quantity',
-                                render: ({ products }) => products.reduce((total, product) => total + product.semiFinishedProducts.reduce((sfTotal, sf) => sfTotal + sf.quantity, 0), 0),
                                 sortable: true,
+                                hidden: hideCols.includes('rejectedQuantity'),
+                            },
+                            {
+                                accessor: 'recycledQuantity',
+                                title: 'Recycled Quantity',
+                                sortable: true,
+                                hidden: hideCols.includes('recycledQuantity'),
+                            },
+                            {
+                                accessor: 'remark',
+                                title: 'Remark',
+                                sortable: true,
+                                hidden: hideCols.includes('remark'),
                             },
                             {
                                 accessor: 'createdBy',
                                 title: 'Created By',
                                 sortable: true,
+                                hidden: hideCols.includes('createdBy'),
                             },
                             {
                                 accessor: 'timestamp',
                                 title: 'Timestamp',
                                 sortable: true,
-                                render: ({ timestamp }) => new Date(timestamp).toLocaleString(),
+                                hidden: hideCols.includes('timestamp'),
+                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
                             },
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                render: ({ packing_id }) => (
+                                render: (rowData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        {/* <NavLink to={`/edit/${packing_id}`} className="flex hover:text-info">
-            <IconEdit className="w-4.5 h-4.5" />
-          </NavLink> */}
-                                        <button
-                                            onClick={() => openModal('view', packing_id)} // Pass packing_id to openModal
-                                            className="flex hover:text-primary"
-                                        >
+                                        <NavLink to={`/falcon-facade/qc-check/detail`} state={{ rowData }} className="flex hover:text-info">
                                             <IconEye className="w-4.5 h-4.5" />
-                                           
-                                        </button>
+                                        </NavLink>
                                     </div>
                                 ),
                             },
@@ -364,12 +296,10 @@ const Packing = () => {
                         minHeight={200}
                         paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
-
-                    {modalType === 'view' && selectedRowData && <ViewDetailsModal isOpen={modalType === 'view'} closeModal={closeModal} data={selectedRowData} />}
                 </div>
             </div>
         </div>
     );
 };
 
-export default Packing;
+export default ColumnChooser;

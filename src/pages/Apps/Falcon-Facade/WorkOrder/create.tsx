@@ -58,13 +58,13 @@ interface FormData {
 }
 
 const products: Product[] = [
-    { label: 'Product1', value: 'Product1', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
-    { label: 'Product2', value: 'Product2', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F'] },
-    { label: 'Product3', value: 'Product3', uom: 'nos', dimensions: ['A', 'B', 'C'] },
-    { label: 'Product4', value: 'Product4', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F', 'G'] },
-    { label: 'Product5', value: 'Product5', uom: 'nos', dimensions: ['A', 'B'] },
-    { label: 'Product6', value: 'Product6', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E'] },
-    { label: 'Product7', value: 'Product7', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
+    { label: 'Inward Door', value: 'Inward Door', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
+    { label: 'Fixed Door', value: 'Fixed Door', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F'] },
+    { label: 'Fixed Window', value: 'Fixed Window', uom: 'nos', dimensions: ['A', 'B', 'C'] },
+    { label: 'Facade', value: 'Facade', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F', 'G'] },
+    // { label: 'Product5', value: 'Product5', uom: 'nos', dimensions: ['A', 'B'] },
+    // { label: 'Product6', value: 'Product6', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E'] },
+    // { label: 'Product7', value: 'Product7', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
 ];
 
 const Create = () => {
