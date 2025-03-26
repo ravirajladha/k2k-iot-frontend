@@ -72,6 +72,7 @@ const ColumnChooser = () => {
         columnAccessor: 'id',
         direction: 'asc',
     });
+    console.log('Inside view detail page!');
 
     const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
@@ -145,16 +146,16 @@ const ColumnChooser = () => {
         setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
-    console.log("Inside qc-check view");
-
+    console.log('Inside qc-check view');
+    
 
     return (
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add QC Check',
-                    link: '/falcon-facade/qc-check/create',
+                    label: 'Back',
+                    link: '/falcon-facade/qc-check',
                     icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
