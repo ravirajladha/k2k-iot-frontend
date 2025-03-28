@@ -1,5 +1,6 @@
 interface Product {
     productId: string;
+    productName:string;
     uom: string;
     code:string;
     colorCode:string;
@@ -37,8 +38,8 @@ const rowData: JobOrder[] = [
         clientName: 'Client Alpha',
         projectName: 'Project Phoenix',
         products: [
-            { productId: 'P-001', uom: 'Nos',code:"TYPE-P5(T)",colorCode:"RAL 9092",width:"1047",height:"1025", poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
-            { productId: 'P-002', uom: 'Nos',code:"TYPE-P4(T)",colorCode:"RAL 9093",width:"1045",height:"1020", poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' },
+            { productId: 'P-001',productName:"Inward Door", uom: 'Nos',code:"TYPE-P5(T)",colorCode:"RAL 9092",width:"1047",height:"1025", poQuantity: 1000, achievedTillNow: 800, rejectedQuantity: 50, plannedQuantity: 1000, date: '2025-01-05' },
+            { productId: 'P-002',productName:"Glazed Window", uom: 'Nos',code:"TYPE-P4(T)",colorCode:"RAL 9093",width:"1045",height:"1020", poQuantity: 500, achievedTillNow: 450, rejectedQuantity: 30, plannedQuantity: 500, date: '2025-01-10' },
         ],
     },
     {
@@ -51,7 +52,7 @@ const rowData: JobOrder[] = [
         factoryName: 'Factory Y',
         clientName: 'Client Beta',
         projectName: 'Project Pegasus',
-        products: [{ productId: 'P-003', uom: 'Nos',code:"TYPE-P2(T)",colorCode:"RAL 9094",width:"1040",height:"1030", poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }],
+        products: [{ productId: 'P-003',productName:"Outward Door", uom: 'Nos',code:"TYPE-P2(T)",colorCode:"RAL 9094",width:"1040",height:"1030", poQuantity: 800, achievedTillNow: 750, rejectedQuantity: 20, plannedQuantity: 800, date: '2025-02-08' }],
     },
 ];
 

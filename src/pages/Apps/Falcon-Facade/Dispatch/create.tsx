@@ -21,6 +21,8 @@ interface QRCodeData {
     workOrder: string;
     product: string;
     uom: string;
+    code: string;
+    colorCode: string;
     quantity: number;
     height?: string; // Optional fields for additional details
     width?: string;
@@ -59,6 +61,7 @@ const DispatchCreation = () => {
         dispatchDate: '',
         invoiceSto: '',
         vehicleNumber: '',
+        contactDetails: '',
         qrCodeImage: '',
     });
     const [showTooltip, setShowTooltip] = useState(false);
@@ -72,10 +75,17 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        QR123456: { productId: 'P001', workOrder: 'WO101', product: 'Inward Window', uom: 'Nos', quantity: 50 },
-        QR654321: { productId: 'P002', workOrder: 'WO101', product: 'Outward Window', uom: 'Nos', quantity: 30 },
-        QR789012: { productId: 'P001', workOrder: 'WO101', product: 'Facade', uom: 'Nos', quantity: 100 }, // Same productId as "QR123456"
-        QR345678: { productId: 'P003', workOrder: 'WO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20 },
+        QR123456: { productId: 'P001', workOrder: 'WO101', product: 'Inward Window', uom: 'Nos', quantity: 50, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
+
+        QR654321: { productId: 'P002', workOrder: 'WO101', product: 'Outward Window', uom: 'Nos', quantity: 30, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
+
+        QR789012: { productId: 'P001', workOrder: 'WO101', product: 'Facade', uom: 'Nos', quantity: 100, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' }, // Same productId as "QR123456"
+
+        QR345678: { productId: 'P003', workOrder: 'WO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
+
+        // QR345678: { productId: 'P003', workOrder: 'WO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20,code:"TYPE-P5(T)",colorCode:"RAL 9092" },
+
+        // QR345678: { productId: 'P003', workOrder: 'WO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20,code:"TYPE-P5(T)",colorCode:"RAL 9092" },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({
@@ -138,8 +148,10 @@ const DispatchCreation = () => {
                     title: qrData.product,
                     uom: qrData.uom,
                     dispatchQuantity: qrData.quantity,
-                    height: '5m',
-                    width: '3m',
+                    code: qrData.code,
+                    colorCode: qrData.colorCode,
+                    height: '1047',
+                    width: '1025',
                     hsnCode: 'HSN1234',
                     boq: '100kg',
                     hardware: '',
@@ -277,8 +289,9 @@ const DispatchCreation = () => {
                                                 <th className="border border-gray-300 px-2 py-1">Product</th>
                                                 <th className="border border-gray-300 px-2 py-1">UOM</th>
                                                 <th className="border border-gray-300 px-2 py-1">SF</th>
-
                                                 <th className="border border-gray-300 px-2 py-1">Dispatch Qty</th>
+                                                <th className="border border-gray-300 px-2 py-1">Code</th>
+                                                <th className="border border-gray-300 px-2 py-1">Color Code</th>
                                                 <th className="border border-gray-300 px-2 py-1">Height</th>
                                                 <th className="border border-gray-300 px-2 py-1">Width</th>
                                                 <th className="border border-gray-300 px-2 py-1">HSN Code</th>
@@ -286,7 +299,6 @@ const DispatchCreation = () => {
                                                 <th className="border border-gray-300 px-2 py-1">Rate</th>
                                                 <th className="border border-gray-300 px-2 py-1">Amount</th>
                                                 <th className="border border-gray-300 px-2 py-1">Hardware Included</th>
-
                                                 <th className="border border-gray-300 px-2 py-1">Action</th>
                                             </tr>
                                         </thead>
@@ -296,8 +308,9 @@ const DispatchCreation = () => {
                                                     <td className="border border-gray-300 px-2 py-1">{item.title}</td>
                                                     <td className="border border-gray-300 px-2 py-1">{item.uom}</td>
                                                     <td className="border border-gray-300 px-2 py-1">SF1</td>
-
                                                     <td className="border border-gray-300 px-2 py-1">{item.dispatchQuantity}</td>
+                                                    <td className="border border-gray-300 px-2 py-1">{item.code}</td>
+                                                    <td className="border border-gray-300 px-2 py-1">{item.colorCode}</td>
                                                     <td className="border border-gray-300 px-2 py-1">
                                                         <input type="text" value={item.height} onChange={(e) => updateItem(index, 'height', e.target.value)} className="form-input w-16 text-xs" />
                                                     </td>
@@ -319,7 +332,6 @@ const DispatchCreation = () => {
                                                     <td className="border border-gray-300 px-2 py-1">
                                                         <input type="text" value={item.hardware} onChange={(e) => updateItem(index, 'hardware', e.target.value)} className="form-input w-16 text-xs" />
                                                     </td>
-
                                                     <td className="border border-gray-300 px-2 py-1">
                                                         <button type="button" onClick={() => removeItem(item.id)}>
                                                             <IconX className="w-4 h-4" />
@@ -387,8 +399,10 @@ const DispatchCreation = () => {
                                 type="text"
                                 placeholder="Enter contact person details"
                                 className="form-input"
-                                value={formData.vehicleNumber}
-                                // onChange={handleInputChange}
+                                value={formData.contactDetails}
+                                onChange={(e) => {
+                                    setFormData({ ...formData, contactDetails: e.target.value });
+                                }}
                             />
                         </div>
 

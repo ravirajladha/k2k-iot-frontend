@@ -25,6 +25,7 @@ import { rowData } from './sampleData';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 interface Product {
     productId: string;
+    productName: string;
     uom: string;
     code: string;
     colorCode: string;
@@ -306,11 +307,12 @@ const ColumnChooser = () => {
                                             <IconEye />
                                         </button> */}
 
-                                        <NavLink to={`/falcon-facade/job-order/detail`} state={{recordsData}} className="flex hover:text-primary">
+                                        <NavLink to={`/falcon-facade/job-order/detail`} state={{ recordsData }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
 
-                                        <NavLink to={`/falcon-facade/productionNew`} className="flex hover:text-primary">
+                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                            {/* /falcon-facade/productionNew */}
                                             <IconLayoutGrid className="w-6 h-6" />
                                         </NavLink>
                                     </div>

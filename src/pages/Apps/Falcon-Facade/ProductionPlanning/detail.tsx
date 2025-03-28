@@ -257,7 +257,7 @@ const JobOrderPage = () => {
                         <tbody>
                             {recordsData.products.map((product, index) => (
                                 <tr key={product.productId} className="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td className="px-4 py-2 text-left border border-gray-300">{product.productId}</td>
+                                    <td className="px-4 py-2 text-left border border-gray-300">{product.productName}</td>
                                     <td className="px-4 py-2 text-left border border-gray-300">SL-123</td>
                                     <td className="px-4 py-2 text-left border border-gray-300">Schuco</td>
                                     <td className="px-4 py-2 text-left border border-gray-300">Casement Window 45 Series</td>

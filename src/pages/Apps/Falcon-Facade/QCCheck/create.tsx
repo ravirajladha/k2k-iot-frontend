@@ -41,8 +41,8 @@ const QcCheckForm: React.FC = () => {
         'WO-003': { workOrder: 'WO-003', jobOrders: ['JO-3001', 'JO-3002'] },
     };
 
-    const products = ['Product A - PR1 [1047 x 1205]', 'Product B - PR2 [722 x 1205]', 'Product C - PR3 [1047 x 3520]'];
-    const sfs = ['SF - PR1', 'SF 2', 'SF 3'];
+    const products = ['Inward Door - PR1 [1047 x 1205]', 'Fixed Door - PR2 [722 x 1205]', 'Glazed Window - PR3 [1047 x 3520]'];
+    const sfs = ['SF 1', 'SF 2', 'SF 3'];
 
     const handleJobOrderChange = (selectedOption: any) => {
         if (!selectedOption) return;
@@ -190,6 +190,7 @@ const QcCheckForm: React.FC = () => {
                                 className="form-input"
                                 value={formData.rejectedQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
                         <div>
@@ -202,6 +203,7 @@ const QcCheckForm: React.FC = () => {
                                 className="form-input"
                                 value={formData.recycledQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
                         {/* Rejection Reason */}

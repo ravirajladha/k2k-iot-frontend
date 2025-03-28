@@ -136,13 +136,13 @@ const ProductionPlanning = () => {
         const productId = items.length + 1;
         console.log('jo', formData.jobOrderNumber);
 
-        if(formData.jobOrderNumber.length <= 0){
-            alert("Please select Job Order first!")
+        if (formData.jobOrderNumber.length <= 0) {
+            alert('Please select Job Order first!');
             return;
         }
 
         const productNumber = `${formData.jobOrderNumber}-${productId}`;
-        // console.log("productNumber",productNumber);
+        console.log('productNumber', productNumber);
 
         const sfId = items.length + 1;
 
@@ -390,10 +390,22 @@ const ProductionPlanning = () => {
         setFormData((prev) => ({ ...prev, system: selectedOption.value, productSystem: '' }));
     };
 
-    const handleProductSystemChange = (selectedOption: any) => {
-        setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
-        setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+    // const handleProductSystemChange = (selectedOption: any) => {
+    //     setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
+    //     setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+    // };
+
+    const handleProductSystemChange = (selectedOption) => {
+        if (selectedOption) {
+            setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
+            setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+        } else {
+            // Handle the case when the selection is cleared
+            setFormData((prev) => ({ ...prev, productName: '' }));
+            setAvailableProductSystems([]);
+        }
     };
+    
 
     const handleCheckboxChange = (sfId: string, step: string, isChecked: boolean) => {
         setItems((prevItems) =>
@@ -555,8 +567,8 @@ const ProductionPlanning = () => {
                             <table className="w-full border-collapse">
                                 <thead className="bg-gray-800 text-dark">
                                     <tr>
-                                        <th className="p-2 border w-48">Product Type</th>
-                                        <th className="p-2 border w-48">Product System</th>
+                                        <th className="p-2 border">Product Type</th>
+                                        <th className="p-2 border">Product System</th>
                                         <th className="p-2 border">Planned Quantity</th>
                                         <th className="p-2 border">Code (autofetch)</th>
                                         <th className="p-2 border">Color Code (autofetch)</th>
@@ -584,19 +596,30 @@ const ProductionPlanning = () => {
                                                         value={formData.productName ? { value: formData.productName, label: formData.productName } : null}
                                                         onChange={handleProductSystemChange}
                                                         options={fakeProjects}
-                                                        className="custom-select flex-1"
+                                                        className="custom-select flex-1 w-48"
                                                         classNamePrefix="custom-select"
-                                                        placeholder="Select a System"
+                                                        placeholder="Select Product Type"
                                                         isClearable
                                                         menuPortalTarget={document.body}
                                                         required
                                                     />
                                                 </td>
                                                 <td>
-                                                    <input type="text" className="form-input w-full" value={'Product 1'} readOnly />
+                                                    <input type="text" className="form-input   w-32" value={'Product 1'} readOnly />
                                                 </td>
                                                 <td className="p-3 border">
-                                                    <input type="number" className="form-input w-32" min={0} value={item.plannedQuantity} />
+                                                    <input
+                                                        type="number"
+                                                        className="form-input w-32"
+                                                        min={0}
+                                                        value={formData.plannedQuantity}
+                                                        onChange={(e) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                plannedQuantity: e.target.value,
+                                                            });
+                                                        }}
+                                                    />{' '}
                                                 </td>
                                                 <td className="p-3 border">
                                                     <input type="text" className="form-input w-32" value="TYPE-P5(T)" disabled />

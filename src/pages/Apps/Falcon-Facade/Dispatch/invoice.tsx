@@ -7,11 +7,10 @@ import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 
 const DispatchChallan = () => {
-    const reduxDispatch = useReduxDispatch(); // Renamed to avoid naming conflict
+    const reduxDispatch = useReduxDispatch();
     const location = useLocation();
-    const dispatchId = location.state?.dispatchId; // Fetch dispatch_id from location state
+    const dispatchId = location.state?.dispatchId;
 
-    // Static data for dispatch
     const [dispatchData] = useState({
         workOrderNumber: 'WO101',
         clientName: 'Client A',
@@ -41,7 +40,7 @@ const DispatchChallan = () => {
     });
 
     useEffect(() => {
-        reduxDispatch(setPageTitle('Dispatch Challan')); // Set page title
+        reduxDispatch(setPageTitle('Dispatch Challan'));
     }, [reduxDispatch]);
 
     const handlePrint = () => {
@@ -53,6 +52,8 @@ const DispatchChallan = () => {
         { key: 'productName', label: 'Product Name' },
         { key: 'sfId', label: 'SF' },
         { key: 'dispatchQty', label: 'Dispatch Qty' },
+        { key: 'code', label: 'Code' },
+        { key: 'colorCode', label: 'Color Code' },
         { key: 'height', label: 'Height' },
         { key: 'width', label: 'Width' },
         { key: 'hsnCode', label: 'HSN Code' },
@@ -61,11 +62,11 @@ const DispatchChallan = () => {
         { key: 'amount', label: 'Amount' },
         { key: 'hardwareIncluded', label: 'Hardware Included' },
     ];
+
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
         { label: 'Dispatch', link: '/falcon-facade/dispatch', isActive: true },
-        // { label: 'Create', link: '#', isActive: true },
     ];
 
     return (
@@ -80,7 +81,6 @@ const DispatchChallan = () => {
 
             <div className="panel">
                 <div className="flex justify-between items-start flex-wrap gap-4 px-4">
-                    {/* Left Section: Company Logo and Addresses */}
                     <div className="flex flex-col space-y-2">
                         <img src="/k2k_iot_logo.jfif" alt="Company Logo" className="w-14" />
                         <div className="text-white-dark">
@@ -91,8 +91,6 @@ const DispatchChallan = () => {
                             <p>+91 8987999988</p>
                         </div>
                     </div>
-
-                    {/* Right Section: Client Details */}
                     <div className="flex flex-col space-y-2">
                         <p>
                             <strong>Work Order:</strong> {dispatchData.workOrderNumber}
@@ -113,13 +111,16 @@ const DispatchChallan = () => {
                 </div>
 
                 <hr className="border-white-light dark:border-[#1b2e4b] my-6" />
-                <div className="border border-gray-300 rounded-md p-4 space-y-4">
-                    {/* Table for Scanned Products */}
-                    <table className="table-striped w-full">
+                <div className="border border-gray-300 rounded-md p-4 space-y-4 overflow-x-auto">
+                    {' '}
+                    {/* Added overflow-x-auto */}
+                    <table className="table-striped min-w-full table-auto">
+                        {' '}
+                        {/* Updated classes */}
                         <thead>
                             <tr>
                                 {columns.map((column) => (
-                                    <th key={column.key} className="px-4 py-2 text-left">
+                                    <th key={column.key} className="px-4 py-2 text-left whitespace-nowrap">
                                         {column.label}
                                     </th>
                                 ))}
@@ -133,13 +134,15 @@ const DispatchChallan = () => {
                                         <td className="px-4 py-2">{product.productName}</td>
                                         <td className="px-4 py-2">{sf.sfId}</td>
                                         <td className="px-4 py-2">{sf.quantity}</td>
-                                        <td className="px-4 py-2">5m</td> {/* Placeholder for Height */}
-                                        <td className="px-4 py-2">3m</td> {/* Placeholder for Width */}
+                                        <td className="px-4 py-2">TYPE-P5(T)</td>
+                                        <td className="px-4 py-2">RAL 9092</td>
+                                        <td className="px-4 py-2">1047</td>
+                                        <td className="px-4 py-2">1025</td>
                                         <td className="px-4 py-2">{sf.hsnCode}</td>
-                                        <td className="px-4 py-2">100kg</td> {/* Placeholder for BOQ */}
+                                        <td className="px-4 py-2">100kg</td>
                                         <td className="px-4 py-2">{sf.rate}</td>
                                         <td className="px-4 py-2">{sf.amount}</td>
-                                        <td className="px-4 py-2">{sf.qrCodes.length > 0 ? 'Yes' : 'No'}</td> {/* Hardware Included */}
+                                        <td className="px-4 py-2">{sf.qrCodes.length > 0 ? 'Yes' : 'No'}</td>
                                     </tr>
                                 ))
                             )}
@@ -147,7 +150,6 @@ const DispatchChallan = () => {
                     </table>
                 </div>
 
-                {/* Terms and Conditions */}
                 <div className="mt-8 p-4 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-800">
                     <h3 className="font-semibold text-lg mb-4">General Terms and Conditions</h3>
                     <ul className="list-disc pl-5 space-y-2 text-sm">

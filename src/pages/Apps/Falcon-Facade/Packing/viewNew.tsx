@@ -25,7 +25,12 @@ const rowData = [
             {
                 productId: 'Inward Window',
                 productName: 'Inward Window',
-                uom: 'nos',
+                uom: 'Nos',
+                code:"TYPE-P5(T)",
+                colorCode:"RAL 9092",
+                height:"1049",
+                width:"1025",
+                quantity:170,
                 semiFinishedProducts: [
                     {
                         sfId: 'SF1',
@@ -42,7 +47,12 @@ const rowData = [
             {
                 productId: 'Outward Window',
                 productName: 'Outward Window',
-                uom: 'nos',
+                uom: 'Nos',
+                code:"TYPE-P5(T)",
+                colorCode:"RAL 9092",
+                height:"1049",
+                width:"1025",
+                quantity:150,
                 semiFinishedProducts: [
                     {
                         sfId: 'SF3',
@@ -64,7 +74,12 @@ const rowData = [
             {
                 productId: 'Facade',
                 productName: 'Facade',
-                uom: 'nos',
+                uom: 'Nos',
+                code:"TYPE-P5(T)",
+                colorCode:"RAL 9092",
+                height:"1049",
+                width:"1025",
+                quantity:200,
                 semiFinishedProducts: [
                     {
                         sfId: 'SF4',
@@ -76,7 +91,12 @@ const rowData = [
             {
                 productId: 'Curtain Wall',
                 productName: 'Curtain Wall',
-                uom: 'nos',
+                uom: 'Nos',
+                code:"TYPE-P5(T)",
+                colorCode:"RAL 9092",
+                height:"1049",
+                width:"1025",
+                quantity:100,
                 semiFinishedProducts: [
                     {
                         sfId: 'SF5',
@@ -145,6 +165,7 @@ const Packing = () => {
         { accessor: 'packing_id', title: 'SL No' },
         { accessor: 'workOrder', title: 'Work Order' },
         { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'totalQuantity', title: 'Total Quantity' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
         { accessor: 'qrCode', title: 'QR Code String' },
         { accessor: 'status', title: 'Status' },
@@ -296,6 +317,16 @@ const Packing = () => {
                                 render: ({ products }) => {
                                     const qrCodes = products.flatMap((product) => product.semiFinishedProducts.flatMap((sf) => sf.qrCodes));
                                     return qrCodes.join(', ');
+                                },
+                                sortable: true,
+                            },
+                            {
+                                accessor: 'totalQuantity',
+                                title: 'Total Quantity',
+                                render: ({ products }) => {
+                                    // Sum the `quantity` field from each product
+                                    const total = products.reduce((sum, product) => sum + product.quantity, 0);
+                                    return total;
                                 },
                                 sortable: true,
                             },

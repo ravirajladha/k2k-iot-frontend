@@ -461,7 +461,7 @@ const Create = () => {
                                                 </td>
                                                 
                                                 <td>
-                                                    <input type="text" className="form-input w-28" placeholder="Code" value={item.code} readOnly />
+                                                    <input type="text" className="form-input w-28" placeholder="Code" value={item.code} onChange={(e) => handleChange(item.id, 'code', e.target.value)} />
                                                 </td>
                                                 {/* UOM */}
                                                 <td>

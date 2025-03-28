@@ -195,7 +195,8 @@ const ProductView = () => {
             title: 'Actions',
             render: (product: Product) => ( // Accept the full product object
                 <div className="flex gap-4 items-center">
-                    <button onClick={() => openModal(product)} className="btn btn-info">
+                    <button onClick={() => openModal(product)} className="flex hover:text-primary">  
+                     {/* className="btn btn-info" */}
                         <IconEye className="text-4xl" />
                     </button>
                 </div>
