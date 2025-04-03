@@ -72,6 +72,8 @@ const DispatchCreation = () => {
         vehicleNumber: '',
         contactDetails: '',
         qrCodeImage: '',
+        gatePassNo: '',
+        dcNo: '',
     });
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -255,28 +257,14 @@ const DispatchCreation = () => {
                             <label htmlFor="clientName" className="block text-sm font-medium">
                                 <strong>Client Name</strong>
                             </label>
-                            <input
-                                id="clientName"
-                                type="text"
-                                className="form-input w-full"
-                                value={formData.clientName}
-                                readOnly
-                                placeholder="Client name will appear here"
-                            />
+                            <input id="clientName" type="text" className="form-input w-full" value={formData.clientName} readOnly placeholder="Client name will appear here" />
                         </div>
                         {/* Address */}
                         <div>
                             <label htmlFor="address" className="block text-sm font-medium">
                                 <strong>Address</strong>
                             </label>
-                            <input
-                                id="address"
-                                type="text"
-                                className="form-input w-full"
-                                value={formData.address}
-                                readOnly
-                                placeholder="Address will appear here"
-                            />
+                            <input id="address" type="text" className="form-input w-full" value={formData.address} readOnly placeholder="Address will appear here" />
                         </div>
                         {/* QR Code Input */}
                         <div className="flex items-end space-x-2">
@@ -285,14 +273,7 @@ const DispatchCreation = () => {
                                     <strong>Scan QR Code</strong>
                                     <span className="text-sm text-slate-600"> (***a/c to work order)</span>
                                 </label>
-                                <input
-                                    id="qrCodeInput"
-                                    type="text"
-                                    placeholder="Enter QR Code"
-                                    className="form-input w-full"
-                                    value={qrCodeInput}
-                                    onChange={(e) => setQrCodeInput(e.target.value)}
-                                />
+                                <input id="qrCodeInput" type="text" placeholder="Enter QR Code" className="form-input w-full" value={qrCodeInput} onChange={(e) => setQrCodeInput(e.target.value)} />
                             </div>
                             <button type="button" className="btn btn-primary mt-6" onClick={handleQRCodeInput}>
                                 Scan
@@ -415,6 +396,30 @@ const DispatchCreation = () => {
                                 className="form-input"
                                 value={formData.contactDetails}
                                 onChange={(e) => setFormData({ ...formData, contactDetails: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="contactDetails">Gate Pass No:</label>
+                            <input
+                                id="contactDetails"
+                                name="contactDetails"
+                                type="text"
+                                placeholder="Enter gate pass number"
+                                className="form-input"
+                                value={formData.gatePassNo}
+                                onChange={(e) => setFormData({ ...formData, gatePassNo: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="contactDetails">DC No:</label>
+                            <input
+                                id="contactDetails"
+                                name="contactDetails"
+                                type="text"
+                                placeholder="Enter DC number"
+                                className="form-input"
+                                value={formData.dcNo}
+                                onChange={(e) => setFormData({ ...formData, dcNo: e.target.value })}
                             />
                         </div>
                         <div className="mb-6">
