@@ -116,11 +116,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>
@@ -157,11 +153,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>
@@ -200,11 +192,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>
@@ -241,11 +229,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>
@@ -284,11 +268,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>
@@ -325,11 +305,7 @@ const JobOrderPage = () => {
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
                                     <strong className="mr-1">QR Id:</strong>
-                                    {mode === 'create' ? (
-                                        <input type="text" className="form-input px-2 py-1 w-48" />
-                                    ) : (
-                                        <div>QR123</div>
-                                    )}
+                                    {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
                             </div>
                         </div>

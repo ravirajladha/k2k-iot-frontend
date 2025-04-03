@@ -145,7 +145,7 @@ const Sidebar = () => {
                                         <NavLink to={`${falconFacadeBasePath}/work-order`} className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
-                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Work Order')}</span>
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Job Order')}</span>
                                             </div>
                                         </NavLink>
                                     </li>
@@ -153,7 +153,7 @@ const Sidebar = () => {
                                         <NavLink to={`${falconFacadeBasePath}/job-order`} className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
-                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Job Order / Planning')}</span>
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Internal Work Order')}</span>
                                             </div>
                                         </NavLink>
                                     </li>

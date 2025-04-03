@@ -4,7 +4,6 @@ import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import IconFile from '@/components/Icon/IconFile';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-import IconMultipleForwardRight from '@/components/Icon/IconMultipleForwardRight';
 import { useLocation } from 'react-router-dom';
 
 const JobOrderPage = () => {
@@ -17,7 +16,6 @@ const JobOrderPage = () => {
         dispatch(setPageTitle('Work Order Detail'));
     }, [dispatch]);
 
-    // Sample data for demonstration
     const clientDetails = {
         clientName: 'ABC Corp',
         projectName: 'Project Alpha',
@@ -51,6 +49,9 @@ const JobOrderPage = () => {
         { label: 'Packing', link: '/falcon-facade/packing', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
+
+    // Counter for serial number
+    let serialNumber = 0;
 
     return (
         <div>
@@ -129,31 +130,62 @@ const JobOrderPage = () => {
                     </div>
                 </div>
 
+                {/* QR Code Cards Section */}
                 <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
-                    <table className="table-auto w-full border-collapse border border-gray-200">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2 text-left border border-gray-300">Product Name</th>
-                                <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
-                                <th className="px-4 py-2 text-left border border-gray-300">SF-Quantity</th>
-                                <th className="px-4 py-2 text-left border border-gray-300">QR Codes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rowData?.products?.map((product, index) => (
-                                <Fragment key={index}>
-                                    {product.semiFinishedProducts.map((sfProduct, sfIndex) => (
-                                        <tr key={sfIndex}>
-                                            <td className="px-4 py-2 border border-gray-300">{product.productName}</td>
-                                            <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
-                                            <td className="px-4 py-2 border border-gray-300">{sfProduct.quantity}</td>
-                                            <td className="px-4 py-2 border border-gray-300">{sfProduct.qrCodes.join(', ')}</td>
-                                        </tr>
-                                    ))}
-                                </Fragment>
-                            ))}
-                        </tbody>
-                    </table>
+                    <h2 className="text-lg font-semibold mb-4">QR Code Details</h2>
+                    <div className="flex flex-wrap gap-6 justify-center">
+                        {rowData?.products?.map((product, productIndex) =>
+                            product.semiFinishedProducts.map((sfProduct, sfIndex) =>
+                                sfProduct.qrCodes.map((qrCode, qrIndex) => {
+                                    serialNumber++; // Increment serial number for each QR code
+                                    return (
+                                        <div
+                                            key={`${productIndex}-${sfIndex}-${qrIndex}`}
+                                            className="product-card bg-blue-100 border rounded-lg shadow p-4 flex flex-col w-[30rem] overflow-hidden relative"
+                                        >
+                                            <div className="serial-number absolute left-0 top-0 p-1 text-right">
+                                                <span className="font-semibold text-xs">S.No: {serialNumber}</span>
+                                            </div>
+                                            <div className="product-header border-b border-gray-400 pb-1 mb-1 w-full mt-6">
+                                                <h3 className="text-sm font-semibold">Product: {product.productName}</h3>
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <div className="product-details p-2 text-xs">
+                                                    <div className="grid grid-cols-2 gap-1">
+                                                        <div className="font-semibold">Work Order Id</div>
+                                                        <div>: {workOrder.id}</div>
+                                                        <div className="font-semibold">Job Order Id</div>
+                                                        <div>: {rowData?.jobOrder || 'JO98765'}</div>
+                                                        <div className="font-semibold">Client Name</div>
+                                                        <div>: {clientDetails.clientName}</div>
+                                                        <div className="font-semibold">Project Name</div>
+                                                        <div>: {clientDetails.projectName}</div>
+                                                        <div className="font-semibold">Bundle No</div>
+                                                        <div>: {sfIndex + 1}</div>
+                                                        <div>
+                                                            <strong>Qty</strong>
+                                                        </div>
+                                                        <div>: {sfProduct.quantity}</div>
+                                                        <div>
+                                                            <strong>Created By</strong>
+                                                        </div>
+                                                        <div>: {workOrder.createdBy.name}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center justify-center flex flex-col">
+                                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt={`QR Code ${qrCode}`} className="w-36 h-36 mb-4" />
+                                                    <div className="flex items-center">
+                                                        <strong className="mr-1">QR Id:</strong>
+                                                    </div>
+                                                    <div>{qrCode}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

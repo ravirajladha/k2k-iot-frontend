@@ -311,12 +311,14 @@ const Packing = () => {
                                 render: ({ products }) => products.map((product) => product.productId).join(', '),
                                 sortable: true,
                             },
-                            {
+                            { 
                                 accessor: 'qrCode',
                                 title: 'QR Codes',
                                 render: ({ products }) => {
                                     const qrCodes = products.flatMap((product) => product.semiFinishedProducts.flatMap((sf) => sf.qrCodes));
-                                    return qrCodes.join(', ');
+                                    // console.log("qrCodes",qrCodes);
+                                    
+                                    return qrCodes.length;
                                 },
                                 sortable: true,
                             },
@@ -324,7 +326,6 @@ const Packing = () => {
                                 accessor: 'totalQuantity',
                                 title: 'Total Quantity',
                                 render: ({ products }) => {
-                                    // Sum the `quantity` field from each product
                                     const total = products.reduce((sum, product) => sum + product.quantity, 0);
                                     return total;
                                 },

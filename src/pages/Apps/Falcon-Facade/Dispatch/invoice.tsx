@@ -16,15 +16,18 @@ const DispatchChallan = () => {
         clientName: 'Client A',
         projectName: 'Project X',
         productId: 'Product A',
-        uom: 'Box',
+        uom: 'Nos',
         dispatchQuantity: 10,
         invoiceSto: 'INV-12345',
         vehicleNumber: 'KA-01-1234',
+        gatePass: '2176',
+        dcNo: '7688',
         products: [
             {
                 productId: 'PRD001',
                 productName: 'Glass Facade',
                 uom: 'Nos',
+                dispatchDate: '30-05-2025',
                 semiFinishedProducts: [
                     {
                         sfId: 'SF1',
@@ -47,20 +50,30 @@ const DispatchChallan = () => {
         window.print();
     };
 
+    // Calculate the total amount
+    const totalAmount = dispatchData.products.reduce((total, product) => {
+        return total + product.semiFinishedProducts.reduce((sfTotal, sf) => sfTotal + (sf.amount || 0), 0);
+    }, 0);
+
+    // Format the total amount with commas
+    const formattedTotalAmount = totalAmount.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
     const columns = [
-        { key: 'id', label: 'S.NO' },
-        { key: 'productName', label: 'Product Name' },
+        { key: 'id', label: 'Sl.No' },
+        { key: 'productName', label: 'Material Description' },
         { key: 'sfId', label: 'SF' },
-        { key: 'dispatchQty', label: 'Dispatch Qty' },
-        { key: 'code', label: 'Code' },
-        { key: 'colorCode', label: 'Color Code' },
+        { key: 'dispatchQty', label: 'Qty' },
         { key: 'height', label: 'Height' },
         { key: 'width', label: 'Width' },
         { key: 'hsnCode', label: 'HSN Code' },
-        { key: 'boq', label: 'BOQ' },
+        { key: 'boq', label: 'Boq' },
+        { key: 'uom', label: 'UOM' },
         { key: 'rate', label: 'Rate' },
+        { key: 'dispatchDate', label: 'Dispatch Date' },
         { key: 'amount', label: 'Amount' },
-        { key: 'hardwareIncluded', label: 'Hardware Included' },
     ];
 
     const breadcrumbItems = [
@@ -82,8 +95,8 @@ const DispatchChallan = () => {
             <div className="panel">
                 <div className="flex justify-between items-start flex-wrap gap-4 px-4">
                     <div className="flex flex-col space-y-2">
-                        <img src="/k2k_iot_logo.jfif" alt="Company Logo" className="w-14" />
-                        <div className="text-white-dark">
+                        <img src="/falcon-facade.png" alt="Company Logo" className="w-28" />
+                        <div className="text-dark">
                             <p>46, 3rd Floor, BEML Layout</p>
                             <p>Rajarajeshwari Nagar</p>
                             <p>Bengaluru, Karnataka 560098</p>
@@ -107,20 +120,22 @@ const DispatchChallan = () => {
                         <p>
                             <strong>Vehicle Number:</strong> {dispatchData.vehicleNumber}
                         </p>
+                        <p>
+                            <strong>Gate Pass:</strong> {dispatchData.gatePass}
+                        </p>
+                        <p>
+                            <strong>DC No:</strong> {dispatchData.dcNo}
+                        </p>
                     </div>
                 </div>
 
                 <hr className="border-white-light dark:border-[#1b2e4b] my-6" />
                 <div className="border border-gray-300 rounded-md p-4 space-y-4 overflow-x-auto">
-                    {' '}
-                    {/* Added overflow-x-auto */}
-                    <table className="table-striped min-w-full table-auto">
-                        {' '}
-                        {/* Updated classes */}
+                    <table className="min-w-full table-auto border-collapse border border-gray-300">
                         <thead>
                             <tr>
                                 {columns.map((column) => (
-                                    <th key={column.key} className="px-4 py-2 text-left whitespace-nowrap">
+                                    <th key={column.key} className="px-4 py-2 text-left border border-gray-300 font-semibold text-sm">
                                         {column.label}
                                     </th>
                                 ))}
@@ -130,25 +145,44 @@ const DispatchChallan = () => {
                             {dispatchData.products?.map((product, index) =>
                                 product.semiFinishedProducts.map((sf, sfIndex) => (
                                     <tr key={`${index}-${sfIndex}`}>
-                                        <td className="px-4 py-2">{index + 1}</td>
-                                        <td className="px-4 py-2">{product.productName}</td>
-                                        <td className="px-4 py-2">{sf.sfId}</td>
-                                        <td className="px-4 py-2">{sf.quantity}</td>
-                                        <td className="px-4 py-2">TYPE-P5(T)</td>
-                                        <td className="px-4 py-2">RAL 9092</td>
-                                        <td className="px-4 py-2">1047</td>
-                                        <td className="px-4 py-2">1025</td>
-                                        <td className="px-4 py-2">{sf.hsnCode}</td>
-                                        <td className="px-4 py-2">100kg</td>
-                                        <td className="px-4 py-2">{sf.rate}</td>
-                                        <td className="px-4 py-2">{sf.amount}</td>
-                                        <td className="px-4 py-2">{sf.qrCodes.length > 0 ? 'Yes' : 'No'}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{index + 1}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.productName}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{sf.sfId}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{sf.quantity}</td>
+                                        <td className="px-4 py-2 border border-gray-300">1047</td>
+                                        <td className="px-4 py-2 border border-gray-300">1025</td>
+                                        <td className="px-4 py-2 border border-gray-300">{sf.hsnCode}</td>
+                                        <td className="px-4 py-2 border border-gray-300">100</td>
+                                        <td className="px-4 py-2 border border-gray-300">{dispatchData.uom}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{sf.rate}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.dispatchDate}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{sf.amount}</td>
                                     </tr>
                                 ))
                             )}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colSpan={columns.length - 1} className="px-4 py-2 border border-gray-300 font-semibold text-left">
+                                    TOTAL AMOUNT :
+                                </td>
+                                <td className="px-4 py-2 border border-gray-300 font-semibold text-right">{formattedTotalAmount}</td>
+                            </tr>
+                        </tfoot>
                     </table>
+                    <div className="mt-8 flex justify-between items-center px-4">
+                        <div className="text-center">
+                            <div className="border-t border-gray-400 w-40 mb-2"></div>
+                            <p className="text-sm font-semibold">Receiver Signature & Date</p>
+                        </div>
+                        <div className="text-center mt-10">
+                            <div className="border-t border-gray-400 w-40 mb-2"></div>
+                            <p className="text-sm font-semibold">Authorised Signature</p>
+                        </div>
+                    </div>
                 </div>
+
+                {/* Signature Section */}
 
                 <div className="mt-8 p-4 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-800">
                     <h3 className="font-semibold text-lg mb-4">General Terms and Conditions</h3>

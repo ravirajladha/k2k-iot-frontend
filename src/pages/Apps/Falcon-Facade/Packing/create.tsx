@@ -53,6 +53,8 @@ interface FormData {
     orderQuantity: string;
     productName: string;
     productQuantity: string;
+    prodReqDate:string;
+    prodReqrDate:string;
     rejectedQuantity: string;
     qrCodeId: string;
     jobOrderName: string;
@@ -86,6 +88,8 @@ const Create = () => {
         workOrder: '',
         productName: '',
         productQuantity: '',
+        prodReqDate:'2025-04-01',
+        prodReqrDate:'2025-04-05',
         rejectedQuantity: '',
         jobOrderName: '',
         qrCodeId: '',
@@ -289,7 +293,7 @@ const Create = () => {
                         </div> */}
 
                         {/* Work Order Number */}
-                        <div>
+                        {/* <div>
                             <label htmlFor="workOrderNumber">Work Order Number</label>
                             <input
                                 id="workOrderNumber"
@@ -300,7 +304,7 @@ const Create = () => {
                                 value={formData.workOrderNumber}
                                 onChange={handleInputChange}
                             />
-                        </div>
+                        </div> */}
 
                         {/* Work Order Date */}
                         <div>
@@ -334,6 +338,38 @@ const Create = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        <div>
+                            <label htmlFor="prodReqDate">Production Request Date</label>
+                            <input
+                                id="prodReqDate"
+                                name="prodReqDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqDate}
+                                // value={formData.prodReqDate}
+                                // min={new Date().toISOString().split("T")[0]} // Today's date
+                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
+                                //     .toISOString()
+                                //     .split("T")[0]} // 7 days from today
+                                onChange={handleInputChange}
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="prodReqrDate">Production Requirement Date</label>
+                            <input
+                                id="prodReqrDate"
+                                name="prodReqrDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqrDate}
+                                // min={new Date().toISOString().split("T")[0]} // Today's date
+                                // max={new Date(new Date().setDate(new Date().getDate() + 15))
+                                //     .toISOString()
+                                //     .split("T")[0]} // 7 days from today
+                                onChange={handleInputChange}
+                            />
+                        </div>
                     </div>
                     <div className="mt-8">
                         <div className="table-responsive">
@@ -348,7 +384,7 @@ const Create = () => {
                                         <th>Width</th>
                                         <th>Semi Finished Products (SF)</th>
                                         <th>Quantity</th>
-                                        <th>QR Code Inputs</th>
+                                        {/* <th>QR Code Inputs</th> */}
                                         <th>Remove</th>
                                     </tr>
                                 </thead>
@@ -421,7 +457,7 @@ const Create = () => {
                                             </td>
 
                                             {/* QR Code Input Fields */}
-                                            <td>
+                                            {/* <td>
                                                 {item.sf.map(
                                                     (sfItem, index) =>
                                                         sfItem.selected &&
@@ -443,7 +479,7 @@ const Create = () => {
                                                             </div>
                                                         )
                                                 )}
-                                            </td>
+                                            </td> */}
 
                                             {/* Remove Item */}
                                             <td>
