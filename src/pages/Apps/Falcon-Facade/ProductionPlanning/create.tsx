@@ -220,9 +220,7 @@ const ProductionPlanning = () => {
                 item.id === productId
                     ? {
                           ...item,
-                          sfSteps: item.sfSteps.map((sf) =>
-                              sf.id === sfId ? { ...sf, name: newName } : sf
-                          ),
+                          sfSteps: item.sfSteps.map((sf) => (sf.id === sfId ? { ...sf, name: newName } : sf)),
                       }
                     : item
             )
@@ -639,27 +637,17 @@ const ProductionPlanning = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-input w-72"
-                                                                    value={''}
+                                                                    value={sf.name} // Bind to sf.name
                                                                     onChange={(e) => updateSFName(item.id, sf.id, e.target.value)}
                                                                     placeholder="Enter Semi Finished Name"
                                                                 />
                                                                 <div className="relative inline-block">
                                                                     <button type="button" className="btn btn-primary flex items-center space-x-2">
-                                                                        {/* <IconFile className="shrink-0" /> */}
                                                                         <span>Add</span>
                                                                     </button>
-                                                                    <input
-                                                                        type="file"
-                                                                        onChange={(e) => handleImageUpload(item.id, sf.id, e.target.files[0])}
-                                                                        className="absolute inset-0 opacity-0 cursor-pointer"
-                                                                    />
                                                                 </div>
                                                             </div>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeSFStep(item.id, sf.id)}
-                                                                className="text-red-600 hover:text-red-800"
-                                                            >
+                                                            <button type="button" onClick={() => removeSFStep(item.id, sf.id)} className="text-red-600 hover:text-red-800">
                                                                 ❌ Remove SF Step
                                                             </button>
                                                         </div>
@@ -734,10 +722,7 @@ const ProductionPlanning = () => {
 
                                             <tr>
                                                 <td colSpan={8} className="p-3 border text-center bg-gray-100">
-                                                    <button
-                                                        className="bg-gray-300 text-black px-3 py-1 text-sm rounded hover:bg-gray-400"
-                                                        onClick={() => addSFStep(item.id)}
-                                                    >
+                                                    <button className="bg-gray-300 text-black px-3 py-1 text-sm rounded hover:bg-gray-400" onClick={() => addSFStep(item.id)}>
                                                         ➕ Add Semi Finished Process
                                                     </button>
                                                 </td>
@@ -771,4 +756,4 @@ const ProductionPlanning = () => {
     );
 };
 
-export default ProductionPlanning;  
+export default ProductionPlanning;

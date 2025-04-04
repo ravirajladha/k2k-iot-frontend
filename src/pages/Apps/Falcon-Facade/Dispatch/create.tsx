@@ -12,6 +12,7 @@ import Select from 'react-select';
 
 interface WorkOrder {
     id: string;
+    woNumber: string;
     plantCode: string;
     clientName: string;
     projectName: string;
@@ -37,6 +38,7 @@ interface QRCodeData {
 interface FormData {
     clientName: string;
     projectName: string;
+    woNumber: string;
     workOrderNumber: string;
     address: string;
     workOrderDate: string;
@@ -61,6 +63,7 @@ const DispatchCreation = () => {
     const [formData, setFormData] = useState({
         workOrderNumber: '',
         plantCode: '',
+        woNumber: '',
         clientName: '',
         projectName: '',
         address: '',
@@ -77,10 +80,15 @@ const DispatchCreation = () => {
     });
     const [showTooltip, setShowTooltip] = useState(false);
 
+    // const workOrders: WorkOrder[] = [
+    //     { id: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X', address: '123 Main St, City A' },
+    //     { id: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y', address: '456 Oak Ave, City B' },
+    //     { id: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
+    // ];
     const workOrders: WorkOrder[] = [
-        { id: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X', address: '123 Main St, City A' },
-        { id: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y', address: '456 Oak Ave, City B' },
-        { id: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
+        { id: 'JO101', woNumber: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X', address: '123 Main St, City A' },
+        { id: 'JO102', woNumber: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y', address: '456 Oak Ave, City B' },
+        { id: 'JO103', woNumber: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
@@ -98,6 +106,7 @@ const DispatchCreation = () => {
     const handleWorkOrderChange = (selectedOption: any) => {
         const selectedWorkOrder = workOrders.find((wo) => wo.id === selectedOption?.value) || {
             id: '',
+            woNumber: '',
             clientName: '',
             address: '',
         };
@@ -105,6 +114,7 @@ const DispatchCreation = () => {
         setFormData((prev) => ({
             ...prev,
             workOrderNumber: selectedOption?.value || '',
+            woNumber: selectedWorkOrder.woNumber,
             clientName: selectedWorkOrder.clientName,
             address: selectedWorkOrder.address,
         }));
@@ -241,18 +251,24 @@ const DispatchCreation = () => {
                         {/* Work Order Number */}
                         <div>
                             <label htmlFor="workOrderNumber" className="block text-sm font-medium text-bold">
-                                <strong>Work Order Number</strong>
+                                <strong>Job Order Number</strong>
                             </label>
                             <Select
                                 id="workOrderNumber"
                                 options={workOrderOptions}
                                 onChange={handleWorkOrderChange}
-                                placeholder="Select Work Order"
+                                placeholder="Select Job Order"
                                 isSearchable
                                 value={workOrderOptions.find((option) => option.value === formData.workOrderNumber) || null}
                             />
                         </div>
                         {/* Client Name */}
+                        <div>
+                            <label htmlFor="woNumber" className="block text-sm font-medium">
+                                <strong>WO Number</strong>
+                            </label>
+                            <input id="woNumber" type="text" className="form-input w-full" value={formData.woNumber} readOnly placeholder="Work Order will appear here" />
+                        </div>
                         <div>
                             <label htmlFor="clientName" className="block text-sm font-medium">
                                 <strong>Client Name</strong>

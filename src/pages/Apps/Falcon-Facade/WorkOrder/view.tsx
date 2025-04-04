@@ -21,7 +21,7 @@ const rowData = [
     {
         id: 1,
         client: 'Client A',
-        work_order_number: 'WO001',
+        work_order_number: 'JO001',
         plant_code: 'PC001',
         project: 'Project Alpha',
         approvedBy: 'V Gouda',
@@ -35,7 +35,7 @@ const rowData = [
     },
     {
         id: 2,
-        work_order_number: 'WO002',
+        work_order_number: 'JO002',
         plant_code: 'PC002',
         client: 'Client B',
         project: 'Project Beta',
@@ -111,7 +111,7 @@ const ColumnChooser = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '#', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order/view', isActive: true },
+        { label: 'Job Order', link: '/falcon-facade/work-order/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -152,7 +152,7 @@ const ColumnChooser = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Work Order',
+                    label: 'Add Job Order',
                     link: '/falcon-facade/work-order/create',
                     icon: <IconPlusCircle className="text-4xl" />,
                 }}
@@ -160,7 +160,7 @@ const ColumnChooser = () => {
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Work Order</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Job Order</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -267,7 +267,7 @@ const ColumnChooser = () => {
                             { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
                             {
                                 accessor: 'work_order_number',
-                                title: 'Work Order Number',
+                                title: 'Job Order Number',
                                 sortable: true,
                                 hidden: hideCols.includes('work_order_number'),
                             },

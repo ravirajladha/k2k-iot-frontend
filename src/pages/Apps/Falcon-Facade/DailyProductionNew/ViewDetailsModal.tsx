@@ -32,7 +32,7 @@ export const ViewDetailsModal = ({ data, closeModal, handleStartJob, handleStopJ
 
                 {/* Start / Stop Buttons */}
                 <div className="mt-5 flex justify-center gap-3">
-                    <button 
+                    {/* <button 
                         onClick={() => handleStartJob(data?.jobOrderId)} 
                         className="btn btn-success flex items-center gap-1"
                     >
@@ -44,7 +44,7 @@ export const ViewDetailsModal = ({ data, closeModal, handleStartJob, handleStopJ
                         className="btn btn-warning flex items-center gap-1"
                     >
                         <IconChecks className="text-xl" /> Stop
-                    </button>
+                    </button> */}
                 </div>
 
                 <div className="mt-5 flex justify-end">

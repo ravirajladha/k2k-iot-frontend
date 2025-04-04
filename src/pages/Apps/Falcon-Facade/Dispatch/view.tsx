@@ -17,7 +17,7 @@ import Breadcrumbs from "@/pages/Components/Breadcrumbs";
 const rowData = [
     {
         sl_no: 1,
-        workOrder: 'WO12345',
+        workOrder: 'JO12345',
         products: [
             { productId: 'Inward Window', quantity: 10 },
             { productId: 'Outward Window', quantity: 5 },
@@ -30,7 +30,7 @@ const rowData = [
     },
     {
         sl_no: 2,
-        workOrder: 'WO12346',
+        workOrder: 'JO12346',
         products: [
             { productId: 'Facade', quantity: 8 },
             { productId: 'Curtain Wall', quantity: 12 },
@@ -44,7 +44,7 @@ const rowData = [
     },
     {
         sl_no: 3,
-        workOrder: 'WO12347',
+        workOrder: 'JO12347',
         products: [
             { productId: 'Sliding Window', quantity: 15 },
             { productId: 'Fixed Type', quantity: 7 },
@@ -237,7 +237,7 @@ const ColumnChooser = () => {
                             },
                             {
                                 accessor: 'workOrder',
-                                title: 'Work Order',
+                                title: 'Job Order',
                                 sortable: true,
                                 hidden: hideCols.includes('workOrder'),
                             },

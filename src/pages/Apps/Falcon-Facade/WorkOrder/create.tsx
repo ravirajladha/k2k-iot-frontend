@@ -67,7 +67,29 @@ const products: Product[] = [
     // { label: 'Product7', value: 'Product7', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
 ];
 
+
+
 const Create = () => {
+
+    const clients: Client[] = [
+        {
+            value: 'client1',
+            label: 'Client 1',
+            projects: [
+                { value: 'project1', label: 'Project 1' },
+                { value: 'project2', label: 'Project 2' },
+            ],
+        },
+        {
+            value: 'client2',
+            label: 'Client 2',
+            projects: [
+                { value: 'project3', label: 'Project 3' },
+                { value: 'project4', label: 'Project 4' },
+            ],
+        },
+    ];
+
     const [formData, setFormData] = useState<FormData>({
         id: 0, // Default ID value
         product: null, // Default value for product
@@ -160,6 +182,11 @@ const Create = () => {
     //     );
     // };
 
+    const handleClientChange = (selectedOption: Client | null) => {
+        setSelectedClient(selectedOption);
+        setSelectedProject(null); // Reset project selection
+    };
+
     const handleChange = (id: number, field: string, value: any) => {
         setItems((prevItems) =>
             prevItems.map((item) =>
@@ -208,7 +235,7 @@ const Create = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order', isActive: false },
+        { label: 'Job Order', link: '/falcon-facade/work-order', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
     const [expandedProductId, setExpandedProductId] = useState<number | null>(null);
@@ -245,13 +272,13 @@ const Create = () => {
             <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5">
-                    <h5 className="font-semibold text-lg">Create Work Order</h5>
+                    <h5 className="font-semibold text-lg">Create Job Order</h5>
                 </div>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label htmlFor="clientName">Client Name</label>
-                            {/* <Select
+                            <Select
                                 id="clientName"
                                 name="clientName"
                                 options={clients}
@@ -261,8 +288,8 @@ const Create = () => {
                                 getOptionValue={(e) => e.value}
                                 placeholder="Select Client"
                                 isClearable
-                            /> */}
-                            <input
+                            />
+                            {/* <input
                                 id="workOrderNumber"
                                 name="workOrderNumber"
                                 type="text"
@@ -270,7 +297,7 @@ const Create = () => {
                                 className="form-input"
                                 value={formData.workOrderNumber}
                                 onChange={handleInputChange}
-                            />
+                            /> */}
                         </div>
 
                         {/* Project Selection */}
