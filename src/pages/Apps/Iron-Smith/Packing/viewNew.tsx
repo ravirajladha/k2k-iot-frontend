@@ -1,44 +1,69 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
 import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconCaretDown from '@/components/Icon/IconCaretDown';
+import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
-// import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
-// import { Breadcrumbs } from '@mantine/core';
 import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+
 const rowData = [
     {
-        id: 1,
-        client: "Client A",
-        projectCount: 22,
-        created_at: "2025-01-01",
-        status: "In Progress",
-        created_by: "Admin"
+        sl_no: 1,
+        workOrder: 'WO12345',
+        jobOrder: 'JO98765',
+        productId: 'PRD001',
+        productName: 'Steel Rods',
+        productQty: '100',
+        totalQty:'6',
+        rejectedQuantity: 5,
+        recycledQuantity: 3,
+        qrCode: 'QR123',
+        createdBy: 'Admin',
+        status: "Pending",
+        timestamp: '2025-01-28T10:25:00Z',
     },
     {
-        id: 2,
-        client: "Client B",
-        projectCount: 22,
-
-        created_at: "2025-01-05",
-        status: "Pending",
-        created_by: "Admin"
+        sl_no: 2,
+        workOrder: 'WO12346',
+        jobOrder: 'JO98766',
+        productId: 'PRD002',
+        productName: 'Iron Rods',
+        productQty: '200',
+        totalQty:'10',
+        rejectedQuantity: 2,
+        recycledQuantity: 1,
+        qrCode: 'QR123',
+        status: "Dispatched",
+        createdBy: 'User1',
+        timestamp: '2025-01-28T11:30:00Z',
+    },
+    {
+        sl_no: 3,
+        workOrder: 'WO12347',
+        jobOrder: 'JO98767',
+        productId: 'PRD003',
+        productName: 'Cast Iron Rods',
+        productQty: '300',
+        totalQty:'8',
+        rejectedQuantity: 8,
+        recycledQuantity: 5,
+        qrCode: 'QR123',
+        status: "Dispatched",
+        createdBy: 'Manager',
+        timestamp: '2025-01-28T12:45:00Z',
     },
 ];
 
-
-const Clients = () => {
+const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Clients'));
+        dispatch(setPageTitle('Packing'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
@@ -46,15 +71,13 @@ const Clients = () => {
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
+    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'sl_no'));
     const [recordsData, setRecordsData] = useState(initialRecords);
-
     const [search, setSearch] = useState('');
     const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-        columnAccessor: 'id',
+        columnAccessor: 'sl_no',
         direction: 'asc',
     });
-
     const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
     const formatDate = (date: any) => {
@@ -76,19 +99,25 @@ const Clients = () => {
     };
 
     const cols = [
-        { accessor: 'id', title: 'ID' },
-        { accessor: 'client', title: 'Client Name' },
+        { accessor: 'sl_no', title: 'SL No' },
+        { accessor: 'workOrder', title: 'Work Order' },
+        { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'productName', title: 'Product Name' },
+        { accessor: 'productQty', title: 'Product Quantity' },
+        { accessor: 'productQty', title: 'Product Quantity' },
+        { accessor: 'totalQty', title: 'Total Quantity' },
+        { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
+        { accessor: 'qrCode', title: 'QR Code String' },
         { accessor: 'status', title: 'Status' },
-        { accessor: 'projectCount', title: 'Projects' },
-
-        { accessor: 'created_by', title: 'Created By' },
-        { accessor: 'created_at', title: 'Created At' },
+        { accessor: 'createdBy', title: 'Created By' },
+        { accessor: 'timestamp', title: 'Timestamp' },
+        { accessor: 'action', title: 'Actions' },
     ];
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Helpers', link: '#', isActive: false },
-        { label: 'Clients', link: '/clients', isActive: true },
+        { label: 'Iron Smith', link: '#', isActive: false },
+        { label: 'Packing', link: '/iron-smith/packing/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -105,41 +134,42 @@ const Clients = () => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
                 return (
-                    item.id.toString().includes(search.toLowerCase()) ||
-                    item.client.toLowerCase().includes(search.toLowerCase()) ||
-                    item.status.toLowerCase().includes(search.toLowerCase()) ||
-                    item.projectCount.toString().includes(search.toLowerCase()) ||
-
-                    item.created_by.toLowerCase().includes(search.toLowerCase()) ||
-                    item.created_at.toLowerCase().includes(search.toLowerCase())
-
+                    item.sl_no.toString().includes(search.toLowerCase()) ||
+                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productName.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productQty.toLowerCase().includes(search.toLowerCase()) ||
+                    item.totalQty.toLowerCase().includes(search.toLowerCase()) ||
+                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
+                    item.status.toString().includes(search.toLowerCase()) ||
+                    item.qrCode.toLowerCase().includes(search.toLowerCase()) ||
+                    item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
+                    item.timestamp.toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
         setPage(1);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Client', link: '/iron-smith/clients/create',
+                    label: 'Add Packing',
+                    link: '/iron-smith/packing/create',
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Clients</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Packing</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -193,86 +223,80 @@ const Clients = () => {
                 <div className="datatables">
                     <DataTable
                         className="whitespace-nowrap table-hover"
-                        records={recordsData}
+                        records={rowData}
                         columns={[
-                            { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
                             {
-                                accessor: 'client',
-                                title: 'Client Name',
+                                accessor: 'sl_no',
+                                title: 'SL No',
                                 sortable: true,
-                                hidden: hideCols.includes('client'),
+                                hidden: hideCols.includes('sl_no'),
+                            },
+                            {
+                                accessor: 'workOrder',
+                                title: 'Work Order',
+                                sortable: true,
+                                hidden: hideCols.includes('workOrder'),
+                            },
+                            {
+                                accessor: 'productId',
+                                title: 'Product ID',
+                                sortable: true,
+                                hidden: hideCols.includes('productId'),
+                            },
+                            {
+                                accessor: 'qrCode',
+                                title: 'QR Code',
+                                sortable: true,
+                                hidden: hideCols.includes('qrCode'),
+                            },
+                            {
+                                accessor: 'rejectedQuantity',
+                                title: 'Rejected Quantity',
+                                sortable: true,
+                                hidden: hideCols.includes('rejectedQuantity'),
                             },
                             {
                                 accessor: 'status',
                                 title: 'Status',
                                 sortable: true,
                                 hidden: hideCols.includes('status'),
-                                render: ({ status }) => (
-                                    <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
-                                    >
-                                        {status}
-                                    </div>
-                                ),
                             },
-
-                            // {
-                            //     accessor: 'machine_count',
-                            //     title: 'Machine Count',
-                            //     sortable: false,
-                            //     hidden: hideCols.includes('machine_count'),
-                            //     render: ({ projectCount }) => (
-                            //         <NavLink
-                            //             // to={`/konkrete_klinkers/machines/${encodeURIComponent(factory_name)}`} 
-                            //             to={`/projects`}
-
-                            //             className="text-blue-500 hover:underline"
-                            //         >
-                            //             {projectCount}
-                            //         </NavLink>
-                            //     ),
-                            // },
                             {
-                                accessor: 'created_by',
+                                accessor: 'createdBy',
                                 title: 'Created By',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-
+                                hidden: hideCols.includes('createdBy'),
                             },
                             {
-                                accessor: 'created_at',
-                                title: 'Created At',
+                                accessor: 'timestamp',
+                                title: 'Timestamp',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-                                render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
+                                hidden: hideCols.includes('timestamp'),
+                                render: ({ timestamp }) => (
+                                    <div>{new Date(timestamp).toLocaleString()}</div>
+                                ),
                             },
-
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                sortable: false,
-                                hidden: hideCols.includes('action'),
-                                render: ({ id }) => (
+                                render: (row) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`#`} className="flex hover:text-info">
+                                        {/* <NavLink to={`/editDriven Iron Smith/${row.sl_no}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
-                                        </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
-                                            <IconEye />
+                                        </NavLink> */}
+                                        <NavLink 
+                                            to={`/iron-smith/packing/detail`} 
+                                            state={{ rowData: row }} 
+                                            className="flex hover:text-primary"
+                                        >
+                                            <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>
                                 ),
                             },
                         ]}
                         highlightOnHover
-                        totalRecords={initialRecords.length}
+                        totalRecords={rowData.length}
                         recordsPerPage={pageSize}
                         page={page}
                         onPageChange={(p) => setPage(p)}
@@ -285,11 +309,10 @@ const Clients = () => {
                             `Showing ${from} to ${to} of ${totalRecords} entries`
                         }
                     />
-
                 </div>
             </div>
         </div>
     );
 };
 
-export default Clients;
+export default ColumnChooser;

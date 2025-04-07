@@ -164,7 +164,7 @@ const DispatchCreation = () => {
     // };
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: 'Cast Iron Rod', uom: 'Nos', dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
+        { id: 1, title: 'Cast Iron Rod', uom: 'Nos', dispatchQuantity: 10, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
 
     ]);
 

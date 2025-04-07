@@ -279,10 +279,11 @@ const ProductView = () => {
                                 hidden: hideCols.includes('action'),
                                 render: ({ materialCode }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
+                                        <NavLink to={`#`} className="flex hover:text-info">
+                                            {/* to={`/edit/${materialCode}`} */}
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`/view/${materialCode}`} className="flex hover:text-primary">
+                                        <NavLink to={`#`} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
 
