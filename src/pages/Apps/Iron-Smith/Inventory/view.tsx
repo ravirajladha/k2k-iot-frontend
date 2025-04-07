@@ -38,7 +38,7 @@ interface Product {
 const rowData = [
     {
         materialCode: 101,
-        productDescription: 'Concrete Blocks',
+        productDescription: 'Steel Rod',
         quantity: 500,
         bufferQuantity: 100,
         requiredQuantity: 300,
@@ -51,7 +51,7 @@ const rowData = [
     },
     {
         materialCode: 102,
-        productDescription: 'Cement Bags',
+        productDescription: 'Cast Iron Rod',
         quantity: 250,
         bufferQuantity: 100,
         requiredQuantity: 200,
@@ -64,7 +64,7 @@ const rowData = [
     },
     {
         materialCode: 103,
-        productDescription: 'Steel Rods',
+        productDescription: 'Iron Rod',
         quantity: 100,
         bufferQuantity: 100,
         requiredQuantity: 80,
@@ -77,7 +77,7 @@ const rowData = [
     },
     {
         materialCode: 104,
-        productDescription: 'Bricks',
+        productDescription: 'Mixed Iron Rod',
         quantity: 1000,
         bufferQuantity: 100,
         requiredQuantity: 900,

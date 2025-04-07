@@ -66,8 +66,8 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        "QR123456": { workOrder: "WO101", product: "Cement Blocks", uom: "Nos", quantity: 50 },
-        "QR654321": { workOrder: "WO101", product: "Concrete Bricks", uom: "Nos", quantity: 30 },
+        "QR123456": { workOrder: "WO101", product: "Steel Rod", uom: "Nos", quantity: 50 },
+        "QR654321": { workOrder: "WO101", product: "Iron Rod", uom: "Nos", quantity: 30 },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({
@@ -164,7 +164,7 @@ const DispatchCreation = () => {
     // };
 
     const [items, setItems] = useState<any>([
-        { id: 1, title: 'Product 1', uom: 'Nos', dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
+        { id: 1, title: 'Cast Iron Rod', uom: 'Nos', dispatchQuantity: 0, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0, recycledQuantity: 0 },
 
     ]);
 

@@ -25,9 +25,10 @@ const rowData = [
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
+        productName: 'Steel Rod',
         rejectedQuantity: 5,
         recycledQuantity: 3,
-        remark:"Brick broken due to excess water",
+        remark:"Failure due to breakage at yeilding point",
 
         createdBy: 'Admin',
         timestamp: '2025-01-28T10:25:00Z',
@@ -37,9 +38,10 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
+        productName: 'Iron Rod',
         rejectedQuantity: 2,
         recycledQuantity: 1,
-        remark:"Brick broken due to excess water",
+        remark:"Product failed at bending test",
 
         createdBy: 'User1',
         timestamp: '2025-01-28T11:30:00Z',
@@ -49,9 +51,10 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
+        productName: 'Cat Iron Rod',
         rejectedQuantity: 8,
         recycledQuantity: 5,
-        remark:"Brick broken due to excess water",
+        remark:"Product failed at maximum tensile force",
         createdBy: 'Manager',
         timestamp: '2025-01-28T12:45:00Z',
     },
@@ -93,6 +96,7 @@ const ColumnChooser = () => {
         { accessor: 'workOrder', title: 'Work Order' },
         { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'productName', title: 'Product Name' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
         { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
         { accessor: 'remark', title: 'Remark' },
@@ -135,6 +139,7 @@ const ColumnChooser = () => {
                     item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
                     item.jobOrder.toLowerCase().includes(search.toLowerCase()) ||
                     item.productId.toLowerCase().includes(search.toLowerCase()) ||
+                    item.productName.toLowerCase().includes(search.toLowerCase()) ||
                     item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
                     item.recycledQuantity.toString().includes(search.toLowerCase()) ||
                     item.remark.toString().includes(search.toLowerCase()) ||
@@ -159,7 +164,7 @@ const ColumnChooser = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add QC Check', link: '/falcon-facade/qc-check/create',
+                    label: 'Add QC Check', link: '/iron-smith/qc-check/create',
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />
@@ -234,9 +239,13 @@ const ColumnChooser = () => {
                                 accessor: 'jobOrder', title: 'Job Order', sortable: true,
                                 hidden: hideCols.includes('jobOrder'),
                             },
+                            // {
+                            //     accessor: 'productId', title: 'Product ID', sortable: true,
+                            //     hidden: hideCols.includes('productId'),
+                            // },
                             {
-                                accessor: 'productId', title: 'Product ID', sortable: true,
-                                hidden: hideCols.includes('productId'),
+                                accessor: 'productName', title: 'Product Name', sortable: true,
+                                hidden: hideCols.includes('productName'),
                             },
                             {
                                 accessor: 'rejectedQuantity', title: 'Rejected Quantity', sortable: true,
@@ -366,7 +375,7 @@ const ColumnChooser = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-semibold">Remark:</p>
-                                                        <p className="text-sm">Brick broken due to excess water.</p>
+                                                        <p className="text-sm">Failure due to yeilding point.</p>
                                                     </div>
                                                 </div>
                                             ) : (

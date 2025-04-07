@@ -111,7 +111,7 @@ const ColumnChooser = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '#', isActive: false },
-        { label: 'Job Order', link: '/falcon-facade/work-order/view', isActive: true },
+        { label: 'Job Order', link: '/falcon-facade/work-order/', isActive: true },
     ];
 
     useEffect(() => {

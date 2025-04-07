@@ -31,7 +31,8 @@ const InvoicePreview = () => {
     const items = [
         {
             id: 1,
-            title: `Product: Rs. {MATERIAL CODE}`,
+            // title: `Product: Rs. {MATERIAL CODE}`,
+            title: `Steel Rods`,
             quantity: dispatchQuantity,
             uom: 'nos',
         },
@@ -162,7 +163,7 @@ const InvoicePreview = () => {
                                 </div> */}
                                 <div className="flex justify-between">
                                     <span className="font-medium">Project:</span>
-                                    <span>K2K Block & Pavers</span>
+                                    <span>K2K Steel</span>
                                 </div>
                             </div>
                         </div>

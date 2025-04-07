@@ -540,7 +540,7 @@ const WorkOrderPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order/view', isActive: false },
+        { label: 'Job Order', link: '/falcon-facade/work-order/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
