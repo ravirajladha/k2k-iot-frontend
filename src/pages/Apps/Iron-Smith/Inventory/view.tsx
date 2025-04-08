@@ -401,10 +401,12 @@ const ColumnChooser = () => {
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Quantity:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.quantity || 'N/A'}</p>
                                                     </div>
+                                                     {/*
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Buffer Quantity:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.bufferQuantity || 'N/A'}</p>
                                                     </div>
+                                                    */}
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Required Quantity:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.requiredQuantity || 'N/A'}</p>
