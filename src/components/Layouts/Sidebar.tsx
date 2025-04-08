@@ -683,14 +683,14 @@ const Sidebar = () => {
                                     </li>
                                      */}
 
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <NavLink to="/iron-smith/products" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Products')}</span>
                                             </div>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
                                 </ul>
                             </li>
@@ -710,27 +710,27 @@ const Sidebar = () => {
                                     <ul className="sub-menu text-gray-500">
 
                                         {/* Plants Submenu */}
-                                        <li className="menu nav-item">
+                                        {/* <li className="menu nav-item">
                                             <button type="button" className={`${currentSubMenu === 'machines' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleSubMenu('machines')}>
-                                                <div className="flex items-center">
+                                                <div className="flex items-center"> */}
                                                     {/* <IconFolderPlus className="group-hover:!text-primary shrink-0" /> */}
-                                                    <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Machines')}</span>
+                                                    {/* <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Machines')}</span>
                                                 </div>
                                                 <div className={currentSubMenu !== 'machines' ? 'rtl:rotate-90 -rotate-90' : ''}>
                                                     <IconCaretDown />
                                                 </div>
-                                            </button>
+                                            </button> */}
 
-                                            <AnimateHeight duration={300} height={currentSubMenu === 'machines' ? 'auto' : 0}>
-                                                <ul className="sub-menu text-gray-500">
+                                            {/* <AnimateHeight duration={300} height={currentSubMenu === 'machines' ? 'auto' : 0}>
+                                                <ul className="sub-menu text-gray-500"> */}
                                                     {/* <li><NavLink to="/iron-smith/plants">{t('Plants')}</NavLink></li> */}
-                                                    <li><NavLink to="/iron-smith/machines">{t('Machines')}</NavLink></li>
+                                                    {/* <li><NavLink to="/iron-smith/machines">{t('Machines')}</NavLink></li>
                                                 </ul>
-                                            </AnimateHeight>
-                                        </li>
+                                            </AnimateHeight> */}
+                                        {/* </li> */}
 
 
-
+                                        <li><NavLink to="/iron-smith/machines">{t('Machines')}</NavLink></li>
                                         <li><NavLink to="/iron-smith/clients">{t('Clients')}</NavLink></li>
                                         <li><NavLink to="/iron-smith/projects">{t('Projects')}</NavLink></li>
                                         <li><NavLink to="/iron-smith/products">{t('Products')}</NavLink></li>
