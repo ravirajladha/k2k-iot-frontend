@@ -348,19 +348,19 @@ const ProductionPlanning = () => {
                                                         <div className="flex space-x-6">
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">UOM:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.uom : '--'}</p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.uom : 'Nos'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">PO Quantity:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.poQuantity : '--'}</p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.poQuantity : '100'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">Achieved:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.achievedQuantity : '--'}</p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.achievedQuantity : '50'}</p>
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">Rejected:</p>
-                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.rejectedQuantity : '--'}</p>
+                                                                <p className="bg-blue-100 px-3 py-1 rounded-md">{item.product ? item.rejectedQuantity : '10'}</p>
                                                             </div>
                                                         </div>
                                                     </div>

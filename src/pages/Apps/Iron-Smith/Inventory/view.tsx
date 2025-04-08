@@ -38,7 +38,7 @@ interface Product {
 const rowData = [
     {
         materialCode: 101,
-        productDescription: 'Concrete Blocks',
+        productDescription: 'Steel Rod',
         quantity: 500,
         bufferQuantity: 100,
         requiredQuantity: 300,
@@ -51,7 +51,7 @@ const rowData = [
     },
     {
         materialCode: 102,
-        productDescription: 'Cement Bags',
+        productDescription: 'Cast Iron Rod',
         quantity: 250,
         bufferQuantity: 100,
         requiredQuantity: 200,
@@ -64,7 +64,7 @@ const rowData = [
     },
     {
         materialCode: 103,
-        productDescription: 'Steel Rods',
+        productDescription: 'Iron Rod',
         quantity: 100,
         bufferQuantity: 100,
         requiredQuantity: 80,
@@ -77,7 +77,7 @@ const rowData = [
     },
     {
         materialCode: 104,
-        productDescription: 'Bricks',
+        productDescription: 'Mixed Iron Rod',
         quantity: 1000,
         bufferQuantity: 100,
         requiredQuantity: 900,
@@ -312,10 +312,12 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('action'),
                                 render: ({ materialCode }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
+                                        <NavLink to={`#`} className="flex hover:text-info">
+                                        {/* to={`/edit/${materialCode}`} */}
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`/view/${materialCode}`} className="flex hover:text-primary">
+                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        {/* to={`/view/${materialCode}`} */}
                                             <IconEye />
                                         </NavLink>
 

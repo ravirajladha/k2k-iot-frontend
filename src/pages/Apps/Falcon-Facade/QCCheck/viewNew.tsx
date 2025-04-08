@@ -25,6 +25,7 @@ const rowData = [
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
+        productName: 'Inward Door',
         rejectedQuantity: 5,
         recycledQuantity: 3,
         remark: 'Glass glazing fix',
@@ -37,6 +38,7 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
+        productName: 'Fixed Door',
         rejectedQuantity: 2,
         recycledQuantity: 1,
         remark: 'Cutting issue',
@@ -49,6 +51,7 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
+        productName: 'Fixed Window',
         rejectedQuantity: 8,
         recycledQuantity: 5,
         remark: 'Assembling mismatch a/c to documents',
@@ -92,6 +95,7 @@ const ColumnChooser = () => {
         { accessor: 'workOrder', title: 'Work Order' },
         { accessor: 'jobOrder', title: 'Job Order' },
         { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'productName', title: 'Product Name' },
         { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
         { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
         { accessor: 'remark', title: 'Remark' },
@@ -149,8 +153,8 @@ const ColumnChooser = () => {
         setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
-    console.log("Inside qc-check view");
-    
+    console.log('Inside qc-check view');
+    console.log('rowData', rowData);
 
     return (
         <div>
@@ -239,11 +243,17 @@ const ColumnChooser = () => {
                                 sortable: true,
                                 hidden: hideCols.includes('jobOrder'),
                             },
+                            // {
+                            //     accessor: 'productId',
+                            //     title: 'Product ID',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('productId'),
+                            // },
                             {
-                                accessor: 'productId',
-                                title: 'Product ID',
+                                accessor: 'productName',
+                                title: 'Product Name',
                                 sortable: true,
-                                hidden: hideCols.includes('productId'),
+                                hidden: hideCols.includes('productName'),
                             },
                             {
                                 accessor: 'rejectedQuantity',
@@ -284,7 +294,7 @@ const ColumnChooser = () => {
                                         {/* <NavLink to={`/edit/${qcCheck.sl_no}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink> */}
-                                        <NavLink to={`/falcon-facade/qc-check/detail`} state={rowData} className="flex hover:text-info">
+                                        <NavLink to={`/falcon-facade/qc-check/detail`} state={{ id: rowData.productId }} className="flex hover:text-info">
                                             <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>

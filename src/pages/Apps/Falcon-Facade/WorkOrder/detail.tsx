@@ -15,24 +15,28 @@ import PackingTable from './PackingTable'; // Import PackingTable
 import ViewPackingDetailsModal from './PackingModal';
 import DispatchDetailsModal from './DispatchDetailsModal';
 import DispatchTable from './DispatchTable';
+import QcCheckTable from './QcCheckTable';
+import QcCheckDetailsModal from './QcCheckDetailsModal'; // Import QC Check Details Modal
+
 const WorkOrderPage = () => {
     const dispatch = useDispatch();
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    //new sf achieved and rejected logs modal
     const [showAchievedModal, setShowAchievedModal] = useState(false);
     const [showRejectedModal, setShowRejectedModal] = useState(false);
     const [selectedAchievedLogs, setSelectedAchievedData] = useState([]);
     const [selectedRejectedLogs, setSelectedRejectedData] = useState([]);
     const [modalTitle, setModalTitle] = useState('');
-    // packing modal
-    // const [selectedPackingData, setSelectedPackingData] = useState(null);
-    // const [isModalOpen1, setIsModalOpen1] = useState(false);
-    // const [isModalOpen2, setIsModalOpen2] = useState(false);
 
-    // const [selectedDispatch, setSelectedDispatch] = useState(null);
-    // const [isModalOpenDispatch, setIsModalOpenDispatch] = useState(false);
+    const [isPackingModalOpen, setIsPackingModalOpen] = useState(false);
+    const [selectedPackingData, setSelectedPackingData] = useState(null);
+
+    const [isDispatchModalOpen, setIsDispatchModalOpen] = useState(false);
+    const [selectedDispatch, setSelectedDispatch] = useState(null);
+
+    const [isQcCheckModalOpen, setIsQcCheckModalOpen] = useState(false);
+    const [selectedQcCheck, setSelectedQcCheck] = useState(null);
 
     const dispatchData = [
         {
@@ -93,68 +97,91 @@ const WorkOrderPage = () => {
                 },
             ],
         },
-        // Other dispatch entries
     ];
-    const [isPackingModalOpen, setIsPackingModalOpen] = useState(false);
-    const [selectedPackingData, setSelectedPackingData] = useState(null);
 
-    const [isDispatchModalOpen, setIsDispatchModalOpen] = useState(false);
-    const [selectedDispatch, setSelectedDispatch] = useState(null);
+    const qcCheckData = [
+        {
+            workOrderId: 'WO001',
+            jobOrderId: 'JO001',
+            products: [
+                {
+                    checkId: 'QC001',
+                    productId: 'P001',
+                    productName: 'Inward Window',
+                    uom: 'Nos',
+                    quantity: 50,
+                    semiFinished: ['SF1', 'SF2', 'SF3'],
+                },
+                {
+                    checkId: 'QC002',
+                    productId: 'P002',
+                    productName: 'Inward Door',
+                    uom: 'Nos',
+                    quantity: 60,
+                    semiFinished: ['SF1', 'SF2', 'SF3'],
+                },
+                {
+                    checkId: 'QC003',
+                    productId: 'P003',
+                    productName: 'Fixed Window',
+                    uom: 'Nos',
+                    quantity: 70,
+                    semiFinished: ['SF1', 'SF2', 'SF3'],
+                },
+            ],
+        },
+    ];
 
-    // Open Packing Modal
     const openPackingDetailsModal = (data) => {
-        console.log('Opening Packing Modal with data:', data);
-
         setSelectedPackingData(data);
         setIsPackingModalOpen(true);
     };
 
-    // Close Packing Modal
     const closePackingModal = () => {
-        console.log('Closing Packing Modal');
         setIsPackingModalOpen(false);
         setSelectedPackingData(null);
     };
 
-    // Open Dispatch Modal
     const openDispatchDetailsModal = (dispatch) => {
         setSelectedDispatch(dispatch);
         setIsDispatchModalOpen(true);
     };
 
-    // Close Dispatch Modal
     const closeDispatchModal = () => {
         setIsDispatchModalOpen(false);
         setSelectedDispatch(null);
+    };
+
+    const openQcCheckDetailsModal = (qcCheck) => {
+        setSelectedQcCheck(qcCheck);
+        setIsQcCheckModalOpen(true);
+    };
+
+    const closeQcCheckModal = () => {
+        setIsQcCheckModalOpen(false);
+        setSelectedQcCheck(null);
     };
 
     const closeAchievedModal = () => setShowAchievedModal(false);
     const closeRejectedModal = () => setShowRejectedModal(false);
 
     const openAchievedModal = (step) => {
-        // If it's the jobOrder's achieved quantity
         if (step.hasOwnProperty('achievedLogs')) {
-            setSelectedAchievedData(
-                step.achievedLogs || [] // Fetch all logs if it's the jobOrder's level
-            );
+            setSelectedAchievedData(step.achievedLogs || []);
             setModalTitle('Achieved Quantity Logs for Job Order');
         } else {
-            console.log(step, 'inside the else block of achived modal');
-            setSelectedAchievedData(step.achievedLogs || []); // Fetch specific step's logs
+            setSelectedAchievedData(step.achievedLogs || []);
             setModalTitle(`Achieved Logs for ${step.name} Step`);
         }
         setShowAchievedModal(true);
     };
 
     const openRejectedModal = (step) => {
-        // If it's the jobOrder's rejected quantity
         if (step.hasOwnProperty('rejectedLogs')) {
-            setSelectedRejectedData(
-                step.rejectedLogs || [] // Fetch all logs if it's the jobOrder's level
-            );
+            setSelectedRejectedData(step.rejectedLogs || []);
             setModalTitle('Rejected Quantity Logs for Job Order');
         } else {
-            setSelectedRejectedData(step.rejectedLogs || []); // Fetch specific step's logs
+            setSelectedRejectedData(step.rejectedLogs || []);
             setModalTitle(`Rejected Logs for ${step.name} Step`);
         }
         setShowRejectedModal(true);
@@ -169,7 +196,6 @@ const WorkOrderPage = () => {
         dispatch(setPageTitle('Work Order Detail'));
     }, [dispatch]);
 
-    // Sample data for demonstration
     const clientDetails = {
         clientName: 'ABC Corp',
         address: '123 Main St',
@@ -258,7 +284,7 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            description: 'Curtain wall',
+            description: 'Curtain Wall',
             materialCode: 'M005',
             uom: 'Nos',
             requiredQuantity: 180,
@@ -288,7 +314,6 @@ const WorkOrderPage = () => {
             status: 'Pending',
             createdBy: 'Pending',
             timestamp: '2025-02-25 10:30 AM',
-
             products: [
                 {
                     productId: 'PRD001',
@@ -297,12 +322,12 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF1',
-                            quantity: 3, // This means 3 QR codes will be generated for this SF
+                            quantity: 3,
                             qrCodes: ['QR1', 'QR2', 'QR3'],
                         },
                         {
                             sfId: 'SF2',
-                            quantity: 2, // This means 2 QR codes will be generated for SF2
+                            quantity: 2,
                             qrCodes: ['QR4', 'QR5'],
                         },
                     ],
@@ -314,7 +339,7 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF3',
-                            quantity: 1, // 1 QR code for SF3
+                            quantity: 1,
                             qrCodes: ['QR6'],
                         },
                     ],
@@ -322,7 +347,7 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            packing_id: 2, // Added new row data
+            packing_id: 2,
             workOrderId: 'WO12346',
             jobOrder: 'JO98766',
             status: 'Completed',
@@ -336,7 +361,7 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF4',
-                            quantity: 4, // This means 4 QR codes will be generated for SF4
+                            quantity: 4,
                             qrCodes: ['QR7', 'QR8', 'QR9', 'QR10'],
                         },
                     ],
@@ -348,14 +373,13 @@ const WorkOrderPage = () => {
                     semiFinishedProducts: [
                         {
                             sfId: 'SF5',
-                            quantity: 5, // This means 5 QR codes will be generated for SF5
+                            quantity: 5,
                             qrCodes: ['QR11', 'QR12', 'QR13', 'QR14', 'QR15'],
                         },
                     ],
                 },
             ],
         },
-        // You can add more rows here as needed
     ];
 
     const mockAchievedLogs1 = [
@@ -370,7 +394,6 @@ const WorkOrderPage = () => {
             createdBy: 'Jane Smith',
         },
     ];
-
     const mockRejectedLogs1 = [
         {
             timestamp: '2025-03-03T13:00:00Z',
@@ -395,7 +418,6 @@ const WorkOrderPage = () => {
             createdBy: 'Kaavish',
         },
     ];
-
     const mockRejectedLogs2 = [
         {
             timestamp: '2025-03-03T13:00:00Z',
@@ -431,8 +453,8 @@ const WorkOrderPage = () => {
                             plannedQuantity: 25,
                             achievedQuantity: 22,
                             rejectedQuantity: 3,
-                            achievedLogs: mockAchievedLogs1, // Logs for the Cutting step
-                            rejectedLogs: mockRejectedLogs1, // Logs for the Cutting step
+                            achievedLogs: mockAchievedLogs1,
+                            rejectedLogs: mockRejectedLogs1,
                         },
                         {
                             name: 'Machining',
@@ -440,8 +462,8 @@ const WorkOrderPage = () => {
                             plannedQuantity: 35,
                             achievedQuantity: 33,
                             rejectedQuantity: 2,
-                            achievedLogs: mockAchievedLogs2, // Logs for the Machining step
-                            rejectedLogs: mockRejectedLogs2, // Logs for the Machining step
+                            achievedLogs: mockAchievedLogs2,
+                            rejectedLogs: mockRejectedLogs2,
                         },
                     ],
                 },
@@ -461,9 +483,8 @@ const WorkOrderPage = () => {
         prodReqrDate: '2025-01-22',
         deadline: '2025-01-30',
         issuedBy: 'V Gouda',
-        recievedBy: 'M R Bhaske',
+        receivedBy: 'M R Bhaske',
         status: 'In Progress',
-        // priority: 'High',
         bufferStock: 'False',
     };
 
@@ -505,7 +526,6 @@ const WorkOrderPage = () => {
             serialNumber: 'BR004',
             productId: 'P104',
             workOrderId: 'WO114',
-
             quantity: 550,
             rejectedQuantity: 20,
             date: '2025-01-13 02:20 PM',
@@ -515,18 +535,12 @@ const WorkOrderPage = () => {
 
     const filteredData = packingData.filter((item) => item.serialNumber.toLowerCase().includes(search.toLowerCase()) || item.productId.toLowerCase().includes(search.toLowerCase()));
 
-    // Filter data based on search
-    const filteredData1 = dispatchData.filter((dispatch) =>
-        dispatch.products.some(
-            (product) => product.productName.toLowerCase().includes(search.toLowerCase())
-            // product.vehicleNumber.toLowerCase().includes(search.toLowerCase())
-        )
-    );
+    const filteredData1 = dispatchData.filter((dispatch) => dispatch.products.some((product) => product.productName.toLowerCase().includes(search.toLowerCase())));
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Work Order', link: '/falcon-facade/work-order/view', isActive: false },
+        { label: 'Job Order', link: '/falcon-facade/work-order/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -575,7 +589,7 @@ const WorkOrderPage = () => {
                                 <strong>Issued By:</strong> {workOrder.issuedBy}
                             </p>
                             <p className="text-sm">
-                                <strong>Recieved By:</strong> {workOrder.recievedBy}
+                                <strong>Received By:</strong> {workOrder.receivedBy}
                             </p>
                             <p className="text-sm">
                                 <strong>Created At:</strong> {workOrder.createdAt}
@@ -606,7 +620,7 @@ const WorkOrderPage = () => {
                             <p className="text-sm">
                                 <strong>Status:</strong>
                                 <span
-                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold
                     ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
                                 >
                                     {workOrder.status}
@@ -616,12 +630,10 @@ const WorkOrderPage = () => {
                     </div>
                 </div>
 
-                {/* progress section */}
+                {/* Progress Section */}
                 <div className="panel mb-4 bg-gray-100" id="labeled">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Overall Progress</h5>
-                        {/* </div> */}
-                        {/* <div className="mb-5 space-y-5"> */}
                         <div className="w-full h-4 bg-[#ebedf2] dark:bg-dark/40 rounded-full">
                             <div className="bg-info h-4 rounded-full w-4/5 text-center text-white text-xs">80%</div>
                         </div>
@@ -636,7 +648,6 @@ const WorkOrderPage = () => {
                             <thead className="bg-gray-100">
                                 <tr>
                                     <th className="px-4 py-2 text-left border border-gray-300">Description</th>
-                                    {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Code</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Color Code</th>
@@ -646,9 +657,7 @@ const WorkOrderPage = () => {
                                     <th className="px-4 py-2 text-left border border-gray-300">Achieved</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Dispatched</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Packed</th>
-                                    {/* <th className="px-4 py-2 text-left border border-gray-300">Plant Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">Delivery Date</th>
-                                    {/* <th className="px-4 py-2 text-left border border-gray-300">Actions</th> */}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
@@ -659,22 +668,12 @@ const WorkOrderPage = () => {
                                         <td className="px-4 py-2 border border-gray-300">{product.code}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.colorCode}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.height}</td>
-                                        {/* <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.width}</td>
-
                                         <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.dispatched}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.packed}</td>
-                                        {/* <td className="px-4 py-2 border border-gray-300">{product.plantCode}</td> */}
                                         <td className="px-4 py-2 border border-gray-300">{product.deliveryDate}</td>
-                                        {/* <td className="px-4 py-2 border border-gray-300">
-                                            <button
-                                                className="bg-blue-400 text-white px-3 py-1 rounded hover:bg-blue-700"
-                                                onClick={() => openModal(product)}
-                                            >
-                                                <IconEye />                                    </button>
-                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -682,7 +681,6 @@ const WorkOrderPage = () => {
                     </div>
 
                     {/* Modal for Dimensions */}
-                    {/* MODAL USING HEADLESS UI */}
                     <Transition appear show={showModal} as={Fragment}>
                         <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={closeModal}>
                             <div className="flex items-center justify-center min-h-screen px-4 text-center">
@@ -837,8 +835,6 @@ const WorkOrderPage = () => {
                     </Transition>
                 </div>
 
-                {/* new job orders */}
-                {/* Job Orders Display */}
                 {/* Job Orders Display */}
                 <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
                     {jobOrders.map((jobOrder) => (
@@ -851,15 +847,14 @@ const WorkOrderPage = () => {
                                         <strong>Product Name:</strong> {jobOrder.productName}
                                     </p>
                                     <p className="text-sm">
-                                        <strong>Sales Order Number :</strong> SL-123
+                                        <strong>Sales Order Number:</strong> SL-123
                                     </p>
                                     <p className="text-sm">
-                                        <strong>System:</strong>Schuco
+                                        <strong>System:</strong> Schuco
                                     </p>
                                     <p className="text-sm">
-                                        <strong>Product System:</strong>Casement Window 45 Series
+                                        <strong>Product System:</strong> Casement Window 45 Series
                                     </p>
-
                                     <p className="text-sm">
                                         <strong>UOM:</strong> {jobOrder.uom}
                                     </p>
@@ -871,7 +866,6 @@ const WorkOrderPage = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    {/* <p className="text-sm"><strong>Planned Quantity:</strong> {jobOrder.plannedQuantity}</p> */}
                                     <p className="text-sm">
                                         <strong>Achieved Quantity:</strong>
                                         <span className="text-green-600 font-semibold cursor-pointer flex items-center" onClick={() => openAchievedModal(jobOrder)}>
@@ -953,26 +947,9 @@ const WorkOrderPage = () => {
 
                 <DispatchDetailsModal isOpen={isDispatchModalOpen} closeDispatchModal={closeDispatchModal} dispatch={selectedDispatch} />
 
-                {/* <PackingTable
-                    rowData={rowData} // Pass your row data here
-                    openPackingDetailsModal={openPackingDetailsModal}
-                />
-                <ViewPackingDetailsModal
-                    isOpen={isModalOpen1}
-                    closeModal={closeModalPacking}
-                    data={selectedPackingData}
-                />
-              
-                <DispatchTable
-                    dispatchData={dispatchData}
-                    openDispatchDetailsModal={openDispatchDetailsModal}
-                />
+                <QcCheckTable qcCheckData={qcCheckData} openQcCheckDetailsModal={openQcCheckDetailsModal} />
 
-                <DispatchDetailsModal
-                    isOpen={isModalOpen2}
-                    closeModal={closeModal}
-                    dispatch={selectedDispatch}
-                /> */}
+                <QcCheckDetailsModal isOpen={isQcCheckModalOpen} closeQcCheckModal={closeQcCheckModal} qcCheck={selectedQcCheck} />
             </div>
         </div>
     );

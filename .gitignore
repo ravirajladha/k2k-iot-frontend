@@ -9,7 +9,7 @@ yarn.lock
 pnpm-lock.yaml
 
 # Build directories
-dist/
+dist*/
 build/
 out/
 

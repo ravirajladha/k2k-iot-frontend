@@ -69,7 +69,6 @@ const ProductionPlanning = () => {
         productSystem: '',
         productName: '',
     });
-    console.log('formData', formData);
 
     const jobOrders = [
         { id: 'JO100', name: 'Job Order 100' },
@@ -134,20 +133,13 @@ const ProductionPlanning = () => {
 
     const addItem = () => {
         const productId = items.length + 1;
-        console.log('jo', formData.jobOrderNumber);
 
-        if(formData.jobOrderNumber.length <= 0){
-            alert("Please select Job Order first!")
+        if (formData.jobOrderNumber.length <= 0) {
+            alert('Please select Job Order first!');
             return;
         }
 
         const productNumber = `${formData.jobOrderNumber}-${productId}`;
-        // console.log("productNumber",productNumber);
-
-        const sfId = items.length + 1;
-
-        const semiFinishedId = `${productNumber}-(1/${sfId})`;
-        console.log('semiFinishedId', semiFinishedId);
 
         setItems([
             ...items,
@@ -157,32 +149,7 @@ const ProductionPlanning = () => {
                 system: '',
                 productSystem: '',
                 plannedQuantity: 0,
-                sfSteps: [
-                    {
-                        id: semiFinishedId,
-                        name: semiFinishedId,
-                        scheduleDate: '',
-                        plantId: plants[0].id,
-                        plantName: plants[0].name,
-                        image: null,
-                        remark: '',
-                        processes: {
-                            cutting: false,
-                            assembling: false,
-                            machining: false,
-                            glazing: false,
-                        },
-                        processRemarks: {
-                            cutting: '',
-                            assembling: '',
-                            machining: '',
-                            glazing: '',
-                        },
-                        checkedSteps: {},
-                        remarks: {},
-                        images: {},
-                    },
-                ],
+                sfSteps: [],
             },
         ]);
     };
@@ -193,13 +160,8 @@ const ProductionPlanning = () => {
 
     const addSFStep = (productId: number) => {
         const product = items.find((item) => item.id === productId);
-        console.log('product');
-
         const sfId = product?.sfSteps.length ? product.sfSteps.length + 1 : 1;
-        console.log('sfId', sfId);
-
-        const semiFinishedId = `${product.title}-(1/${String(sfId)})`; //.padStart(2, '0')
-        console.log('semiFinishedId', semiFinishedId);
+        const semiFinishedId = `${product.title}-(1/${String(sfId)})`;
 
         setItems((prevItems) =>
             prevItems.map((item) =>
@@ -246,6 +208,19 @@ const ProductionPlanning = () => {
                     ? {
                           ...item,
                           sfSteps: item.sfSteps.filter((sf) => sf.id !== sfId),
+                      }
+                    : item
+            )
+        );
+    };
+
+    const updateSFName = (productId: number, sfId: string, newName: string) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === productId
+                    ? {
+                          ...item,
+                          sfSteps: item.sfSteps.map((sf) => (sf.id === sfId ? { ...sf, name: newName } : sf)),
                       }
                     : item
             )
@@ -387,12 +362,21 @@ const ProductionPlanning = () => {
     const [availableProductSystems, setAvailableProductSystems] = useState<any[]>([]);
 
     const handleSystemChange = (selectedOption: any) => {
-        setFormData((prev) => ({ ...prev, system: selectedOption.value, productSystem: '' }));
+        setFormData((prev) => ({
+            ...prev,
+            system: selectedOption ? selectedOption.value : '',
+            productSystem: '',
+        }));
     };
 
-    const handleProductSystemChange = (selectedOption: any) => {
-        setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
-        setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+    const handleProductSystemChange = (selectedOption) => {
+        if (selectedOption) {
+            setFormData((prev) => ({ ...prev, productName: selectedOption.value }));
+            setAvailableProductSystems(fakeProductSystems[selectedOption.value] || []);
+        } else {
+            setFormData((prev) => ({ ...prev, productName: '' }));
+            setAvailableProductSystems([]);
+        }
     };
 
     const handleCheckboxChange = (sfId: string, step: string, isChecked: boolean) => {
@@ -555,8 +539,9 @@ const ProductionPlanning = () => {
                             <table className="w-full border-collapse">
                                 <thead className="bg-gray-800 text-dark">
                                     <tr>
-                                        <th className="p-2 border w-48">Product Type</th>
-                                        <th className="p-2 border w-48">Product System</th>
+                                        <th className="p-2 border">Product Type</th>
+                                        <th className="p-2 border">System</th>
+                                        <th className="p-2 border">Product System</th>
                                         <th className="p-2 border">Planned Quantity</th>
                                         <th className="p-2 border">Code (autofetch)</th>
                                         <th className="p-2 border">Color Code (autofetch)</th>
@@ -584,19 +569,44 @@ const ProductionPlanning = () => {
                                                         value={formData.productName ? { value: formData.productName, label: formData.productName } : null}
                                                         onChange={handleProductSystemChange}
                                                         options={fakeProjects}
-                                                        className="custom-select flex-1"
+                                                        className="custom-select flex-1 w-48"
                                                         classNamePrefix="custom-select"
-                                                        placeholder="Select a System"
+                                                        placeholder="Select Product Type"
+                                                        isClearable
+                                                        menuPortalTarget={document.body}
+                                                        required
+                                                    />
+                                                </td>
+                                                <td className="p-3 border">
+                                                    <Select
+                                                        id="system"
+                                                        value={formData.system ? { value: formData.system, label: formData.system } : null}
+                                                        onChange={handleSystemChange}
+                                                        options={fakeSystems}
+                                                        className="custom-select flex-1 w-48"
+                                                        classNamePrefix="custom-select"
+                                                        placeholder="Select System"
                                                         isClearable
                                                         menuPortalTarget={document.body}
                                                         required
                                                     />
                                                 </td>
                                                 <td>
-                                                    <input type="text" className="form-input w-full" value={'Product 1'} readOnly />
+                                                    <input type="text" className="form-input w-32" value={'Product 1'} readOnly />
                                                 </td>
                                                 <td className="p-3 border">
-                                                    <input type="number" className="form-input w-32" min={0} value={item.plannedQuantity} />
+                                                    <input
+                                                        type="number"
+                                                        className="form-input w-32"
+                                                        min={0}
+                                                        value={formData.plannedQuantity}
+                                                        onChange={(e) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                plannedQuantity: e.target.value,
+                                                            });
+                                                        }}
+                                                    />
                                                 </td>
                                                 <td className="p-3 border">
                                                     <input type="text" className="form-input w-32" value="TYPE-P5(T)" disabled />
@@ -621,7 +631,22 @@ const ProductionPlanning = () => {
                                                 <tr key={sf.id} className="bg-gray-50">
                                                     <td colSpan={8} className="p-4 rounded-lg shadow-md">
                                                         <div className="flex justify-between items-center bg-gray-100 p-3 rounded-md">
-                                                            <h4 className="text-lg font-semibold">{sf.name}</h4>
+                                                            <div className="flex items-center space-x-4">
+                                                                <span className="text-lg font-semibold">Semi Finished</span>
+                                                                <span className="text-lg font-semibold">{sf.id}</span>
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-input w-72"
+                                                                    value={sf.name} // Bind to sf.name
+                                                                    onChange={(e) => updateSFName(item.id, sf.id, e.target.value)}
+                                                                    placeholder="Enter Semi Finished Name"
+                                                                />
+                                                                <div className="relative inline-block">
+                                                                    <button type="button" className="btn btn-primary flex items-center space-x-2">
+                                                                        <span>Add</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                             <button type="button" onClick={() => removeSFStep(item.id, sf.id)} className="text-red-600 hover:text-red-800">
                                                                 ❌ Remove SF Step
                                                             </button>

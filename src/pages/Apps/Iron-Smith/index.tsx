@@ -1,4 +1,6 @@
-export { default as QCCheckView } from './QCCheck/view';
+// export { default as QCCheckView } from './QCCheck/view';
+export { default as QCCheckViewNew } from './QCCheck/viewNew'; ////NEW
+export { default as QCCheckViewDetail } from './QCCheck/detail'; ////NEW
 export { default as QCCheckCreate } from './QCCheck/create';
 export { default as WorkOrderView } from './WorkOrder/view';
 export { default as WorkOrderCreate } from './WorkOrder/create';
@@ -27,10 +29,16 @@ export { default as InventoryView } from './Inventory/view';
 // export { default as InventoryView } from './Inventory/view';
 // export { default as InventoryCreate } from './Inventory/create';
 
-export { default as PackingView } from './Packing/view';
+// export { default as PackingView } from './Packing/view';
+export { default as PackingViewNew } from './Packing/viewNew';
+export { default as PackingViewDetail } from './Packing/detail';
 export { default as PackingCreate } from './Packing/create';
 
-export { default as DispatchView } from './Dispatch/view';
+
+// export { default as DispatchView } from './Dispatch/view';
+export { default as DispatchViewNew } from './Dispatch/viewNew';  ///New
+export { default as DispatchViewDetail } from './Dispatch/detail';  ///New
+export { default as DispatchEditDetail } from './Dispatch/editDetail';  ///New
 export { default as DispatchCreate } from './Dispatch/create';
 export { default as DipatchInvoiceView } from './Dispatch/invoice';
 

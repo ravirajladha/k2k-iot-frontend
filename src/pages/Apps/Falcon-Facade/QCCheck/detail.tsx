@@ -1,22 +1,10 @@
-import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useState, Fragment } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Dialog, Transition } from '@headlessui/react';
-
-import sortBy from 'lodash/sortBy';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/store/store';
-import Dropdown from '@/components/Dropdown';
+import React, { useEffect, useState, Fragment } from 'react';
+import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconPlusCircle from '@/components/Icon/IconPlusCircle';
-import IconCaretDown from '@/components/Icon/IconCaretDown';
-import IconEdit from '@/components/Icon/IconEdit';
-import IconTrash from '@/components/Icon/IconTrash';
-
-import IconEye from '@/components/Icon/IconEye';
-import IconX from '@/components/Icon/IconX';
-
+import IconFile from '@/components/Icon/IconFile';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import { useLocation } from 'react-router-dom';
 
 const rowData = [
     {
@@ -24,6 +12,7 @@ const rowData = [
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
+        productName: 'Inward Door',
         rejectedQuantity: 5,
         recycledQuantity: 3,
         remark: 'Glass glazing fix',
@@ -35,6 +24,7 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
+        productName: 'Fixed Door',
         rejectedQuantity: 2,
         recycledQuantity: 1,
         remark: 'Cutting issue',
@@ -46,6 +36,7 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
+        productName: 'Fixed Window',
         rejectedQuantity: 8,
         recycledQuantity: 5,
         remark: 'Assembling mismatch a/c to documents',
@@ -54,252 +45,130 @@ const rowData = [
     },
 ];
 
-const ColumnChooser = () => {
+const QcCheckDetailPage = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const { id } = location.state || {};
+    console.log('Incoming productId:', id);
+    console.log("Inside view detail page");
+
     useEffect(() => {
-        dispatch(setPageTitle('Quality Control Check'));
-    });
-    const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
+        dispatch(setPageTitle('Qc Check Detail'));
+    }, [dispatch]);
 
-    const [page, setPage] = useState(1);
-    const PAGE_SIZES = [10, 20, 30, 50, 100];
-    const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
-    const [recordsData, setRecordsData] = useState(initialRecords);
+    // Find the product details based on the incoming productId
+    const productDetails = rowData.find(item => item.productId === id);
 
-    const [search, setSearch] = useState('');
-    const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
-        columnAccessor: 'id',
-        direction: 'asc',
-    });
-
-    const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
-
-    const showHideColumns = (col: any, value: any) => {
-        if (hideCols.includes(col)) {
-            setHideCols((col: any) => hideCols.filter((d: any) => d !== col));
-        } else {
-            setHideCols([...hideCols, col]);
-        }
+    const clientDetails = {
+        clientName: 'ABC Corp',
+        projectName: 'Project Alpha',
+        address: '123 Main St',
+        city: 'New York',
+        state: 'NY',
+        gst: '123456789ABC',
+        placeOfSupply: 'New York',
     };
 
-    const cols = [
-        { accessor: 'sl_no', title: 'SL No' },
-        { accessor: 'workOrder', title: 'Work Order' },
-        { accessor: 'jobOrder', title: 'Job Order' },
-        { accessor: 'productId', title: 'Product ID' },
-        { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
-        { accessor: 'recycledQuantity', title: 'Recycled Quantity' },
-        { accessor: 'remark', title: 'Remark' },
-        { accessor: 'createdBy', title: 'Created By' },
-        { accessor: 'timestamp', title: 'Timestamp' },
-        { accessor: 'action', title: 'Actions' },
-    ];
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedQCCheck, setSelectedQCCheck] = useState<any | null>(null);
-
-    const handleViewDetails = (qcCheck: any) => {
-        setSelectedQCCheck(qcCheck);
-        setIsModalOpen(true);
+    const workOrder = {
+        id: 'abc123',
+        createdAt: '2025-01-10 10:30 AM',
+        createdBy: {
+            name: 'Bharath Kumar',
+            role: 'Manager',
+        },
+        plantCode: '123',
+        prodReqDate: '2025-01-21',
+        prodReqrDate: '2025-01-22',
+        deadline: '2025-01-30',
+        issuedBy: 'V Gouda',
+        recievedBy: 'M R Bhaske',
+        status: 'In Progress',
+        bufferStock: 'False',
     };
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Falcon Facade', link: '#', isActive: false },
-        { label: 'QC Check', link: '/falcon-facade/qc-check/view', isActive: true },
+        { label: 'Falcon Facade', link: '/', isActive: false },
+        { label: 'Qc Check', link: '/falcon-facade/qc-check', isActive: false },
+        { label: 'Detail Page', link: '#', isActive: true },
     ];
-
-    useEffect(() => {
-        setPage(1);
-    }, [pageSize]);
-
-    useEffect(() => {
-        const from = (page - 1) * pageSize;
-        const to = from + pageSize;
-        setRecordsData([...initialRecords.slice(from, to)]);
-    }, [page, pageSize, initialRecords]);
-
-    useEffect(() => {
-        setInitialRecords(() => {
-            return rowData.filter((item) => {
-                return (
-                    item.sl_no.toString().includes(search.toLowerCase()) ||
-                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
-                    item.jobOrder.toLowerCase().includes(search.toLowerCase()) ||
-                    item.productId.toLowerCase().includes(search.toLowerCase()) ||
-                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
-                    item.recycledQuantity.toString().includes(search.toLowerCase()) ||
-                    item.remark.toString().includes(search.toLowerCase()) ||
-                    item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-                    item.timestamp.toLowerCase().includes(search.toLowerCase())
-                );
-            });
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [search]);
-
-    useEffect(() => {
-        const data = sortBy(initialRecords, sortStatus.columnAccessor);
-        setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
-        setPage(1);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sortStatus]);
-    console.log("Inside qc-check view");
-
 
     return (
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{
-                    label: 'Add QC Check',
-                    link: '/falcon-facade/qc-check/create',
-                    icon: <IconPlusCircle className="text-4xl" />,
-                }}
-            />
-
-            <div className="panel mt-6">
-                <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">QC Check</h5>
-                    <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
-                        <div className="flex md:items-center md:flex-row flex-col gap-5">
-                            <div className="dropdown">
-                                <Dropdown
-                                    placement={`${isRtl ? 'bottom-end' : 'bottom-start'}`}
-                                    btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
-                                    button={
-                                        <>
-                                            <span className="ltr:mr-1 rtl:ml-1">Columns</span>
-                                            <IconCaretDown className="w-5 h-5" />
-                                        </>
-                                    }
-                                >
-                                    <ul className="!min-w-[140px]">
-                                        {cols.map((col, i) => {
-                                            return (
-                                                <li
-                                                    key={i}
-                                                    className="flex flex-col"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                    }}
-                                                >
-                                                    <div className="flex items-center px-4 py-1">
-                                                        <label className="cursor-pointer mb-0">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={!hideCols.includes(col.accessor)}
-                                                                className="form-checkbox"
-                                                                defaultValue={col.accessor}
-                                                                onChange={(event: any) => {
-                                                                    setHideCols(event.target.value);
-                                                                    showHideColumns(col.accessor, event.target.checked);
-                                                                }}
-                                                            />
-                                                            <span className="ltr:ml-2 rtl:mr-2">{col.title}</span>
-                                                        </label>
-                                                    </div>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </Dropdown>
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/qc-check', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
+                Print Page
+            </button>
+            <div className="p-4 pt-10">
+                {/* Client Details Section */}
+                <div className="panel mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
+                    <h2 className="text-lg font-semibold mb-4">Client & Work Order Details</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-4 rounded-lg shadow">
+                        {/* Left Section: Client Details */}
+                        <div className="bg-yellow-50 p-4 rounded-md shadow">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
+                            <p className="text-sm"><strong>Client Name:</strong> {clientDetails.clientName}</p>
+                            <p className="text-sm"><strong>Project Name:</strong> {clientDetails.projectName}</p>
+                            <p className="text-sm"><strong>Address:</strong> {clientDetails.address}</p>
+                        </div>
+                        {/* Right Section: Work Order Details */}
+                        <div className="bg-blue-50 p-4 rounded-md shadow">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
+                            <p className="text-sm"><strong>Production Request Date:</strong> {workOrder.prodReqDate}</p>
+                            <p className="text-sm"><strong>Production Requirement Date:</strong> {workOrder.prodReqrDate}</p>
+                            <p className="text-sm"><strong>Issued By:</strong> {workOrder.issuedBy}</p>
+                            <p className="text-sm"><strong>Received By:</strong> {workOrder.recievedBy}</p>
+                            <p className="text-sm"><strong>Created At:</strong> {workOrder.createdAt}</p>
+                            <p className="text-sm"><strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})</p>
+                            <p className="text-sm mt-2"><strong>Date:</strong> {workOrder.deadline}</p>
+                            <div className="flex items-center gap-2 mt-2">
+                                <strong>Files:</strong>
+                                <IconFile className="text-gray-600" />
                             </div>
                         </div>
-                        <div className="text-right">
-                            <input type="text" className="form-input" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                        <div className="bg-gray-300 p-4 rounded-md shadow">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Job Order Details</h3>
+                            <p className="text-sm"><strong>Created By:</strong> Bharath (Manager)</p>
+                            <p className="text-sm"><strong>Created At:</strong> 28/02/2025 12:24:23</p>
+                            <p className="text-sm"><strong>Status:</strong>
+                                <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}>
+                                    {workOrder.status}
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div className="datatables">
-                    <DataTable
-                        className="whitespace-nowrap table-hover"
-                        records={rowData}
-                        columns={[
-                            {
-                                accessor: 'sl_no',
-                                title: 'SL No',
-                                sortable: true,
-                                hidden: hideCols.includes('sl_no'),
-                            },
-                            {
-                                accessor: 'workOrder',
-                                title: 'Work Order',
-                                sortable: true,
-                                hidden: hideCols.includes('workOrder'),
-                            },
-                            {
-                                accessor: 'jobOrder',
-                                title: 'Job Order',
-                                sortable: true,
-                                hidden: hideCols.includes('jobOrder'),
-                            },
-                            {
-                                accessor: 'productId',
-                                title: 'Product ID',
-                                sortable: true,
-                                hidden: hideCols.includes('productId'),
-                            },
-                            {
-                                accessor: 'rejectedQuantity',
-                                title: 'Rejected Quantity',
-                                sortable: true,
-                                hidden: hideCols.includes('rejectedQuantity'),
-                            },
-                            {
-                                accessor: 'recycledQuantity',
-                                title: 'Recycled Quantity',
-                                sortable: true,
-                                hidden: hideCols.includes('recycledQuantity'),
-                            },
-                            {
-                                accessor: 'remark',
-                                title: 'Remark',
-                                sortable: true,
-                                hidden: hideCols.includes('remark'),
-                            },
-                            {
-                                accessor: 'createdBy',
-                                title: 'Created By',
-                                sortable: true,
-                                hidden: hideCols.includes('createdBy'),
-                            },
-                            {
-                                accessor: 'timestamp',
-                                title: 'Timestamp',
-                                sortable: true,
-                                hidden: hideCols.includes('timestamp'),
-                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
-                            },
-                            {
-                                accessor: 'action',
-                                title: 'Actions',
-                                render: (rowData) => (
-                                    <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/falcon-facade/qc-check/detail`} state={{ rowData }} className="flex hover:text-info">
-                                            <IconEye className="w-4.5 h-4.5" />
-                                        </NavLink>
-                                    </div>
-                                ),
-                            },
-                        ]}
-                        highlightOnHover
-                        totalRecords={rowData.length}
-                        recordsPerPage={pageSize}
-                        page={page}
-                        onPageChange={(p) => setPage(p)}
-                        recordsPerPageOptions={PAGE_SIZES}
-                        onRecordsPerPageChange={setPageSize}
-                        sortStatus={sortStatus}
-                        onSortStatusChange={setSortStatus}
-                        minHeight={200}
-                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
-                    />
+                <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
+                    <table className="table-auto w-full border-collapse border border-gray-200">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2 text-left border border-gray-300">Sl No.</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Work Order</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Job Order</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Product Name</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Rejected Quantity</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Recycled Quantity</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {productDetails && (
+                                <tr key={productDetails.sl_no}>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.sl_no}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.workOrder}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.jobOrder}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.productName}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.rejectedQuantity}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.recycledQuantity}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{productDetails.remark}</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ColumnChooser;
+export default QcCheckDetailPage;

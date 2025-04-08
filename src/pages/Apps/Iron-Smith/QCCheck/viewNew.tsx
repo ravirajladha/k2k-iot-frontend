@@ -18,17 +18,17 @@ import IconX from '@/components/Icon/IconX';
 
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         sl_no: 1,
         workOrder: 'WO12345',
         jobOrder: 'JO98765',
         productId: 'PRD001',
-        productName: 'Steel Rod',
+        productName: 'Steel Rods',
         rejectedQuantity: 5,
         recycledQuantity: 3,
-        remark:"Failure due to breakage at yeilding point",
+        remark: 'Product failure due to maximum yeilding point',
 
         createdBy: 'Admin',
         timestamp: '2025-01-28T10:25:00Z',
@@ -38,11 +38,10 @@ const rowData = [
         workOrder: 'WO12346',
         jobOrder: 'JO98766',
         productId: 'PRD002',
-        productName: 'Iron Rod',
+        productName: 'Iron Rods',
         rejectedQuantity: 2,
         recycledQuantity: 1,
-        remark:"Product failed at bending test",
-
+        remark: 'Passed maximum bending',
         createdBy: 'User1',
         timestamp: '2025-01-28T11:30:00Z',
     },
@@ -51,10 +50,10 @@ const rowData = [
         workOrder: 'WO12347',
         jobOrder: 'JO98767',
         productId: 'PRD003',
-        productName: 'Cat Iron Rod',
+        productName: 'Cast Iron Rods',
         rejectedQuantity: 8,
         recycledQuantity: 5,
-        remark:"Product failed at maximum tensile force",
+        remark: 'Passed at maximum pressure test',
         createdBy: 'Manager',
         timestamp: '2025-01-28T12:45:00Z',
     },
@@ -82,7 +81,6 @@ const ColumnChooser = () => {
 
     const [hideCols, setHideCols] = useState<any>(['age', 'dob', 'isActive']);
 
-
     const showHideColumns = (col: any, value: any) => {
         if (hideCols.includes(col)) {
             setHideCols((col: any) => hideCols.filter((d: any) => d !== col));
@@ -105,8 +103,6 @@ const ColumnChooser = () => {
         { accessor: 'action', title: 'Actions' },
     ];
 
-
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedQCCheck, setSelectedQCCheck] = useState<any | null>(null); // Selected QC Check Data
 
@@ -117,8 +113,8 @@ const ColumnChooser = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Iron Smith', link: '#', isActive: false },
-        { label: 'QC Check', link: '/iron-smith/qc-check', isActive: true },
+        { label: 'Falcon Facade', link: '#', isActive: false },
+        { label: 'QC Check', link: '/falcon-facade/qc-check', isActive: true },
     ];
 
     useEffect(() => {
@@ -160,12 +156,12 @@ const ColumnChooser = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add QC Check', link: '/iron-smith/qc-check/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add QC Check',
+                    link: '/falcon-facade/qc-check/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
@@ -228,39 +224,57 @@ const ColumnChooser = () => {
                         records={rowData}
                         columns={[
                             {
-                                accessor: 'sl_no', title: 'SL No', sortable: true,
+                                accessor: 'sl_no',
+                                title: 'SL No',
+                                sortable: true,
                                 hidden: hideCols.includes('sl_no'),
                             },
                             {
-                                accessor: 'workOrder', title: 'Work Order', sortable: true,
+                                accessor: 'workOrder',
+                                title: 'Work Order',
+                                sortable: true,
                                 hidden: hideCols.includes('workOrder'),
                             },
                             {
-                                accessor: 'jobOrder', title: 'Job Order', sortable: true,
+                                accessor: 'jobOrder',
+                                title: 'Job Order',
+                                sortable: true,
                                 hidden: hideCols.includes('jobOrder'),
                             },
+                            {
+                                accessor: 'productId',
+                                title: 'Product ID',
+                                sortable: true,
+                                hidden: hideCols.includes('productId'),
+                            },
                             // {
-                            //     accessor: 'productId', title: 'Product ID', sortable: true,
-                            //     hidden: hideCols.includes('productId'),
+                            //     accessor: 'productName',
+                            //     title: 'Product Name',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('productName'),
                             // },
                             {
-                                accessor: 'productName', title: 'Product Name', sortable: true,
-                                hidden: hideCols.includes('productName'),
-                            },
-                            {
-                                accessor: 'rejectedQuantity', title: 'Rejected Quantity', sortable: true,
+                                accessor: 'rejectedQuantity',
+                                title: 'Rejected Quantity',
+                                sortable: true,
                                 hidden: hideCols.includes('rejectedQuantity'),
                             },
                             {
-                                accessor: 'recycledQuantity', title: 'Recycled Quantity', sortable: true,
+                                accessor: 'recycledQuantity',
+                                title: 'Recycled Quantity',
+                                sortable: true,
                                 hidden: hideCols.includes('recycledQuantity'),
                             },
                             {
-                                accessor: 'remark', title: 'Remark', sortable: true,
+                                accessor: 'remark',
+                                title: 'Remark',
+                                sortable: true,
                                 hidden: hideCols.includes('remark'),
                             },
                             {
-                                accessor: 'createdBy', title: 'Created By', sortable: true,
+                                accessor: 'createdBy',
+                                title: 'Created By',
+                                sortable: true,
                                 hidden: hideCols.includes('createdBy'),
                             },
                             {
@@ -268,24 +282,19 @@ const ColumnChooser = () => {
                                 title: 'Timestamp',
                                 sortable: true,
                                 hidden: hideCols.includes('timestamp'),
-                                render: ({ timestamp }) => (
-                                    <div>{new Date(timestamp).toLocaleString()}</div>
-                                ),
+                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
                             },
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                render: (qcCheck) => (
+                                render: (rowData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
                                         {/* <NavLink to={`/edit/${qcCheck.sl_no}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink> */}
-                                        <button
-                                            className="flex hover:text-primary"
-                                            onClick={() => handleViewDetails(qcCheck)}
-                                        >
+                                       <NavLink to={`/iron-smith/qc-check/detail`} state={{ rowData }} className="flex hover:text-info">
                                             <IconEye className="w-4.5 h-4.5" />
-                                        </button>
+                                        </NavLink>
                                     </div>
                                 ),
                             },
@@ -300,17 +309,22 @@ const ColumnChooser = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
                 </div>
-
 
                 {/* QC Check Details Modal */}
                 <Transition appear show={isModalOpen} as={Fragment}>
                     <Dialog as="div" open={isModalOpen} onClose={() => setIsModalOpen(false)} className="relative z-50">
-                        <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
                             <div className="fixed inset-0 bg-black/60" />
                         </Transition.Child>
                         <div className="fixed inset-0 overflow-y-auto">
@@ -375,7 +389,7 @@ const ColumnChooser = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-semibold">Remark:</p>
-                                                        <p className="text-sm">Failure due to yeilding point.</p>
+                                                        <p className="text-sm">Yeilding point breakage.</p>
                                                     </div>
                                                 </div>
                                             ) : (
@@ -393,8 +407,6 @@ const ColumnChooser = () => {
                         </div>
                     </Dialog>
                 </Transition>
-
-
             </div>
         </div>
     );

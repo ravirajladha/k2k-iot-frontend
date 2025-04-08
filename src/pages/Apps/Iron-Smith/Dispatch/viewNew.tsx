@@ -7,38 +7,65 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
 import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconCaretDown from '@/components/Icon/IconCaretDown';
+import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
-        id: 1,
-        client: "Client A",
-        projectCount: 22,
-        created_at: "2025-01-01",
-        status: "In Progress",
-        created_by: "Admin"
+        sl_no: 1,
+        workOrder: 'WO12345',
+        jobOrder: 'JO12345',
+        products: [
+            { productId: 'PRD001',productName:'Steel Rods', quantity: 10 },
+            { productId: 'PRD002',productName:'Iron Rods', quantity: 5 },
+        ],
+        invoiceNo: 'INV123456',
+        rejectedQuantity: '22',
+        vehicleNumber: 'KA-01-MC-1234',
+        createdBy: 'Admin',
+        timestamp: '2025-01-28T10:25:00Z',
     },
     {
-        id: 2,
-        client: "Client B",
-        projectCount: 22,
+        sl_no: 2,
+        workOrder: 'WO12346',
+        jobOrder: 'JO12346',
+        products: [
+            { productId: 'PRD003',productName:'Cast Rods', quantity: 8 },
+            { productId: 'PRD004',productName:'Iron Rods', quantity: 12 },
+        ],
+        invoiceNo: 'INV123457',
+        rejectedQuantity: '22',
 
-        created_at: "2025-01-05",
-        status: "Pending",
-        created_by: "Admin"
+        vehicleNumber: 'KA-02-MC-5678',
+        createdBy: 'User1',
+        timestamp: '2025-01-28T11:30:00Z',
+    },
+    {
+        sl_no: 3,
+        workOrder: 'WO12347',
+        jobOrder: 'JO12347',
+        products: [
+            { productId: 'PRD005',productName:'Iron Rods', quantity: 15 },
+            { productId: 'PRD006',productName:'Steel Rods', quantity: 7 },
+            { productId: 'PRD007',productName:'Cast Iron Rods', quantity: 3 },
+        ],
+        invoiceNo: 'INV123458',
+        rejectedQuantity: '22',
+
+        vehicleNumber: 'KA-03-MC-9101',
+        createdBy: 'Manager',
+        timestamp: '2025-01-28T12:45:00Z',
     },
 ];
 
-
-const Clients = () => {
+const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Clients'));
+        dispatch(setPageTitle('Dispatch'));
     });
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
@@ -76,19 +103,20 @@ const Clients = () => {
     };
 
     const cols = [
-        { accessor: 'id', title: 'ID' },
-        { accessor: 'client', title: 'Client Name' },
-        { accessor: 'status', title: 'Status' },
-        { accessor: 'projectCount', title: 'Projects' },
-
-        { accessor: 'created_by', title: 'Created By' },
-        { accessor: 'created_at', title: 'Created At' },
+        { accessor: 'sl_no', title: 'SL No' },
+        { accessor: 'workOrder', title: 'Work Order' },
+        { accessor: 'jobOrder', title: 'Job Order' },
+        { accessor: 'productId', title: 'Product ID' },
+        { accessor: 'rejectedQuantity', title: 'Rejected Quantity' },
+        { accessor: 'createdBy', title: 'Created By' },
+        { accessor: 'timestamp', title: 'Timestamp' },
+        { accessor: 'action', title: 'Actions' },
     ];
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Helpers', link: '#', isActive: false },
-        { label: 'Clients', link: '/clients', isActive: true },
+        { label: 'Iron Smith', link: '#', isActive: false },
+        { label: 'Dispatch', link: '/iron-smith/dispatch/view', isActive: true },
     ];
 
     useEffect(() => {
@@ -102,17 +130,23 @@ const Clients = () => {
     }, [page, pageSize, initialRecords]);
 
     useEffect(() => {
+        const from = (page - 1) * pageSize;
+        const to = from + pageSize;
+        setRecordsData([...initialRecords.slice(from, to)]);
+    }, [page, pageSize, initialRecords]);
+
+    useEffect(() => {
         setInitialRecords(() => {
             return rowData.filter((item) => {
+                const productMatches = item.products.some((product) => product.productId.toLowerCase().includes(search.toLowerCase()) || product.quantity.toString().includes(search.toLowerCase()));
+
                 return (
-                    item.id.toString().includes(search.toLowerCase()) ||
-                    item.client.toLowerCase().includes(search.toLowerCase()) ||
-                    item.status.toLowerCase().includes(search.toLowerCase()) ||
-                    item.projectCount.toString().includes(search.toLowerCase()) ||
-
-                    item.created_by.toLowerCase().includes(search.toLowerCase()) ||
-                    item.created_at.toLowerCase().includes(search.toLowerCase())
-
+                    item.sl_no.toString().includes(search.toLowerCase()) ||
+                    item.workOrder.toLowerCase().includes(search.toLowerCase()) ||
+                    productMatches ||
+                    item.rejectedQuantity.toString().includes(search.toLowerCase()) ||
+                    item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
+                    item.timestamp.toLowerCase().includes(search.toLowerCase())
                 );
             });
         });
@@ -128,18 +162,11 @@ const Clients = () => {
 
     return (
         <div>
-
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{
-                    label: 'Add Client', link: '/iron-smith/clients/create',
-                    icon: <IconPlusCircle className="text-4xl" />
-                }}
-            />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Add Dispatch', link: '/iron-smith/dispatch/create', icon: <IconPlusCircle className="text-4xl" /> }} />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Clients</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Dispatch</h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">
@@ -193,86 +220,71 @@ const Clients = () => {
                 <div className="datatables">
                     <DataTable
                         className="whitespace-nowrap table-hover"
-                        records={recordsData}
+                        records={rowData}
                         columns={[
-                            { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
                             {
-                                accessor: 'client',
-                                title: 'Client Name',
+                                accessor: 'sl_no',
+                                title: 'SL No',
                                 sortable: true,
-                                hidden: hideCols.includes('client'),
+                                hidden: hideCols.includes('sl_no'),
                             },
                             {
-                                accessor: 'status',
-                                title: 'Status',
+                                accessor: 'workOrder',
+                                title: 'Work Order',
                                 sortable: true,
-                                hidden: hideCols.includes('status'),
-                                render: ({ status }) => (
-                                    <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
-                                    >
-                                        {status}
+                                hidden: hideCols.includes('workOrder'),
+                            },
+                            {
+                                accessor: 'products',
+                                title: 'Products',
+                                sortable: false, // Sorting can be tricky for arrays
+                                hidden: hideCols.includes('products'),
+                                render: ({ products }) => (
+                                    <div>
+                                        {products.map((product, index) => (
+                                            <div key={index}>
+                                                {product.productId} - {product.quantity}
+                                            </div>
+                                        ))}
                                     </div>
                                 ),
                             },
-
-                            // {
-                            //     accessor: 'machine_count',
-                            //     title: 'Machine Count',
-                            //     sortable: false,
-                            //     hidden: hideCols.includes('machine_count'),
-                            //     render: ({ projectCount }) => (
-                            //         <NavLink
-                            //             // to={`/konkrete_klinkers/machines/${encodeURIComponent(factory_name)}`} 
-                            //             to={`/projects`}
-
-                            //             className="text-blue-500 hover:underline"
-                            //         >
-                            //             {projectCount}
-                            //         </NavLink>
-                            //     ),
-                            // },
                             {
-                                accessor: 'created_by',
+                                accessor: 'rejectedQuantity',
+                                title: 'Rejected Quantity',
+                                sortable: true,
+                                hidden: hideCols.includes('rejectedQuantity'),
+                            },
+                            {
+                                accessor: 'createdBy',
                                 title: 'Created By',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-
+                                hidden: hideCols.includes('createdBy'),
                             },
                             {
-                                accessor: 'created_at',
-                                title: 'Created At',
+                                accessor: 'timestamp',
+                                title: 'Timestamp',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-                                render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
+                                hidden: hideCols.includes('timestamp'),
+                                render: ({ timestamp }) => <div>{new Date(timestamp).toLocaleString()}</div>,
                             },
-
                             {
                                 accessor: 'action',
                                 title: 'Actions',
-                                sortable: false,
-                                hidden: hideCols.includes('action'),
-                                render: ({ id }) => (
+                                render: (row) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`#`} className="flex hover:text-info">
+                                        <NavLink to={`/iron-smith/dispatch/edit`} state={{ rowData: row }} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
-                                            <IconEye />
+                                        <NavLink to={`/iron-smith/dispatch/detail`} state={{ rowData: row }} className="flex hover:text-primary">
+                                            <IconEye className="w-4.5 h-4.5" />
                                         </NavLink>
                                     </div>
                                 ),
                             },
                         ]}
                         highlightOnHover
-                        totalRecords={initialRecords.length}
+                        totalRecords={rowData.length}
                         recordsPerPage={pageSize}
                         page={page}
                         onPageChange={(p) => setPage(p)}
@@ -281,15 +293,12 @@ const Clients = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
-
                 </div>
             </div>
         </div>
     );
 };
 
-export default Clients;
+export default ColumnChooser;

@@ -4,12 +4,13 @@ import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Select from 'react-select';
 import Breadcrumbs from "@/pages/Components/Breadcrumbs";
-import IconArrowBackward from '@/components/Icon/IconPlusCircle';
+import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 interface FormData {
     workOrder: string;
     jobOrder: string;
     productId: string;
     rejectedQuantity: string;
+    recycledQuantity: string;
     rejectionReason: string;
 }
 
@@ -26,6 +27,7 @@ const QcCheckForm: React.FC = () => {
         jobOrder: '',
         productId: '',
         rejectedQuantity: '',
+        recycledQuantity: '',
         rejectionReason: '',
     });
 
@@ -37,7 +39,7 @@ const QcCheckForm: React.FC = () => {
         "WO-003": { workOrder: "WO-003", jobOrders: ["JO-3001", "JO-3002"] },
     };
 
-    const products = ['Product A - PR1', 'Product B - PR2', 'Product C PR3'];
+    const products = ['Steel Rod', 'Iron Rod', 'Cast Iron Rod'];
     const handleJobOrderChange = (selectedOption: any) => {
         if (!selectedOption) return;
         const selectedJobOrder = selectedOption.value;
@@ -86,8 +88,8 @@ const QcCheckForm: React.FC = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Falcon Facade', link: '#', isActive: false },
-        { label: 'QC Check', link: '/falcon-facade/qc-check', isActive: true },
+        { label: 'Iron Smith', link: '#', isActive: false },
+        { label: 'QC Check', link: '/iron-smith/qc-check', isActive: true },
     ];
     return (
 
@@ -95,7 +97,7 @@ const QcCheckForm: React.FC = () => {
 
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/falcon-facade/qc-check', icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/iron-smith/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }}
             />
 
             <div className="panel">
@@ -169,18 +171,20 @@ const QcCheckForm: React.FC = () => {
                                 className="form-input"
                                 value={formData.rejectedQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
                         <div>
-                            <label htmlFor="rejectedQuantity">Recycled Quantity</label>
+                            <label htmlFor="recycledQuantity">Recycled Quantity</label>
                             <input
-                                id="rejectedQuantity"
-                                name="rejectedQuantity"
+                                id="recycledQuantity"
+                                name="recycledQuantity"
                                 type="number"
                                 placeholder="Enter Recycled Quantity"
                                 className="form-input"
-                                value={formData.rejectedQuantity}
+                                value={formData.recycledQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
                         {/* Rejection Reason */}

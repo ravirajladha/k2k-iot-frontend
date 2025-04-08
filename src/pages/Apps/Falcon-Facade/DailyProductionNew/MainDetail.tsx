@@ -1,13 +1,13 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from '@headlessui/react';
 import IconEye from '@/components/Icon/IconEye';
 
 import { DataTable } from 'mantine-datatable';
 import AnimateHeight from 'react-animate-height';
 import IconFile from '@/components/Icon/IconFile';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 
 const WorkOrderPage = () => {
@@ -26,7 +26,6 @@ const WorkOrderPage = () => {
         setShowModal(false);
     };
 
-
     useEffect(() => {
         dispatch(setPageTitle('Production Detail'));
     }, [dispatch]);
@@ -41,15 +40,14 @@ const WorkOrderPage = () => {
         placeOfSupply: 'New York',
     };
     const productDetails = {
-        name: 'Product 1',
-        system: 'System 1',
-        productSystem: "Product System 1",
-
+        name: 'Fixed Window',
+        system: 'System A',
+        productSystem: 'Product System A',
     };
 
     const products = [
         {
-            description: 'Product A',
+            description: 'Inward Door',
             materialCode: 'M001',
             uom: 'Nos',
             requiredQuantity: 100,
@@ -59,18 +57,17 @@ const WorkOrderPage = () => {
             plantCode: 'P1',
             deliveryDate: '2025-01-20',
             dimensions: [
-                { name: "A", value: "8cm" },
-                { name: "B", value: "10cm" },
-                { name: "C", value: "12cm" },
+                { name: 'A', value: '8cm' },
+                { name: 'B', value: '10cm' },
+                { name: 'C', value: '12cm' },
             ],
         },
-
     ];
 
     const jobOrders = [
         {
             id: 1,
-            productName: 'Product A',
+            productName: 'Inward Door',
             uom: 'Nos',
             poQuantity: 100,
             plannedQuantity: 90,
@@ -96,11 +93,11 @@ const WorkOrderPage = () => {
                     recycledQuantity: 3,
                 },
             ],
-            machineAssigned: ["Machine A - Bending", "Machine B - Cutting", "Machine C - Folding"],
+            machineAssigned: ['Machine A - Bending', 'Machine B - Cutting', 'Machine C - Folding'],
         },
         {
             id: 2,
-            productName: 'Product B',
+            productName: 'Outward Door',
             uom: 'Nos',
             poQuantity: 200,
             plannedQuantity: 180,
@@ -126,10 +123,8 @@ const WorkOrderPage = () => {
                     recycledQuantity: 3,
                 },
             ],
-            machineAssigned: ["Machine A - Bending", "Machine B - Cutting", "Machine C - Folding"],
-
+            machineAssigned: ['Machine A - Bending', 'Machine B - Cutting', 'Machine C - Folding'],
         },
-
     ];
 
     const workOrder = {
@@ -142,7 +137,7 @@ const WorkOrderPage = () => {
         deadline: '2025-01-20',
         status: 'In Progress',
         // priority: 'High',
-        bufferStock: "False",
+        bufferStock: 'False',
     };
 
     const [search, setSearch] = useState('');
@@ -153,39 +148,44 @@ const WorkOrderPage = () => {
 
     const productionData = [
         {
-            serialNumber: "P001",
+            serialNumber: 'P001',
+            productName: 'Fixed Window',
             quantity: 100,
-            dateTime: "2025-02-25 10:30 AM",
-            createdBy: "Bharath",
-            dueDate: "2025-03-01",
+            dateTime: '2025-02-25 10:30 AM',
+            createdBy: 'Bharath',
+            dueDate: '2025-03-01',
         },
         {
-            serialNumber: "P002",
+            serialNumber: 'P002',
+            productName: 'Fixed Door',
             quantity: 250,
-            dateTime: "2025-02-24 02:45 PM",
-            createdBy: "Rutu",
-            dueDate: "2025-02-28",
+            dateTime: '2025-02-24 02:45 PM',
+            createdBy: 'Rutu',
+            dueDate: '2025-02-28',
         },
         {
-            serialNumber: "P003",
+            serialNumber: 'P003',
+            productName: 'Inward Door',
             quantity: 75,
-            dateTime: "2025-02-23 08:15 AM",
-            createdBy: "Kunal",
-            dueDate: "2025-03-02",
+            dateTime: '2025-02-23 08:15 AM',
+            createdBy: 'Kunal',
+            dueDate: '2025-03-02',
         },
         {
-            serialNumber: "P004",
+            serialNumber: 'P004',
+            productName: 'Facade',
             quantity: 320,
-            dateTime: "2025-02-22 04:20 PM",
-            createdBy: "Emily Johnson",
-            dueDate: "2025-02-29",
+            dateTime: '2025-02-22 04:20 PM',
+            createdBy: 'Emily Johnson',
+            dueDate: '2025-02-29',
         },
         {
-            serialNumber: "P005",
+            serialNumber: 'P005',
+            productName: 'Fixed Window',
             quantity: 150,
-            dateTime: "2025-02-21 01:10 PM",
-            createdBy: "Ravi",
-            dueDate: "2025-03-03",
+            dateTime: '2025-02-21 01:10 PM',
+            createdBy: 'Ravi',
+            dueDate: '2025-03-03',
         },
     ];
 
@@ -234,58 +234,53 @@ const WorkOrderPage = () => {
 
     const qualityCheckData = [
         {
-            serialNumber: "QC001",
+            serialNumber: 'QC001',
             rejectedQuantity: 10,
-            remarks: "Defective material",
-            createdBy: "Ravi",
-            timestamp: "2025-02-25 10:30 AM",
+            remarks: 'Defective material',
+            createdBy: 'Ravi',
+            timestamp: '2025-02-25 10:30 AM',
             poQuantity: 500,
             achievedTillNow: 450,
         },
         {
-            serialNumber: "QC002",
+            serialNumber: 'QC002',
             rejectedQuantity: 5,
-            remarks: "Minor scratches",
-            createdBy: "Raj",
-            timestamp: "2025-02-24 02:45 PM",
+            remarks: 'Minor scratches',
+            createdBy: 'Raj',
+            timestamp: '2025-02-24 02:45 PM',
             poQuantity: 600,
             achievedTillNow: 590,
         },
         {
-            serialNumber: "QC003",
+            serialNumber: 'QC003',
             rejectedQuantity: 20,
-            remarks: "Incorrect dimensions",
-            createdBy: "Ashmin",
-            timestamp: "2025-02-23 08:15 AM",
+            remarks: 'Incorrect dimensions',
+            createdBy: 'Ashmin',
+            timestamp: '2025-02-23 08:15 AM',
             poQuantity: 700,
             achievedTillNow: 670,
         },
         {
-            serialNumber: "QC004",
+            serialNumber: 'QC004',
             rejectedQuantity: 15,
-            remarks: "Improper alignment",
-            createdBy: "Kaveri",
-            timestamp: "2025-02-22 04:20 PM",
+            remarks: 'Improper alignment',
+            createdBy: 'Kaveri',
+            timestamp: '2025-02-22 04:20 PM',
             poQuantity: 400,
             achievedTillNow: 380,
         },
         {
-            serialNumber: "QC005",
+            serialNumber: 'QC005',
             rejectedQuantity: 8,
-            remarks: "Color mismatch",
-            createdBy: "User",
-            timestamp: "2025-02-21 01:10 PM",
+            remarks: 'Color mismatch',
+            createdBy: 'User',
+            timestamp: '2025-02-21 01:10 PM',
             poQuantity: 550,
             achievedTillNow: 540,
         },
     ];
 
-
-
-    const filteredData = productionData.filter(
-        (item) =>
-            item.serialNumber.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredData = productionData.filter((item) => item.serialNumber.toLowerCase().includes(search.toLowerCase()));
 
     const [expandedJobOrders, setExpandedJobOrders] = useState(jobOrders.map((job) => job.id));
 
@@ -300,15 +295,13 @@ const WorkOrderPage = () => {
 
     const filteredQCCheckData = qualityCheckData.filter(
         (item) =>
-            item.serialNumber.toLowerCase().includes(search.toLowerCase()) ||
-            item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-            item.remarks.toLowerCase().includes(search.toLowerCase())
+            item.serialNumber.toLowerCase().includes(search.toLowerCase()) || item.createdBy.toLowerCase().includes(search.toLowerCase()) || item.remarks.toLowerCase().includes(search.toLowerCase())
     );
 
     const downtimeDetails = [
-        { serialNumber: 1, description: "Machine maintenance", numberOfHours: 4, remarks: "Scheduled maintenance" },
-        { serialNumber: 2, description: "Power outage", numberOfHours: 2, remarks: "Unexpected" },
-        { serialNumber: 3, description: "Operator error", numberOfHours: 1.5, remarks: "Resolved" },
+        { serialNumber: 1, description: 'Machine maintenance', numberOfHours: 4, remarks: 'Scheduled maintenance' },
+        { serialNumber: 2, description: 'Power outage', numberOfHours: 2, remarks: 'Unexpected' },
+        { serialNumber: 3, description: 'Operator error', numberOfHours: 1.5, remarks: 'Resolved' },
     ];
 
     const breadcrumbItems = [
@@ -319,16 +312,9 @@ const WorkOrderPage = () => {
     ];
 
     return (
-
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/falcon-facade/productionNew', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
-            <button
-                onClick={() => window.print()}
-                className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right"
-            >
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/productionNew', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
             <div className="p-4 pt-10">
@@ -338,23 +324,35 @@ const WorkOrderPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-4 rounded-lg shadow">
                         <div className="bg-blue-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
-                            <p className="text-sm"><strong>Work Order Number:</strong> {workOrder.id}</p>
-                            <p className="text-sm"><strong>Job Order Number:</strong> {workOrder.id}</p>
+                            <p className="text-sm">
+                                <strong>Work Order Number:</strong> {workOrder.id}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Job Order Number:</strong> {workOrder.id}
+                            </p>
 
-                            <p className="text-sm"><strong>Created At:</strong> {workOrder.createdAt}</p>
-                            <p className="text-sm"><strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})</p>
+                            <p className="text-sm">
+                                <strong>Created At:</strong> {workOrder.createdAt}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})
+                            </p>
 
                             <div className="flex items-center gap-2 mt-2">
                                 <strong>Files:</strong>
                                 <IconFile className="text-gray-600" />
                             </div>
 
-                            <p className="text-sm mt-2"><strong>Dates:</strong> {workOrder.deadline}</p>
+                            <p className="text-sm mt-2">
+                                <strong>Dates:</strong> {workOrder.deadline}
+                            </p>
 
-                            <p className="text-sm"><strong>Status:</strong>
-                                <span className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
-                    ${workOrder.status === 'In Progress' ? 'text-blue-500' :
-                                        workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}>
+                            <p className="text-sm">
+                                <strong>Status:</strong>
+                                <span
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                    ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
+                                >
                                     {workOrder.status}
                                 </span>
                             </p>
@@ -362,24 +360,44 @@ const WorkOrderPage = () => {
 
                         <div className="bg-yellow-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Product Details</h3>
-                            <p className="text-sm"><strong>Product Name:</strong> {productDetails.name}</p>
+                            <p className="text-sm">
+                                <strong>Product Name:</strong> {productDetails.name}
+                            </p>
 
-                            <p className="text-sm"><strong>Master System:</strong>{productDetails.system}</p>
+                            <p className="text-sm">
+                                <strong>Master System:</strong>
+                                {productDetails.system}
+                            </p>
 
-                            <p className="text-sm"><strong>Product System:</strong> {productDetails.productSystem}</p>
+                            <p className="text-sm">
+                                <strong>Product System:</strong> {productDetails.productSystem}
+                            </p>
 
-                            <p className="text-sm"><strong>Project Name:</strong> </p>
-                            <p className="text-sm"><strong>Deadline Range:</strong> 16-02-2025 to 21-02-2025</p>
-                            <p className="text-sm"><strong>Schedule Date:</strong> 11-02-2025</p>
+                            <p className="text-sm">
+                                <strong>Project Name:</strong> Project Phoenix{' '}
+                            </p>
+                            <p className="text-sm">
+                                <strong>Deadline Range:</strong> 16-02-2025 to 21-02-2025
+                            </p>
+                            <p className="text-sm">
+                                <strong>Schedule Date:</strong> 11-02-2025
+                            </p>
                         </div>
 
                         <div className="bg-gray-300 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Semi Finished Details</h3>
-                            <p className="text-sm"><strong>SF ID:</strong> SF1</p>
-                            <p className="text-sm"><strong>Created By:</strong> Bharath (Manager)</p>
-                            <p className="text-sm"><strong>Created At:</strong> 28/02/2025 12:24:23</p>
-                            <p className="text-sm"><strong>Status:</strong> Started</p>
-
+                            <p className="text-sm">
+                                <strong>SF ID:</strong> SF1
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created By:</strong> Bharath (Manager)
+                            </p>
+                            <p className="text-sm">
+                                <strong>Created At:</strong> 28/02/2025 12:24:23
+                            </p>
+                            <p className="text-sm">
+                                <strong>Status:</strong> Started
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -413,7 +431,6 @@ const WorkOrderPage = () => {
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Plant Code</th> */}
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Delivery Date</th> */}
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Actions</th> */}
-
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
@@ -440,7 +457,6 @@ const WorkOrderPage = () => {
                             </tbody>
                         </table>
                     </div>
-
 
                     {/* Modal for Dimensions */}
                     {/* MODAL USING HEADLESS UI */}
@@ -483,11 +499,7 @@ const WorkOrderPage = () => {
                                             )}
                                         </div>
                                         <div className="mt-5 flex justify-end">
-                                            <button
-                                                type="button"
-                                                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                                                onClick={closeModal}
-                                            >
+                                            <button type="button" className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600" onClick={closeModal}>
                                                 Close
                                             </button>
                                         </div>
@@ -502,13 +514,7 @@ const WorkOrderPage = () => {
                 <div className="panel bg-slate-50">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Production Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Serial Number or Product ID..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
+                        <input type="text" className="form-input w-auto" placeholder="Search by Serial Number or Product ID..." value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="datatables">
                         <DataTable
@@ -517,6 +523,7 @@ const WorkOrderPage = () => {
                             records={filteredData}
                             columns={[
                                 { accessor: 'serialNumber', title: 'Sl No' }, // Serial Number
+                                { accessor: 'productName', title: 'Product Name' }, // Serial Number
                                 { accessor: 'quantity', title: 'Quantity' }, // Quantity Produced
                                 { accessor: 'dateTime', title: 'Date & Time' }, // Production Date
                                 { accessor: 'createdBy', title: 'Created By' }, // User who created the entry
@@ -529,9 +536,7 @@ const WorkOrderPage = () => {
                             recordsPerPageOptions={PAGE_SIZES}
                             onRecordsPerPageChange={setPageSize}
                             minHeight={200}
-                            paginationText={({ from, to, totalRecords }) =>
-                                `Showing ${from} to ${to} of ${totalRecords} entries`
-                            }
+                            paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                         />
                     </div>
                 </div>
@@ -540,13 +545,7 @@ const WorkOrderPage = () => {
                 <div className="panel bg-slate-50">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Quality Check Details</h5>
-                        <input
-                            type="text"
-                            className="form-input w-auto"
-                            placeholder="Search by Serial Number, Created By, or Remarks..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
+                        <input type="text" className="form-input w-auto" placeholder="Search by Serial Number, Created By, or Remarks..." value={search} onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="datatables">
                         <DataTable
@@ -557,14 +556,14 @@ const WorkOrderPage = () => {
                                 balance: item.poQuantity - item.achievedTillNow - item.rejectedQuantity, // Calculating balance dynamically
                             }))}
                             columns={[
-                                { accessor: "serialNumber", title: "Sl No" }, // Serial Number
-                                { accessor: "rejectedQuantity", title: "Rejected Qty" }, // Rejected Quantity
-                                { accessor: "remarks", title: "Remarks" }, // Remarks
-                                { accessor: "createdBy", title: "Created By" }, // User who created the entry
-                                { accessor: "timestamp", title: "Timestamp" }, // Quality Check Date & Time
-                                { accessor: "poQuantity", title: "PO Quantity" }, // Purchase Order Quantity
-                                { accessor: "achievedTillNow", title: "Achieved Till Now" }, // Quantity Achieved So Far
-                                { accessor: "balance", title: "Balance" }, // Balance Calculation
+                                { accessor: 'serialNumber', title: 'Sl No' }, // Serial Number
+                                { accessor: 'rejectedQuantity', title: 'Rejected Qty' }, // Rejected Quantity
+                                { accessor: 'remarks', title: 'Remarks' }, // Remarks
+                                { accessor: 'createdBy', title: 'Created By' }, // User who created the entry
+                                { accessor: 'timestamp', title: 'Timestamp' }, // Quality Check Date & Time
+                                { accessor: 'poQuantity', title: 'PO Quantity' }, // Purchase Order Quantity
+                                { accessor: 'achievedTillNow', title: 'Achieved Till Now' }, // Quantity Achieved So Far
+                                { accessor: 'balance', title: 'Balance' }, // Balance Calculation
                             ]}
                             totalRecords={filteredData.length}
                             recordsPerPage={pageSize}
@@ -573,17 +572,12 @@ const WorkOrderPage = () => {
                             recordsPerPageOptions={PAGE_SIZES}
                             onRecordsPerPageChange={setPageSize}
                             minHeight={200}
-                            paginationText={({ from, to, totalRecords }) =>
-                                `Showing ${from} to ${to} of ${totalRecords} entries`
-                            }
+                            paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                         />
                     </div>
                 </div>
-
-
             </div>
         </div>
-
     );
 };
 

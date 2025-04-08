@@ -2,13 +2,12 @@ const basePath = '/falcon-facade';
 
 import {
     QCCheckView,
-    QCCheckViewNew,  //New
-    QCCheckViewDetail,  //New
+    QCCheckViewNew, //New
+    QCCheckViewDetail, //New
     QCCheckCreate,
     WorkOrderView,
     WorkOrderCreate,
     WorkOrderDetail,
-
     ProductView,
     ProductCreate,
     HelperClients,
@@ -23,12 +22,11 @@ import {
     HelperMachineCreate,
     // ProductionPlanningView,
     // ProductionPlanningCreate,
-
     DailyProductionDetail,
     DailyProductionView,
     DailyProductionCreate,
     DailyProductionNewView,
-    Systems, 
+    Systems,
     SystemsCreate,
     ProductSystems,
     ProductSystemCreate,
@@ -50,16 +48,16 @@ import {
 // export { default as DailyProductionCreate } from './DailyProduction/create';
 export const falconFacadeRoutes = [
     // Work Order Routes
-    {
-        path: `${basePath}/qc-check`,
-        element: <QCCheckView />,
-        layout: 'admin',
-    },
     // {
     //     path: `${basePath}/qc-check`,
-    //     element: <QCCheckViewNew />,
+    //     element: <QCCheckView />,
     //     layout: 'admin',
     // },
+    {
+        path: `${basePath}/qc-check`,
+        element: <QCCheckViewNew />,
+        layout: 'admin',
+    },
     {
         path: `${basePath}/qc-check/detail`,
         element: <QCCheckViewDetail />,
@@ -131,11 +129,9 @@ export const falconFacadeRoutes = [
     },
     {
         path: `${basePath}/systems/create`,
-        element: <SystemsCreate/>,
+        element: <SystemsCreate />,
         layout: 'admin',
     },
-
-
 
     // Production Planning Routes
     {
@@ -153,7 +149,7 @@ export const falconFacadeRoutes = [
         element: <DailyProductionDetail />,
         layout: 'admin',
     },
-    
+
     {
         path: `${basePath}/production-planning/create`,
         element: <DailyProductionCreate />,

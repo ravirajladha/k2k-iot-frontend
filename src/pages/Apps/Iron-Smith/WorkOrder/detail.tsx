@@ -43,7 +43,7 @@ const WorkOrderPage = () => {
 
     const products = [
         {
-            description: 'Product A',
+            description: 'Steel Rod',
             materialCode: 'M001',
             uom: 'Nos',
             requiredQuantity: 100,
@@ -61,7 +61,7 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            description: 'Product B',
+            description: 'Cast Iron Rod',
             materialCode: 'M002',
             uom: 'Nos',
             barMark: "BM111",
@@ -74,7 +74,7 @@ const WorkOrderPage = () => {
             deliveryDate: '2025-01-22',
         },
         {
-            description: 'Product C',
+            description: 'Iron Rod',
             materialCode: 'M003',
             uom: 'Nos',
             barMark: "BM114",
@@ -93,7 +93,7 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            description: 'Product D',
+            description: 'Mixed Iron Rod',
             materialCode: 'M004',
             uom: 'Nos',
             barMark: "BM112",
@@ -112,7 +112,7 @@ const WorkOrderPage = () => {
             ],
         },
         {
-            description: 'Product E',
+            description: 'Steel',
             materialCode: 'M005',
             uom: 'Nos',
             requiredQuantity: 180,
@@ -136,7 +136,7 @@ const WorkOrderPage = () => {
     const jobOrders = [
         {
             id: 1,
-            productName: 'Product A',
+            productName: 'Steel Rods',
             uom: 'Nos',
          
             poQuantity: 100,
@@ -167,7 +167,7 @@ const WorkOrderPage = () => {
         },
         {
             id: 2,
-            productName: 'Product B',
+            productName: 'Iron Rods',
             uom: 'Nos',
         
             poQuantity: 200,
@@ -270,7 +270,7 @@ const WorkOrderPage = () => {
             dispatchId: 'D001',
             products: [
                 {
-                    productName: 'Bricks A',
+                    productName: 'Steel Rod',
                     quantity: 500,
                     uom: 'Nos',
                     rate: 10,
@@ -280,7 +280,7 @@ const WorkOrderPage = () => {
                     docketNumber: 'DOC001',
                 },
                 {
-                    productName: 'Bricks B',
+                    productName: 'Cast Iron Rod',
                     quantity: 300,
                     uom: 'Nos',
                     rate: 12,
@@ -295,7 +295,7 @@ const WorkOrderPage = () => {
             dispatchId: 'D002',
             products: [
                 {
-                    productName: 'Bricks C',
+                    productName: 'Iron Rod',
                     quantity: 400,
                     uom: 'Nos',
                     rate: 15,
@@ -342,7 +342,7 @@ const WorkOrderPage = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '/', isActive: false },
+        { label: 'Iron Smith', link: '/', isActive: false },
         { label: 'Work Order', link: '/konkrete-klinkers/work-order/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];

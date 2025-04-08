@@ -6,11 +6,11 @@ import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import IconBell from '@/components/Icon/IconBell';
 import IconLock from '@/components/Icon/IconLock';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-import DowntimeReasonModal from "./DowntimeReasonCreationModal";
-import { FaPencilAlt } from "react-icons/fa";
-import Table from "./Table";
+import DowntimeReasonModal from './DowntimeReasonCreationModal';
+import { FaPencilAlt } from 'react-icons/fa';
+import Table from './Table';
 
 const Tabs = () => {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Tabs = () => {
             setTabs([...tabs, name]);
         }
     };
-    
+
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
@@ -45,9 +45,9 @@ const Tabs = () => {
             plantCode: 'P1',
             deliveryDate: '2025-01-20',
             dimensions: [
-                { name: "A", value: "8cm" },
-                { name: "B", value: "10cm" },
-                { name: "C", value: "12cm" },
+                { name: 'A', value: '8cm' },
+                { name: 'B', value: '10cm' },
+                { name: 'C', value: '12cm' },
             ],
         },
         {
@@ -72,10 +72,10 @@ const Tabs = () => {
             plantCode: 'P3',
             deliveryDate: '2025-01-25',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
         },
         {
@@ -89,10 +89,10 @@ const Tabs = () => {
             plantCode: 'P4',
             deliveryDate: '2025-01-28',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
         },
         {
@@ -106,12 +106,12 @@ const Tabs = () => {
             plantCode: 'P5',
             deliveryDate: '2025-01-30',
             dimensions: [
-                { name: "A", value: "15cm" },
-                { name: "B", value: "17cm" },
-                { name: "C", value: "19cm" },
-                { name: "D", value: "20cm" },
+                { name: 'A', value: '15cm' },
+                { name: 'B', value: '17cm' },
+                { name: 'C', value: '19cm' },
+                { name: 'D', value: '20cm' },
             ],
-        }
+        },
     ];
 
     const [showDowntimeReasonModal, setShowDowntimeReasonModal] = useState(false);
@@ -120,11 +120,11 @@ const Tabs = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{
-                    label: 'Back',
-                    link: '/falcon-facade/job-order',
-                    icon: <IconArrowBackward className="text-4xl" />,
-                }}
+                // addButton={{
+                //     label: 'Back',
+                //     link: '/falcon-facade/job-order',
+                //     icon: <IconArrowBackward className="text-4xl" />,
+                // }}
             />
 
             <div className="space-y-8 pt-5">
@@ -134,11 +134,11 @@ const Tabs = () => {
                     </div>
                     <span className="ltr:mr-3 rtl:ml-3">Note: </span>
                     <a href="#" target="_blank" className="block hover:underline" rel="noreferrer">
-                        The steps included in the production comes from the post selection job order. For now the job order selection is also given for future change. But the job order could be automatically fetched from the job orders page as this page is connected to it. Increase of production quantities and qc check modal has been provided.
+                        The steps included in the production comes from the post selection job order. For now the job order selection is also given for future change. But the job order could be
+                        automatically fetched from the job orders page as this page is connected to it. Increase of production quantities and qc check modal has been provided.
                     </a>
                 </div>
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-1">
-
                     {/* Icon Pills */}
                     <div className="panel" id="icon_pills">
                         <div className="mb-5 flex items-center justify-between">
@@ -178,7 +178,6 @@ const Tabs = () => {
                                                 className={`${selected ? 'bg-warning text-white !outline-none' : ''}
                                                     before:inline-block' -mb-[1px] flex items-center rounded p-3.5 py-2 hover:bg-warning hover:text-white`}
                                             >
-
                                                 Machining
                                             </button>
                                         )}
@@ -209,8 +208,6 @@ Assembling
                                     </Tab>
                                 </Tab.List>
                                 <Tab.Panels>
-
-
                                     <Tab.Panel>
                                         <div>
                                             <div className="overflow-x-auto w-full">
@@ -219,7 +216,10 @@ Assembling
                                         </div>
                                     </Tab.Panel>
 
-                                    <Tab.Panel>At what moment the process are going to change in the module. Scene: a product once started with the cutting process , should be activated in the machining state.</Tab.Panel>
+                                    <Tab.Panel>
+                                        At what moment the process are going to change in the module. Scene: a product once started with the cutting process , should be activated in the machining
+                                        state.
+                                    </Tab.Panel>
 
                                     <Tab.Panel>
                                         <div className="pt-5">
@@ -234,13 +234,9 @@ Assembling
                                 </Tab.Panels>
                             </Tab.Group>
                         </div>
-
                     </div>
-
                 </div>
                 <DowntimeReasonModal isOpen={showDowntimeReasonModal} onClose={() => setShowDowntimeReasonModal(false)} />
-
-
             </div>
         </div>
     );

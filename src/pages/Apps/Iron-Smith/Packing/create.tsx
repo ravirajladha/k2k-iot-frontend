@@ -18,7 +18,7 @@ const PackingCreation = () => {
 
     const [isScannerOpen, setIsScannerOpen] = useState(false);
 
-    const products = ['Product A', 'Product B', 'Product C'];
+    const products = ['Iron Rod', 'Steel Rod', 'Cast Iron Rod'];
     const workOrders = ["Work Order A", "Work Order B", "Work Order C"];
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -57,8 +57,8 @@ const PackingCreation = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'Packing', link: '/konkrete-klinkers/packing/view', isActive: false },
+        { label: 'Iron Smith', link: '/', isActive: false },
+        { label: 'Packing', link: '/iron-smith/packing/view', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
 
@@ -68,7 +68,7 @@ const PackingCreation = () => {
                 items={breadcrumbItems}
                 addButton={{
                     label: 'Back',
-                    link: '/konkrete-klinkers/job-order/view',
+                    link: '/iron-smith/packing/view',
                     icon: <IconArrowBackward className="text-4xl" />,
                 }}
             />
@@ -126,6 +126,7 @@ const PackingCreation = () => {
                                 className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
                                 value={formData.productQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
 
@@ -142,6 +143,7 @@ const PackingCreation = () => {
                                 className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
                                 value={formData.rejectedQuantity}
                                 onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
 

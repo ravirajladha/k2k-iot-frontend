@@ -84,7 +84,7 @@ const ClientCreation = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/clients', icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/iron-smith/clients', icon: <IconArrowBackward className="text-4xl" /> }}
                 />
             <div className="panel">
                 <div className="mb-5">

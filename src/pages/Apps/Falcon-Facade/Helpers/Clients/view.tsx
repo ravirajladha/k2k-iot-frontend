@@ -132,7 +132,7 @@ const Clients = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Client', link: '/clients/create',
+                    label: 'Add Client', link: '/falcon-facade/clients/create',
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />

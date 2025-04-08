@@ -10,7 +10,9 @@ const Notification = lazy(() => import('@/pages/Apps/Notifications'));
 const basePath = '/iron-smith';
 
 import {
-    QCCheckView,
+    // QCCheckView,
+    QCCheckViewNew,
+    QCCheckViewDetail,
     QCCheckCreate,
     WorkOrderView,
     WorkOrderCreate,
@@ -42,9 +44,14 @@ import {
 
     InventoryView,
 
-    PackingView,
+    // PackingView,
+    PackingViewNew, ///New
+    PackingViewDetail, ///New
     PackingCreate,
-    DispatchView,
+    // DispatchView,
+    DispatchViewNew,  ///New
+    DispatchViewDetail,  ///New
+    DispatchEditDetail,  ///New
     DispatchCreate,
     DipatchInvoiceView,
 
@@ -55,7 +62,6 @@ import { workerData } from 'worker_threads';
 
 // User-specific components
 const Users = lazy(() => import('@/pages/Apps/Users'));
-
 const UsersProfile = lazy(() => import('@/pages/Apps/Users/Profile'));
 const UsersAccountSettings = lazy(() => import('@/pages/Apps/Users/AccountSetting'));
 
@@ -160,9 +166,19 @@ export const ironSmithRoutes = [
     },
     
     // QC Check
+    // {
+    //     path: `${basePath}/qc-check/view`,
+    //     element: <QCCheckView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/qc-check/view`,
-        element: <QCCheckView />,
+        element: <QCCheckViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/qc-check/detail`,
+        element: <QCCheckViewDetail />,
         layout: 'admin',
     },
     {
@@ -196,9 +212,19 @@ export const ironSmithRoutes = [
     },
     
     // Packing
+    // {
+    //     path: `${basePath}/packing/view`,
+    //     element: <PackingView />,
+    //     layout: 'admin',
+    // },
     {
-        path: `${basePath}/packing/view`,
-        element: <PackingView />,
+        path: `${basePath}/packing/view`,   ///New
+        element: <PackingViewNew />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/packing/detail`,   ///New
+        element: <PackingViewDetail />,
         layout: 'admin',
     },
     {
@@ -208,9 +234,24 @@ export const ironSmithRoutes = [
     },
     
     // Dispatch
+    // {
+    //     path: `${basePath}/dispatch/view`,
+    //     element: <DispatchView />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/dispatch/view`,
-        element: <DispatchView />,
+        element: <DispatchViewNew/>,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/detail`,
+        element: <DispatchViewDetail/>,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/dispatch/edit`,
+        element: <DispatchEditDetail/>,
         layout: 'admin',
     },
     {

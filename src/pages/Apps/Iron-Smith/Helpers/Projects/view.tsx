@@ -14,14 +14,14 @@ import Breadcrumbs from "@/pages/Components/Breadcrumbs";
 const rowData = [
     {
         id: 1,
-        client: "Client A",
+        client: "Project A",
         created_at: "2025-01-01",
         status: "In Progress",
         created_by: "Admin"
     },
     {
         id: 2,
-        client: "Client B",
+        client: "Project B",
         created_at: "2025-01-05",
         status: "Pending",
         created_by: "Admin"
@@ -122,7 +122,7 @@ const Projects = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Project', link: '/projects/create',
+                    label: 'Add Project', link: '/iron-smith/projects/create',
                     icon: <IconPlusCircle className="text-4xl" />
                 }}
             />

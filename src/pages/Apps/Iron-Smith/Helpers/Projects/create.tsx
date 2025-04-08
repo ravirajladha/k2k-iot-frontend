@@ -6,6 +6,8 @@ import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Select from 'react-select';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+
 
 interface ClientOption {
   value: string;
@@ -91,9 +93,18 @@ const ProjectCreation = () => {
       outline: 'none',
     }),
   };
+  const breadcrumbItems = [
+    { label: 'Home', link: '/', isActive: false },
+    { label: 'Projects', link: '/projects', isActive: false },
+    { label: 'Create', link: '#', isActive: true },
+];
 
   return (
     <div>
+       <Breadcrumbs
+                items={breadcrumbItems}
+                addButton={{ label: 'Back', link: '/iron-smith/projects', icon: <IconArrowBackward className="text-4xl" /> }}
+                />
       <div className="panel">
         <div className="mb-5">
           <h5 className="font-semibold text-lg">Project Creation</h5>
