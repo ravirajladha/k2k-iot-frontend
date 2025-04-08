@@ -1,4 +1,4 @@
-import { FaSyncAlt, FaPause, FaHistory, FaCheckCircle } from 'react-icons/fa';
+import { FaSyncAlt, FaPause, FaHistory, FaCheckCircle, FaCheck } from 'react-icons/fa';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
 import { useState } from 'react';
@@ -195,6 +195,7 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                         <button className="p-1 rounded-md bg-gray-500 text-white hover:bg-gray-600" onClick={handleRefresh}>
                             <FaSyncAlt size={14} />
                         </button>
+                        
                         <button className="p-2 bg-blue-500 text-white rounded" title="Downtime Logs Modal" onClick={() => setIsModalOpen(true)}>
                             <AiOutlineStop size={14} />
                         </button>
@@ -205,7 +206,7 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                             <FaPencilAlt className="text-xs" />
                         </button>
                         <button onClick={() => openModal('qcCheck', report.jobOrderNumber)} className="p-1 btn btn-danger flex items-center gap-1" title="QC Check">
-                            <FaPencilAlt className="text-xs" />
+                            <FaCheck className="text-xs" />
                         </button>
                         {report.status !== 'Finished' && (
                             <button
