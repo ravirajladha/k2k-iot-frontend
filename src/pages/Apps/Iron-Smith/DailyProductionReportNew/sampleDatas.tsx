@@ -23,6 +23,7 @@ export interface ProductionLog {
     timestamp: string;
     productId: string;
     numberOfBlocks: number;
+    userName: string;
 }
 
 export interface DowntimeLog {
@@ -151,9 +152,9 @@ export const futureReports: Report[] = [
 ];
 
 export const sampleProductionLogs: ProductionLog[] = [
-    { timestamp: '2025-02-04 10:30 AM', productId: 'P001', numberOfBlocks: 150 },
-    { timestamp: '2025-02-04 11:00 AM', productId: 'P002', numberOfBlocks: 120 },
-    { timestamp: '2025-02-04 11:30 AM', productId: 'P003', numberOfBlocks: 200 },
+    { timestamp: '2025-02-04 10:30 AM', productId: 'P001', numberOfBlocks: 150,userName:'Bharath' },
+    { timestamp: '2025-02-04 11:00 AM', productId: 'P002', numberOfBlocks: 120,userName:'Bharath' },
+    { timestamp: '2025-02-04 11:30 AM', productId: 'P003', numberOfBlocks: 200,userName:'Bharath' },
 ];
 
 export const sampleDowntimeLogs: DowntimeLog[] = [

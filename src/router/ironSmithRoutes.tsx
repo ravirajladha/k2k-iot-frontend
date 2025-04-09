@@ -13,7 +13,8 @@ import {
     // QCCheckView,
     QCCheckViewNew,
     QCCheckViewDetail,
-    QCCheckCreate,
+    QcCheckCreateIronSmith,
+    
     WorkOrderView,
     WorkOrderCreate,
     WorkOrderDetail,
@@ -22,6 +23,9 @@ import {
     ProductCreate,
     HelperClients,
     HelperClientCreate,
+    HelperClientDetail,
+    HelperClientEditQty,
+    HelperClientViewMaterial,
     HelperProjects,
     HelperProjectCreate,
     HelperPlants,
@@ -43,6 +47,7 @@ import {
     JobOrderCreate,
 
     InventoryView,
+    InventoryViewDetail,
 
     // PackingView,
     PackingViewNew, ///New
@@ -183,7 +188,7 @@ export const ironSmithRoutes = [
     },
     {
         path: `${basePath}/qc-check/create`,
-        element: <QCCheckCreate />,
+        element: <QcCheckCreateIronSmith />,
         layout: 'admin',
     },
     
@@ -208,6 +213,11 @@ export const ironSmithRoutes = [
     {
         path: `${basePath}/inventories/create`,
         element: <InventoryView />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/inventory/detail`,
+        element: <InventoryViewDetail />,
         layout: 'admin',
     },
     
@@ -293,6 +303,21 @@ export const ironSmithRoutes = [
     {
         path: `/${basePath}/clients/edit/:id`,
         element: <HelperClientCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `/${basePath}/clients/raw-material`,
+        element: <HelperClientDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `/${basePath}/clients/raw-material/edit`,
+        element: <HelperClientEditQty />,
+        layout: 'admin',
+    },
+    {
+        path: `/${basePath}/clients/raw-material/view`,
+        element: <HelperClientViewMaterial />,
         layout: 'admin',
     },
     

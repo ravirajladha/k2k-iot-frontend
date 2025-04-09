@@ -23,8 +23,8 @@ const JobOrderPage = () => {
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'Work Order', link: '/iron-smith/job-order/view', isActive: false },
+        { label: 'Iron Smith', link: '/', isActive: false },
+        { label: 'Job Order/Planning', link: '/iron-smith/job-order/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
@@ -69,7 +69,7 @@ const JobOrderPage = () => {
                 <div className="panel mb-6">
                     <div className="flex gap-6 justify-center">
                         {jobOrder.products.map((product, index) => (
-                            <div key={index} className="product-card bg-white border border-gray-800 p-4 flex flex-col w-[30rem] overflow-hidden relative">
+                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative">
                                 {/* Logo in the left corner */}
                                 <div className="logo absolute left-0 top-0 p-1">
                                     <img src={logo} alt="Logo" className="w-30 h-7" />
@@ -127,7 +127,7 @@ const JobOrderPage = () => {
                                     </div>
 
                                     {/* QR Code, Bar Image, and Table */}
-                                    <div className="qr-code-container flex flex-col items-center ml-8">
+                                    <div className="qr-code-container flex flex-col items-center ml-4">
                                         <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mb-4" />
                                         <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-24 h-24 mb-2" />
                                         <table className="w-full border-collapse" style={{ fontSize: '0.8rem' }}>

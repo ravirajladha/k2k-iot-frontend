@@ -43,7 +43,7 @@ const rowData = [
         bufferQuantity: 100,
         requiredQuantity: 300,
         balanceQuantity: 200,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'nos',
         noOfPiecesPerPunch: 5,
         qtyInBundle: 6.4,
         qtyInNoPerBundle: 160,
@@ -82,7 +82,7 @@ const rowData = [
         bufferQuantity: 100,
         requiredQuantity: 900,
         balanceQuantity: 100,
-        unitOfMeasurement: 'sqmt',
+        unitOfMeasurement: 'nos',
         noOfPiecesPerPunch: 8,
         qtyInBundle: 8.32,
         qtyInNoPerBundle: 208,
@@ -278,7 +278,7 @@ const ColumnChooser = () => {
                                 hidden: hideCols.includes('unitOfMeasurement'),
                             },
 
-                            { accessor: 'quantity', title: 'Quantity', sortable: true, hidden: hideCols.includes('quantity') },
+                            { accessor: 'quantity', title: 'Inventory Quantity', sortable: true, hidden: hideCols.includes('quantity') },
                      
 
                             {
@@ -289,7 +289,7 @@ const ColumnChooser = () => {
                             },
                             {
                                 accessor: 'balanceQuantity',
-                                title: 'Balance Quantity',
+                                title: 'Dispatch Quantity',
                                 sortable: true,
                                 hidden: hideCols.includes('balanceQuantity'),
                             },
@@ -316,7 +316,7 @@ const ColumnChooser = () => {
                                         {/* to={`/edit/${materialCode}`} */}
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        <NavLink to={`/iron-smith/inventory/detail`} state={{ rowData, materialCode }} className="flex hover:text-primary">
                                         {/* to={`/view/${materialCode}`} */}
                                             <IconEye />
                                         </NavLink>

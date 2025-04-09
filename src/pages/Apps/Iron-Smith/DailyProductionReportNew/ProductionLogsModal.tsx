@@ -5,6 +5,7 @@ interface ProductionLog {
     timestamp: string;
     productId: string;
     numberOfBlocks: number;
+    userName: string;
 }
 
 interface ProductionLogsModalProps {
@@ -36,7 +37,8 @@ const ProductionLogsModal: React.FC<ProductionLogsModalProps> = ({ isOpen, setSh
                                             <tr className="bg-gray-100">
                                                 <th className="p-2 border">Timestamp</th>
                                                 <th className="p-2 border">Product ID</th>
-                                                <th className="p-2 border">Number of Blocks</th>
+                                                <th className="p-2 border">Number</th>
+                                                <th className="p-2 border">Username</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -45,6 +47,7 @@ const ProductionLogsModal: React.FC<ProductionLogsModalProps> = ({ isOpen, setSh
                                                     <td className="p-2 border">{log.timestamp}</td>
                                                     <td className="p-2 border">{log.productId}</td>
                                                     <td className="p-2 border">{log.numberOfBlocks}</td>
+                                                    <td className="p-2 border">{log.userName}</td>
                                                 </tr>
                                             ))}
                                         </tbody>

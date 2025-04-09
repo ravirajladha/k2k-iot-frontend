@@ -1,7 +1,6 @@
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
 import sortBy from 'lodash/sortBy';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '@/store/store';
@@ -11,9 +10,8 @@ import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
-// import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
-// import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+
 const rowData = [
     {
         id: 1,
@@ -27,13 +25,11 @@ const rowData = [
         id: 2,
         client: "Client B",
         projectCount: 22,
-
         created_at: "2025-01-05",
         status: "Pending",
         created_by: "Admin"
     },
 ];
-
 
 const Clients = () => {
     const dispatch = useDispatch();
@@ -80,7 +76,6 @@ const Clients = () => {
         { accessor: 'client', title: 'Client Name' },
         { accessor: 'status', title: 'Status' },
         { accessor: 'projectCount', title: 'Projects' },
-
         { accessor: 'created_by', title: 'Created By' },
         { accessor: 'created_at', title: 'Created At' },
     ];
@@ -109,10 +104,8 @@ const Clients = () => {
                     item.client.toLowerCase().includes(search.toLowerCase()) ||
                     item.status.toLowerCase().includes(search.toLowerCase()) ||
                     item.projectCount.toString().includes(search.toLowerCase()) ||
-
                     item.created_by.toLowerCase().includes(search.toLowerCase()) ||
                     item.created_at.toLowerCase().includes(search.toLowerCase())
-
                 );
             });
         });
@@ -128,7 +121,6 @@ const Clients = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
@@ -222,29 +214,17 @@ const Clients = () => {
                                     </div>
                                 ),
                             },
-
-                            // {
-                            //     accessor: 'machine_count',
-                            //     title: 'Machine Count',
-                            //     sortable: false,
-                            //     hidden: hideCols.includes('machine_count'),
-                            //     render: ({ projectCount }) => (
-                            //         <NavLink
-                            //             // to={`/konkrete_klinkers/machines/${encodeURIComponent(factory_name)}`} 
-                            //             to={`/projects`}
-
-                            //             className="text-blue-500 hover:underline"
-                            //         >
-                            //             {projectCount}
-                            //         </NavLink>
-                            //     ),
-                            // },
+                            {
+                                accessor: 'projectCount',
+                                title: 'Projects',
+                                sortable: true,
+                                hidden: hideCols.includes('projectCount'),
+                            },
                             {
                                 accessor: 'created_by',
                                 title: 'Created By',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-
+                                hidden: hideCols.includes('created_by'),
                             },
                             {
                                 accessor: 'created_at',
@@ -253,18 +233,21 @@ const Clients = () => {
                                 hidden: hideCols.includes('created_at'),
                                 render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
                             },
-
                             {
                                 accessor: 'action',
                                 title: 'Actions',
                                 sortable: false,
                                 hidden: hideCols.includes('action'),
-                                render: ({ id }) => (
+                                render: ({ id, client}) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`#`} className="flex hover:text-info">
+                                        <NavLink to={`/iron-smith/clients/edit/${id}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        <NavLink
+                                            to={`/iron-smith/clients/raw-material`}
+                                            state={{ clientData: { id, client } }}
+                                            className="flex hover:text-primary"
+                                        >
                                             <IconEye />
                                         </NavLink>
                                     </div>
@@ -285,7 +268,6 @@ const Clients = () => {
                             `Showing ${from} to ${to} of ${totalRecords} entries`
                         }
                     />
-
                 </div>
             </div>
         </div>

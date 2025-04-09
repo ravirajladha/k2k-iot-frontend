@@ -31,23 +31,31 @@ const InvoicePreview = () => {
         {
             id: 1,
             title: `Steel Rods`,
+            hsnCode: `721420`,
             member: 'SHEARWALL',
             quantity: dispatchQuantity,
             diameter: '10',
             barMark: 'SW11-6',
-            uom: 'nos',
+            uom: 'MT',
+            rate: '54,700',
+            amount: '54,700',
+            dispatchDate: '15-04-2025',
         },
     ];
 
     const columns = [
         { key: 'id', label: 'S.NO' },
-        { key: 'title', label: 'ITEMS' },
-        { key: 'member', label: 'MEMBER' },
+        { key: 'title', label: 'MATERIAL DESCRIPTION' },
+        { key: 'hsnCode', label: 'HSN CODE' },
         { key: 'quantity', label: 'QTY' },
-        { key: 'diameter', label: 'DIAMETER' },
-        { key: 'barmark', label: 'BARMARK' },
         { key: 'uom', label: 'UOM', class: 'text-right' },
+        { key: 'rate', label: 'RATE', class: 'text-right' },
+        { key: 'dispatchDate', label: 'DISPATCH DATE', class: 'text-right' },
+        { key: 'amount', label: 'AMOUNT', class: 'text-right' },
     ];
+
+    // Calculate total amount
+    const totalAmount = items.reduce((sum, item) => sum + parseFloat(item.amount.replace(/,/g, '')), 0).toLocaleString('en-IN');
 
     return (
         <div>
@@ -79,26 +87,19 @@ const InvoicePreview = () => {
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div className="border border-gray-300 p-4 rounded-md">
+                        <div className=" p-4 rounded-md lg:col-start-1">
                             <h3 className="font-semibold text-center border-b border-gray-300 pb-2">Client Name and Address</h3>
                             <p className="mt-2 font-bold">Prestige Beta Projects Private</p>
                             <p>Ammanikere, Bellandur Village</p>
                             <p>Varthur Hobli, Bengaluru East Taluk</p>
+                            <p>Bengaluru-560103</p>
                             <p>Bengaluru-560103</p>
                             <p className="mt-2">Client GST: 29AAMCP5351N1ZO</p>
                             <p>Place of Supply: Karnataka (29)</p>
                             <p className="mt-2">Tax Applicable under RCM: No</p>
                         </div>
 
-                        <div className="border border-gray-300 p-4 rounded-md">
-                            <h3 className="font-semibold text-center border-b border-gray-300 pb-2">Ship To</h3>
-                            <p className="mt-2 font-bold">Prestige Lake Shore Drive</p>
-                            <p>Ammanikere, Bellandur Village</p>
-                            <p>Varthur Hobli, Bengaluru East Taluk</p>
-                            <p>BENGALURU-560103</p>
-                        </div>
-
-                        <div className="border border-gray-300 p-4 rounded-md">
+                        <div className=" p-4 rounded-md lg:col-start-3">
                             <h3 className="font-semibold text-center border-b border-gray-300 pb-2">Invoice Details</h3>
                             <div className="mt-2 space-y-2">
                                 <div className="flex justify-between">
@@ -109,26 +110,34 @@ const InvoicePreview = () => {
                                     <span className="font-medium">Int. Doc. No.:</span>
                                     <span>2001032612</span>
                                 </div>
-                                <div className="flex justify-between">
+                                {/* <div className="flex justify-between">
                                     <span className="font-medium">Document Date:</span>
                                     <span>18.11.2024</span>
-                                </div>
+                                </div> */}
                                 <div className="flex justify-between">
                                     <span className="font-medium">Order No.:</span>
                                     <span>4900007103 Dt 24.10.2024</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="font-medium">Invoice STO.:</span>
-                                    <span>01530</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-medium">Vehicle No.:</span>
                                     <span>KA34A1530</span>
                                 </div>
                                 <div className="flex justify-between">
+                                    <span className="font-medium">Gate Pass No.:</span>
+                                    <span>121512</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-medium">Contact Person:</span>
+                                    <span>9632526210 - Mr. Harish</span>
+                                </div>
+                                <div className="flex justify-between">
                                     <span className="font-medium">Project:</span>
                                     <span>K2K Steel</span>
                                 </div>
+                                <h3 className="font-semibold text-center border-b border-gray-300 pb-2"></h3>
+                                <p className="mt-2 font-bold">Prestige Lake Shore Drive</p>
+                                <p>Ammanikere, Bellandur Village, BENGALURU-560103</p>
+                                {/* <p>BENGALURU-560103</p> */}
                             </div>
                         </div>
                     </div>
@@ -141,10 +150,7 @@ const InvoicePreview = () => {
                                 <thead>
                                     <tr className="bg-gray-200">
                                         {columns.map((column) => (
-                                            <th 
-                                                key={column.key} 
-                                                className={`border border-gray-300 px-4 py-2 ${column?.class || ''}`}
-                                            >
+                                            <th key={column.key} className={`border border-gray-300 px-4 py-2 ${column?.class || ''}`}>
                                                 {column.label}
                                             </th>
                                         ))}
@@ -155,15 +161,34 @@ const InvoicePreview = () => {
                                         <tr key={item.id} className="text-center">
                                             <td className="border border-gray-300 px-4 py-2">{item.id}</td>
                                             <td className="border border-gray-300 px-4 py-2">{item.title}</td>
-                                            <td className="border border-gray-300 px-4 py-2">{item.member}</td>
+                                            <td className="border border-gray-300 px-4 py-2">{item.hsnCode}</td>
                                             <td className="border border-gray-300 px-4 py-2">{item.quantity}</td>
-                                            <td className="border border-gray-300 px-4 py-2">{item.diameter}</td>
-                                            <td className="border border-gray-300 px-4 py-2">{item.barMark}</td>
                                             <td className="border border-gray-300 px-4 py-2 text-right">{item.uom}</td>
+                                            <td className="border border-gray-300 px-4 py-2 text-right">{item.rate}</td>
+                                            <td className="border border-gray-300 px-4 py-2 text-right">{item.dispatchDate}</td>
+                                            <td className="border border-gray-300 px-4 py-2 text-right">{item.amount}</td>
                                         </tr>
                                     ))}
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colSpan={columns.length - 1} className="px-4 py-2 border border-gray-300 font-semibold text-left">
+                                            TOTAL AMOUNT :
+                                        </td>
+                                        <td className="px-4 py-2 border border-gray-300 font-semibold text-right">{totalAmount}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
+                            <div className="mt-8 flex justify-between items-center px-4">
+                                <div className="text-center">
+                                    <div className="border-t border-gray-400 w-40 mb-2"></div>
+                                    <p className="text-sm font-semibold">Receiver Signature & Date</p>
+                                </div>
+                                <div className="text-center mt-10">
+                                    <div className="border-t border-gray-400 w-40 mb-2"></div>
+                                    <p className="text-sm font-semibold">Authorised Signature</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

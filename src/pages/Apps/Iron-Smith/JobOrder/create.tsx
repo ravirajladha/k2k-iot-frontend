@@ -1,9 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
-
 import IconX from '@/components/Icon/IconX';
-
 import IconSave from '@/components/Icon/IconSave';
-// IconSend
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconChecks from '@/components/Icon/IconChecks';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
@@ -11,13 +8,17 @@ import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Select from 'react-select';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/flatpickr.css';
-import IconBell from '@/components/Icon/IconBell';
-import IconCode from '@/components/Icon/IconCode';
+
 interface WorkOrder {
     id: string;
     clientName: string;
     projectName: string;
     poQuantity: number;
+}
+
+interface Product {
+    value: string;
+    label: string;
 }
 
 interface Plant {
@@ -38,7 +39,7 @@ interface FormData {
     salesOrderNumber: string;
     productId: string;
     uom: string;
-    poQuantity: string | number; // Can be string (from input) or number (from `workOrders`)
+    poQuantity: string | number;
     date: string;
     plannedQuantity: string;
     actualQuantity: string;
@@ -59,7 +60,7 @@ const ProductionPlanning = () => {
         plannedQuantity: '',
         actualQuantity: '',
         rejectedQuantity: '',
-        selectedMachines: [], // New field for machine selection
+        selectedMachines: [],
     });
 
     const workOrders = [
@@ -85,7 +86,6 @@ const ProductionPlanning = () => {
                 { id: 'factory4', name: 'Factory 4' },
             ],
         },
-        // Add more plants and factories as needed
     ];
 
     const handleWorkOrderChange = (selectedOption: any) => {
@@ -102,7 +102,6 @@ const ProductionPlanning = () => {
     const handleMachineChange = (selectedOptions: any, id: number) => {
         setItems((prevItems) => prevItems.map((item) => (item.id === id ? { ...item, selectedMachines: selectedOptions ? selectedOptions.map((option: any) => option.value) : [] } : item)));
     };
-    const [selectedMachines, setSelectedMachines] = useState<string>('');
 
     const [selectedPlant, setSelectedPlant] = useState<string>('');
     const [factories, setFactories] = useState<Factory[]>([]);
@@ -129,7 +128,7 @@ const ProductionPlanning = () => {
         console.log('Form Data:', formData);
     };
 
-    const [items, setItems] = useState<any>([{ id: 1, title: 'Product 1', uom: 'KG', poQuantity: 5, achieved: 5, plannedQuantity: 0, achievedQuantity: 0, rejectedQuantity: 0 }]);
+    const [items, setItems] = useState<any>([]); // Initialize with empty array
 
     const addItem = () => {
         let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
@@ -144,7 +143,7 @@ const ProductionPlanning = () => {
                 deliveryDate: '',
                 plannedQuantity: 0,
                 scheduleDate: '',
-                selectedMachines: [], // Ensure machine selection resets
+                selectedMachines: [],
             },
         ]);
     };
@@ -167,6 +166,7 @@ const ProductionPlanning = () => {
         { label: 'Job Order / Planning', link: '/iron-smith/job-order/view', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
+
     const customStyles = {
         control: (base: any) => ({
             ...base,
@@ -194,6 +194,25 @@ const ProductionPlanning = () => {
         { value: 'machine5', label: 'Machine 5 - Grinding' },
     ];
 
+    const products: Product[] = [
+        { label: 'Steel Rod', value: 'Product1' },
+        { label: 'Iron Rod', value: 'Product2' },
+        { label: 'Cast Iron Rod', value: 'Product3' },
+    ];
+
+    const handleProductChange = (selectedOption: Product | null, id: number) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === id
+                    ? {
+                          ...item,
+                          product: selectedOption,
+                      }
+                    : item
+            )
+        );
+    };
+
     return (
         <div>
             <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/iron-smith/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
@@ -204,7 +223,6 @@ const ProductionPlanning = () => {
                 </div>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-4">
-                        {/* Work Order Number */}
                         <div>
                             <label htmlFor="workOrderNumber">
                                 Work Order Number <span className="text-red-700">*</span>
@@ -236,7 +254,6 @@ const ProductionPlanning = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* Sales Order Number */}
                         <div>
                             <label htmlFor="salesOrderNumber">Sales Order Number (Optional)</label>
                             <input
@@ -254,7 +271,6 @@ const ProductionPlanning = () => {
                             <label htmlFor="date">
                                 Range Date (from and to) <span className="text-red-700">*</span>
                             </label>
-
                             <Flatpickr
                                 options={{
                                     mode: 'range',
@@ -271,7 +287,7 @@ const ProductionPlanning = () => {
                     <div className="mt-8">
                         <div className="table-responsive">
                             <table>
-                                <thead className="bg-black ">
+                                <thead className="bg-black">
                                     <tr>
                                         <th>Product</th>
                                         <th>Planned Quantity</th>
@@ -280,7 +296,6 @@ const ProductionPlanning = () => {
                                         <th></th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
                                     {items.length <= 0 && (
                                         <tr>
@@ -291,10 +306,33 @@ const ProductionPlanning = () => {
                                     )}
                                     {items.map((item: any) => (
                                         <React.Fragment key={item.id}>
-                                            {/* Table Row: Editable Fields */}
                                             <tr>
                                                 <td>
-                                                    <input type="text" className="form-input min-w-[200px]" placeholder="Enter Item Name" defaultValue={item.title} readOnly />
+                                                    <Select
+                                                        id={`productDropdown-${item.id}`}
+                                                        name={`productDropdown-${item.id}`}
+                                                        options={products.map((p) => ({
+                                                            ...p,
+                                                            isDisabled: items.some((itm) => itm.product?.value === p.value),
+                                                        }))}
+                                                        onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
+                                                        value={item.product}
+                                                        getOptionLabel={(e: Product) => e.label}
+                                                        getOptionValue={(e: Product) => e.value}
+                                                        placeholder="Select Product"
+                                                        isClearable
+                                                        menuPortalTarget={document.body}
+                                                        menuPosition="absolute"
+                                                        menuPlacement="auto"
+                                                        styles={{
+                                                            control: (base) => ({
+                                                                ...base,
+                                                                width: '200px',
+                                                            }),
+                                                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                                                            menu: (base) => ({ ...base, zIndex: 9999 }),
+                                                        }}
+                                                    />
                                                 </td>
                                                 <td>
                                                     <input
@@ -308,14 +346,14 @@ const ProductionPlanning = () => {
                                                 </td>
                                                 <td>
                                                     <input
-                                                        id="date"
-                                                        name="date"
+                                                        id="scheduleDate"
+                                                        name="scheduleDate"
                                                         type="date"
                                                         className="form-input"
-                                                        value={item.plannedQuantity}
-                                                        min={new Date().toISOString().split('T')[0]} // Today's date
-                                                        max={new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().split('T')[0]} // 7 days from today
-                                                        onChange={(e) => updateField(item.id, 'plannedQuantity', Number(e.target.value))}
+                                                        value={item.scheduleDate}
+                                                        min={new Date().toISOString().split('T')[0]}
+                                                        max={new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().split('T')[0]}
+                                                        onChange={(e) => updateField(item.id, 'scheduleDate', Number(e.target.value))}
                                                     />
                                                 </td>
                                                 <td>
@@ -324,23 +362,21 @@ const ProductionPlanning = () => {
                                                         name="machineSelection"
                                                         options={machineOptions}
                                                         onChange={(selectedOptions) => handleMachineChange(selectedOptions, item.id)}
-                                                        value={machineOptions.filter((option) => (item.selectedMachines || []).includes(option.value))} // ✅ Safe check
+                                                        value={machineOptions.filter((option) => (item.selectedMachines || []).includes(option.value))}
                                                         className="form-input"
                                                         placeholder="Select Machines"
                                                         isSearchable
                                                         isMulti
                                                         styles={customStyles}
+                                                        menuPortalTarget={document.body}
                                                     />
                                                 </td>
-
                                                 <td>
                                                     <button type="button" onClick={() => removeItem(item)}>
                                                         <IconX className="w-5 h-5" />
                                                     </button>
                                                 </td>
                                             </tr>
-
-                                            {/* Autofetch Details in a Card Below the Row */}
                                             <tr>
                                                 <td colSpan={5}>
                                                     <div className="bg-gray-100 p-3 rounded-lg shadow-md mt-2 flex justify-between items-center">
@@ -381,7 +417,6 @@ const ProductionPlanning = () => {
                         </div>
                     </div>
 
-                    {/* Submit Button */}
                     <div className="flex gap-4">
                         <button type="submit" className="btn btn-success w-1/2">
                             <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />

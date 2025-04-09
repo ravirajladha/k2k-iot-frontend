@@ -3,7 +3,7 @@ import IconInfoCircle from '@/components/Icon/IconInfoCircle';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Select from 'react-select';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 interface FormData {
     workOrder: string;
@@ -15,7 +15,6 @@ interface FormData {
 }
 
 const QcCheckForm: React.FC = () => {
-
     //tooltip
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -34,9 +33,9 @@ const QcCheckForm: React.FC = () => {
     const workOrders = ['Work Order 1', 'Work Order 2', 'Work Order 3'];
 
     const jobOrdersMap: { [key: string]: { jobOrders: string[]; workOrder: string } } = {
-        "WO-001": { workOrder: "WO-001", jobOrders: ["JO-1001", "JO-1002"] },
-        "WO-002": { workOrder: "WO-002", jobOrders: ["JO-2001", "JO-2002"] },
-        "WO-003": { workOrder: "WO-003", jobOrders: ["JO-3001", "JO-3002"] },
+        'WO-001': { workOrder: 'WO-001', jobOrders: ['JO-1001', 'JO-1002'] },
+        'WO-002': { workOrder: 'WO-002', jobOrders: ['JO-2001', 'JO-2002'] },
+        'WO-003': { workOrder: 'WO-003', jobOrders: ['JO-3001', 'JO-3002'] },
     };
 
     const products = ['Steel Rod', 'Iron Rod', 'Cast Iron Rod'];
@@ -92,13 +91,8 @@ const QcCheckForm: React.FC = () => {
         { label: 'QC Check', link: '/iron-smith/qc-check', isActive: true },
     ];
     return (
-
         <div>
-
-            <Breadcrumbs
-                items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/iron-smith/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }}
-            />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/iron-smith/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }} />
 
             <div className="panel">
                 <div className="mb-5 flex items-center justify-between">
@@ -113,7 +107,8 @@ const QcCheckForm: React.FC = () => {
                         </span>
                         {showTooltip && (
                             <div className="absolute top-0 right-full ml-2 w-64 bg-gray-800 text-white text-sm p-3 rounded shadow-lg z-50">
-                                This form is used for QC checks. Select the appropriate job order, work order will  be autofetched on the basis of Job order, and select product ID. Fill out the rejected quantity or recycled quantity and reason for rejection.
+                                This form is used for QC checks. Select the appropriate job order, work order will be autofetched on the basis of Job order, and select product ID. Fill out the
+                                rejected quantity or recycled quantity and reason for rejection.
                             </div>
                         )}
                     </button>
@@ -136,13 +131,7 @@ const QcCheckForm: React.FC = () => {
                         {/* Work Order (Auto-Filled) */}
                         <div>
                             <label htmlFor="workOrder">Work Order</label>
-                            <input
-                                id="workOrder"
-                                type="text"
-                                className="form-input"
-                                value={formData.workOrder}
-                                readOnly
-                            />
+                            <input id="workOrder" type="text" className="form-input" value={formData.workOrder} readOnly />
                         </div>
 
                         {/* Product Selection */}
@@ -152,10 +141,12 @@ const QcCheckForm: React.FC = () => {
                                 id="productId"
                                 options={productOptions}
                                 value={productOptions.find((option) => option.value === formData.productId)}
-                                onChange={(selectedOption) => setFormData((prev) => ({
-                                    ...prev,
-                                    productId: selectedOption ? selectedOption.value : '',
-                                }))}
+                                onChange={(selectedOption) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        productId: selectedOption ? selectedOption.value : '',
+                                    }))
+                                }
                                 placeholder="Select Product"
                                 isSearchable
                             />
@@ -199,7 +190,6 @@ const QcCheckForm: React.FC = () => {
                                 value={formData.rejectionReason}
                                 onChange={handleInputChange}
                             ></textarea>
-
                         </div>
                     </div>
 
@@ -217,7 +207,6 @@ const QcCheckForm: React.FC = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 

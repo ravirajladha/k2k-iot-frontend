@@ -1,7 +1,9 @@
 // export { default as QCCheckView } from './QCCheck/view';
+export { default as QcCheckCreateIronSmith } from './QCCheck/createQc';
 export { default as QCCheckViewNew } from './QCCheck/viewNew'; ////NEW
 export { default as QCCheckViewDetail } from './QCCheck/detail'; ////NEW
-export { default as QCCheckCreate } from './QCCheck/create';
+
+
 export { default as WorkOrderView } from './WorkOrder/view';
 export { default as WorkOrderCreate } from './WorkOrder/create';
 
@@ -25,6 +27,7 @@ export { default as ProductView } from './Product/view';
 export { default as ProductCreate } from './Product/create';
 
 export { default as InventoryView } from './Inventory/view';
+export { default as InventoryViewDetail } from './Inventory/detail';
 
 // export { default as InventoryView } from './Inventory/view';
 // export { default as InventoryCreate } from './Inventory/create';
@@ -44,6 +47,9 @@ export { default as DipatchInvoiceView } from './Dispatch/invoice';
 
 export { default as HelperClients } from '../Iron-Smith/Helpers/Clients/view';
 export { default as HelperClientCreate } from '../Iron-Smith/Helpers/Clients/create';
+export { default as HelperClientDetail } from '../Iron-Smith/Helpers/Clients/detail';  ///New
+export { default as HelperClientEditQty } from '../Iron-Smith/Helpers/Clients/editQty';  ///New
+export { default as HelperClientViewMaterial } from '../Iron-Smith/Helpers/Clients/viewMaterialDetail';  ///New
 
 export { default as HelperProjects } from '../Iron-Smith/Helpers/Projects/view';
 export { default as HelperProjectCreate } from '../Iron-Smith/Helpers/Projects/create';

@@ -34,6 +34,8 @@ interface FormData {
     product: Product | null;
     uom: string;
     quantity: number;
+    diameter: string;
+    weight: string;
     plantCode: string;
     deliveryDate: string;
     dimensionA: string;
@@ -74,9 +76,7 @@ const clients: Client[] = [
     {
         value: 'Client3',
         label: 'Client C',
-        projects: [
-            { value: 'Project5', label: 'Project Epsilon' },
-        ],
+        projects: [{ value: 'Project5', label: 'Project Epsilon' }],
     },
 ];
 
@@ -86,6 +86,8 @@ const Create = () => {
         product: null,
         uom: '',
         quantity: 0,
+        diameter: '',
+        weight: '',
         plantCode: '',
         deliveryDate: '',
         dimensionA: '',
@@ -197,7 +199,7 @@ const Create = () => {
     const customStyles = {
         control: (base: any) => ({
             ...base,
-            border: 'none',
+            // border: 'none',
             boxShadow: 'none',
             '&:hover': {
                 border: 'none',
@@ -306,14 +308,7 @@ const Create = () => {
 
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input
-                                id="workOrderDate"
-                                name="workOrderDate"
-                                type="date"
-                                className="form-input"
-                                value={formData.workOrderDate}
-                                onChange={handleInputChange}
-                            />
+                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input" value={formData.workOrderDate} onChange={handleInputChange} />
                         </div>
                     </div>
 
@@ -323,9 +318,10 @@ const Create = () => {
                                 <thead>
                                     <tr>
                                         <th>Product Name / Material Code</th>
-                                        <th>UOM</th>
+                                        {/* <th>UOM</th>
                                         <th>PO Quantity</th>
                                         <th>Diameter</th>
+                                        <th>Weight</th> */}
                                         <th>Member Details</th>
                                         <th>Bar Mark</th>
                                         <th>Delivery Date (optional)</th>
@@ -363,7 +359,7 @@ const Create = () => {
                                                         }}
                                                     />
                                                 </td>
-
+{/* 
                                                 <td>
                                                     <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
                                                 </td>
@@ -380,8 +376,11 @@ const Create = () => {
                                                 </td>
 
                                                 <td>
-                                                    <input type="text" className="form-input w-32" placeholder="(in cm)" value={item.diameter} />
+                                                    <input type="text" className="form-input w-32" placeholder="(in mm)" value={item.diameter} />
                                                 </td>
+                                                <td>
+                                                    <input type="text" className="form-input w-32" placeholder="" value={item.weight} />
+                                                </td> */}
 
                                                 <td>
                                                     <input
@@ -410,6 +409,38 @@ const Create = () => {
                                                     <button type="button" onClick={() => removeItem(item.id)}>
                                                         ❌
                                                     </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={4}>
+                                                    <div className="bg-gray-100 p-3 rounded-lg shadow-md mt-2 flex justify-between items-center">
+                                                        {/* <h4 className="text-lg font-semibold">Auto-Fetched Details:</h4> */}
+                                                        <div className="flex space-x-6">
+                                                            <div className="flex items-center">
+                                                                <p className="font-medium mr-2">UOM:</p>
+                                                                <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <p className="font-medium mr-2">PO Quantity:</p>
+                                                                <input
+                                                                    type="number"
+                                                                    className="form-input w-32"
+                                                                    placeholder="Quantity"
+                                                                    min={0}
+                                                                    value={item.quantity}
+                                                                    onChange={(e) => handleChange(item.id, 'quantity', parseInt(e.target.value) || 0)}
+                                                                />
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <p className="font-medium mr-2">Diameter:</p>
+                                                                <input type="text" className="form-input w-32" placeholder="(in mm)" value={item.diameter} />
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <p className="font-medium mr-2">Weight:</p>
+                                                                <input type="text" className="form-input w-32" placeholder="" value={item.weight} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
 
