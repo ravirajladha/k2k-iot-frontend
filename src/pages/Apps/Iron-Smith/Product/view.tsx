@@ -104,14 +104,14 @@ const ProductView = () => {
     };
     const cols = [
         { accessor: 'materialCode', title: 'Material Code' },
-        // { accessor: 'productDescription', title: 'Product Description' },
+        { accessor: 'productDescription', title: 'Product Description' },
         { accessor: 'plantCode', title: 'Plant Code' },
         { accessor: 'unitOfMeasurement', title: 'Unit of Measurement' },
         { accessor: 'noOfPiecesPerPunch', title: 'No. of Pieces Per Punch' },
         { accessor: 'qtyInBundle', title: 'Quantity in Bundle' },
         { accessor: 'qtyInNoPerBundle', title: 'Quantity in No. Per Bundle' },
         { accessor: 'status', title: 'Status' },
-        { accessor: 'action', title: 'Actions' }, // Placeholder for actions like edit/delete.
+        { accessor: 'action', title: 'Actions' },
     ];
 
     const breadcrumbItems = [
@@ -231,21 +231,12 @@ const ProductView = () => {
                                 sortable: true,
                                 hidden: hideCols.includes('productDescription'),
                             },
-                            // { accessor: 'quantity', title: 'Quantity', sortable: true, hidden: hideCols.includes('quantity') },
-                            // { accessor: 'bufferQuantity', title: 'Buffer Quantity', sortable: true, hidden: hideCols.includes('quantity') },
-
-                            // {
-                            //     accessor: 'requiredQuantity',
-                            //     title: 'Required Quantity',
-                            //     sortable: true,
-                            //     hidden: hideCols.includes('requiredQuantity'),
-                            // },
-                            // {
-                            //     accessor: 'balanceQuantity',
-                            //     title: 'Balance Quantity',
-                            //     sortable: true,
-                            //     hidden: hideCols.includes('balanceQuantity'),
-                            // },
+                            {
+                                accessor: 'plantCode',
+                                title: 'Plant Code',
+                                sortable: true,
+                                hidden: hideCols.includes('plantCode'),
+                            },
                             {
                                 accessor: 'unitOfMeasurement',
                                 title: 'Unit of Measurement',
@@ -277,30 +268,24 @@ const ProductView = () => {
                                 title: 'Actions',
                                 sortable: false,
                                 hidden: hideCols.includes('action'),
-                                render: ({ materialCode }) => (
+                                render: ({ materialCode, productDescription, plantCode, unitOfMeasurement, noOfPiecesPerPunch, qtyInBundle, qtyInNoPerBundle, status }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`#`} className="flex hover:text-info">
-                                            {/* to={`/edit/${materialCode}`} */}
+                                        <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        <NavLink to={`/iron-smith/product/detail`} state={{ rowData: { materialCode, productDescription, plantCode, unitOfMeasurement, noOfPiecesPerPunch, qtyInBundle, qtyInNoPerBundle, status } }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
-
-                                        {/* SlideIn Down */}
-                                        <div>
-                                            <button
-                                                onClick={() => {
-                                                    const product = rowData.find((item) => item.materialCode === materialCode);
-                                                    setSelectedProduct(product || null);
-                                                    setModal10(true);
-                                                }}
-                                                type="button"
-                                                className="btn btn-info"
-                                            >
-                                                View
-                                            </button>
-                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                setSelectedProduct({ materialCode, productDescription, plantCode, unitOfMeasurement, noOfPiecesPerPunch, qtyInBundle, qtyInNoPerBundle, status });
+                                                setModal10(true);
+                                            }}
+                                            type="button"
+                                            className="btn btn-info"
+                                        >
+                                            View
+                                        </button>
                                     </div>
                                 ),
                             },
@@ -355,13 +340,8 @@ const ProductView = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Plant Code:</p>
-                                                        <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.materialCode || 'N/A'}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm text-gray-600 dark:text-gray-400">Plant Code:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.plantCode || 'N/A'}</p>
                                                     </div>
-
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Unit of Measurement:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.unitOfMeasurement || 'N/A'}</p>

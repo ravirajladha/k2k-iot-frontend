@@ -15,6 +15,7 @@ const rowData = [
     {
         id: 1,
         client: "Project A",
+        address: "32 stanford street",
         created_at: "2025-01-01",
         status: "In Progress",
         created_by: "Admin"
@@ -22,6 +23,7 @@ const rowData = [
     {
         id: 2,
         client: "Project B",
+        address: "32 stanford street",
         created_at: "2025-01-05",
         status: "Pending",
         created_by: "Admin"
@@ -72,6 +74,7 @@ const Projects = () => {
     const cols = [
         { accessor: 'id', title: 'ID' },
         { accessor: 'client', title: 'Project Name' },
+        { accessor: 'address', title: 'Address' },
         { accessor: 'status', title: 'Status' },
         { accessor: 'created_by', title: 'Created By' },
         { accessor: 'created_at', title: 'Created At' },
@@ -233,12 +236,12 @@ const Projects = () => {
                                 title: 'Actions',
                                 sortable: false,
                                 hidden: hideCols.includes('action'),
-                                render: ({ id }) => (
+                                render: ( rowData ) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
                                         <NavLink to={`#`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        <NavLink to={`/iron-smith/projects/details`} state={{rowData}} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
                                     </div>

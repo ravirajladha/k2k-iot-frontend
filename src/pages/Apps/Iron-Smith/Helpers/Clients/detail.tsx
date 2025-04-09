@@ -72,15 +72,25 @@ const InventoryDetailPage = () => {
                         <h2 className="text-lg font-semibold mb-4 text-center text-gray-700">Client Details</h2>
                         <div className="bg-yellow-50 p-6 rounded-lg shadow-lg w-full max-w-4xl">
                             <div className="text-sm text-center flex justify-center items-center space-x-4 text-gray-800">
-                                <span><strong>Client Name:</strong> {clientDetails.clientName}</span>
+                                <span>
+                                    <strong>Client Name:</strong> {clientDetails.clientName}
+                                </span>
                                 <span>|</span>
-                                <span><strong>Address:</strong> {clientDetails.address}</span>
+                                <span>
+                                    <strong>Address:</strong> {clientDetails.address}
+                                </span>
                                 <span>|</span>
-                                <span><strong>City:</strong> {clientDetails.city}</span>
+                                <span>
+                                    <strong>City:</strong> {clientDetails.city}
+                                </span>
                                 <span>|</span>
-                                <span><strong>State:</strong> {clientDetails.state}</span>
+                                <span>
+                                    <strong>State:</strong> {clientDetails.state}
+                                </span>
                                 <span>|</span>
-                                <span><strong>GST:</strong> {clientDetails.gst}</span>
+                                <span>
+                                    <strong>GST:</strong> {clientDetails.gst}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -113,20 +123,18 @@ const InventoryDetailPage = () => {
                                             />
                                         </td>
                                         <td className="px-4 py-2 border border-gray-300 relative w-16">
-                                            <NavLink 
-                                                to={`#`}
+                                        <NavLink
+                                                to={`/iron-smith/clients/raw-material/view`}
                                                 state={{ diameter, quantity: quantities[parseInt(diameter)] }}
-                                                className="flex hover:text-info absolute left-2"
-                                            >
-                                                <IconTrashLines className="w-4.5 h-4.5" />
-                                            </NavLink>
-                                            <NavLink 
-                                                to={`/iron-smith/clients/raw-material/view`} 
-                                                state={{ diameter, quantity: quantities[parseInt(diameter)] }} 
-                                                className="flex hover:text-primary absolute right-2"
+                                                className="flex hover:text-primary absolute left-2"
                                             >
                                                 <IconEye />
                                             </NavLink>
+                                            <NavLink to={`#`}
+                                             state={{ diameter, quantity: quantities[parseInt(diameter)] }} className="flex hover:text-info absolute right-2">
+                                                <IconTrashLines/>
+                                            </NavLink>
+                                           
                                         </td>
                                     </tr>
                                 ))}

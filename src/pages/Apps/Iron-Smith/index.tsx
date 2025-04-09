@@ -25,6 +25,7 @@ export { default as JobOrderDetail } from './JobOrderNew/detail'; //////////
 
 export { default as ProductView } from './Product/view';
 export { default as ProductCreate } from './Product/create';
+export { default as ProductDetail } from './Product/detail';
 
 export { default as InventoryView } from './Inventory/view';
 export { default as InventoryViewDetail } from './Inventory/detail';
@@ -53,6 +54,7 @@ export { default as HelperClientViewMaterial } from '../Iron-Smith/Helpers/Clien
 
 export { default as HelperProjects } from '../Iron-Smith/Helpers/Projects/view';
 export { default as HelperProjectCreate } from '../Iron-Smith/Helpers/Projects/create';
+export { default as HelperProjectDetail } from '../Iron-Smith/Helpers/Projects/detail';
 
 export { default as HelperPlants } from '../Iron-Smith/Helpers/Plants/view';
 export { default as HelperPlantCreate } from '../Iron-Smith/Helpers/Plants/create';
@@ -62,6 +64,7 @@ export { default as HelperFactoryCreate } from '../Iron-Smith/Helpers/Factories/
 
 export { default as HelperMachines } from '../Iron-Smith/Helpers/Machines/view';
 export { default as HelperMachineCreate } from '../Iron-Smith/Helpers/Machines/create';
+export { default as HelperMachineDetails } from '../Iron-Smith/Helpers/Machines/detail';
 
 export { default as Helper1 } from '../Iron-Smith/Helpers/helper1';
 export { default as Helper2 } from '../Iron-Smith/Helpers/helper2';

@@ -21,6 +21,7 @@ import {
  
     ProductView,
     ProductCreate,
+    ProductDetail,
     HelperClients,
     HelperClientCreate,
     HelperClientDetail,
@@ -28,12 +29,14 @@ import {
     HelperClientViewMaterial,
     HelperProjects,
     HelperProjectCreate,
+    HelperProjectDetail,
     HelperPlants,
     HelperPlantCreate,
     HelperFactories,
     HelperFactoryCreate,
     HelperMachines,
     HelperMachineCreate,
+    HelperMachineDetails,
 
 
     DailyProductionPlanningView,
@@ -204,6 +207,12 @@ export const ironSmithRoutes = [
         layout: 'admin',
     },
     
+    {
+        path: `${basePath}/product/detail`,
+        element: <ProductDetail />,
+        layout: 'admin',
+    },
+    
     // Inventory
     {
         path: `${basePath}/inventories`,
@@ -288,6 +297,11 @@ export const ironSmithRoutes = [
         element: <HelperMachineCreate />,
         layout: 'admin',
     },
+    {
+        path: `/${basePath}/machines/details`,
+        element: <HelperMachineDetails />,
+        layout: 'admin',
+    },
     
     // HELPERS CLIENTS
     {
@@ -335,6 +349,11 @@ export const ironSmithRoutes = [
     {
         path: `/${basePath}/projects/edit/:id`,
         element: <HelperProjectCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `/${basePath}/projects/details`,
+        element: <HelperProjectDetail />,
         layout: 'admin',
     },
     

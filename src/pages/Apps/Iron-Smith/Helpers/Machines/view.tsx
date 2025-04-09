@@ -12,28 +12,27 @@ import IconEdit from '@/components/Icon/IconEdit';
 import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 const rowData = [
     {
         id: 1,
-        plant_name: "Plant A",
-        factory_name: "Factory Alpha",
-        machine_name: "Machine X",
-        created_at: "2025-01-01",
-        status: "In Progress",
-        created_by: "Admin"
+        plant_name: 'Plant A',
+        factory_name: 'Factory Alpha',
+        machine_name: 'Machine X',
+        created_at: '2025-01-01',
+        status: 'In Progress',
+        created_by: 'Admin',
     },
     {
         id: 2,
-        plant_name: "Plant B",
-        factory_name: "Factory Beta",
-        machine_name: "Machine Y",
-        created_at: "2025-01-05",
-        status: "Pending",
-        created_by: "Admin"
+        plant_name: 'Plant B',
+        factory_name: 'Factory Beta',
+        machine_name: 'Machine Y',
+        created_at: '2025-01-05',
+        status: 'Pending',
+        created_by: 'Admin',
     },
 ];
-
 
 const Machines = () => {
     const dispatch = useDispatch();
@@ -89,7 +88,6 @@ const Machines = () => {
         },
     ];
 
-
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '#', isActive: false },
@@ -125,7 +123,6 @@ const Machines = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
-
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
@@ -135,12 +132,12 @@ const Machines = () => {
 
     return (
         <div>
-
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Machine', link: '/iron-smith/machines/create',
-                    icon: <IconPlusCircle className="text-4xl" />
+                    label: 'Add Machine',
+                    link: '/iron-smith/machines/create',
+                    icon: <IconPlusCircle className="text-4xl" />,
                 }}
             />
 
@@ -226,7 +223,7 @@ const Machines = () => {
                             //     sortable: true,
                             //     hidden: hideCols.includes('factory_name'),
                             // },
-                          
+
                             {
                                 accessor: 'status',
                                 title: 'Status',
@@ -234,14 +231,9 @@ const Machines = () => {
                                 hidden: hideCols.includes('status'),
                                 render: ({ status }) => (
                                     <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
+                                        className={`${
+                                            status === 'In Progress' ? 'text-info' : status === 'Pending' ? 'text-warning' : status === 'Completed' ? 'text-success' : 'text-danger'
+                                        } capitalize`}
                                     >
                                         {status}
                                     </div>
@@ -258,21 +250,19 @@ const Machines = () => {
                                 title: 'Created At',
                                 sortable: true,
                                 hidden: hideCols.includes('created_at'),
-                                render: ({ created_at }) => (
-                                    <div>{new Date(created_at).toLocaleDateString()}</div>
-                                ),
+                                render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
                             },
                             {
                                 accessor: 'action',
                                 title: 'Actions',
                                 sortable: false,
                                 hidden: hideCols.includes('action'),
-                                render: ({ id }) => (
+                                render: (rowData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
                                         <NavLink to={`#`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
-                                        <NavLink to={`#`} className="flex hover:text-primary">
+                                        <NavLink to={`/iron-smith/machines/details`} state={{ rowData }} className="flex hover:text-primary">
                                             <IconEye />
                                         </NavLink>
                                     </div>
@@ -289,12 +279,9 @@ const Machines = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
                 </div>
-
             </div>
         </div>
     );
