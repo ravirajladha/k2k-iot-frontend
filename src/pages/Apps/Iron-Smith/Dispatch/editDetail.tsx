@@ -36,7 +36,7 @@ const DispatchDetailPage = () => {
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
         { label: 'Dispatch', link: '/iron-smith/dispatch/view', isActive: false },
-        { label: 'Detail Page', link: '#', isActive: true },
+        { label: 'Edit Page', link: '#', isActive: true },
     ];
 
     const handleSubmit = (e: React.FormEvent) => {

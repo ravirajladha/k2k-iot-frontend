@@ -36,7 +36,7 @@ const JobOrderPage = () => {
             </button>
             <div className="p-4 pt-10">
                 {/* Client Details Section */}
-                <div className="panel mb-6  p-4 rounded-lg shadow-md">
+                <div className="panel mb-6 p-4 rounded-lg shadow-md">
                     <h2 className="text-lg font-semibold mb-4">Client & Work Order Details</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-4 rounded-lg shadow">
@@ -69,7 +69,7 @@ const JobOrderPage = () => {
                 <div className="panel mb-6">
                     <div className="flex gap-6 justify-center">
                         {jobOrder.products.map((product, index) => (
-                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative">
+                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative" style={{ height: '320px' }}>
                                 {/* Logo in the left corner */}
                                 <div className="logo absolute left-0 top-0 p-1">
                                     <img src={logo} alt="Logo" className="w-30 h-7" />
@@ -86,7 +86,7 @@ const JobOrderPage = () => {
                                 <div className="flex flex-row justify-between">
                                     {/* Key-Value Data */}
                                     <div className="product-details flex-1 p-1 text-xs">
-                                        <div className="grid grid-cols-2 gap-2">
+                                        <div className="grid grid-cols-2 gap-1">
                                             <div>
                                                 <strong>BBS NO:</strong>
                                             </div>
@@ -98,7 +98,7 @@ const JobOrderPage = () => {
                                             <div>
                                                 <strong>Desc:</strong>
                                             </div>
-                                            <div>SHEARWALL BBS 3RD RAFT</div>
+                                            <div className="whitespace-nowrap">SHEARWALL BBS 3RD RAFT</div>
                                             <div>
                                                 <strong>Bar Mark:</strong>
                                             </div>
@@ -127,10 +127,10 @@ const JobOrderPage = () => {
                                     </div>
 
                                     {/* QR Code, Bar Image, and Table */}
-                                    <div className="qr-code-container flex flex-col items-center ml-4">
-                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mb-4" />
-                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-24 h-24 mb-2" />
-                                        <table className="w-full border-collapse" style={{ fontSize: '0.8rem' }}>
+                                    <div className="qr-code-container flex flex-col items-center ml-6">
+                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-18 h-20 mb-4" />
+                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-18 h-16 mb-2" />
+                                        <table className="w-full border-collapse" style={{ fontSize: '0.8rem', height: '40px' }}>
                                             <thead>
                                                 <tr>
                                                     <th className="border px-1 py-0.5">A</th>

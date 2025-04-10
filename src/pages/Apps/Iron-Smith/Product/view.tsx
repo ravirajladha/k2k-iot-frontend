@@ -270,7 +270,8 @@ const ProductView = () => {
                                 hidden: hideCols.includes('action'),
                                 render: ({ materialCode, productDescription, plantCode, unitOfMeasurement, noOfPiecesPerPunch, qtyInBundle, qtyInNoPerBundle, status }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/edit/${materialCode}`} className="flex hover:text-info">
+                                        <NavLink to={`#`} className="flex hover:text-info">
+                                        {/* to={`/edit/${materialCode}`} */}
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
                                         <NavLink to={`/iron-smith/product/detail`} state={{ rowData: { materialCode, productDescription, plantCode, unitOfMeasurement, noOfPiecesPerPunch, qtyInBundle, qtyInNoPerBundle, status } }} className="flex hover:text-primary">
