@@ -114,7 +114,7 @@ const JobOrderPage = () => {
                                             <div>
                                                 <strong>CL:</strong>
                                             </div>
-                                            <div>: 2840</div>
+                                            <div>2840</div>
                                             <div>
                                                 <strong>Qty:</strong>
                                             </div>

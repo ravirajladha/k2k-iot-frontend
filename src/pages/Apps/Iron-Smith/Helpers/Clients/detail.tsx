@@ -123,18 +123,16 @@ const InventoryDetailPage = () => {
                                             />
                                         </td>
                                         <td className="px-4 py-2 border border-gray-300 relative w-16">
-                                        <NavLink
+                                            <NavLink
                                                 to={`/iron-smith/clients/raw-material/view`}
                                                 state={{ diameter, quantity: quantities[parseInt(diameter)] }}
                                                 className="flex hover:text-primary absolute left-2"
                                             >
                                                 <IconEye />
                                             </NavLink>
-                                            <NavLink to={`#`}
-                                             state={{ diameter, quantity: quantities[parseInt(diameter)] }} className="flex hover:text-info absolute right-2">
-                                                <IconTrashLines/>
+                                            <NavLink to={`#`} state={{ diameter, quantity: quantities[parseInt(diameter)] }} className="flex hover:text-info absolute right-2">
+                                                <IconTrashLines />
                                             </NavLink>
-                                           
                                         </td>
                                     </tr>
                                 ))}

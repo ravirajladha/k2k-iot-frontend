@@ -432,8 +432,8 @@ const Create = () => {
                                                                 />
                                                             </div>
                                                             <div className="flex items-center">
-                                                                <p className="font-medium mr-2">Diameter:</p>
-                                                                <input type="text" className="form-input w-32" placeholder="(in mm)" value={item.diameter} />
+                                                                <p className="font-medium mr-2">Diameter (mm):</p>
+                                                                <input type="text" className="form-input w-32" placeholder="in mm" value={item.diameter} />
                                                             </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">Weight:</p>
