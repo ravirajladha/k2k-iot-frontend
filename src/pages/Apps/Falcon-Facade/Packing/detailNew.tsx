@@ -102,6 +102,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/1)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 1</div>
                                         <div>
@@ -116,7 +118,6 @@ const JobOrderPage = () => {
                                 </div>
                                 <div className="flex items-center justify-center flex flex-col">
                                     <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-36 h-36 mb-4" />
-                                    <strong className="mr-1">QR Id:</strong>
                                     <strong className="mr-1">QR Id:</strong>
                                     {mode === 'create' ? <input type="text" className="form-input px-2 py-1 w-48" /> : <div>QR123</div>}
                                 </div>
@@ -140,6 +141,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/2)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 2</div>
                                         <div>
@@ -179,6 +182,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/3)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 3</div>
                                         <div>
@@ -216,6 +221,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/4)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 4</div>
                                         <div>
@@ -255,6 +262,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/5)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 5</div>
                                         <div>
@@ -292,6 +301,8 @@ const JobOrderPage = () => {
                                         <div>: Client Alpha</div>
                                         <div className="font-semibold">Project Name</div>
                                         <div>: Project Phoenix</div>
+                                        <div className="font-semibold">SF Id</div>
+                                        <div>: SF JO98765-1-(1/6)</div>
                                         <div className="font-semibold">Bundle No</div>
                                         <div>: 6</div>
                                         <div>

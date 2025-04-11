@@ -45,7 +45,7 @@ const QCCheckModal: React.FC<QCCheckModalProps> = ({ isOpen, setShowQCCheck, dat
           min={0}
         />
 
-        <label className="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">Process</label>
+        <label className="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">Process Back To</label>
         <Select
                                 id="sfId"
                                 options={sfOptions}

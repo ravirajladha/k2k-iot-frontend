@@ -49,7 +49,7 @@ export const ViewDetailsModal = ({ data, closeModal, handleStartJob, handleStopJ
 
                 <div className="mt-5 flex justify-between">
                     <button onClick={closeModal} className="btn btn-outline-primary">
-                        Send Notification
+                        Invite QC
                     </button>
                     <button onClick={closeModal} className="btn btn-outline-danger">
                         Close

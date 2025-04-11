@@ -8,6 +8,12 @@ import {
     WorkOrderView,
     WorkOrderCreate,
     WorkOrderDetail,
+
+    //////////New Work Order Tab -
+    NewWorkOrderCreate,
+    NewWorkOrderView,
+    NewWorkOrderViewDetail,
+
     ProductView,
     ProductCreate,
     HelperClients,
@@ -82,6 +88,23 @@ export const falconFacadeRoutes = [
     {
         path: `${basePath}/work-order/detail`,
         element: <WorkOrderDetail />,
+        layout: 'admin',
+    },
+
+    //New Work Order Tab -
+    {
+        path: `${basePath}/work-orders`,
+        element: <NewWorkOrderView />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/work-orders/create`,
+        element: <NewWorkOrderCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/work-orders/detail`,
+        element: <NewWorkOrderViewDetail />,
         layout: 'admin',
     },
 

@@ -5,6 +5,12 @@ export { default as QCCheckCreate } from './QCCheck/create';
 export { default as WorkOrderView } from './WorkOrder/view';
 export { default as WorkOrderCreate } from './WorkOrder/create';
 
+////New Work Order Tab -
+export { default as NewWorkOrderCreate } from './NewWorkOrderTab/create';
+export { default as NewWorkOrderView } from './NewWorkOrderTab/view';
+export { default as NewWorkOrderViewDetail } from './NewWorkOrderTab/detail';
+
+
 export { default as WorkOrderDetail } from './WorkOrder/detail';
 export { default as Canvas } from './WorkOrder/canvas';
 

@@ -13,12 +13,7 @@ import { addAlert } from '@/store/slices/alertSlice';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-interface Client {
-    value: string;
-    label: string;
-    projects: Project[];
-}
-
+// Define interfaces
 interface Product {
     value: string;
     label: string;
@@ -27,12 +22,10 @@ interface Product {
     colorCode: string;
     height: string;
     width: string;
+    totalQty: string;
+    achievedQty: string;
+    balanceQty: string;
     sf: string[];
-}
-
-interface Project {
-    value: string;
-    label: string;
 }
 
 interface FormData {
@@ -63,10 +56,47 @@ interface FormData {
     }>;
 }
 
-const products = [
-    { label: 'Inward Window', value: 'Inward Window', uom: 'Nos', code: 'TYPE-P5(T)', colorCode: 'RAL 9092', height: '1047', width: '1025', sf: ['SF1', 'SF2', 'SF3'] },
-    { label: 'Outward Window', value: 'Outward Window', uom: 'Nos', code: 'TYPE-P6(T)', colorCode: 'RAL 9092', height: '1047', width: '1025', sf: ['SF1', 'SF2'] },
-    { label: 'Facade', value: 'Facade', uom: 'Nos', code: 'TYPE-P7(T)', colorCode: 'RAL 9092', height: '1047', width: '1025', sf: ['SF3', 'SF4'] },
+// Sample product data
+const products: Product[] = [
+    {
+        label: 'Inward Window',
+        value: 'Inward Window',
+        uom: 'Nos',
+        code: 'TYPE-P5(T)',
+        colorCode: 'RAL 9092',
+        height: '1047',
+        width: '1025',
+        totalQty: '100',
+        achievedQty: '50',
+        balanceQty: '50',
+        sf: ['SF1', 'SF2', 'SF3'],
+    },
+    {
+        label: 'Outward Window',
+        value: 'Outward Window',
+        uom: 'Nos',
+        code: 'TYPE-P6(T)',
+        colorCode: 'RAL 9092',
+        height: '1047',
+        width: '1025',
+        totalQty: '100',
+        achievedQty: '50',
+        balanceQty: '50',
+        sf: ['SF1', 'SF2'],
+    },
+    {
+        label: 'Facade',
+        value: 'Facade',
+        uom: 'Nos',
+        code: 'TYPE-P7(T)',
+        colorCode: 'RAL 9092',
+        height: '1047',
+        width: '1025',
+        totalQty: '100',
+        achievedQty: '50',
+        balanceQty: '50',
+        sf: ['SF3', 'SF4'],
+    },
 ];
 
 const Create = () => {
@@ -88,7 +118,6 @@ const Create = () => {
         files: [],
         items: [{ id: 1, product: null, sf: [] }],
     });
-    console.log('formData', formData);
 
     const workOrders = ['Work Order A', 'Work Order B', 'Work Order C'];
     const jobOrders = ['Job Order A', 'Job Order B', 'Job Order C'];
@@ -121,15 +150,15 @@ const Create = () => {
         setFormData((prev) => ({ ...prev, files: imageList }));
     };
 
-    const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const dispatch = useDispatch();
 
-    const handleProductChange = (selectedOption: any, id: number) => {
+    // Handle product selection
+    const handleProductChange = (selectedOption: Product | null, id: number) => {
         setFormData((prev) => ({
             ...prev,
-            items: prev.items.map((item) => (item.id === id ? { ...item, product: selectedOption, sf: [] } : item)),
+            items: prev.items.map((item) =>
+                item.id === id ? { ...item, product: selectedOption, sf: [] } : item
+            ),
         }));
     };
 
@@ -140,7 +169,9 @@ const Create = () => {
                 item.id === id
                     ? {
                           ...item,
-                          sf: item.sf.some((sfItem) => sfItem.name === sf) ? item.sf : [...item.sf, { name: sf, quantity: 0, qrCodes: [], selected: true }],
+                          sf: item.sf.some((sfItem) => sfItem.name === sf)
+                              ? item.sf
+                              : [...item.sf, { name: sf, quantity: 0, qrCodes: [], selected: true }],
                       }
                     : item
             ),
@@ -155,7 +186,11 @@ const Create = () => {
                 item.id === id
                     ? {
                           ...item,
-                          sf: item.sf.map((sfItem) => (sfItem.name === sf ? { ...sfItem, quantity: safeQuantity, qrCodes: Array(safeQuantity).fill('') } : sfItem)),
+                          sf: item.sf.map((sfItem) =>
+                              sfItem.name === sf
+                                  ? { ...sfItem, quantity: safeQuantity, qrCodes: Array(safeQuantity).fill('') }
+                                  : sfItem
+                          ),
                       }
                     : item
             ),
@@ -169,7 +204,14 @@ const Create = () => {
                 item.id === id
                     ? {
                           ...item,
-                          sf: item.sf.map((sfItem) => (sfItem.name === sf ? { ...sfItem, qrCodes: sfItem.qrCodes.map((code, i) => (i === index ? value : code)) } : sfItem)),
+                          sf: item.sf.map((sfItem) =>
+                              sfItem.name === sf
+                                  ? {
+                                        ...sfItem,
+                                        qrCodes: sfItem.qrCodes.map((code, i) => (i === index ? value : code)),
+                                    }
+                                  : sfItem
+                          ),
                       }
                     : item
             ),
@@ -177,7 +219,9 @@ const Create = () => {
     };
 
     const addItem = () => {
-        const newItemId = formData.items.length ? Math.max(...formData.items.map((item) => item.id)) + 1 : 1;
+        const newItemId = formData.items.length
+            ? Math.max(...formData.items.map((item) => item.id)) + 1
+            : 1;
         setFormData((prev) => ({
             ...prev,
             items: [...prev.items, { id: newItemId, product: null, sf: [] }],
@@ -200,7 +244,14 @@ const Create = () => {
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/packing', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <Breadcrumbs
+                items={breadcrumbItems}
+                addButton={{
+                    label: 'Back',
+                    link: '/falcon-facade/packing',
+                    icon: <IconArrowBackward className="text-4xl" />,
+                }}
+            />
             <div className="panel">
                 <div className="mb-5">
                     <h5 className="font-semibold text-lg">Create Packing</h5>
@@ -208,13 +259,18 @@ const Create = () => {
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="workOrderId" className="block text-sm font-medium text-gray-700">
+                            <label
+                                htmlFor="workOrderId"
+                                className="block text-sm font-medium text-gray-700"
+                            >
                                 Work Order
                             </label>
                             <Select
                                 id="workOrderId"
                                 options={workOrderOptions}
-                                value={workOrderOptions.find((option) => option.value === formData.workOrderId)}
+                                value={workOrderOptions.find(
+                                    (option) => option.value === formData.workOrderId
+                                )}
                                 onChange={handleSelectChange('workOrderId')}
                                 placeholder="Select Work Order"
                                 isSearchable
@@ -222,13 +278,18 @@ const Create = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="jobOrder" className="block text-sm font-medium text-gray-700">
+                            <label
+                                htmlFor="jobOrder"
+                                className="block text-sm font-medium text-gray-700"
+                            >
                                 Job Order
                             </label>
                             <Select
                                 id="jobOrder"
                                 options={jobOrderOptions}
-                                value={jobOrderOptions.find((option) => option.value === formData.jobOrder)}
+                                value={jobOrderOptions.find(
+                                    (option) => option.value === formData.jobOrder
+                                )}
                                 onChange={handleSelectChange('jobOrder')}
                                 placeholder="Select Job Order"
                                 isSearchable
@@ -237,20 +298,49 @@ const Create = () => {
 
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input" value={formData.workOrderDate} onChange={handleInputChange} />
+                            <input
+                                id="workOrderDate"
+                                name="workOrderDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.workOrderDate}
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div>
                             <label htmlFor="plantCode">Plant Code</label>
-                            <input id="plantCode" name="plantCode" type="text" className="form-input" placeholder="Enter Plant Code" value={formData.plantCode} onChange={handleInputChange} />
+                            <input
+                                id="plantCode"
+                                name="plantCode"
+                                type="text"
+                                className="form-input"
+                                placeholder="Enter Plant Code"
+                                value={formData.plantCode}
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div>
                             <label htmlFor="prodReqDate">Production Request Date</label>
-                            <input id="prodReqDate" name="prodReqDate" type="date" className="form-input" value={formData.prodReqDate} onChange={handleInputChange} />
+                            <input
+                                id="prodReqDate"
+                                name="prodReqDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqDate}
+                                onChange={handleInputChange}
+                            />
                         </div>
 
                         <div>
                             <label htmlFor="prodReqrDate">Production Requirement Date</label>
-                            <input id="prodReqrDate" name="prodReqrDate" type="date" className="form-input" value={formData.prodReqrDate} onChange={handleInputChange} />
+                            <input
+                                id="prodReqrDate"
+                                name="prodReqrDate"
+                                type="date"
+                                className="form-input"
+                                value={formData.prodReqrDate}
+                                onChange={handleInputChange}
+                            />
                         </div>
                     </div>
                     <div className="mt-8">
@@ -264,6 +354,9 @@ const Create = () => {
                                         <th>Color Code</th>
                                         <th>Height</th>
                                         <th>Width</th>
+                                        <th>Total Quantity</th>
+                                        <th>Achieved</th>
+                                        <th>Balance</th>
                                         <th>Semi Finished Products (SF)</th>
                                         <th>Quantity</th>
                                         <th>Remove</th>
@@ -276,7 +369,9 @@ const Create = () => {
                                                 <Select
                                                     id={`product-${item.id}`}
                                                     value={item.product || null}
-                                                    onChange={(selectedOption) => handleProductChange(selectedOption, item.id)}
+                                                    onChange={(selectedOption) =>
+                                                        handleProductChange(selectedOption, item.id)
+                                                    }
                                                     options={products}
                                                     className="custom-select flex-1 w-48"
                                                     classNamePrefix="custom-select"
@@ -288,26 +383,79 @@ const Create = () => {
                                             </td>
 
                                             <td>
-                                                <input type="text" value={item.product?.uom || ''} readOnly className="form-input border-none focus:outline-none focus:ring-0 w-32" />
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.uom || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
                                             </td>
                                             <td>
-                                                <input type="text" value={item.product?.code || ''} readOnly className="form-input border-none focus:outline-none focus:ring-0 w-32" />
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.code || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
                                             </td>
                                             <td>
-                                                <input type="text" value={item.product?.colorCode || ''} readOnly className="form-input border-none focus:outline-none focus:ring-0 w-32" />
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.colorCode || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
                                             </td>
                                             <td>
-                                                <input type="text" value={item.product?.height || ''} readOnly className="form-input border-none focus:outline-none focus:ring-0 w-32" />
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.height || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
                                             </td>
                                             <td>
-                                                <input type="text" value={item.product?.width || ''} readOnly className="form-input border-none focus:outline-none focus:ring-0 w-32" />
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.width || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.totalQty || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.achievedQty || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    value={item.product?.balanceQty || ''}
+                                                    readOnly
+                                                    className="form-input border-none focus:outline-none focus:ring-0 w-32"
+                                                />
                                             </td>
 
                                             <td>
                                                 {item.product && (
                                                     <div>
                                                         {item.product.sf.map((sf, index) => (
-                                                            <button key={index} onClick={() => handleAddSF(sf, item.id)} className="btn btn-primary m-2">
+                                                            <button
+                                                                key={index}
+                                                                onClick={() => handleAddSF(sf, item.id)}
+                                                                className="btn btn-primary m-2"
+                                                            >
                                                                 {sf}
                                                             </button>
                                                         ))}
@@ -325,7 +473,13 @@ const Create = () => {
                                                                     type="number"
                                                                     placeholder="Quantity"
                                                                     value={sfItem.quantity}
-                                                                    onChange={(e) => handleQuantityChange(item.id, sfItem.name, parseInt(e.target.value) || 0)}
+                                                                    onChange={(e) =>
+                                                                        handleQuantityChange(
+                                                                            item.id,
+                                                                            sfItem.name,
+                                                                            parseInt(e.target.value) || 0
+                                                                        )
+                                                                    }
                                                                     className="form-input px-4 py-2 w-24"
                                                                 />
                                                             </div>
@@ -334,7 +488,15 @@ const Create = () => {
                                             </td>
 
                                             <td>
-                                                <button type="button" onClick={() => setFormData((prev) => ({ ...prev, items: prev.items.filter((i) => i.id !== item.id) }))}>
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setFormData((prev) => ({
+                                                            ...prev,
+                                                            items: prev.items.filter((i) => i.id !== item.id),
+                                                        }))
+                                                    }
+                                                >
                                                     ❌
                                                 </button>
                                             </td>
@@ -359,7 +521,11 @@ const Create = () => {
                                 Upload Files <span className="text-red-500">*</span>
                             </label>
                             <div className="relative flex items-center">
-                                <button onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} className="text-gray-500 hover:text-gray-700">
+                                <button
+                                    onMouseEnter={() => setShowTooltip(true)}
+                                    onMouseLeave={() => setShowTooltip(false)}
+                                    className="text-gray-500 hover:text-gray-700"
+                                >
                                     <IconInfoCircle className="h-5 w-5" />
                                 </button>
                                 {showTooltip && (
@@ -370,18 +536,35 @@ const Create = () => {
                             </div>
                         </div>
 
-                        <ImageUploading multiple value={formData.files} onChange={handleFileChange} maxNumber={maxNumber}>
+                        <ImageUploading
+                            multiple
+                            value={formData.files}
+                            onChange={handleFileChange}
+                            maxNumber={maxNumber}
+                        >
                             {({ imageList, onImageUpload, onImageRemove }) => (
                                 <div>
-                                    <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary mb-2 flex items-center space-x-2"
+                                        onClick={onImageUpload}
+                                    >
                                         <IconFile className="shrink-0" />
                                         <span>Upload Files</span>
                                     </button>
                                     <div className="grid gap-4 sm:grid-cols-3 grid-cols-1">
                                         {imageList.map((image, index) => (
                                             <div key={index} className="relative">
-                                                <img src={image.dataURL} alt="uploaded" className="w-full h-32 object-cover rounded" />
-                                                <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full" onClick={() => onImageRemove(index)}>
+                                                <img
+                                                    src={image.dataURL}
+                                                    alt="uploaded"
+                                                    className="w-full h-32 object-cover rounded"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+                                                    onClick={() => onImageRemove(index)}
+                                                >
                                                     ×
                                                 </button>
                                             </div>
@@ -393,7 +576,11 @@ const Create = () => {
                     </div>
 
                     <div className="flex gap-4">
-                        <NavLink to="/falcon-facade/packing/detail" state={{ rowData: formData, mode: 'create' }} className="btn btn-success w-1/2 flex items-center justify-center">
+                        <NavLink
+                            to="/falcon-facade/packing/detail"
+                            state={{ rowData: formData, mode: 'create' }}
+                            className="btn btn-success w-1/2 flex items-center justify-center"
+                        >
                             Create
                         </NavLink>
                         <button type="submit" className="btn btn-danger w-1/2">

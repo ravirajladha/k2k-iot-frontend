@@ -67,7 +67,10 @@ const products: Product[] = [
     // { label: 'Product7', value: 'Product7', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
 ];
 
+
+
 const Create = () => {
+
     const clients: Client[] = [
         {
             value: 'client1',
@@ -90,7 +93,7 @@ const Create = () => {
     const [formData, setFormData] = useState<FormData>({
         id: 0, // Default ID value
         product: null, // Default value for product
-        code: '',
+        code:'',
         uom: '',
         quantity: 0, // Default numeric value
         plantCode: '',
@@ -135,7 +138,7 @@ const Create = () => {
             {
                 id: maxId + 1,
                 product: null,
-                code: '',
+                code:'',
                 uom: '',
                 quantity: 0,
                 plantCode: '',
@@ -232,7 +235,7 @@ const Create = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Falcon Facade', link: '/', isActive: false },
-        { label: 'Job Order', link: '/falcon-facade/work-order', isActive: false },
+        { label: 'Work Order', link: '/falcon-facade/work-orders', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
     const [expandedProductId, setExpandedProductId] = useState<number | null>(null);
@@ -266,10 +269,10 @@ const Create = () => {
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/work-order', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/falcon-facade/work-orders', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5">
-                    <h5 className="font-semibold text-lg">Create Job Order</h5>
+                    <h5 className="font-semibold text-lg">Create Work Order</h5>
                 </div>
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -310,7 +313,7 @@ const Create = () => {
                                 getOptionLabel={(e) => e.label}
                                 getOptionValue={(e) => e.value}
                                 placeholder="Select Project"
-                                // styles={customStyles}
+                                styles={customStyles}
                                 isClearable
                                 isDisabled={!selectedClient} // Disable until a client is selected
                             />
@@ -346,7 +349,7 @@ const Create = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
-                        <div>
+                        {/* <div>
                             <label htmlFor="plantCode">Production Issued and Approved By</label>
                             <input
                                 id="plantCode"
@@ -379,7 +382,7 @@ const Create = () => {
                                 //     .split("T")[0]} // 7 days from today
                                 onChange={handleInputChange}
                             />
-                        </div>
+                        </div> */}
                         {/* Work Order Date */}
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
@@ -397,7 +400,7 @@ const Create = () => {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label htmlFor="prodReqDate">Production Request Date</label>
                             <input
                                 id="prodReqDate"
@@ -427,7 +430,7 @@ const Create = () => {
                                 //     .split("T")[0]} // 7 days from today
                                 onChange={handleInputChange}
                             />
-                        </div>
+                        </div> */}
                         <div>
                             <label htmlFor="plantCode">Remarks</label>
                             <textarea id="remarks" name="remarks" placeholder="Enter Remarks" className="form-input" value={formData.remarks} onChange={handleInputChange}></textarea>
@@ -439,14 +442,16 @@ const Create = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Description</th>
-                                        <th>Code</th>
+                                        <th>Product Description</th>
+                                        <th> Sac Code</th>
+                                        <th>Quantity</th>
                                         <th>UOM</th>
-                                        <th>PO Quantity</th>
+
                                         {/* <th>Delivery Date (optional)</th> */}
-                                        <th>Color Code</th> {/* New Bar Mark column */}
-                                        <th>Width</th>
-                                        <th>Height</th>
+                                        {/* <th>Color Code</th>  */}
+                                        {/* New Bar Mark column */}
+                                        {/* <th>Width</th>
+                                        <th>Height</th> */}
                                         {/* New Member Details column */}
                                         <th></th>
                                     </tr>
@@ -483,20 +488,11 @@ const Create = () => {
                                                         }}
                                                     />
                                                 </td>
-
+                                                
                                                 <td>
-                                                    <input
-                                                        type="text"
-                                                        className="form-input w-28"
-                                                        placeholder="Code"
-                                                        value={item.code}
-                                                        onChange={(e) => handleChange(item.id, 'code', e.target.value)}
-                                                    />
+                                                    <input type="text" className="form-input w-28" placeholder="Code" value={item.code} onChange={(e) => handleChange(item.id, 'code', e.target.value)} />
                                                 </td>
-                                                {/* UOM */}
-                                                <td>
-                                                    <input type="text" className="form-input w-24" placeholder="UOM" value={item.uom} readOnly />
-                                                </td>
+                                              
 
                                                 {/* PO Quantity */}
                                                 <td>
@@ -508,6 +504,10 @@ const Create = () => {
                                                         value={item.quantity}
                                                         onChange={(e) => handleChange(item.id, 'quantity', parseInt(e.target.value) || 0)}
                                                     />
+                                                </td>
+                                                  {/* UOM */}
+                                                  <td>
+                                                    <input type="text" className="form-input w-24" placeholder="UOM" value={item.uom} readOnly />
                                                 </td>
 
                                                 {/* Delivery Date */}
@@ -521,7 +521,7 @@ const Create = () => {
                             </td> */}
 
                                                 {/* Bar Mark (New Field) */}
-                                                <td>
+                                                {/* <td>
                                                     <input
                                                         type="text"
                                                         className="form-input w-24"
@@ -529,10 +529,10 @@ const Create = () => {
                                                         value={item.colorCode}
                                                         onChange={(e) => handleChange(item.id, 'colorCode', e.target.value)}
                                                     />
-                                                </td>
+                                                </td> */}
 
                                                 {/* Member Details (New Field) */}
-                                                <td>
+                                                {/* <td>
                                                     <input
                                                         type="text"
                                                         className="form-input w-24"
@@ -549,7 +549,7 @@ const Create = () => {
                                                         value={item.height}
                                                         onChange={(e) => handleChange(item.id, 'height', e.target.value)}
                                                     />
-                                                </td>
+                                                </td> */}
 
                                                 <td>
                                                     <button type="button" onClick={() => removeItem(item.id)}>
