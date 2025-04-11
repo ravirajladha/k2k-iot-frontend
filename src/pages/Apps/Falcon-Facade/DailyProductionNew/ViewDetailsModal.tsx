@@ -47,7 +47,10 @@ export const ViewDetailsModal = ({ data, closeModal, handleStartJob, handleStopJ
                     </button> */}
                 </div>
 
-                <div className="mt-5 flex justify-end">
+                <div className="mt-5 flex justify-between">
+                    <button onClick={closeModal} className="btn btn-outline-primary">
+                        Send Notification
+                    </button>
                     <button onClick={closeModal} className="btn btn-outline-danger">
                         Close
                     </button>

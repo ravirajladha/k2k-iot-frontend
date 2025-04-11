@@ -36,7 +36,8 @@ import {
     InventoryView,
     PackingView,
     PackingCreate,
-    PackingDetail, //New
+    // PackingDetail, //New
+    PackingDetailNew, //New
     PackingViewNew, //New
     DispatchView,
     DispatchCreate,
@@ -172,9 +173,14 @@ export const falconFacadeRoutes = [
         element: <PackingCreate />,
         layout: 'admin',
     },
+    // {
+    //     path: `${basePath}/packing/detail`,
+    //     element: <PackingDetail />,
+    //     layout: 'admin',
+    // },
     {
         path: `${basePath}/packing/detail`,
-        element: <PackingDetail />,
+        element: <PackingDetailNew />,
         layout: 'admin',
     },
 

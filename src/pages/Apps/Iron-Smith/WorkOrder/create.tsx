@@ -359,7 +359,7 @@ const Create = () => {
                                                         }}
                                                     />
                                                 </td>
-{/* 
+                                                {/* 
                                                 <td>
                                                     <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />
                                                 </td>

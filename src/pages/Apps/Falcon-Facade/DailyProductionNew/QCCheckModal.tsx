@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Dialog, Transition } from '@headlessui/react';
+import Select from 'react-select';
+
 
 interface QCCheckModalProps {
   isOpen: boolean;
@@ -20,6 +22,12 @@ const QCCheckModal: React.FC<QCCheckModalProps> = ({ isOpen, setShowQCCheck, dat
     });
     setShowQCCheck(null); // Close modal after submission
   };
+  const sfs = ['Cutting', 'Machining', 'Assembeling','Glass Fixing'];
+
+  const sfOptions = sfs.map((sf) => ({
+    value: sf,
+    label: sf,
+}));
 
   return (
     <div className="w-full max-w-lg p-6 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-md">
@@ -37,6 +45,20 @@ const QCCheckModal: React.FC<QCCheckModalProps> = ({ isOpen, setShowQCCheck, dat
           min={0}
         />
 
+        <label className="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">Process</label>
+        <Select
+                                id="sfId"
+                                options={sfOptions}
+                                // value={sfOptions.find((option) => option.value === formData.sfId)}
+                                // onChange={(selectedOption) =>
+                                //     setFormData((prev) => ({
+                                //         ...prev,
+                                //         sfId: selectedOption ? selectedOption.value : '',
+                                //     }))
+                                // }
+                                placeholder="Select Process"
+                                isSearchable
+                            />
         <label className="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">Remarks</label>
         <textarea
           value={remarks}

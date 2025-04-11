@@ -31,7 +31,8 @@ export { default as InventoryView } from './Inventory/view';
 
 export { default as PackingView } from './Packing/view';
 export { default as PackingCreate } from './Packing/create';
-export { default as PackingDetail } from './Packing/detail'; //Detail
+// export { default as PackingDetail } from './Packing/detail'; //Detail
+export { default as PackingDetailNew } from './Packing/detailNew'; //Detail New
 export { default as PackingViewNew } from './Packing/viewNew'; //View
 
 export { default as DispatchView } from './Dispatch/view';

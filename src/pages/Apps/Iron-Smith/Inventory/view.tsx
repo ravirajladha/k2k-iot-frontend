@@ -16,9 +16,7 @@ import 'swiper/css/pagination';
 import IconX from '@/components/Icon/IconX';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
 
-
-
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 
 interface Product {
     materialCode: number;
@@ -33,7 +31,6 @@ interface Product {
     qtyInNoPerBundle: number;
     status: string;
 }
-
 
 const rowData = [
     {
@@ -90,8 +87,6 @@ const rowData = [
     },
 ];
 
-
-
 const ColumnChooser = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -140,8 +135,6 @@ const ColumnChooser = () => {
         { accessor: 'requiredQuantity', title: 'Required Quantity' },
         { accessor: 'bufferQuantity', title: 'Buffer Quantity' },
 
-
-
         { accessor: 'balanceQuantity', title: 'Balance Quantity' },
         { accessor: 'unitOfMeasurement', title: 'Unit of Measurement' },
         { accessor: 'noOfPiecesPerPunch', title: 'No. of Pieces Per Punch' },
@@ -150,7 +143,6 @@ const ColumnChooser = () => {
         { accessor: 'status', title: 'Status' },
         { accessor: 'action', title: 'Actions' }, // Placeholder for actions like edit/delete.
     ];
-
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
@@ -177,7 +169,6 @@ const ColumnChooser = () => {
                     item.quantity.toString().includes(search.toLowerCase()) ||
                     item.requiredQuantity.toString().includes(search.toLowerCase()) ||
                     item.bufferQuantity.toString().includes(search.toLowerCase()) ||
-
                     item.balanceQuantity.toString().includes(search.toLowerCase()) ||
                     item.unitOfMeasurement.toLowerCase().includes(search.toLowerCase()) ||
                     item.noOfPiecesPerPunch.toString().includes(search.toLowerCase()) ||
@@ -190,7 +181,6 @@ const ColumnChooser = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
-
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
         setInitialRecords(sortStatus.direction === 'desc' ? data.reverse() : data);
@@ -200,11 +190,7 @@ const ColumnChooser = () => {
 
     return (
         <div>
-            <Breadcrumbs
-                items={breadcrumbItems}
-              
-            />
-
+            <Breadcrumbs items={breadcrumbItems} />
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
@@ -279,7 +265,6 @@ const ColumnChooser = () => {
                             },
 
                             { accessor: 'quantity', title: 'Inventory Quantity', sortable: true, hidden: hideCols.includes('quantity') },
-                     
 
                             {
                                 accessor: 'requiredQuantity',
@@ -299,11 +284,7 @@ const ColumnChooser = () => {
                                 title: 'Status',
                                 sortable: true,
                                 hidden: hideCols.includes('status'),
-                                render: ({ status }) => (
-                                    <div className={`${status === 'Active' ? 'text-success' : 'text-danger'} capitalize`}>
-                                        {status}
-                                    </div>
-                                ),
+                                render: ({ status }) => <div className={`${status === 'Active' ? 'text-success' : 'text-danger'} capitalize`}>{status}</div>,
                             },
                             {
                                 accessor: 'action',
@@ -313,11 +294,11 @@ const ColumnChooser = () => {
                                 render: ({ materialCode }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
                                         <NavLink to={`#`} className="flex hover:text-info">
-                                        {/* to={`/edit/${materialCode}`} */}
+                                            {/* to={`/edit/${materialCode}`} */}
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
                                         <NavLink to={`/iron-smith/inventory/detail`} state={{ rowData, materialCode }} className="flex hover:text-primary">
-                                        {/* to={`/view/${materialCode}`} */}
+                                            {/* to={`/view/${materialCode}`} */}
                                             <IconEye />
                                         </NavLink>
 
@@ -334,7 +315,6 @@ const ColumnChooser = () => {
                                             >
                                                 View
                                             </button>
-
                                         </div>
                                     </div>
                                 ),
@@ -350,9 +330,7 @@ const ColumnChooser = () => {
                         sortStatus={sortStatus}
                         onSortStatusChange={setSortStatus}
                         minHeight={200}
-                        paginationText={({ from, to, totalRecords }) =>
-                            `Showing ${from} to ${to} of ${totalRecords} entries`
-                        }
+                        paginationText={({ from, to, totalRecords }) => `Showing ${from} to ${to} of ${totalRecords} entries`}
                     />
 
                     <Transition appear show={modal10} as={Fragment}>
@@ -375,21 +353,14 @@ const ColumnChooser = () => {
                                         {/* Modal Header */}
                                         <div className="flex items-center justify-between bg-gray-100 px-5 py-3 dark:bg-[#121c2c]">
                                             <h5 className="text-lg font-bold">{selectedProduct?.productDescription}</h5>
-                                            <button
-                                                onClick={() => setModal10(false)}
-                                                type="button"
-                                                className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
-                                            >
+                                            <button onClick={() => setModal10(false)} type="button" className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
                                                 <IconX />
                                             </button>
                                         </div>
                                         {/* Modal Body */}
                                         <div>
                                             {/* Full-width Product Image */}
-                                            <img
-                                                src="/assets/images/profile-34.jpeg" alt="Product"
-                                                className="w-full h-60 object-cover"
-                                            />
+                                            <img src="/assets/images/profile-34.jpeg" alt="Product" className="w-full h-60 object-cover" />
                                             {/* Product Details */}
                                             <div className="p-5">
                                                 <div className="grid grid-cols-2 gap-4">
@@ -401,7 +372,7 @@ const ColumnChooser = () => {
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Quantity:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.quantity || 'N/A'}</p>
                                                     </div>
-                                                     {/*
+                                                    {/*
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Buffer Quantity:</p>
                                                         <p className="text-base font-medium text-gray-800 dark:text-white">{selectedProduct?.bufferQuantity || 'N/A'}</p>
@@ -422,21 +393,16 @@ const ColumnChooser = () => {
                                                     <div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">Status:</p>
                                                         <span
-                                                            className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${selectedProduct?.status === 'Active'
-                                                                ? 'bg-green-100 text-green-700'
-                                                                : 'bg-red-100 text-red-700'
-                                                                }`}
+                                                            className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${
+                                                                selectedProduct?.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                                            }`}
                                                         >
                                                             {selectedProduct?.status || 'N/A'}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div className="mt-8 flex items-center justify-end">
-                                                    <button
-                                                        onClick={() => setModal10(false)}
-                                                        type="button"
-                                                        className="btn btn-outline-danger"
-                                                    >
+                                                    <button onClick={() => setModal10(false)} type="button" className="btn btn-outline-danger">
                                                         Close
                                                     </button>
                                                 </div>
@@ -447,8 +413,6 @@ const ColumnChooser = () => {
                             </div>
                         </Dialog>
                     </Transition>
-
-
                 </div>
             </div>
         </div>
