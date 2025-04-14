@@ -308,6 +308,29 @@ const WorkOrderPage = () => {
         },
     ];
 
+    const qcData = [
+        {
+            slNo: "1",
+            product: "Steel Rod",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Product failure due to maximum yeilding point."
+        },
+        {
+            slNo: "2",
+            product: "Iron Rod",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Passed at maximum pressure test."
+        },
+        {
+            slNo: "3",
+            product: "Cast Iron Rod",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Passed maximum bending."
+        }
+    ]
 
     const filteredData = packingData.filter(
         (item) =>
@@ -759,6 +782,39 @@ const WorkOrderPage = () => {
                                                 </tr>
                                             ))}
                                         </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="panel mt-4 bg-slate-50">
+                    <div className="flex items-center justify-between mb-5">
+                        <h5 className="font-semibold text-lg dark:text-white-light">QC Details</h5>
+                        <input type="text" className="form-input w-auto" placeholder="Search by Product Name or Vehicle Number..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    </div>
+                    <div className="datatables">
+                        <div className="overflow-x-auto">
+                            <table className="table-auto w-full border-collapse border border-gray-200">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th>Sl No.</th>
+                                        <th>Product Name</th>
+                                        <th>Recycled Qty</th>
+                                        <th>Rejected Qty</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {qcData.map((qc) => (
+                                        <tr key={qc.slNo}>
+                                            <td>{qc.slNo}</td>
+                                            <td>{qc.product}</td>
+                                            <td>{qc.recycledQty}</td>
+                                            <td>{qc.rejectedQty}</td>
+                                            <td>{qc.remark}</td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>

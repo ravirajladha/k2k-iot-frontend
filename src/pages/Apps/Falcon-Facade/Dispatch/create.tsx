@@ -26,6 +26,8 @@ interface QRCodeData {
     uom: string;
     code: string;
     colorCode: string;
+    balanceQty: string;
+    totalQty: string;
     quantity: number;
     height?: string;
     width?: string;
@@ -86,16 +88,16 @@ const DispatchCreation = () => {
     //     { id: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
     // ];
     const workOrders: WorkOrder[] = [
-        { id: 'JO101', woNumber: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X', address: '123 Main St, City A' },
-        { id: 'JO102', woNumber: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y', address: '456 Oak Ave, City B' },
-        { id: 'JO103', woNumber: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
+        { id: 'JO101', woNumber: 'JO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X', address: '123 Main St, City A' },
+        { id: 'JO102', woNumber: 'JO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y', address: '456 Oak Ave, City B' },
+        { id: 'JO103', woNumber: 'JO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z', address: '789 Pine Rd, City C' },
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        QR123456: { productId: 'P001', workOrder: 'WO101', product: 'Inward Window', uom: 'Nos', quantity: 50, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
-        QR654321: { productId: 'P002', workOrder: 'WO101', product: 'Outward Window', uom: 'Nos', quantity: 30, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
-        QR789012: { productId: 'P001', workOrder: 'WO101', product: 'Facade', uom: 'Nos', quantity: 100, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
-        QR345678: { productId: 'P003', workOrder: 'WO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' },
+        QR123456: { productId: 'P001', workOrder: 'JO101', product: 'Inward Window', uom: 'Nos', quantity: 50, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100" },
+        QR654321: { productId: 'P002', workOrder: 'JO101', product: 'Outward Window', uom: 'Nos', quantity: 30, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100"  },
+        QR789012: { productId: 'P001', workOrder: 'JO101', product: 'Facade', uom: 'Nos', quantity: 100, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100"  },
+        QR345678: { productId: 'P003', workOrder: 'JO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' ,balanceQty:"50",totalQty:"100" },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({
@@ -159,6 +161,8 @@ const DispatchCreation = () => {
                     title: qrData.product,
                     uom: qrData.uom,
                     dispatchQuantity: qrData.quantity,
+                    balanceQuantity: qrData.balanceQty,
+                    totalQuantity: qrData.totalQty,
                     code: qrData.code,
                     colorCode: qrData.colorCode,
                     height: '1047',
@@ -309,6 +313,8 @@ const DispatchCreation = () => {
                                             <th className="border border-gray-300 px-2 py-1">UOM</th>
                                             <th className="border border-gray-300 px-2 py-1">SF</th>
                                             <th className="border border-gray-300 px-2 py-1">Dispatch Qty</th>
+                                            <th className="border border-gray-300 px-2 py-1">Balance Qty</th>
+                                            <th className="border border-gray-300 px-2 py-1">Total Qty</th>
                                             <th className="border border-gray-300 px-2 py-1">Code</th>
                                             <th className="border border-gray-300 px-2 py-1">Color Code</th>
                                             <th className="border border-gray-300 px-2 py-1">Height</th>
@@ -328,6 +334,8 @@ const DispatchCreation = () => {
                                                 <td className="border border-gray-300 px-2 py-1">{item.uom}</td>
                                                 <td className="border border-gray-300 px-2 py-1">SF1</td>
                                                 <td className="border border-gray-300 px-2 py-1">{item.dispatchQuantity}</td>
+                                                <td className="border border-gray-300 px-2 py-1">{item.balanceQuantity}</td>
+                                                <td className="border border-gray-300 px-2 py-1">{item.totalQuantity}</td>
                                                 <td className="border border-gray-300 px-2 py-1">{item.code}</td>
                                                 <td className="border border-gray-300 px-2 py-1">{item.colorCode}</td>
                                                 <td className="border border-gray-300 px-2 py-1">

@@ -153,7 +153,6 @@ const WorkOrderPage = () => {
         },
         deadline: '2025-01-20',
         status: 'In Progress',
-        // priority: 'High',
         bufferStock: 'False',
     };
 
@@ -168,7 +167,6 @@ const WorkOrderPage = () => {
             serialNumber: 'BR001',
             productId: 'P101',
             workOrderId: 'WO111',
-
             quantity: 500,
             rejectedQuantity: 10,
             date: '2025-01-10 10:30 AM',
@@ -176,7 +174,6 @@ const WorkOrderPage = () => {
         },
         {
             workOrderId: 'WO112',
-
             serialNumber: 'BR002',
             productId: 'P102',
             quantity: 450,
@@ -188,7 +185,6 @@ const WorkOrderPage = () => {
             serialNumber: 'BR003',
             productId: 'P103',
             workOrderId: 'WO113',
-
             quantity: 600,
             rejectedQuantity: 15,
             date: '2025-01-12 09:45 AM',
@@ -198,7 +194,6 @@ const WorkOrderPage = () => {
             serialNumber: 'BR004',
             productId: 'P104',
             workOrderId: 'WO114',
-
             quantity: 550,
             rejectedQuantity: 20,
             date: '2025-01-13 02:20 PM',
@@ -249,6 +244,30 @@ const WorkOrderPage = () => {
         },
     ];
 
+    const qcData = [
+        {
+            slNo: "1",
+            product: "1000010188/Paver Black 200*200*60",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Base material is not properly compacted."
+        },
+        {
+            slNo: "2",
+            product: "1000010184/Paver Grey 200*200*60",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Brick broken due to excess water."
+        },
+        {
+            slNo: "3",
+            product: "1000010186/Paver Red 200*200*60",
+            recycledQty: "5",
+            rejectedQty: "10",
+            remark: "Extreme temperature change leading to cracks."
+        }
+    ];
+
     const filteredData = packingData.filter((item) => item.serialNumber.toLowerCase().includes(search.toLowerCase()) || item.productId.toLowerCase().includes(search.toLowerCase()));
 
     const [expandedJobOrders, setExpandedJobOrders] = useState(jobOrders.map((job) => job.id));
@@ -260,7 +279,7 @@ const WorkOrderPage = () => {
             setExpandedJobOrders((prev) => [...prev, id]);
         }
     };
-    // Filter data based on search
+
     const filteredData1 = dispatchData.filter((dispatch) =>
         dispatch.products.some((product) => product.productName.toLowerCase().includes(search.toLowerCase()) || product.vehicleNumber.toLowerCase().includes(search.toLowerCase()))
     );
@@ -329,7 +348,7 @@ const WorkOrderPage = () => {
                             <p className="text-sm">
                                 <strong>Status:</strong>
                                 <span
-                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold
                     ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
                                 >
                                     {workOrder.status}
@@ -339,7 +358,7 @@ const WorkOrderPage = () => {
                             <p className="text-sm">
                                 <strong>Buffer Stock:</strong>
                                 <span
-                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold 
+                                    className={`ml-2 px-2 py-1 rounded text-sm font-semibold
                     ${workOrder.bufferStock === 'False' ? 'text-red-500' : workOrder.bufferStock === 'True' ? 'text-yellow-500' : 'text-green-500'}`}
                                 >
                                     {workOrder.bufferStock}
@@ -390,8 +409,6 @@ const WorkOrderPage = () => {
                 <div className="panel mb-4 bg-gray-100" id="labeled">
                     <div className="flex items-center justify-between mb-5">
                         <h5 className="font-semibold text-lg dark:text-white-light">Overall Progress</h5>
-                        {/* </div> */}
-                        {/* <div className="mb-5 space-y-5"> */}
                         <div className="w-full h-4 bg-[#ebedf2] dark:bg-dark/40 rounded-full">
                             <div className="bg-info h-4 rounded-full w-4/5 text-center text-white text-xs">80%</div>
                         </div>
@@ -402,10 +419,7 @@ const WorkOrderPage = () => {
                 <div className="panel mb-4 bg-gray-100 p-4 rounded-lg shadow">
                     {jobOrders.map((jobOrder) => (
                         <div key={jobOrder.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
-                            {/* Job Order Header */}
                             <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Job Order - {jobOrder.id}</h2>
-
-                            {/* Job Order Details Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
                                 <div>
                                     <p className="text-sm">
@@ -421,8 +435,6 @@ const WorkOrderPage = () => {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* Product Details Table */}
                             <div className="overflow-x-auto mt-3">
                                 <table className="w-full border-collapse border border-gray-200 text-sm">
                                     <thead className="bg-gray-100 dark:bg-gray-700">
@@ -449,16 +461,12 @@ const WorkOrderPage = () => {
                                     </tbody>
                                 </table>
                             </div>
-
-                            {/* Toggle Button for Production Reports */}
                             <div className="mt-4">
                                 <button type="button" onClick={() => toggleJobOrder(jobOrder.id)} className="flex items-center text-primary font-semibold transition-all hover:text-blue-600">
                                     <span className={`mr-2 transition-transform ${expandedJobOrders.includes(jobOrder.id) ? 'rotate-180' : ''}`}>▼</span>
                                     {expandedJobOrders.includes(jobOrder.id) ? 'Hide Production Reports' : 'Show Production Reports'}
                                 </button>
                             </div>
-
-                            {/* Expandable Daily Production Reports */}
                             <AnimateHeight duration={300} height={expandedJobOrders.includes(jobOrder.id) ? 'auto' : 0} className="bg-gray-50 dark:bg-gray-900 rounded mt-3">
                                 <ul className="text-gray-600 dark:text-gray-300">
                                     {jobOrder.dailyReports.map((report, index) => (
@@ -492,8 +500,6 @@ const WorkOrderPage = () => {
                                     ))}
                                 </ul>
                             </AnimateHeight>
-
-                            {/* Downtime Details Section */}
                             <div className="mt-6 bg-red-50 dark:bg-red-900 p-4 rounded-lg">
                                 <h2 className="text-lg font-semibold text-red-600 dark:text-red-300 mb-3">Downtime Details</h2>
                                 <div className="overflow-x-auto">
@@ -536,8 +542,6 @@ const WorkOrderPage = () => {
                             records={filteredData}
                             columns={[
                                 { accessor: 'serialNumber', title: 'Serial Number' },
-                                // { accessor: 'workOrderId', title: 'Work Order ID' },
-
                                 { accessor: 'productId', title: 'Product ID' },
                                 { accessor: 'date', title: 'Date & Time' },
                                 { accessor: 'quantity', title: 'Quantity' },
@@ -568,12 +572,9 @@ const WorkOrderPage = () => {
                                 <thead className="bg-gray-100">
                                     <tr>
                                         <th>Dispatch ID</th>
-                                        {/* <th>Work Order Id</th> */}
                                         <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>UOM</th>
-                                        {/* <th>Rate</th>
-                                        <th>Amount</th> */}
                                         <th>Timestamp</th>
                                         <th>Vehicle Number</th>
                                         <th>Docket Number</th>
@@ -583,28 +584,58 @@ const WorkOrderPage = () => {
                                 <tbody>
                                     {filteredData1.map((dispatch) => (
                                         <React.Fragment key={dispatch.dispatchId}>
-                                            {/* Dispatch Header */}
                                             <tr className="bg-gray-100 font-bold">
-                                                <td colSpan={7}>Dispatch ID: {dispatch.dispatchId}</td>
-                                                <td>
-                                                    <IconFile />
-                                                </td>
+                                                <td colSpan={8}>Dispatch ID: {dispatch.dispatchId}</td>
                                             </tr>
-                                            {/* Products under Dispatch */}
                                             {dispatch.products.map((product, index) => (
                                                 <tr key={index}>
-                                                    <td></td> {/* Empty cell for Dispatch ID */}
+                                                    <td></td>
                                                     <td>{product.productName}</td>
                                                     <td>{product.quantity}</td>
                                                     <td>{product.uom}</td>
-                                                    {/* <td>{product.rate}</td>
-                                                    <td>{product.amount}</td> */}
                                                     <td>{product.timestamp}</td>
                                                     <td>{product.vehicleNumber}</td>
                                                     <td>{product.docketNumber}</td>
+                                                    <td>
+                                                        <IconFile />
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {/* QC Details Section */}
+                <div className="panel mt-4 bg-slate-50">
+                    <div className="flex items-center justify-between mb-5">
+                        <h5 className="font-semibold text-lg dark:text-white-light">QC Details</h5>
+                        <input type="text" className="form-input w-auto" placeholder="Search by Product Name or Vehicle Number..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    </div>
+                    <div className="datatables">
+                        <div className="overflow-x-auto">
+                            <table className="table-auto w-full border-collapse border border-gray-200">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th>Sl No.</th>
+                                        <th>Product Name</th>
+                                        <th>Recycled Qty</th>
+                                        <th>Rejected Qty</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {qcData.map((qc) => (
+                                        <tr key={qc.slNo}>
+                                            <td>{qc.slNo}</td>
+                                            <td>{qc.product}</td>
+                                            <td>{qc.recycledQty}</td>
+                                            <td>{qc.rejectedQty}</td>
+                                            <td>{qc.remark}</td>
+                                        </tr>
                                     ))}
                                 </tbody>
                             </table>

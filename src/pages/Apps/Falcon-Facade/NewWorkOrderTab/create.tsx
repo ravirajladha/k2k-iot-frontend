@@ -67,10 +67,7 @@ const products: Product[] = [
     // { label: 'Product7', value: 'Product7', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
 ];
 
-
-
 const Create = () => {
-
     const clients: Client[] = [
         {
             value: 'client1',
@@ -93,7 +90,7 @@ const Create = () => {
     const [formData, setFormData] = useState<FormData>({
         id: 0, // Default ID value
         product: null, // Default value for product
-        code:'',
+        code: '',
         uom: '',
         quantity: 0, // Default numeric value
         plantCode: '',
@@ -138,7 +135,7 @@ const Create = () => {
             {
                 id: maxId + 1,
                 product: null,
-                code:'',
+                code: '',
                 uom: '',
                 quantity: 0,
                 plantCode: '',
@@ -313,7 +310,7 @@ const Create = () => {
                                 getOptionLabel={(e) => e.label}
                                 getOptionValue={(e) => e.value}
                                 placeholder="Select Project"
-                                styles={customStyles}
+                                // styles={customStyles}
                                 isClearable
                                 isDisabled={!selectedClient} // Disable until a client is selected
                             />
@@ -488,11 +485,16 @@ const Create = () => {
                                                         }}
                                                     />
                                                 </td>
-                                                
+
                                                 <td>
-                                                    <input type="text" className="form-input w-28" placeholder="Code" value={item.code} onChange={(e) => handleChange(item.id, 'code', e.target.value)} />
+                                                    <input
+                                                        type="text"
+                                                        className="form-input w-28"
+                                                        placeholder="Code"
+                                                        value={item.code}
+                                                        onChange={(e) => handleChange(item.id, 'code', e.target.value)}
+                                                    />
                                                 </td>
-                                              
 
                                                 {/* PO Quantity */}
                                                 <td>
@@ -505,8 +507,8 @@ const Create = () => {
                                                         onChange={(e) => handleChange(item.id, 'quantity', parseInt(e.target.value) || 0)}
                                                     />
                                                 </td>
-                                                  {/* UOM */}
-                                                  <td>
+                                                {/* UOM */}
+                                                <td>
                                                     <input type="text" className="form-input w-24" placeholder="UOM" value={item.uom} readOnly />
                                                 </td>
 
