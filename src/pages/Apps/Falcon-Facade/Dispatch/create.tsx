@@ -94,10 +94,10 @@ const DispatchCreation = () => {
     ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
-        QR123456: { productId: 'P001', workOrder: 'JO101', product: 'Inward Window', uom: 'Nos', quantity: 50, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100" },
-        QR654321: { productId: 'P002', workOrder: 'JO101', product: 'Outward Window', uom: 'Nos', quantity: 30, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100"  },
-        QR789012: { productId: 'P001', workOrder: 'JO101', product: 'Facade', uom: 'Nos', quantity: 100, code: 'TYPE-P5(T)', colorCode: 'RAL 9092',balanceQty:"50",totalQty:"100"  },
-        QR345678: { productId: 'P003', workOrder: 'JO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20, code: 'TYPE-P5(T)', colorCode: 'RAL 9092' ,balanceQty:"50",totalQty:"100" },
+        QR123456: { productId: 'P001', workOrder: 'JO101', product: 'Inward Window', uom: 'Nos', quantity: 50, code: 'TYPE-P5(T)', colorCode: 'RAL 9092', balanceQty: '50', totalQty: '100' },
+        QR654321: { productId: 'P002', workOrder: 'JO101', product: 'Outward Window', uom: 'Nos', quantity: 30, code: 'TYPE-P5(T)', colorCode: 'RAL 9092', balanceQty: '50', totalQty: '100' },
+        QR789012: { productId: 'P001', workOrder: 'JO101', product: 'Facade', uom: 'Nos', quantity: 100, code: 'TYPE-P5(T)', colorCode: 'RAL 9092', balanceQty: '50', totalQty: '100' },
+        QR345678: { productId: 'P003', workOrder: 'JO103', product: 'Curtain Wall', uom: 'Nos', quantity: 20, code: 'TYPE-P5(T)', colorCode: 'RAL 9092', balanceQty: '50', totalQty: '100' },
     };
 
     const workOrderOptions = workOrders.map((wo) => ({

@@ -57,7 +57,7 @@ const ClientCreation = () => {
         <div>
             <Breadcrumbs
                 items={breadcrumbItems}
-                addButton={{ label: 'Back', link: '/plants' , icon: <IconArrowBackward className="text-4xl" /> }}
+                addButton={{ label: 'Back', link: '/konkrete-klinkers/plants' , icon: <IconArrowBackward className="text-4xl" /> }}
                 />
             <div className="panel mb-10">
                 <div className="mb-5">

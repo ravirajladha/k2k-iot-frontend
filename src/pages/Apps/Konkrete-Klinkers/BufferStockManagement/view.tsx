@@ -9,6 +9,9 @@ import Dropdown from '@/components/Dropdown';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import IconCaretDown from '@/components/Icon/IconCaretDown';
 import IconPlusCircle from '@/components/Icon/IconPlusCircle';
+import IconEdit from '@/components/Icon/IconEdit';
+import IconEye from '@/components/Icon/IconEye';
+
 
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -251,10 +254,13 @@ const BufferStockManagement = () => {
                                 render: (recordsData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
                                         <NavLink to={`/konkrete-klinkers/stockManagement/editDetail`} state={{ rowData: recordsData }} className="flex hover:text-info">
-                                            <span className="btn btn-sm btn-outline-primary">Edit</span>
+                                            {/* <span className="btn btn-sm btn-outline-primary">Edit</span> */}
+                                            <IconEdit className="w-4.5 h-4.5" />
+
                                         </NavLink>
                                         <NavLink to={`/konkrete-klinkers/stockManagement/detail`} state={{ rowData: recordsData }} className="flex hover:text-primary">
-                                            <span className="btn btn-sm btn-outline-secondary">View</span>
+                                            {/* <span className="btn btn-sm btn-outline-secondary">View</span> */}
+                                            <IconEye />
                                         </NavLink>
                                     </div>
                                 ),
