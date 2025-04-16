@@ -141,6 +141,14 @@ const Sidebar = () => {
 
                             <li className="nav-item">
                                 <ul>
+                                <li className="nav-item">
+                                        <NavLink to={`${falconFacadeBasePath}/work-orders`} className="group">
+                                            <div className="flex items-center">
+                                                <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Work Order')}</span>
+                                            </div>
+                                        </NavLink>
+                                    </li>
                                     <li className="nav-item">
                                         <NavLink to={`${falconFacadeBasePath}/work-order`} className="group">
                                             <div className="flex items-center">
@@ -149,14 +157,7 @@ const Sidebar = () => {
                                             </div>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
-                                        <NavLink to={`${falconFacadeBasePath}/work-orders`} className="group">
-                                            <div className="flex items-center">
-                                                <IconMenuPages className="group-hover:!text-primary shrink-0" />
-                                                <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Work Order')}</span>
-                                            </div>
-                                        </NavLink>
-                                    </li>
+                                   
                                     <li className="nav-item">
                                         <NavLink to={`${falconFacadeBasePath}/job-order`} className="group">
                                             <div className="flex items-center">

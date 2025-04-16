@@ -128,23 +128,23 @@ const JobOrderPage = () => {
 
                                     {/* QR Code, Bar Image, and Table */}
                                     <div className="qr-code-container flex flex-col items-center ml-6">
-                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-18 h-20 mb-4" />
-                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-18 h-16 mb-2" />
-                                        <table className="w-full border-collapse" style={{ fontSize: '0.8rem', height: '40px' }}>
+                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24" />
+                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-32 h-16  mb-2" />
+                                        <table className="border-collapse" style={{ fontSize: '0.45rem', width: '70px', height: '20px' }}>
                                             <thead>
                                                 <tr>
-                                                    <th className="border px-1 py-0.5">A</th>
-                                                    <th className="border px-1 py-0.5">B</th>
-                                                    <th className="border px-1 py-0.5">C</th>
-                                                    <th className="border px-1 py-0.5">D</th>
+                                                    <th className="border px-0 py-0 text-center">A</th>
+                                                    <th className="border px-0 py-0 text-center">B</th>
+                                                    <th className="border px-0 py-0 text-center">C</th>
+                                                    <th className="border px-0 py-0 text-center">D</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td className="border px-1 py-0.5">120</td>
-                                                    <td className="border px-1 py-0.5">120</td>
-                                                    <td className="border px-1 py-0.5">120</td>
-                                                    <td className="border px-1 py-0.5">5770</td>
+                                                    <td className="border px-0 py-0 text-center">120</td>
+                                                    <td className="border px-0 py-0 text-center">120</td>
+                                                    <td className="border px-0 py-0 text-center">120</td>
+                                                    <td className="border px-0 py-0 text-center">5770</td>
                                                 </tr>
                                             </tbody>
                                         </table>

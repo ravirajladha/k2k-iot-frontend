@@ -41,6 +41,7 @@ interface FormData {
     uom: string;
     poQuantity: string | number;
     date: string;
+    dia: string;
     plannedQuantity: string;
     actualQuantity: string;
     rejectedQuantity: string;
@@ -57,6 +58,7 @@ const ProductionPlanning = () => {
         uom: '',
         poQuantity: '',
         date: '',
+        dia: '',
         plannedQuantity: '',
         actualQuantity: '',
         rejectedQuantity: '',
@@ -144,6 +146,7 @@ const ProductionPlanning = () => {
                 plannedQuantity: 0,
                 scheduleDate: '',
                 selectedMachines: [],
+                checked: false, // Initialize checkbox as unchecked
             },
         ]);
     };
@@ -154,6 +157,10 @@ const ProductionPlanning = () => {
 
     const updateField = (id: number, field: string, value: number) => {
         setItems((prevItems: any) => prevItems.map((item: any) => (item.id === id ? { ...item, [field]: value } : item)));
+    };
+
+    const handleCheckboxChange = (id: number) => {
+        setItems((prevItems: any) => prevItems.map((item: any) => (item.id === id ? { ...item, checked: !item.checked } : item)));
     };
 
     const workOrderOptions = workOrders.map((wo) => ({ value: wo.id, label: `${wo.id} - ${wo.clientName} - ${wo.projectName}` }));
@@ -282,6 +289,22 @@ const ProductionPlanning = () => {
                                 onChange={(date3) => setDate3(date3)}
                             />
                         </div>
+                        <div>
+                            <label htmlFor="machine">Machine</label>
+                            <Select
+                                // id={`machineSelection-${item.id}`}
+                                name="machineSelection"
+                                options={machineOptions}
+                                // onChange={(selectedOptions) => handleMachineChange(selectedOptions, item.id)}
+                                // value={machineOptions.filter((option) => (item.selectedMachines || []).includes(option.value))}
+                                className="form-input"
+                                placeholder="Select Machines"
+                                isSearchable
+                                isMulti
+                                styles={customStyles}
+                                menuPortalTarget={document.body}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-8">
@@ -289,17 +312,19 @@ const ProductionPlanning = () => {
                             <table>
                                 <thead className="bg-black">
                                     <tr>
+                                        <th> </th> {/* Checkbox column header */}
                                         <th>Product</th>
+                                        <th>Dia (mm)</th>
                                         <th>Planned Quantity</th>
                                         <th>Schedule Date</th>
-                                        <th>Machine</th>
+                                        {/* <th>Machine</th> */}
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {items.length <= 0 && (
                                         <tr>
-                                            <td colSpan={5} className="!text-center font-semibold">
+                                            <td colSpan={7} className="!text-center font-semibold">
                                                 No Item Available
                                             </td>
                                         </tr>
@@ -307,6 +332,9 @@ const ProductionPlanning = () => {
                                     {items.map((item: any) => (
                                         <React.Fragment key={item.id}>
                                             <tr>
+                                                <td>
+                                                    <input type="checkbox" checked={item.checked} onChange={() => handleCheckboxChange(item.id)} className="form-checkbox" />
+                                                </td>
                                                 <td>
                                                     <Select
                                                         id={`productDropdown-${item.id}`}
@@ -338,6 +366,16 @@ const ProductionPlanning = () => {
                                                     <input
                                                         type="number"
                                                         className="form-input w-32"
+                                                        placeholder="Enter Dia"
+                                                        min={0}
+                                                        value={item.dia}
+                                                        onChange={(e) => updateField(item.id, 'dia', Number(e.target.value))}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        className="form-input w-32"
                                                         placeholder="Planned Quantity"
                                                         min={0}
                                                         value={item.plannedQuantity}
@@ -356,7 +394,7 @@ const ProductionPlanning = () => {
                                                         onChange={(e) => updateField(item.id, 'scheduleDate', Number(e.target.value))}
                                                     />
                                                 </td>
-                                                <td>
+                                                {/* <td>
                                                     <Select
                                                         id={`machineSelection-${item.id}`}
                                                         name="machineSelection"
@@ -370,7 +408,7 @@ const ProductionPlanning = () => {
                                                         styles={customStyles}
                                                         menuPortalTarget={document.body}
                                                     />
-                                                </td>
+                                                </td> */}
                                                 <td>
                                                     <button type="button" onClick={() => removeItem(item)}>
                                                         <IconX className="w-5 h-5" />
@@ -378,7 +416,7 @@ const ProductionPlanning = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colSpan={5}>
+                                                <td colSpan={7}>
                                                     <div className="bg-gray-100 p-3 rounded-lg shadow-md mt-2 flex justify-between items-center">
                                                         <h4 className="text-lg font-semibold">Auto-Fetched Details:</h4>
                                                         <div className="flex space-x-6">

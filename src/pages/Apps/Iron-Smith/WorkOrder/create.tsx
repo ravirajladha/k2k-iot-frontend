@@ -17,6 +17,12 @@ interface Client {
     label: string;
     projects: Project[];
 }
+// interface Product {
+//     value: string;
+//     label: string;
+//     uom: string;
+//     dimensions: string[];
+// }
 interface Product {
     value: string;
     label: string;
@@ -49,10 +55,15 @@ interface FormData {
     files: any[];
 }
 
+// const products: Product[] = [
+//     { label: 'Steel Rod', value: 'Product1', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
+//     { label: 'Iron Rod', value: 'Product2', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F'] },
+//     { label: 'Cast Iron Rod', value: 'Product3', uom: 'nos', dimensions: ['A', 'B', 'C'] },
+// ];
 const products: Product[] = [
-    { label: 'Steel Rod', value: 'Product1', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
-    { label: 'Iron Rod', value: 'Product2', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F'] },
-    { label: 'Cast Iron Rod', value: 'Product3', uom: 'nos', dimensions: ['A', 'B', 'C'] },
+    { label: 'SC-1', value: 'Product1', uom: 'nos', dimensions: ['A', 'B', 'C', 'D'] },
+    { label: 'SC-2', value: 'Product2', uom: 'nos', dimensions: ['A', 'B', 'C', 'D', 'E', 'F'] },
+    { label: 'SC-3', value: 'Product3', uom: 'nos', dimensions: ['A', 'B', 'C'] },
 ];
 
 // Sample clients data with projects
@@ -133,6 +144,7 @@ const Create = () => {
                 deliveryDate: '',
                 barMark: '',
                 memberDetails: '',
+                memberQty: '',
                 shapes: [],
             },
         ]);
@@ -317,7 +329,10 @@ const Create = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Product Name / Material Code</th>
+                                        <th>Sl.No.</th>
+                                        <th>Shape Code</th>
+                                        {/* <th>Member Qty</th> */}
+                                        {/* <th>Product Name / Material Code</th> */}
                                         {/* <th>UOM</th>
                                         <th>PO Quantity</th>
                                         <th>Diameter</th>
@@ -329,9 +344,10 @@ const Create = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {items.map((item) => (
+                                    {items.map((item, index) => (
                                         <React.Fragment key={item.id}>
                                             <tr>
+                                                <td>{index + 1}</td>
                                                 <td>
                                                     <Select
                                                         id={`productDropdown-${item.id}`}
@@ -344,7 +360,7 @@ const Create = () => {
                                                         value={item.product}
                                                         getOptionLabel={(e: Product) => e.label}
                                                         getOptionValue={(e: Product) => e.value}
-                                                        placeholder="Select Product"
+                                                        placeholder="Select Shape Code"
                                                         isClearable
                                                         menuPortalTarget={document.body}
                                                         menuPosition="absolute"
@@ -382,6 +398,15 @@ const Create = () => {
                                                     <input type="text" className="form-input w-32" placeholder="" value={item.weight} />
                                                 </td> */}
 
+                                                {/* <td>
+                                                    <input
+                                                        type="text"
+                                                        className="form-input w-32"
+                                                        placeholder="Member Qty"
+                                                        value={item.memberQty}
+                                                        onChange={(e) => handleChange(item.id, 'memberQty', e.target.value)}
+                                                    />
+                                                </td> */}
                                                 <td>
                                                     <input
                                                         type="text"
@@ -412,10 +437,14 @@ const Create = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colSpan={4}>
+                                                <td colSpan={6}>
                                                     <div className="bg-gray-100 p-3 rounded-lg shadow-md mt-2 flex justify-between items-center">
                                                         {/* <h4 className="text-lg font-semibold">Auto-Fetched Details:</h4> */}
                                                         <div className="flex space-x-6">
+                                                            <div className="flex items-center">
+                                                                <p className="font-medium mr-2">Member Quantity:</p>
+                                                                <input type="text" className="form-input w-32" placeholder="Qty" value={item.uom} readOnly />
+                                                            </div>
                                                             <div className="flex items-center">
                                                                 <p className="font-medium mr-2">UOM:</p>
                                                                 <input type="text" className="form-input w-32" placeholder="UOM" value={item.uom} readOnly />

@@ -43,7 +43,7 @@ const LoginCover = () => {
             setShowSuccessMessage(true);
             console.log('Redirecting to dashboard after successful login...');
             // addAlert('Welcome! Your account has been created successfully.', 'success');
-            // navigate('/'); 
+            // navigate('/');
         }
     }, [isAuthenticated, navigate]);
 
@@ -80,11 +80,8 @@ const LoginCover = () => {
                         <div className="mx-auto w-full max-w-[440px]">
                             <div className="mb-10 text-center">
                                 <h1 className="text-3xl font-extrabold uppercase !leading-snug text-success md:text-4xl">Login Page</h1>
-                                <p className="text-base font-bold leading-normal text-white-dark">
-                                    Enter your email and password to login
-                                </p>
+                                <p className="text-base font-bold leading-normal text-white-dark">Enter your email and password to login</p>
                             </div>
-
 
                             <form className="space-y-5 dark:text-white" onSubmit={handleSubmit}>
                                 <div>
@@ -129,8 +126,6 @@ const LoginCover = () => {
                                     {isLoading ? 'Signing in...' : 'Sign in'}
                                 </button>
                             </form>
-
-
                         </div>
                     </div>
                 </div>

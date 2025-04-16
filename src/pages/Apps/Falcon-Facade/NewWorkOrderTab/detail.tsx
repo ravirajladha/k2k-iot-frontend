@@ -497,6 +497,8 @@ const WorkOrderPage = () => {
                             rejectedQuantity: 3,
                             achievedLogs: mockAchievedLogs1,
                             rejectedLogs: mockRejectedLogs1,
+                            packingData:20,
+                            dispatchData:10
                         },
                         {
                             name: 'Machining',
@@ -506,6 +508,8 @@ const WorkOrderPage = () => {
                             rejectedQuantity: 2,
                             achievedLogs: mockAchievedLogs2,
                             rejectedLogs: mockRejectedLogs2,
+                            packingData:25,
+                            dispatchData:20
                         },
                     ],
                 },
@@ -951,6 +955,8 @@ const WorkOrderPage = () => {
                                                         <th className="px-4 py-2 border">Planned Quantity</th>
                                                         <th className="px-4 py-2 border">Achieved Quantity</th>
                                                         <th className="px-4 py-2 border">Rejected Quantity</th>
+                                                        <th className="px-4 py-2 border">Packing Details</th>
+                                                        <th className="px-4 py-2 border">Dispatch Details</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -969,6 +975,8 @@ const WorkOrderPage = () => {
                                                                     {step.rejectedQuantity}
                                                                 </span>
                                                             </td>
+                                                            <td className="px-4 py-2 border">{step.packingData}</td>
+                                                            <td className="px-4 py-2 border">{step.dispatchData}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>

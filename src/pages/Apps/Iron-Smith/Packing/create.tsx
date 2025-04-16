@@ -12,6 +12,7 @@ const PackingCreation = () => {
 
         productName: '',
         productQuantity: '',
+        weight: '',
         rejectedQuantity: '',
         qrCodeId: '',
     });
@@ -110,6 +111,22 @@ const PackingCreation = () => {
                                 onChange={handleSelectChange('productName')}
                                 placeholder="Select Product"
                                 isSearchable
+                            />
+                        </div>
+                        {/* Weight*/}
+                        <div>
+                            <label htmlFor="weight" className="block text-sm font-medium text-gray-700">
+                                Weight (kg)
+                            </label>
+                            <input
+                                id="weight"
+                                name="weight"
+                                type="number"
+                                placeholder="Enter Weight"
+                                className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
+                                value={formData.weight}
+                                onChange={handleInputChange}
+                                min={0}
                             />
                         </div>
 

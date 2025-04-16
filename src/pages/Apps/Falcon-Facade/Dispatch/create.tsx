@@ -55,6 +55,7 @@ interface FormData {
     vehicleNumber: string;
     contactDetails: string;
     qrCodeImage: string;
+    ticketNumber: string;
 }
 
 const DispatchCreation = () => {
@@ -79,6 +80,7 @@ const DispatchCreation = () => {
         qrCodeImage: '',
         gatePassNo: '',
         dcNo: '',
+        ticketNumber: '',
     });
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -432,6 +434,18 @@ const DispatchCreation = () => {
                                 className="form-input"
                                 value={formData.gatePassNo}
                                 onChange={(e) => setFormData({ ...formData, gatePassNo: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="ticketNumber">Ticket No:</label>
+                            <input
+                                id="ticketNumber"
+                                name="ticketNumber"
+                                type="text"
+                                placeholder="Enter Ticket number"
+                                className="form-input"
+                                value={formData.ticketNumber}
+                                onChange={(e) => setFormData({ ...formData, ticketNumber: e.target.value })}
                             />
                         </div>
                         <div>
