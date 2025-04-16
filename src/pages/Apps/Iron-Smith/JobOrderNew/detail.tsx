@@ -69,7 +69,7 @@ const JobOrderPage = () => {
                 <div className="panel mb-6">
                     <div className="flex gap-6 justify-center">
                         {jobOrder.products.map((product, index) => (
-                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative" style={{ height: '320px' }}>
+                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative" style={{ height: '350px' }}>
                                 {/* Logo in the left corner */}
                                 <div className="logo absolute left-0 top-0 p-1">
                                     <img src={logo} alt="Logo" className="w-30 h-7" />
@@ -86,7 +86,7 @@ const JobOrderPage = () => {
                                 <div className="flex flex-row justify-between">
                                     {/* Key-Value Data */}
                                     <div className="product-details flex-1 p-1 text-xs">
-                                        <div className="grid grid-cols-2 gap-1">
+                                        <div className="grid grid-cols-2 gap-1 ">
                                             <div>
                                                 <strong>BBS NO:</strong>
                                             </div>
@@ -123,28 +123,28 @@ const JobOrderPage = () => {
                                                 <strong>Wt / Kgs:</strong>
                                             </div>
                                             <div className="font-semibold">117.91</div>
+                                            <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-40 h-34 mt-2" />
                                         </div>
                                     </div>
 
                                     {/* QR Code, Bar Image, and Table */}
                                     <div className="qr-code-container flex flex-col items-center ml-6">
-                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24" />
-                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-32 h-16  mb-2" />
-                                        <table className="border-collapse" style={{ fontSize: '0.45rem', width: '70px', height: '20px' }}>
+                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-34 h-32 mt-10 mb-6 ml-6" />
+                                        <table className="border-collapse mt-1">
                                             <thead>
                                                 <tr>
-                                                    <th className="border px-0 py-0 text-center">A</th>
-                                                    <th className="border px-0 py-0 text-center">B</th>
-                                                    <th className="border px-0 py-0 text-center">C</th>
-                                                    <th className="border px-0 py-0 text-center">D</th>
+                                                    <th className="border border-gray-300">A</th>
+                                                    <th className="border border-gray-300">B</th>
+                                                    <th className="border border-gray-300">C</th>
+                                                    <th className="border border-gray-300">D</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td className="border px-0 py-0 text-center">120</td>
-                                                    <td className="border px-0 py-0 text-center">120</td>
-                                                    <td className="border px-0 py-0 text-center">120</td>
-                                                    <td className="border px-0 py-0 text-center">5770</td>
+                                                    <td className="border border-gray-300">120</td>
+                                                    <td className="border border-gray-300">120</td>
+                                                    <td className="border border-gray-300">120</td>
+                                                    <td className="border border-gray-300">5770</td>
                                                 </tr>
                                             </tbody>
                                         </table>
