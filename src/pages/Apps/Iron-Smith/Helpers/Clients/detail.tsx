@@ -22,7 +22,7 @@ const InventoryDetailPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
-        { label: 'Clients', link: '/iron-smith/clients/raw-materials', isActive: false },
+        { label: 'Clients', link: '/iron-smith/clients', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 

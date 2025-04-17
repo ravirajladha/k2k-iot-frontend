@@ -436,7 +436,7 @@ const DispatchCreation = () => {
                                 onChange={(e) => setFormData({ ...formData, gatePassNo: e.target.value })}
                             />
                         </div>
-                        <div>
+                        {/* <div>
                             <label htmlFor="ticketNumber">Ticket No:</label>
                             <input
                                 id="ticketNumber"
@@ -447,7 +447,7 @@ const DispatchCreation = () => {
                                 value={formData.ticketNumber}
                                 onChange={(e) => setFormData({ ...formData, ticketNumber: e.target.value })}
                             />
-                        </div>
+                        </div> */}
                         <div>
                             <label htmlFor="contactDetails">DC No:</label>
                             <input

@@ -59,7 +59,7 @@ interface Item {
     scheduleDate: string;
     selectedMachines: string[];
     checked: boolean;
-    dia: number | string; // Allow number or string based on usage
+    dia: number | string;
     poQuantity: number;
     achievedQuantity: number;
     rejectedQuantity: number;
@@ -149,7 +149,13 @@ const ProductionPlanning = () => {
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === id
-                    ? { ...item, selectedMachines: value.split(',').map((v) => v.trim()).filter((v) => v) }
+                    ? {
+                          ...item,
+                          selectedMachines: value
+                              .split(',')
+                              .map((v) => v.trim())
+                              .filter((v) => v),
+                      }
                     : item
             )
         );
@@ -182,6 +188,12 @@ const ProductionPlanning = () => {
 
     const addItem = () => {
         let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
+        // Map selected machine values to their operation names (part after the dash)
+        const selectedMachineLabels = formData.selectedMachines.map((machineValue) => {
+            const label = machineOptions.find((option) => option.value === machineValue)?.label || machineValue;
+            // Extract the part after the dash and trim whitespace
+            return label.split('-').pop()?.trim() || label;
+        });
         setItems([
             ...items,
             {
@@ -193,12 +205,12 @@ const ProductionPlanning = () => {
                 deliveryDate: '',
                 plannedQuantity: 0,
                 scheduleDate: '',
-                selectedMachines: formData.selectedMachines,
+                selectedMachines: selectedMachineLabels,
                 checked: false,
                 dia: '',
-                poQuantity: 100, // Default value
-                achievedQuantity: 50, // Default value
-                rejectedQuantity: 10, // Default value
+                poQuantity: 100,
+                achievedQuantity: 50,
+                rejectedQuantity: 10,
             },
         ]);
     };

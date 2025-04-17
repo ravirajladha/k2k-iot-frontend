@@ -455,8 +455,8 @@ const WorkOrderPage = () => {
                             rejectedQuantity: 3,
                             achievedLogs: mockAchievedLogs1,
                             rejectedLogs: mockRejectedLogs1,
-                            packingData:20,
-                            dispatchData:10
+                            packingData: 20,
+                            dispatchData: 10,
                         },
                         {
                             name: 'Machining',
@@ -466,8 +466,8 @@ const WorkOrderPage = () => {
                             rejectedQuantity: 2,
                             achievedLogs: mockAchievedLogs2,
                             rejectedLogs: mockRejectedLogs2,
-                            packingData:25,
-                            dispatchData:20
+                            packingData: 25,
+                            dispatchData: 20,
                         },
                     ],
                 },

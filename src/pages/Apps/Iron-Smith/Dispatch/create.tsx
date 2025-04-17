@@ -52,6 +52,8 @@ const DispatchCreation = () => {
         invoiceSto: '',
         vehicleNumber: '',
         qrCodeImage: '',
+        ticketNumber: ''
+
     });
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -328,6 +330,18 @@ const DispatchCreation = () => {
                                 className="form-input"
                                 value={formData.vehicleNumber}
                                 onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="ticketNumber">Ticket No:</label>
+                            <input
+                                id="ticketNumber"
+                                name="ticketNumber"
+                                type="text"
+                                placeholder="Enter Ticket number"
+                                className="form-input"
+                                value={formData.ticketNumber}
+                                onChange={(e) => setFormData({ ...formData, ticketNumber: e.target.value })}
                             />
                         </div>
 

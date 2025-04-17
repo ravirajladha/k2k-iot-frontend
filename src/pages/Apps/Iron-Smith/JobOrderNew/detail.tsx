@@ -12,6 +12,7 @@ const JobOrderPage = () => {
     const location = useLocation();
     const { jobOrder } = location.state || {};
     console.log('jobOrder', jobOrder);
+    
 
     React.useEffect(() => {
         dispatch(setPageTitle('Work Order Detail'));
@@ -69,7 +70,7 @@ const JobOrderPage = () => {
                 <div className="panel mb-6">
                     <div className="flex gap-6 justify-center">
                         {jobOrder.products.map((product, index) => (
-                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30rem] overflow-hidden relative" style={{ height: '350px' }}>
+                            <div key={index} className="product-card bg-white border border-gray-800 p-1 flex flex-col w-[30.5rem] overflow-hidden relative" style={{ height: '295px' }}>
                                 {/* Logo in the left corner */}
                                 <div className="logo absolute left-0 top-0 p-1">
                                     <img src={logo} alt="Logo" className="w-30 h-7" />
@@ -123,30 +124,31 @@ const JobOrderPage = () => {
                                                 <strong>Wt / Kgs:</strong>
                                             </div>
                                             <div className="font-semibold">117.91</div>
-                                            <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-40 h-34 mt-2" />
+                                           
                                         </div>
                                     </div>
 
                                     {/* QR Code, Bar Image, and Table */}
                                     <div className="qr-code-container flex flex-col items-center ml-6">
-                                        <img src="https://i.ibb.co/Zp5bKfs3/Screenshot-2025-03-06-102703.png" alt="Dimension Image" className="w-34 h-32 mt-10 mb-6 ml-6" />
-                                        <table className="border-collapse mt-1">
+                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mt-0 ml-40 mb-2" />
+                                        <img src="https://i.ibb.co/LD7XBh5V/Screenshot-2025-04-17-174954.png" alt="Dimension Image" className="w-44 h-20 mt-1 ml-36" />
+                                        <table className="border-collapse ">
                                             <thead>
                                                 <tr>
-                                                    <th className="border border-gray-300">A</th>
-                                                    <th className="border border-gray-300">B</th>
-                                                    <th className="border border-gray-300">C</th>
-                                                    <th className="border border-gray-300">D</th>
+                                                    <th className="border border-gray-300 text-right">A :<b>120</b></th>
+                                                    <th className="border border-gray-300 text-right">B :<b>120</b></th>
+                                                    <th className="border border-gray-300 text-right">C :<b>120</b></th>
+                                                    <th className="border border-gray-300 text-right">D :<b>5770</b></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            {/* <tbody>
                                                 <tr>
                                                     <td className="border border-gray-300">120</td>
                                                     <td className="border border-gray-300">120</td>
                                                     <td className="border border-gray-300">120</td>
                                                     <td className="border border-gray-300">5770</td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> */}
                                         </table>
                                     </div>
                                 </div>
