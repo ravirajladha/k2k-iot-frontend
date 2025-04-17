@@ -55,13 +55,13 @@ const JobOrderPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
-        { label: 'Job Order/Planning', link: '/iron-smith/job-order/view', isActive: false },
+        { label: 'Packing', link: '/iron-smith/packing/view', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/iron-smith/job-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/iron-smith/packing/view', icon: <IconArrowBackward className="text-4xl" /> }} />
             <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
