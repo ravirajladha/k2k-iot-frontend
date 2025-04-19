@@ -9,12 +9,14 @@ import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 
 const ClientCreation = () => {
     const baseURL = import.meta.env.VITE_APP_SERVER_URL;
+    // const baseURL = import.meta.env.VITE_APP_API_URL;
     const userDetail = useSelector((state: IRootState) => state.auth.user) || 'Guest User';
 
     const [formData, setFormData] = useState({
         name: '',
         address: '',
     });
+    console.log('formData', formData);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -55,7 +57,9 @@ const ClientCreation = () => {
 
         try {
             const userId = userDetail._id;
-            const response = await fetch(`${baseURL}/clients`, {
+            console.log('userId', userId);
+
+            const response = await fetch(`${baseURL}/helpers/clients`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,6 +67,7 @@ const ClientCreation = () => {
                 },
                 body: JSON.stringify({ ...formData, created_by: userId }),
             });
+            // console.log("response",response);
 
             if (!response.ok) {
                 throw new Error('Failed to create client');
@@ -98,14 +103,13 @@ const ClientCreation = () => {
                     {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
                     {/* Client Address */}
-                    {/* Client Address */}
                     <div className="flex items-center">
                         <label htmlFor="clientAddress" className="w-1/4 pr-4">
                             Client Address
                         </label>
                         <textarea
                             id="clientAddress"
-                            name="clientAddress"
+                            name="address" // Changed from "clientAddress" to "address"
                             placeholder="Enter Client Address"
                             className="form-input flex-1"
                             value={formData.address}

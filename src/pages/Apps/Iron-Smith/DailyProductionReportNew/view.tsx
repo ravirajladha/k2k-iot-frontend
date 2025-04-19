@@ -17,6 +17,7 @@ interface Report {
     materialCode: string;
     UOM: string;
     POQuantity: number;
+    machineName: String;
     achievedTillNow: number;
     rejectQuantity: number;
     recycleQuantity: number;

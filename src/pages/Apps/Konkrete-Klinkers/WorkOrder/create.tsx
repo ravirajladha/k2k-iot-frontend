@@ -41,6 +41,8 @@ interface FormData {
 }
 
 const Create = () => {
+    console.log("inside create work order component");
+    
     const [formData, setFormData] = useState<FormData>({
         clientName: '',
         projectName: '',

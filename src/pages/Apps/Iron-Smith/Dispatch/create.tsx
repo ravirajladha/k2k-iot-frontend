@@ -52,8 +52,7 @@ const DispatchCreation = () => {
         invoiceSto: '',
         vehicleNumber: '',
         qrCodeImage: '',
-        ticketNumber: ''
-
+        ticketNumber: '',
     });
     const [showTooltip, setShowTooltip] = useState(false);
 

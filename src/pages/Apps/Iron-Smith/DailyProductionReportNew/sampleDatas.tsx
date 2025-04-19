@@ -9,6 +9,7 @@ export interface Report {
     materialCode: string;
     UOM: string;
     POQuantity: number;
+    machineName: String;
     achievedTillNow: number;
     rejectQuantity: number;
     recycleQuantity: number;
@@ -44,6 +45,7 @@ export const pastReports: Report[] = [
         materialCode: 'SR-98765',
         UOM: 'Nos',
         POQuantity: 1200,
+        machineName: 'Machine X',
         achievedTillNow: 1150,
         rejectQuantity: 20,
         recycleQuantity: 30,
@@ -62,6 +64,7 @@ export const pastReports: Report[] = [
         materialCode: 'CM-45678',
         UOM: 'Nos',
         POQuantity: 800,
+        machineName: 'Machine Y',
         achievedTillNow: 750,
         rejectQuantity: 10,
         recycleQuantity: 20,
@@ -83,6 +86,7 @@ export const currentReports: Report[] = [
         materialCode: 'CB-56789',
         UOM: 'Nos',
         POQuantity: 500,
+        machineName: 'Machine X',
         achievedTillNow: 320,
         rejectQuantity: 15,
         recycleQuantity: 10,
@@ -101,6 +105,7 @@ export const currentReports: Report[] = [
         materialCode: 'CB-56790',
         UOM: 'Nos',
         POQuantity: 600,
+        machineName: 'Machine Y',
         achievedTillNow: 400,
         rejectQuantity: 10,
         recycleQuantity: 15,
@@ -122,6 +127,7 @@ export const futureReports: Report[] = [
         materialCode: 'AC-2025',
         UOM: 'Nos',
         POQuantity: 1500,
+        machineName: 'Machine X',
         achievedTillNow: 0,
         rejectQuantity: 0,
         recycleQuantity: 0,
@@ -140,6 +146,7 @@ export const futureReports: Report[] = [
         materialCode: 'AF-90876',
         UOM: 'Nos',
         POQuantity: 900,
+        machineName: 'Machine Y',
         achievedTillNow: 0,
         rejectQuantity: 0,
         recycleQuantity: 0,

@@ -12,6 +12,7 @@ const PackingCreation = () => {
 
         productName: '',
         productQuantity: '',
+        totalBatches: '',
         weight: '',
         rejectedQuantity: '',
         qrCodeId: '',
@@ -144,6 +145,22 @@ const PackingCreation = () => {
                                 value={formData.productQuantity}
                                 onChange={handleInputChange}
                                 min={0}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="totalBatches" className="block text-sm font-medium text-gray-700">
+                                Number Of Bundles
+                            </label>
+                            <input
+                                id="totalBatches"
+                                name="totalBatches"
+                                type="number"
+                                placeholder="Enter Number of Bundles"
+                                className="form-input w-full mt-1 border border-gray-300 rounded px-3 py-2"
+                                value={formData.totalBatches}
+                                onChange={handleInputChange}
+                                min={0}
+                                // onBlur={generateBatchInputs}
                             />
                         </div>
 

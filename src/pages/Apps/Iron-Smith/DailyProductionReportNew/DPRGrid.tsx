@@ -15,6 +15,7 @@ interface Report {
     materialCode: string;
     UOM: string;
     POQuantity: number;
+    machineName: String;
     achievedTillNow: number;
     rejectQuantity: number;
     recycleQuantity: number;
@@ -177,6 +178,9 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-semibold">PO Quantity:</span> <span>{report.POQuantity}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-semibold">Macine Name:</span> <span>{report.machineName}</span>
                                 </div>
                                 <div className="flex justify-between text-green-600">
                                     <span className="font-semibold">Achieved:</span> <span>{report.achievedTillNow}</span>
