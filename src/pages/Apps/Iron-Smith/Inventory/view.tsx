@@ -259,7 +259,7 @@ const ColumnChooser = () => {
                             { accessor: 'materialCode', title: 'Material Code', sortable: true, hidden: hideCols.includes('materialCode') },
                             {
                                 accessor: 'productDescription',
-                                title: 'Product Description',
+                                title: 'Shape Description',
                                 sortable: true,
                                 hidden: hideCols.includes('productDescription'),
                             },

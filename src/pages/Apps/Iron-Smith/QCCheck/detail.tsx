@@ -189,8 +189,8 @@ const DispatchDetailPage = () => {
                                 <th className="px-4 py-2 text-left border border-gray-300">Sl No.</th>
                                 {/* <th className="px-4 py-2 text-left border border-gray-300">Work Order</th>
                                 <th className="px-4 py-2 text-left border border-gray-300">Job Order</th> */}
-                                <th className="px-4 py-2 text-left border border-gray-300">Product Id</th>
-                                <th className="px-4 py-2 text-left border border-gray-300">Product Name</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Shape Id</th>
+                                <th className="px-4 py-2 text-left border border-gray-300">Shape</th>
                                 <th className="px-4 py-2 text-left border border-gray-300">Recycled Quantity</th>
                                 <th className="px-4 py-2 text-left border border-gray-300">Rejected Quantity</th>
                                 <th className="px-4 py-2 text-left border border-gray-300">Remarks</th>

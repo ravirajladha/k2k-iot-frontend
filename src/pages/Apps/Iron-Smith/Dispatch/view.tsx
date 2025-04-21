@@ -243,7 +243,7 @@ const ColumnChooser = () => {
                             },
                             {
                                 accessor: 'products',
-                                title: 'Products',
+                                title: 'Shapes',
                                 sortable: false, // Sorting can be tricky for arrays
                                 hidden: hideCols.includes('products'),
                                 render: ({ products }) => (

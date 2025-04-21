@@ -432,7 +432,7 @@ const WorkOrderPage = () => {
                         <table className="table-auto w-full border-collapse border border-gray-200">
                             <thead className="bg-gray-100">
                                 <tr>
-                                    <th className="px-4 py-2 text-left border border-gray-300">Description</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Shapes</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Material Code</th> */}
                                     <th className="px-4 py-2 text-left border border-gray-300">UOM</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Bar Mark</th>
@@ -570,7 +570,7 @@ const WorkOrderPage = () => {
                                 <table className="w-full border-collapse border border-gray-200 text-sm">
                                     <thead className="bg-gray-100 dark:bg-gray-700">
                                         <tr className="text-gray-700 dark:text-white">
-                                            <th className="px-4 py-2 border">Product Name</th>
+                                            <th className="px-4 py-2 border">Shapes</th>
                                             <th className="px-4 py-2 border">UOM</th>
                                             <th className="px-4 py-2 border">PO Quantity</th>
                                             <th className="px-4 py-2 border">Machine Assigned</th>
@@ -747,7 +747,7 @@ const WorkOrderPage = () => {
                                     <tr>
                                         <th>Dispatch ID</th>
                                         {/* <th>Work Order Id</th> */}
-                                        <th>Product Name</th>
+                                        <th>Shapes</th>
                                         <th>Quantity</th>
                                         <th>UOM</th>
                                         {/* <th>Rate</th>
@@ -800,7 +800,7 @@ const WorkOrderPage = () => {
                                 <thead className="bg-gray-100">
                                     <tr>
                                         <th>Sl No.</th>
-                                        <th>Product Name</th>
+                                        <th>Shapes</th>
                                         <th>Recycled Qty</th>
                                         <th>Rejected Qty</th>
                                         <th>Remark</th>

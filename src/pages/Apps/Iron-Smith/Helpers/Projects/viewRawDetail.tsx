@@ -30,11 +30,11 @@ const ClientDetailPage = () => {
 
     // Sample data for work orders
     const workOrders = [
-        { workOrder: 'WO101', used: 50, date: '2025-04-01' },
-        { workOrder: 'WO102', used: 20, date: '2025-04-02' },
-        { workOrder: 'WO103', used: 10, date: '2025-04-03' },
-        { workOrder: 'WO104', used: 30, date: '2025-04-04' },
-        { workOrder: 'WO105', used: 40, date: '2025-04-05' },
+        { workOrder: 'WO101', used: +50, date: '2025-04-01' },
+        { workOrder: 'WO102', used: -20, date: '2025-04-02' },
+        { workOrder: 'WO103', used: +10, date: '2025-04-03' },
+        { workOrder: 'WO104', used: -30, date: '2025-04-04' },
+        { workOrder: 'WO105', used: +40, date: '2025-04-05' },
     ];
 
     return (

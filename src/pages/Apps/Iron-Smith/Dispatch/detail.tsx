@@ -85,7 +85,7 @@ const DispatchViewDetailPage = () => {
                                 <thead>
                                     <tr className="bg-gray-200">
                                         <th className="border border-gray-300 px-4 py-2">Sl No.</th>
-                                        <th className="border border-gray-300 px-4 py-2">Product</th>
+                                        <th className="border border-gray-300 px-4 py-2">Shape</th>
                                         <th className="border border-gray-300 px-4 py-2">UOM</th>
                                         <th className="border border-gray-300 px-4 py-2">Batch ID</th>
                                         <th className="border border-gray-300 px-4 py-2">Dispatch Quantity</th>

@@ -239,7 +239,7 @@ const ColumnChooser = () => {
                             },
                             {
                                 accessor: 'productId',
-                                title: 'Product ID',
+                                title: 'Shape ID',
                                 sortable: true,
                                 hidden: hideCols.includes('productId'),
                             },

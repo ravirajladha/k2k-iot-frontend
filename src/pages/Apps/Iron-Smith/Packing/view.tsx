@@ -231,7 +231,7 @@ const ColumnChooser = () => {
                             //     hidden: hideCols.includes('jobOrder'),
                             // },
                             {
-                                accessor: 'productId', title: 'Product ID', sortable: true,
+                                accessor: 'productId', title: 'Shape ID', sortable: true,
                                 hidden: hideCols.includes('productId'),
                             },
                             {

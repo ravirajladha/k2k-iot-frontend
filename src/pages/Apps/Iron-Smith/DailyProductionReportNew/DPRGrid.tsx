@@ -168,7 +168,7 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleStartStop, handleCompl
                                     <span className="font-semibold">Dates:</span> <span>02-02-2025</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="font-semibold">Product:</span> <span>{report.productName}</span>
+                                    <span className="font-semibold">Shape:</span> <span>{report.productName}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Material Code:</span> <span>{report.materialCode}</span>

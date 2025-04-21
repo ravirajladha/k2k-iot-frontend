@@ -131,13 +131,13 @@ const InventoryDetailPage = () => {
                                             <NavLink
                                                 to={`/iron-smith/projects/raw-material/view`}
                                                 state={{ diameter, quantity: quantities[parseInt(diameter)] }}
-                                                className="flex hover:text-primary absolute left-2"
+                                                className="flex hover:text-primary absolute left-14 bottom-4"
                                             >
                                                 <IconEye />
                                             </NavLink>
-                                            <NavLink to={`#`} state={{ diameter, quantity: quantities[parseInt(diameter)] }} className="flex hover:text-info absolute right-2">
+                                            {/* <NavLink to={`#`} state={{ diameter, quantity: quantities[parseInt(diameter)] }} className="flex hover:text-info absolute right-2">
                                                 <IconTrashLines />
-                                            </NavLink>
+                                            </NavLink> */}
                                         </td>
                                     </tr>
                                 ))}

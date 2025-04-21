@@ -101,7 +101,7 @@ const PackingCreation = () => {
                         {/* Product Name */}
                         <div>
                             <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
-                                Product Name
+                                Shape
                             </label>
                             <Select
                                 id="productName"
