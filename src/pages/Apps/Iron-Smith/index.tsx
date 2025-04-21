@@ -48,13 +48,16 @@ export { default as DipatchInvoiceView } from './Dispatch/invoice';
 
 export { default as HelperClients } from '../Iron-Smith/Helpers/Clients/view';
 export { default as HelperClientCreate } from '../Iron-Smith/Helpers/Clients/create';
-export { default as HelperClientDetail } from '../Iron-Smith/Helpers/Clients/detail';  ///New
+// export { default as HelperClientDetail } from '../Iron-Smith/Helpers/Clients/detail';  ///New
+export { default as HelperClientDetail } from '../Iron-Smith/Helpers/Clients/detailNew';  ///New
 export { default as HelperClientEditQty } from '../Iron-Smith/Helpers/Clients/editQty';  ///New
 export { default as HelperClientViewMaterial } from '../Iron-Smith/Helpers/Clients/viewMaterialDetail';  ///New
 
 export { default as HelperProjects } from '../Iron-Smith/Helpers/Projects/view';
 export { default as HelperProjectCreate } from '../Iron-Smith/Helpers/Projects/create';
-export { default as HelperProjectDetail } from '../Iron-Smith/Helpers/Projects/detail';
+// export { default as HelperProjectDetail } from '../Iron-Smith/Helpers/Projects/detail';
+export { default as HelperProjectDetail } from '../Iron-Smith/Helpers/Projects/detailNew';
+export { default as HelperProjectRawDetail } from '../Iron-Smith/Helpers/Projects/viewRawDetail';
 
 export { default as HelperPlants } from '../Iron-Smith/Helpers/Plants/view';
 export { default as HelperPlantCreate } from '../Iron-Smith/Helpers/Plants/create';

@@ -83,7 +83,7 @@ const ProductCreationForm: React.FC = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
-        { label: 'Products', link: '/iron-smith/product', isActive: false },
+        { label: 'Shapes', link: '/iron-smith/product', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
     const maxNumber = 5;
@@ -98,7 +98,7 @@ const ProductCreationForm: React.FC = () => {
             <div className="panel relative">
                 {/* Header Section */}
                 <div className="mb-5 flex justify-between items-center">
-                    <h5 className="font-semibold text-lg">Create Product</h5>
+                    <h5 className="font-semibold text-lg">Create</h5>
 
                     {/* Tooltip Button (Aligned to Right) */}
                     <div className="relative">

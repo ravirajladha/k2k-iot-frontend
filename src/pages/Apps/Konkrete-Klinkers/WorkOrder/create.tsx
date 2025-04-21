@@ -41,8 +41,8 @@ interface FormData {
 }
 
 const Create = () => {
-    console.log("inside create work order component");
-    
+    console.log('inside create work order component');
+
     const [formData, setFormData] = useState<FormData>({
         clientName: '',
         projectName: '',
@@ -287,7 +287,7 @@ const Create = () => {
                                 getOptionLabel={(e) => e.label}
                                 getOptionValue={(e) => e.value}
                                 placeholder="Select Project"
-                                styles={customStyles}
+                                // styles={customStyles}
                                 isClearable
                                 isDisabled={!selectedClient}
                             />
@@ -300,7 +300,7 @@ const Create = () => {
                                 name="workOrderNumber"
                                 type="text"
                                 placeholder="Enter Work Order Number"
-                                className="form-input w-full sm:w-3/4"
+                                className="form-input w-full"
                                 value={formData.workOrderNumber}
                                 onChange={handleInputChange}
                             />
@@ -308,7 +308,7 @@ const Create = () => {
 
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input w-full sm:w-2/4" value={formData.workOrderDate} onChange={handleInputChange} />
+                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input w-full" value={formData.workOrderDate} onChange={handleInputChange} />
                         </div>
 
                         <div>

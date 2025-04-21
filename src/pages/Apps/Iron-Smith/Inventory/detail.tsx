@@ -189,6 +189,7 @@ const InventoryDetailPage = () => {
                                 <tr>
                                     <th className="px-4 py-2 text-left border border-gray-300">Material Code</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Product Description</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Diameter</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Unit of Measurement</th>
                                     <th className="px-4 py-2 text-left border border-gray-300">Inventory Quantity</th>
                                     {/* <th className="px-4 py-2 text-left border border-gray-300">Buffer Quantity</th> */}
@@ -201,6 +202,7 @@ const InventoryDetailPage = () => {
                                 <tr className="hover:bg-gray-50">
                                     <td className="px-4 py-2 border border-gray-300">{selectedItem.materialCode}</td>
                                     <td className="px-4 py-2 border border-gray-300">{selectedItem.productDescription}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{selectedItem.dia}</td>
                                     <td className="px-4 py-2 border border-gray-300">{selectedItem.unitOfMeasurement}</td>
                                     <td className="px-4 py-2 border border-gray-300">{selectedItem.quantity}</td>
                                     {/* <td className="px-4 py-2 border border-gray-300">{selectedItem.bufferQuantity}</td> */}

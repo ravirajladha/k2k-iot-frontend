@@ -893,7 +893,7 @@ const WorkOrderPage = () => {
                                 {jobOrder.semiFinishedTasks.map((sf) => (
                                     <div key={sf.id} className="border p-4 mb-4 bg-white shadow-sm rounded-md">
                                         <h4 className="text-md font-semibold mb-2">{sf.name}</h4>
-                                        <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-4 gap-4">
                                             <div>
                                                 <p className="text-sm font-semibold">File:</p>
                                                 {sf.file ? <p className="text-green-600">File Uploaded</p> : <p className="text-gray-500">No file uploaded</p>}
@@ -901,6 +901,14 @@ const WorkOrderPage = () => {
                                             <div>
                                                 <p className="text-sm font-semibold">Remarks:</p>
                                                 <p className="text-gray-700">{sf.remark}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold">Packing Details:</p>
+                                                <p className="text-gray-700">{20}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold">Dispatch Details:</p>
+                                                <p className="text-gray-700">{21}</p>
                                             </div>
                                         </div>
                                         {/* Steps Table */}
@@ -913,8 +921,8 @@ const WorkOrderPage = () => {
                                                         <th className="px-4 py-2 border">Planned Quantity</th>
                                                         <th className="px-4 py-2 border">Achieved Quantity</th>
                                                         <th className="px-4 py-2 border">Rejected Quantity</th>
-                                                        <th className="px-4 py-2 border">Packing Details</th>
-                                                        <th className="px-4 py-2 border">Dispatch Details</th>
+                                                        {/* <th className="px-4 py-2 border">Packing Details</th>
+                                                        <th className="px-4 py-2 border">Dispatch Details</th> */}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -933,8 +941,8 @@ const WorkOrderPage = () => {
                                                                     {step.rejectedQuantity}
                                                                 </span>
                                                             </td>
-                                                            <td className="px-4 py-2 border">{step.packingData}</td>
-                                                            <td className="px-4 py-2 border">{step.dispatchData}</td>
+                                                            {/* <td className="px-4 py-2 border">{step.packingData}</td>
+                                                            <td className="px-4 py-2 border">{step.dispatchData}</td> */}
                                                         </tr>
                                                     ))}
                                                 </tbody>

@@ -41,6 +41,7 @@ const rowData = [
         requiredQuantity: 300,
         balanceQuantity: 200,
         unitOfMeasurement: 'nos',
+        dia: 8,
         noOfPiecesPerPunch: 5,
         qtyInBundle: 6.4,
         qtyInNoPerBundle: 160,
@@ -54,6 +55,7 @@ const rowData = [
         requiredQuantity: 200,
         balanceQuantity: 50,
         unitOfMeasurement: 'nos',
+        dia: 10,
         noOfPiecesPerPunch: 10,
         qtyInBundle: 25,
         qtyInNoPerBundle: 25,
@@ -67,6 +69,7 @@ const rowData = [
         requiredQuantity: 80,
         balanceQuantity: 20,
         unitOfMeasurement: 'nos',
+        dia: 12,
         noOfPiecesPerPunch: 2,
         qtyInBundle: 20,
         qtyInNoPerBundle: 20,
@@ -80,6 +83,7 @@ const rowData = [
         requiredQuantity: 900,
         balanceQuantity: 100,
         unitOfMeasurement: 'nos',
+        dia: 16,
         noOfPiecesPerPunch: 8,
         qtyInBundle: 8.32,
         qtyInNoPerBundle: 208,
@@ -137,6 +141,7 @@ const ColumnChooser = () => {
 
         { accessor: 'balanceQuantity', title: 'Balance Quantity' },
         { accessor: 'unitOfMeasurement', title: 'Unit of Measurement' },
+        { accessor: 'dia', title: 'Diameter' },
         { accessor: 'noOfPiecesPerPunch', title: 'No. of Pieces Per Punch' },
         { accessor: 'qtyInBundle', title: 'Quantity in Bundle' },
         { accessor: 'qtyInNoPerBundle', title: 'Quantity in No. Per Bundle' },
@@ -171,6 +176,7 @@ const ColumnChooser = () => {
                     item.bufferQuantity.toString().includes(search.toLowerCase()) ||
                     item.balanceQuantity.toString().includes(search.toLowerCase()) ||
                     item.unitOfMeasurement.toLowerCase().includes(search.toLowerCase()) ||
+                    item.dia ||
                     item.noOfPiecesPerPunch.toString().includes(search.toLowerCase()) ||
                     item.qtyInBundle.toString().includes(search.toLowerCase()) ||
                     item.qtyInNoPerBundle.toString().includes(search.toLowerCase()) ||

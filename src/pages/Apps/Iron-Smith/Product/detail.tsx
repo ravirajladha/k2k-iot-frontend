@@ -26,7 +26,7 @@ const ProductDetailPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
-        { label: 'Products', link: '/iron-smith/products', isActive: false },
+        { label: 'Shapes', link: '/iron-smith/products', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 

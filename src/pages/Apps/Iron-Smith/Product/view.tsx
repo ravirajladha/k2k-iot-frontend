@@ -117,7 +117,7 @@ const ProductView = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '#', isActive: false },
-        { label: 'Products', link: '/iron-smith/products', isActive: true },
+        { label: 'Shapes', link: '/iron-smith/products', isActive: true },
     ];
 
     useEffect(() => {
@@ -160,7 +160,7 @@ const ProductView = () => {
             <Breadcrumbs
                 items={breadcrumbItems}
                 addButton={{
-                    label: 'Add Product',
+                    label: 'Add Shape',
                     link: '/iron-smith/product/create',
                     icon: <IconPlusCircle className="text-4xl" />,
                 }}
@@ -168,7 +168,7 @@ const ProductView = () => {
 
             <div className="panel mt-6">
                 <div className="flex md:items-center md:flex-row flex-col mb-5 gap-5">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Products </h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Shapes </h5>
                     <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
                         <div className="flex md:items-center md:flex-row flex-col gap-5">
                             <div className="dropdown">

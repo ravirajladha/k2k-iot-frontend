@@ -22,12 +22,13 @@ const InventoryDetailPage = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Iron Smith', link: '/', isActive: false },
-        { label: 'Clients', link: '/iron-smith/clients', isActive: false },
+        { label: 'Projects', link: '/iron-smith/projects', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
     const clientDetails = {
         clientName: 'ABC Corp',
+        projectName: 'Project X',
         address: '123 Main St',
         city: 'New York',
         state: 'NY',
@@ -59,7 +60,7 @@ const InventoryDetailPage = () => {
                 items={breadcrumbItems}
                 addButton={{
                     label: 'Back',
-                    link: '/iron-smith/clients',
+                    link: '/iron-smith/projects',
                     icon: <IconArrowBackward className="text-4xl" />,
                 }}
             />
@@ -72,8 +73,12 @@ const InventoryDetailPage = () => {
                         <h2 className="text-lg font-semibold mb-4 text-center text-gray-700">Client Details</h2>
                         <div className="bg-yellow-50 p-6 rounded-lg shadow-lg w-full max-w-4xl">
                             <div className="text-sm text-center flex justify-center items-center space-x-4 text-gray-800">
-                                <span>
+                                {/* <span>
                                     <strong>Client Name:</strong> {clientDetails.clientName}
+                                </span>
+                                <span>|</span> */}
+                                <span>
+                                    <strong>Project Name:</strong> {clientDetails.projectName}
                                 </span>
                                 <span>|</span>
                                 <span>
@@ -87,10 +92,10 @@ const InventoryDetailPage = () => {
                                 <span>
                                     <strong>State:</strong> {clientDetails.state}
                                 </span>
-                                <span>|</span>
-                                <span>
+                                {/* <span>|</span> */}
+                                {/* <span>
                                     <strong>GST:</strong> {clientDetails.gst}
-                                </span>
+                                </span> */}
                             </div>
                         </div>
                     </div>
@@ -124,7 +129,7 @@ const InventoryDetailPage = () => {
                                         </td>
                                         <td className="px-4 py-2 border border-gray-300 relative w-16">
                                             <NavLink
-                                                to={`/iron-smith/clients/raw-material/view`}
+                                                to={`/iron-smith/projects/raw-material/view`}
                                                 state={{ diameter, quantity: quantities[parseInt(diameter)] }}
                                                 className="flex hover:text-primary absolute left-2"
                                             >

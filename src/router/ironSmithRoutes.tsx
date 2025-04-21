@@ -30,6 +30,7 @@ import {
     HelperProjects,
     HelperProjectCreate,
     HelperProjectDetail,
+    HelperProjectRawDetail,
     HelperPlants,
     HelperPlantCreate,
     HelperFactories,
@@ -354,6 +355,11 @@ export const ironSmithRoutes = [
     {
         path: `/${basePath}/projects/details`,
         element: <HelperProjectDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `/${basePath}/projects/raw-material/view`,
+        element: <HelperProjectRawDetail />,
         layout: 'admin',
     },
     

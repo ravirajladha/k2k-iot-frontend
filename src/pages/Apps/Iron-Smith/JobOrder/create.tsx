@@ -364,7 +364,7 @@ const ProductionPlanning = () => {
                                 <thead className="bg-black">
                                     <tr>
                                         <th> </th>
-                                        <th>Product</th>
+                                        <th>Shapes</th>
                                         <th>Dia (mm)</th>
                                         <th>Planned Quantity</th>
                                         <th>Schedule Date</th>
@@ -403,7 +403,7 @@ const ProductionPlanning = () => {
                                                         value={item.product}
                                                         getOptionLabel={(e: Product) => e.label}
                                                         getOptionValue={(e: Product) => e.value}
-                                                        placeholder="Select Product"
+                                                        placeholder="Select Shapes"
                                                         isClearable
                                                         menuPortalTarget={document.body}
                                                         menuPosition="absolute"

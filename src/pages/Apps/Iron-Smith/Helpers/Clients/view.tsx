@@ -233,19 +233,39 @@ const Clients = () => {
                                 hidden: hideCols.includes('created_at'),
                                 render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
                             },
+                            // {
+                            //     accessor: 'action',
+                            //     title: 'Actions',
+                            //     sortable: false,
+                            //     hidden: hideCols.includes('action'),
+                            //     render: ({ id, client}) => (
+                            //         <div className="flex gap-4 items-center w-max mx-auto">
+                            //             <NavLink to={`/iron-smith/clients/edit/${id}`} className="flex hover:text-info">
+                            //                 <IconEdit className="w-4.5 h-4.5" />
+                            //             </NavLink>
+                            //             <NavLink
+                            //                 to={`/iron-smith/clients/raw-material`}
+                            //                 state={{ clientData: { id, client } }}
+                            //                 className="flex hover:text-primary"
+                            //             >
+                            //                 <IconEye />
+                            //             </NavLink>
+                            //         </div>
+                            //     ),
+                            // },
                             {
                                 accessor: 'action',
                                 title: 'Actions',
                                 sortable: false,
                                 hidden: hideCols.includes('action'),
-                                render: ({ id, client}) => (
+                                render: (rowData) => (
                                     <div className="flex gap-4 items-center w-max mx-auto">
-                                        <NavLink to={`/iron-smith/clients/edit/${id}`} className="flex hover:text-info">
+                                        <NavLink to={`/iron-smith/clients/edit/${rowData.id}`} className="flex hover:text-info">
                                             <IconEdit className="w-4.5 h-4.5" />
                                         </NavLink>
                                         <NavLink
                                             to={`/iron-smith/clients/raw-material`}
-                                            state={{ clientData: { id, client } }}
+                                            state={{ rowData }}
                                             className="flex hover:text-primary"
                                         >
                                             <IconEye />

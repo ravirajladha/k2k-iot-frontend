@@ -742,7 +742,7 @@ const Sidebar = () => {
                                         <li><NavLink to="/iron-smith/machines">{t('Machines')}</NavLink></li>
                                         <li><NavLink to="/iron-smith/clients">{t('Clients')}</NavLink></li>
                                         <li><NavLink to="/iron-smith/projects">{t('Projects')}</NavLink></li>
-                                        <li><NavLink to="/iron-smith/products">{t('Products')}</NavLink></li>
+                                        <li><NavLink to="/iron-smith/products">{t('Shapes')}</NavLink></li>
 
 
 

@@ -12,36 +12,38 @@ const JobOrderPage = () => {
     const location = useLocation();
 
     const jobOrder = {
-        "id": 1,
-        "jobOrderId": "JO1234",
-        "workOrderId": "WO5678",
-        "fromDate": "2025-01-01",
-        "toDate": "2025-01-15",
-        "plantName": "Plant A",
-        "factoryName": "Factory X",
-        "clientName": "Client Alpha",
-        "projectName": "Project Phoenix",
-        "products": [
+        id: 1,
+        jobOrderId: 'JO1234',
+        workOrderId: 'WO5678',
+        fromDate: '2025-01-01',
+        toDate: '2025-01-15',
+        plantName: 'Plant A',
+        factoryName: 'Factory X',
+        clientName: 'Client Alpha',
+        projectName: 'Project Phoenix',
+        products: [
             {
-                "productId": "P-001",
-                "uom": "Kg",
-                "poQuantity": 1000,
-                "achievedTillNow": 800,
-                "rejectedQuantity": 50,
-                "plannedQuantity": 1000,
-                "date": "2025-01-05"
+                productId: 'P-001',
+                uom: 'Kg',
+                poQuantity: 1000,
+                bundleNo: 1,
+                achievedTillNow: 800,
+                rejectedQuantity: 50,
+                plannedQuantity: 1000,
+                date: '2025-01-05',
             },
             {
-                "productId": "P-002",
-                "uom": "Ton",
-                "poQuantity": 500,
-                "achievedTillNow": 450,
-                "rejectedQuantity": 30,
-                "plannedQuantity": 500,
-                "date": "2025-01-10"
-            }
-        ]
-    }
+                productId: 'P-002',
+                uom: 'Ton',
+                poQuantity: 500,
+                bundleNo: 2,
+                achievedTillNow: 450,
+                rejectedQuantity: 30,
+                plannedQuantity: 500,
+                date: '2025-01-10',
+            },
+        ],
+    };
     console.log('jobOrder', jobOrder);
 
     React.useEffect(() => {
@@ -119,56 +121,67 @@ const JobOrderPage = () => {
                                     <div className="product-details flex-1 p-1 text-xs">
                                         <div className="grid grid-cols-2 gap-1 ">
                                             <div>
-                                                <strong>BBS NO:</strong>
+                                                <strong>BBS NO</strong>
                                             </div>
-                                            <div className="font-semibold">CAM-01-00011</div>
+                                            <div className="font-semibold whitespace-nowrap">:CAM-01-00011</div>
                                             <div>
-                                                <strong>Member:</strong>
+                                                <strong>Member</strong>
                                             </div>
-                                            <div>SHEARWALL</div>
+                                            <div>:SHEARWALL</div>
                                             <div>
-                                                <strong>Desc:</strong>
+                                                <strong>Desc</strong>
                                             </div>
-                                            <div className="whitespace-nowrap">SHEARWALL BBS 3RD RAFT</div>
+                                            <div className="whitespace-nowrap">:SHEARWALL BBS 3RD RAFT</div>
                                             <div>
-                                                <strong>Bar Mark:</strong>
+                                                <strong>Bar Mark</strong>
                                             </div>
-                                            <div>SW11-5</div>
+                                            <div>:SW11-5</div>
                                             <div>
-                                                <strong>Item No:</strong>
+                                                <strong>Item No</strong>
                                             </div>
-                                            <div>{product.productId}</div>
+                                            <div>:{product.productId}</div>
+                                            <div className="whitespace-nowrap">
+                                                <strong>Bundle No</strong>
+                                            </div>
+                                            <div>:{product.bundleNo}</div>
                                             <div>
-                                                <strong>Dia:</strong>
+                                                <strong>Dia</strong>
                                             </div>
-                                            <div className="font-semibold">8</div>
+                                            <div className="font-semibold">:8</div>
                                             <div>
-                                                <strong>CL:</strong>
+                                                <strong>CL</strong>
                                             </div>
-                                            <div>2840</div>
+                                            <div>:2840</div>
                                             <div>
-                                                <strong>Qty:</strong>
+                                                <strong>Qty</strong>
                                             </div>
-                                            <div className="font-semibold">{product.poQuantity}</div>
+                                            <div className="font-semibold">:{product.poQuantity}</div>
                                             <div>
-                                                <strong>Wt / Kgs:</strong>
+                                                <strong>Wt / Kgs</strong>
                                             </div>
-                                            <div className="font-semibold">117.91</div>
-                                           
+                                            <div className="font-semibold">:117.91</div>
                                         </div>
                                     </div>
 
                                     {/* QR Code, Bar Image, and Table */}
                                     <div className="qr-code-container flex flex-col items-center ml-6">
-                                    <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mt-0 ml-40 mb-2" />
+                                        <img src="https://cdn.pixabay.com/photo/2021/12/12/16/10/qr-6865526_1280.png" alt="QR Code" className="w-24 h-24 mt-0 ml-40 mb-2" />
                                         <img src="https://i.ibb.co/LD7XBh5V/Screenshot-2025-04-17-174954.png" alt="Dimension Image" className="w-44 h-20 mt-1 ml-36" />
                                         <table className="border-collapse ">
                                             <thead>
                                                 <tr>
-                                                    <th className="border border-gray-300 text-right">A :<b>120</b></th>
-                                                    <th className="border border-gray-300 text-right">B :<b>120</b></th>
-                                                    <th className="border border-gray-300 text-right">C :<b>120</b></th>
-                                                    <th className="border border-gray-300 text-right">D :<b>5770</b></th>
+                                                    <th className="border border-gray-300 text-right">
+                                                        A :<b>120</b>
+                                                    </th>
+                                                    <th className="border border-gray-300 text-right">
+                                                        B :<b>120</b>
+                                                    </th>
+                                                    <th className="border border-gray-300 text-right">
+                                                        C :<b>120</b>
+                                                    </th>
+                                                    <th className="border border-gray-300 text-right">
+                                                        D :<b>5770</b>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             {/* <tbody>
