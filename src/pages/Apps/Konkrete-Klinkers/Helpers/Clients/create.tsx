@@ -6,6 +6,7 @@ import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import { storeClientData } from '@/api/konkreteKlinkers/client';
 
 const ClientCreation = () => {
     // const baseURL = import.meta.env.VITE_APP_SERVER_URL;
@@ -17,7 +18,7 @@ const ClientCreation = () => {
         address: '',
     });
     console.log("formData",formData);
-    
+
 
     const [errors, setErrors] = useState({
         name: '',
@@ -58,19 +59,22 @@ const ClientCreation = () => {
 
         try {
             const userId = userDetail._id;
-            const response = await fetch(`${baseURL}/konkreteKlinkers/helpers/clients`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-                body: JSON.stringify({ ...formData, created_by: userId }),
-            });
+            // const response = await fetch(`${baseURL}/konkreteKlinkers/helpers/clients`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            //     },
+            //     body: JSON.stringify({ ...formData, created_by: userId }),
+            // });
 
-            if (!response.ok) {
-                throw new Error('Failed to create client');
-            }
-            console.log('Client created successfully');
+            // if (!response.ok) {
+            //     throw new Error('Failed to create client');
+            // }
+            // console.log('Client created successfully');
+            const response = await storeClientData(formData);
+            console.log(response);
+
             navigate('/konkrete-klinkers/clients');
         } catch (error) {
             console.error('Error creating client:', error);

@@ -14,6 +14,7 @@ import IconEye from '@/components/Icon/IconEye';
 // import { Breadcrumbs } from '../../Breadcrumbs../components/Breadcrumbs';
 // import { Breadcrumbs } from '@mantine/core';
 import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import { fetchClientData } from '@/api/konkreteKlinkers/client';
 const rowData = [
     {
         id: 1,
@@ -46,7 +47,7 @@ const Clients = () => {
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
-    const [initialRecords, setInitialRecords] = useState(sortBy(rowData, 'id'));
+    const [initialRecords, setInitialRecords] = useState([]);
     const [recordsData, setRecordsData] = useState(initialRecords);
 
     const [search, setSearch] = useState('');
@@ -82,7 +83,7 @@ const Clients = () => {
         { accessor: 'projectCount', title: 'Projects' },
 
         { accessor: 'created_by', title: 'Created By' },
-        { accessor: 'created_at', title: 'Created At' },
+        { accessor: 'createdAt', title: 'Created At' },
     ];
 
     const breadcrumbItems = [
@@ -125,6 +126,21 @@ const Clients = () => {
         setPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortStatus]);
+
+    const fetchdata = async () => {
+        try {
+            const response = await fetchClientData();
+            setInitialRecords(response)
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    useEffect(() =>{
+        fetchdata();
+    },[])
 
     return (
         <div>
@@ -195,33 +211,33 @@ const Clients = () => {
                         className="whitespace-nowrap table-hover"
                         records={recordsData}
                         columns={[
-                            { accessor: 'id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
+                            { accessor: '_id', title: 'ID', sortable: true, hidden: hideCols.includes('id') },
                             {
-                                accessor: 'client',
+                                accessor: 'name',
                                 title: 'Client Name',
                                 sortable: true,
-                                hidden: hideCols.includes('client'),
+                                hidden: hideCols.includes('name'),
                             },
-                            {
-                                accessor: 'status',
-                                title: 'Status',
-                                sortable: true,
-                                hidden: hideCols.includes('status'),
-                                render: ({ status }) => (
-                                    <div
-                                        className={`${status === 'In Progress'
-                                            ? 'text-info'
-                                            : status === 'Pending'
-                                                ? 'text-warning'
-                                                : status === 'Completed'
-                                                    ? 'text-success'
-                                                    : 'text-danger'
-                                            } capitalize`}
-                                    >
-                                        {status}
-                                    </div>
-                                ),
-                            },
+                            // {
+                            //     accessor: 'status',
+                            //     title: 'Status',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('status'),
+                            //     render: ({ status }) => (
+                            //         <div
+                            //             className={`${status === 'In Progress'
+                            //                 ? 'text-info'
+                            //                 : status === 'Pending'
+                            //                     ? 'text-warning'
+                            //                     : status === 'Completed'
+                            //                         ? 'text-success'
+                            //                         : 'text-danger'
+                            //                 } capitalize`}
+                            //         >
+                            //             {status}
+                            //         </div>
+                            //     ),
+                            // },
 
                             // {
                             //     accessor: 'machine_count',
@@ -230,7 +246,7 @@ const Clients = () => {
                             //     hidden: hideCols.includes('machine_count'),
                             //     render: ({ projectCount }) => (
                             //         <NavLink
-                            //             // to={`/konkrete_klinkers/machines/${encodeURIComponent(factory_name)}`} 
+                            //             // to={`/konkrete_klinkers/machines/${encodeURIComponent(factory_name)}`}
                             //             to={`/projects`}
 
                             //             className="text-blue-500 hover:underline"
@@ -240,18 +256,18 @@ const Clients = () => {
                             //     ),
                             // },
                             {
-                                accessor: 'created_by',
+                                accessor: 'created_by.username',
                                 title: 'Created By',
                                 sortable: true,
                                 hidden: hideCols.includes('created_at'),
 
                             },
                             {
-                                accessor: 'created_at',
+                                accessor: 'createdAt',
                                 title: 'Created At',
                                 sortable: true,
-                                hidden: hideCols.includes('created_at'),
-                                render: ({ created_at }) => <div>{new Date(created_at).toLocaleDateString()}</div>,
+                                hidden: hideCols.includes('createdAt'),
+                                render: ({ createdAt }) => <div>{new Date(createdAt).toLocaleDateString()}</div>,
                             },
 
                             {
