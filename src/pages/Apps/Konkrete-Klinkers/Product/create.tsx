@@ -179,23 +179,18 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                     {/* UOM */}
                     <div>
                         <label htmlFor="uom">UOM</label>
-                        <select
+                        <input
                             id="uom"
                             name="uom"
                             className="form-input"
-                            value={formData.uom}
+                            value={"Square Metre/No"}
                             onChange={handleInputChange}
-                        >
-                            <option value="">Select UOM</option>
-                            {uomOptions.map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
+                            readOnly
+                        />
+                     
                     </div>
 
-                    {formData.uom === 'Square Metre' && (
+                    {/* {formData.uom === 'Square Metre' && ( */}
                         <>
                             {/* Length */}
                             {/* <div>
@@ -237,7 +232,7 @@ const [selectedClient, setSelectedClient] = useState<string | null>(null);
                                 />
                             </div>
                         </>
-                    )}
+                    {/* // )} */}
 
                     {/* Qty in Bundle */}
                     <div>

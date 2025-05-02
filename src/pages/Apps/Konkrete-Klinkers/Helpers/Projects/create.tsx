@@ -6,143 +6,155 @@ import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import Select from 'react-select';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 
 interface ClientOption {
-  value: string;
-  label: string;
+    value: string;
+    label: string;
 }
 
 const ProjectCreation = () => {
-  const baseURL = import.meta.env.VITE_APP_SERVER_URL;
-      const navigate = useNavigate();
-  
-  const userDetail = useSelector((state: IRootState) => state.auth.user) || 'Guest User';
+    const baseURL = import.meta.env.VITE_APP_SERVER_URL;
+    const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    clientName: '',
-    projectName: '',
-  });
+    const userDetail = useSelector((state: IRootState) => state.auth.user) || 'Guest User';
 
-  const clientOptions: ClientOption[] = [
-    { value: 'client1', label: 'Client 1' },
-    { value: 'client2', label: 'Client 2' },
-    { value: 'client3', label: 'Client 3' },
-  ];
-
-  const handleClientChange = (selectedOption: any) => {
-    if (selectedOption) {
-      setFormData((prev) => ({
-        ...prev,
-        clientName: selectedOption.label,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
+    const [formData, setFormData] = useState({
         clientName: '',
-      }));
-    }
-  };
+        projectName: '',
+    });
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    const clientOptions: ClientOption[] = [
+        { value: 'client1', label: 'Client 1' },
+        { value: 'client2', label: 'Client 2' },
+        { value: 'client3', label: 'Client 3' },
+    ];
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const userId = userDetail._id;
-      const response = await fetch(`${baseURL}/projects`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        body: JSON.stringify({ ...formData, created_by: userId }),
-      });
+    const handleClientChange = (selectedOption: any) => {
+        if (selectedOption) {
+            setFormData((prev) => ({
+                ...prev,
+                clientName: selectedOption.label,
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                clientName: '',
+            }));
+        }
+    };
 
-      if (!response.ok) {
-        throw new Error('Failed to create project');
-      }
-      console.log('Project created successfully');
-      // navigate('/projects');
-    } catch (error) {
-      console.error('Error creating project:', error);
-    }
-  };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
-  const customStyles = {
-    control: (base: any) => ({
-      ...base,
-      border: 'none',
-      boxShadow: 'none',
-      '&:hover': {
-        border: 'none',
-      },
-      '&:focus': {
-        border: 'none',
-        boxShadow: 'none',
-      },
-    }),
-    input: (base: any) => ({
-      ...base,
-      outline: 'none',
-    }),
-  };
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const userId = userDetail._id;
+            const response = await fetch(`${baseURL}/projects`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+                body: JSON.stringify({ ...formData, created_by: userId }),
+            });
 
-  return (
-    <div>
-      <div className="panel">
-        <div className="mb-5">
-          <h5 className="font-semibold text-lg">Project Creation</h5>
-        </div>
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* Client Name */}
-          <div className="flex items-center">
-            <label htmlFor="clientName" className="w-1/4 pr-4">Client Name</label>
-            <Select
-              id="clientName"
-              name="clientName"
-              options={clientOptions}
-              onChange={handleClientChange}
-              className="form-input flex-1"
-              placeholder="Select Client"
-              styles={customStyles}
-            />
-          </div>
+            if (!response.ok) {
+                throw new Error('Failed to create project');
+            }
+            console.log('Project created successfully');
+            // navigate('/projects');
+        } catch (error) {
+            console.error('Error creating project:', error);
+        }
+    };
 
-          {/* Project Name */}
-          <div className="flex items-center">
-            <label htmlFor="projectName" className="w-1/4 pr-4">Project Name</label>
-            <input
-              id="projectName"
-              name="projectName"
-              type="text"
-              placeholder="Enter Project Name"
-              className="form-input flex-1"
-              value={formData.projectName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="flex items-center">
-            <label htmlFor="projectName" className="w-1/4 pr-4">Project Address</label>
-            <input
-              id="projectName"
-              name="projectName"
-              type="text"
-              placeholder="Enter Project Address"
-              className="form-input flex-1"
-              value={formData.projectName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+    const customStyles = {
+        control: (base: any) => ({
+            ...base,
+            border: 'none',
+            boxShadow: 'none',
+            '&:hover': {
+                border: 'none',
+            },
+            '&:focus': {
+                border: 'none',
+                boxShadow: 'none',
+            },
+        }),
+        input: (base: any) => ({
+            ...base,
+            outline: 'none',
+        }),
+    };
 
-          {/* Submit and Cancel Buttons */}
-          <div className="flex justify-between space-x-4 mt-6">
+    const breadcrumbItems = [
+        { label: 'Home', link: '/', isActive: false },
+        { label: 'Projects', link: '/konkrete-klinkers/projects', isActive: false },
+        { label: 'Create', link: '#', isActive: true },
+    ];
+
+    return (
+        <div>
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/projects', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <div className="panel">
+                <div className="mb-5">
+                    <h5 className="font-semibold text-lg">Project Creation</h5>
+                </div>
+                <form className="space-y-5" onSubmit={handleSubmit}>
+                    {/* Client Name */}
+                    <div className="flex items-center">
+                        <label htmlFor="clientName" className="w-1/4 pr-4">
+                            Client Name
+                        </label>
+                        <Select
+                            id="clientName"
+                            name="clientName"
+                            options={clientOptions}
+                            onChange={handleClientChange}
+                            className="form-input flex-1"
+                            placeholder="Select Client"
+                            styles={customStyles}
+                        />
+                    </div>
+
+                    {/* Project Name */}
+                    <div className="flex items-center">
+                        <label htmlFor="projectName" className="w-1/4 pr-4">
+                            Project Name
+                        </label>
+                        <input
+                            id="projectName"
+                            name="projectName"
+                            type="text"
+                            placeholder="Enter Project Name"
+                            className="form-input flex-1"
+                            value={formData.projectName}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="flex items-center">
+                        <label htmlFor="projectName" className="w-1/4 pr-4">
+                            Project Address
+                        </label>
+                        <input
+                            id="projectName"
+                            name="projectName"
+                            type="text"
+                            placeholder="Enter Project Address"
+                            className="form-input flex-1"
+                            value={formData.projectName}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+
+                    {/* Submit and Cancel Buttons */}
+                    <div className="flex justify-between space-x-4 mt-6">
                         <button type="submit" className="btn btn-success flex-1">
                             <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
                             Submit
@@ -152,10 +164,10 @@ const ProjectCreation = () => {
                             Cancel
                         </button>
                     </div>
-        </form>
-      </div>
-    </div>
-  );
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default ProjectCreation;

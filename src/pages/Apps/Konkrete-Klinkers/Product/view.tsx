@@ -262,12 +262,12 @@ const ProductView = () => {
                                 hidden: hideCols.includes('noOfPiecesPerPunch'),
                             },
                             { accessor: 'qtyInBundle', title: 'Qty in Bundle', sortable: true, hidden: hideCols.includes('qtyInBundle') },
-                            {
-                                accessor: 'qtyInNoPerBundle',
-                                title: 'Qty in No. Per Bundle',
-                                sortable: true,
-                                hidden: hideCols.includes('qtyInNoPerBundle'),
-                            },
+                            // {
+                            //     accessor: 'qtyInNoPerBundle',
+                            //     title: 'Qty in No. Per Bundle',
+                            //     sortable: true,
+                            //     hidden: hideCols.includes('qtyInNoPerBundle'),
+                            // },
                             {
                                 accessor: 'status',
                                 title: 'Status',

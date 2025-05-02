@@ -89,6 +89,9 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
     try {
+      console.log("username",username);
+      console.log("password",password);
+      
       // Simulate backend login by checking credentials
       if (username !== 'admin@gmail.com' || password !== 'admin') {
         throw new Error('Invalid email or password');

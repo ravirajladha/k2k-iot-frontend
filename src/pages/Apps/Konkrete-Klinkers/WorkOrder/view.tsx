@@ -112,8 +112,6 @@ const ColumnChooser = () => {
                 return (
                     item.id.toString().includes(search.toLowerCase()) ||
                     item.work_order_number.toString().includes(search.toLowerCase()) ||
-                 
-
                     item.client.toLowerCase().includes(search.toLowerCase()) ||
                     item.project.toLowerCase().includes(search.toLowerCase()) ||
                     item.created_at.toLowerCase().includes(search.toLowerCase()) ||
@@ -293,13 +291,13 @@ const ColumnChooser = () => {
                                             status === 'In Progress' ? 'text-info' : status === 'Pending' ? 'text-warning' : status === 'Completed' ? 'text-success' : 'text-danger'
                                         } capitalize`}
                                     >
-                                        {status}
+                                        n{status}
                                     </div>
                                 ),
                             },
                             {
                                 accessor: 'deadline',
-                                title: 'Date',
+                                title: 'WO Date',
                                 sortable: true,
                                 hidden: hideCols.includes('deadline'),
                                 render: ({ deadline }) => <div>{new Date(deadline).toLocaleDateString()}</div>,
