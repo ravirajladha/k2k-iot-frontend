@@ -119,6 +119,8 @@ const Clients = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
+    console.log("initialRecords",initialRecords);
+    
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);

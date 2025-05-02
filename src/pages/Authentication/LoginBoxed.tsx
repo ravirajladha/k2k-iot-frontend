@@ -24,12 +24,14 @@ const LoginCover = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Starting login...');
+        console.log('Starting login in 1 2 3...');
         dispatch(loginUser({ username, password }));
     };
 
     // Check token validity
     const token = user?.accessToken || null;
+    console.log("token",token);
+    
     const tokenIsValid = isTokenValid(token);
     console.log('checking login error:', error);
     console.log('Current loading state:', isLoading);
