@@ -40,7 +40,6 @@ const isTokenExpired = (token: string): boolean => {
 
 // Create AsyncThunk for refreshing the access token
 
-
 export const registerUser = createAsyncThunk(
     'auth/registerUser',
     async ({ fullName, username, email, password }: { fullName: string; username: string; email: string; password: string }, { rejectWithValue }) => {
@@ -85,52 +84,85 @@ export const registerUser = createAsyncThunk(
 // store/slices/authSlice.ts
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk('auth/loginUser', async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
     try {
-      console.log("username",username);
-      console.log("password",password);
-      
-      // Simulate backend login by checking credentials
-      if (username !== 'admin@gmail.com' || password !== 'admin') {
-        throw new Error('Invalid email or password');
-      }
+        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/users/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+            credentials: 'include',
+        });
+        // console.log("response",response);
 
-      // Simulate a user object
-      const mockUser = {
-        _id: 'mock-user-id',
-        username: 'admin@gmail.com',
-        email: 'admin@gmail.com',
-        fullName: 'Admin User',
-        type: 'admin',
-      };
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Login failed');
+        }
 
-      // Generate mock tokens (you can use a library like uuid or hardcode them)
-      const mockAccessToken = `mock-access-token-${uuidv4()}`; // e.g., "mock-access-token-1234"
-      const mockRefreshToken = `mock-refresh-token-${uuidv4()}`; // e.g., "mock-refresh-token-5678"
+        const data = await response.json();
+        console.log('data', data);
 
-      // Store tokens in localStorage
-      localStorage.setItem('accessToken', mockAccessToken);
-      localStorage.setItem('refreshToken', mockRefreshToken);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+        if (!data.data.accessToken) {
+            throw new Error('Access token missing in response');
+        }
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
+        localStorage.setItem('user', JSON.stringify(data.data.user));
 
-      console.log('Simulated login successful:', {
-        user: mockUser,
-        accessToken: mockAccessToken,
-        refreshToken: mockRefreshToken,
-      });
-
-      return {
-        user: mockUser,
-        accessToken: mockAccessToken,
-        refreshToken: mockRefreshToken,
-      };
+        console.log('user data with accesstoken', { user: data.data.user, accessToken: data.data.accessToken, data: data });
+        return { user: data.data.user, accessToken: data.data.accessToken, refreshToken: data.data.refreshToken }; // Include token explicitly
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Unexpected error');
+        return rejectWithValue(error instanceof Error ? error.message : 'Unexpected error');
     }
-  }
-);
+});
+
+//Working login but with mock details and mock tokens
+// export const loginUser = createAsyncThunk(
+//   'auth/loginUser',
+//   async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
+//     try {
+//       console.log("username",username);
+//       console.log("password",password);
+
+//       // Simulate backend login by checking credentials
+//       if (username !== 'admin@gmail.com' || password !== 'admin') {
+//         throw new Error('Invalid email or password');
+//       }
+
+//       // Simulate a user object
+//       const mockUser = {
+//         _id: 'mock-user-id',
+//         username: 'admin@gmail.com',
+//         email: 'admin@gmail.com',
+//         fullName: 'Admin User',
+//         type: 'admin',
+//       };
+
+//       // Generate mock tokens (you can use a library like uuid or hardcode them)
+//       const mockAccessToken = `mock-access-token-${uuidv4()}`; // e.g., "mock-access-token-1234"
+//       const mockRefreshToken = `mock-refresh-token-${uuidv4()}`; // e.g., "mock-refresh-token-5678"
+
+//       // Store tokens in localStorage
+//       localStorage.setItem('accessToken', mockAccessToken);
+//       localStorage.setItem('refreshToken', mockRefreshToken);
+//       localStorage.setItem('user', JSON.stringify(mockUser));
+
+//       console.log('Simulated login successful:', {
+//         user: mockUser,
+//         accessToken: mockAccessToken,
+//         refreshToken: mockRefreshToken,
+//       });
+
+//       return {
+//         user: mockUser,
+//         accessToken: mockAccessToken,
+//         refreshToken: mockRefreshToken,
+//       };
+//     } catch (error) {
+//       return rejectWithValue(error instanceof Error ? error.message : 'Unexpected error');
+//     }
+//   }
+// );
 
 // Fetch User Details Thunk
 export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async (_, { rejectWithValue }) => {
@@ -151,7 +183,6 @@ export const fetchUserDetails = createAsyncThunk('auth/fetchUserDetails', async 
     }
 });
 
-
 export const refreshAccessToken = createAsyncThunk<
     { accessToken: string }, // Return type
     void, // Argument type
@@ -161,7 +192,6 @@ export const refreshAccessToken = createAsyncThunk<
         const { auth } = getState() as IRootState;
 
         console.log('Getting refresh token from state:', auth); // Log the refresh token from Redux
-
 
         console.log('Getting refresh token from state:', auth.user.refreshToken); // Log the refresh token from Redux
 
@@ -194,8 +224,6 @@ export const refreshAccessToken = createAsyncThunk<
     }
 });
 
-
-
 // Logout Thunk
 export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
     try {
@@ -218,70 +246,70 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-      resetError(state) {
-        state.error = null;
-      },
-      clearUser(state) {
-        state.user = null;
-        state.isAuthenticated = false;
-      },
+        resetError(state) {
+            state.error = null;
+        },
+        clearUser(state) {
+            state.user = null;
+            state.isAuthenticated = false;
+        },
     },
     extraReducers: (builder) => {
-      builder
-        .addCase(registerUser.pending, (state) => {
-          state.isLoading = true;
-          state.error = null;
-        })
-        .addCase(registerUser.fulfilled, (state, action) => {
-          state.user = action.payload.user;
-          state.isAuthenticated = true;
-          state.isLoading = false;
-        })
-        .addCase(registerUser.rejected, (state, action) => {
-          state.error = action.payload as string;
-          state.isLoading = false;
-        })
-        .addCase(loginUser.pending, (state) => {
-          state.isLoading = true;
-          state.error = null;
-        })
-        .addCase(loginUser.fulfilled, (state, action) => {
-          state.user = {
-            ...action.payload.user,
-            accessToken: action.payload.accessToken,
-            refreshToken: action.payload.refreshToken,
-          };
-          state.isAuthenticated = true;
-          state.isLoading = false;
-        })
-        .addCase(loginUser.rejected, (state, action) => {
-          state.error = action.payload as string;
-          state.isLoading = false;
-        })
-        .addCase(fetchUserDetails.pending, (state) => {
-          state.isLoading = true;
-          state.error = null;
-        })
-        .addCase(fetchUserDetails.fulfilled, (state, action) => {
-          state.user = action.payload;
-          state.isAuthenticated = true;
-          state.isLoading = false;
-        })
-        .addCase(fetchUserDetails.rejected, (state, action) => {
-          state.error = action.payload as string;
-          state.isLoading = false;
-          state.isAuthenticated = false;
-        })
-        .addCase(logoutUser.fulfilled, (state) => {
-          state.user = null;
-          state.isAuthenticated = false;
-          state.error = null;
-        })
-        .addCase(logoutUser.rejected, (state, action) => {
-          state.error = action.payload as string;
-        });
+        builder
+            .addCase(registerUser.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.user = action.payload.user;
+                state.isAuthenticated = true;
+                state.isLoading = false;
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.error = action.payload as string;
+                state.isLoading = false;
+            })
+            .addCase(loginUser.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.user = {
+                    ...action.payload.user,
+                    accessToken: action.payload.accessToken,
+                    refreshToken: action.payload.refreshToken,
+                };
+                state.isAuthenticated = true;
+                state.isLoading = false;
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.error = action.payload as string;
+                state.isLoading = false;
+            })
+            .addCase(fetchUserDetails.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(fetchUserDetails.fulfilled, (state, action) => {
+                state.user = action.payload;
+                state.isAuthenticated = true;
+                state.isLoading = false;
+            })
+            .addCase(fetchUserDetails.rejected, (state, action) => {
+                state.error = action.payload as string;
+                state.isLoading = false;
+                state.isAuthenticated = false;
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.user = null;
+                state.isAuthenticated = false;
+                state.error = null;
+            })
+            .addCase(logoutUser.rejected, (state, action) => {
+                state.error = action.payload as string;
+            });
     },
-  });
-  
-  export const { resetError, clearUser } = authSlice.actions;
-  export default authSlice.reducer;
+});
+
+export const { resetError, clearUser } = authSlice.actions;
+export default authSlice.reducer;
