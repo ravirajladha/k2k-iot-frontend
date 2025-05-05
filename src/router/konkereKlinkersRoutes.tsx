@@ -53,6 +53,10 @@ import {
     StockManagementCreate,
     StockManagmentViewDetail,
     StockManagmentEditDetail,
+    HelperClientUpdate,
+    HelperClientDetail,
+    HelperProjectUpdate,
+    HelperProjectDetail,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -284,8 +288,13 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/clients/edit/:id`,
-        element: <HelperClientCreate />,
+        path: `${basePath}/clients/:id/edit`,
+        element: <HelperClientUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/clients/:id/detail`,
+        element: <HelperClientDetail />,
         layout: 'admin',
     },
 
@@ -301,8 +310,13 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/projects/edit/:id`,
-        element: <HelperProjectCreate />,
+        path: `${basePath}/projects/:id/edit`,
+        element: <HelperProjectUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/projects/:id/detail`,
+        element: <HelperProjectDetail />,
         layout: 'admin',
     },
 

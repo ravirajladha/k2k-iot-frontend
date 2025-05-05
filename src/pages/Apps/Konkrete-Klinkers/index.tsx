@@ -46,9 +46,13 @@ export { default as DipatchInvoiceView } from './Dispatch/invoice';
 
 export { default as HelperClients } from './Helpers/Clients/view';
 export { default as HelperClientCreate } from './Helpers/Clients/create';
+export { default as HelperClientUpdate } from './Helpers/Clients/update';
+export { default as HelperClientDetail } from './Helpers/Clients/detail';
 
 export { default as HelperProjects } from './Helpers/Projects/view';
 export { default as HelperProjectCreate } from './Helpers/Projects/create';
+export { default as HelperProjectUpdate } from './Helpers/Projects/update';
+export { default as HelperProjectDetail } from './Helpers/Projects/detail';
 
 export { default as HelperPlants } from './Helpers/Plants/view';
 export { default as HelperPlantCreate } from './Helpers/Plants/create';

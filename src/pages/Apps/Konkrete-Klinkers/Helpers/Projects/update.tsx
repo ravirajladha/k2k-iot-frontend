@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
+import { fetchClientData } from '@/api/konkreteKlinkers/client';
+import { fetchProjectById, updateProjectData } from '@/api/konkreteKlinkers/project';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-import Breadcrumbs from '@/pages/Components/Breadcrumbs';
-import { storeProjectData } from '@/api/konkreteKlinkers/project';
-import { fetchClientData } from '@/api/konkreteKlinkers/client';
+import CustomLoader from '@/components/Loader';
 
 type FormValues = {
     client: string;
@@ -15,49 +16,70 @@ type FormValues = {
     address: string;
 };
 
-const ProjectCreation = () => {
+const ProjectUpdate = () => {
+    const { id } = useParams(); // Get project ID from URL
     const navigate = useNavigate();
     const [apiError, setApiError] = useState('');
     const [clientOptions, setClientOptions] = useState<{ value: string; label: string }[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors, isSubmitting },
     } = useForm<FormValues>();
 
     useEffect(() => {
-        const fetchClients = async () => {
-            const options = await fetchClientData();
-            const clientData = options.map((client: any) => ({
-                value: client._id,
-                label: client.name,
-            }));
-            setClientOptions(clientData);
+        const init = async () => {
+            try {
+                // Load clients
+                const clients = await fetchClientData();
+                const clientMapped = clients.map((client: any) => ({
+                    value: client._id,
+                    label: client.name,
+                }));
+                setClientOptions(clientMapped);
+
+                // Load project
+                if (id) {
+                    const data = await fetchProjectById(id);
+                    reset({
+                        client: data.client?._id || '',
+                        name: data.name || '',
+                        address: data.address || '',
+                    });
+                }
+            } catch (error: any) {
+                setApiError(error.response?.data?.message || 'Failed to load data.');
+            }finally {
+                setLoading(false);
+            }
         };
-        fetchClients();
-    }, []);
+
+        init();
+    }, [id, reset]);
 
     const onSubmit = async (data: FormValues) => {
         setApiError('');
         try {
-            await storeProjectData({
+            await updateProjectData(id as string, {
                 name: data.name,
                 client: data.client,
             });
             navigate('/konkrete-klinkers/projects');
         } catch (error: any) {
-            console.error('Error creating project:', error);
-            setApiError(error.response?.data?.message || 'Failed to create project. Please try again.');
+            console.error('Update failed:', error);
+            setApiError(error.response?.data?.message || 'Failed to update project.');
         }
     };
 
-        const breadcrumbItems = [
-            { label: 'Home', link: '/', isActive: false },
-            { label: 'Projects', link: '/konkrete-klinkers/projects', isActive: false },
-            { label: 'Create', link: '#', isActive: true },
-        ];
+    const breadcrumbItems = [
+        { label: 'Home', link: '/', isActive: false },
+        { label: 'Projects', link: '/konkrete-klinkers/projects', isActive: false },
+        { label: 'Edit', link: '#', isActive: true },
+    ];
 
     return (
         <div>
@@ -71,15 +93,18 @@ const ProjectCreation = () => {
             />
             <div className="panel">
                 <div className="mb-5">
-                    <h5 className="font-semibold text-lg">Project Creation</h5>
+                    <h5 className="font-semibold text-lg">Update Project</h5>
                 </div>
 
                 {apiError && <div className="alert alert-danger mb-5">{apiError}</div>}
+                {loading ? (
+                    <CustomLoader />
+                ) : (
 
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     {/* Client Dropdown */}
                     <div className="flex items-center">
-                        <label htmlFor="clientId" className="w-1/4 pr-4">
+                        <label htmlFor="client" className="w-1/4 pr-4">
                             Client Name
                         </label>
                         <Controller
@@ -92,8 +117,8 @@ const ProjectCreation = () => {
                                     options={clientOptions}
                                     placeholder="Select Client"
                                     className="flex-1"
-                                    value={clientOptions.find((option) => option.value === field.value)}
-                                    onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                    value={clientOptions.find(opt => opt.value === field.value)}
+                                    onChange={(option) => field.onChange(option?.value)}
                                 />
                             )}
                         />
@@ -102,11 +127,9 @@ const ProjectCreation = () => {
 
                     {/* Project Name */}
                     <div className="flex items-center">
-                        <label htmlFor="projectName" className="w-1/4 pr-4">
-                            Project Name
-                        </label>
+                        <label htmlFor="name" className="w-1/4 pr-4">Project Name</label>
                         <input
-                            id="projectName"
+                            id="name"
                             type="text"
                             placeholder="Enter Project Name"
                             className={`form-input flex-1 ${errors.name ? 'border-red-500' : ''}`}
@@ -117,9 +140,7 @@ const ProjectCreation = () => {
 
                     {/* Project Address */}
                     <div className="flex items-center">
-                        <label htmlFor="address" className="w-1/4 pr-4">
-                            Project Address
-                        </label>
+                        <label htmlFor="address" className="w-1/4 pr-4">Project Address</label>
                         <input
                             id="address"
                             type="text"
@@ -138,7 +159,7 @@ const ProjectCreation = () => {
                             ) : (
                                 <>
                                     <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                                    Submit
+                                    Update
                                 </>
                             )}
                         </button>
@@ -148,9 +169,10 @@ const ProjectCreation = () => {
                         </button>
                     </div>
                 </form>
+                )}
             </div>
         </div>
     );
 };
 
-export default ProjectCreation;
+export default ProjectUpdate;

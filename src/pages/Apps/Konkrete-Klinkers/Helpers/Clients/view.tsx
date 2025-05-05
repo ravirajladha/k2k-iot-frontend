@@ -64,12 +64,12 @@ const Clients = () => {
             accessor: 'action',
             title: 'Actions',
             sortable: false,
-            render: ({ id }) => (
+            render: ({ _id }) => (
                 <div className="flex gap-4 items-center w-max mx-auto">
-                    <NavLink to={`#`} className="flex hover:text-info">
+                    <NavLink to={`${_id}/edit`} className="flex hover:text-info">
                         <IconEdit className="w-4.5 h-4.5" />
                     </NavLink>
-                    <NavLink to={`#`} className="flex hover:text-primary">
+                    <NavLink to={`${_id}/detail`} className="flex hover:text-primary">
                         <IconEye />
                     </NavLink>
                 </div>
