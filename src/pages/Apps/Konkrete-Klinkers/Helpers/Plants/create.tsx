@@ -63,6 +63,7 @@ const PlantCreation = () => {
                                 {...register('plant_name', { required: 'Plant Name is required' })}
                             />
                         </div>
+                    {errors.plant_name && <p className="text-red-500 text-sm mt-0">{errors.plant_name.message}</p>}
                         <div className="flex items-center">
                             <label htmlFor="plant_code" className="w-1/4 pr-4">
                                 Plant Code
@@ -75,6 +76,8 @@ const PlantCreation = () => {
                                 {...register('plant_code', { required: 'Plant Name is required' })}
                             />
                         </div>
+                    {errors.plant_code && <p className="text-red-500 text-sm mt-0">{errors.plant_code.message}</p>}
+
                     </div>
 
                     {/* Submit and Cancel Buttons */}

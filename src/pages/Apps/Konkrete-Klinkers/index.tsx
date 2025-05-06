@@ -18,6 +18,8 @@ export { default as JobOrderCreate } from './JobOrder/create';
 
 export { default as ProductView } from './Product/view';
 export { default as ProductCreate } from './Product/create';
+export { default as ProductUpdate } from './Product/update';
+export { default as ProductDetail } from './Product/detail';
 
 export { default as InventoryView } from './Inventory/view';
 export { default as InventoryViewNew } from './Inventory/viewNew';
@@ -56,12 +58,16 @@ export { default as HelperProjectDetail } from './Helpers/Projects/detail';
 
 export { default as HelperPlants } from './Helpers/Plants/view';
 export { default as HelperPlantCreate } from './Helpers/Plants/create';
+export { default as HelperPlantUpdate } from './Helpers/Plants/update';
+export { default as HelperPlantDetail } from './Helpers/Plants/detail';
 
 export { default as HelperFactories } from './Helpers/Factories/view';
 export { default as HelperFactoryCreate } from './Helpers/Factories/create';
 
 export { default as HelperMachines } from './Helpers/Machines/view';
 export { default as HelperMachineCreate } from './Helpers/Machines/create';
+export { default as HelperMachineUpdate } from './Helpers/Machines/update';
+export { default as HelperMachineDetail } from './Helpers/Machines/detail';
 
 export { default as Helper1 } from './Helpers/helper1';
 export { default as Helper2 } from './Helpers/helper2';

@@ -1,191 +1,140 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { IRootState } from "@/store/store";
-import IconTrashLines from '@/components/Icon/IconTrashLines';
-import IconSave from '@/components/Icon/IconSave';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
+import IconSave from '@/components/Icon/IconSave';
+import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import { fetchPlantData } from '@/api/konkreteKlinkers/plant';
+import { storeMachineData } from '@/api/konkreteKlinkers/machine';
 
-interface Factory {
-  id: string;
-  name: string;
-}
-
-interface Client {
-  id: string;
-  name: string;
-  factories: Factory[];
-}
-
-const ProjectCreation = () => {
-  const baseURL = import.meta.env.VITE_APP_SERVER_URL;
-  const userDetail = useSelector((state: IRootState) => state.auth.user) || 'Guest User';
-
-  const [clientsData] = useState<Client[]>([
-    {
-      id: 'plant1',
-      name: 'Plant 1',
-      factories: [
-        { id: 'factory1', name: 'Factory 1' },
-        { id: 'factory2', name: 'Factory 2' },
-      ],
-    },
-    {
-      id: 'plant2',
-      name: 'Plant 2',
-      factories: [
-        { id: 'factory3', name: 'Factory 3' },
-        { id: 'factory4', name: 'Factory 4' },
-      ],
-    },
-    // Add more clients as needed
-  ]);
-
-  const [selectedClient, setSelectedClient] = useState<string | null>(null);
-  const [factories, setFactories] = useState<Factory[]>([]);
-  const [selectedFactory, setSelectedFactory] = useState<string | null>(null);
-  const [machineName, setMachineName] = useState<string>('');
-
-  const navigate = useNavigate();
-
-  const handleClientChange = (selectedOption: any) => {
-    const clientId = selectedOption ? selectedOption.value : null;
-    setSelectedClient(clientId);
-    const client = clientsData.find((client) => client.id === clientId);
-    setFactories(client ? client.factories : []);
-    setSelectedFactory(null); // Reset factory selection
-  };
-
-  const handleFactoryChange = (selectedOption: any) => {
-    setSelectedFactory(selectedOption ? selectedOption.value : null);
-  };
-
-  const handleMachineNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMachineName(event.target.value);
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!selectedClient || !selectedFactory || !machineName) {
-      alert('Please fill in all fields.');
-      return;
-    }
-    try {
-      const userId = userDetail._id;
-      const response = await fetch(`${baseURL}/machines`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        body: JSON.stringify({ clientId: selectedClient, factoryId: selectedFactory, machineName, created_by: userId }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create machine');
-      }
-      console.log('Machine created successfully');
-      navigate('/machines');
-    } catch (error) {
-      console.error('Error creating machine:', error);
-    }
-  };
-
-  const breadcrumbItems = [
-    { label: 'Home', link: '/', isActive: false },
-    { label: 'Machines', link: '/machines', isActive: false },
-    { label: 'Create', link: '#', isActive: true },
-  ];
-
-  return (
-    <div>
-      <Breadcrumbs
-        items={breadcrumbItems}
-        addButton={{ label: 'Back', link: '/konkrete-klinkers/machines', icon: <IconArrowBackward className="text-4xl" /> }}
-      />
-      <div className="panel">
-        <div className="mb-5">
-          <h5 className="font-semibold text-lg">Machine Creation</h5>
-        </div>
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-            {/* Client Selection */}
-            <div>
-              <label htmlFor="client">Plant</label>
-              <Select
-                id="client"
-                value={selectedClient ? { value: selectedClient, label: clientsData.find(client => client.id === selectedClient)?.name } : null}
-                onChange={handleClientChange}
-                options={clientsData.map(client => ({ value: client.id, label: client.name }))}
-                className="custom-select"
-                classNamePrefix="custom-select"
-                placeholder="Select Plant"
-                isClearable
-                required
-              />
-            </div>
-
-            {/* Factory Selection */}
-            {/* {selectedClient && (
-              <div>
-                <label htmlFor="factory">Factory</label>
-                <Select
-                  id="factory"
-                  value={selectedFactory ? { value: selectedFactory, label: factories.find(factory => factory.id === selectedFactory)?.name } : null}
-                  onChange={handleFactoryChange}
-                  options={factories.map(factory => ({ value: factory.id, label: factory.name }))}
-                  className="custom-select"
-                  classNamePrefix="custom-select"
-                  placeholder="Select Factory"
-                  isClearable
-                  required
-                />
-              </div>
-            )} */}
-
-            {/* Machine
-::contentReference[oaicite:0]{index=0}
- 
-            {/* Machine Name Input */}
-            {/* {selectedFactory && ( 
-            )}
-            */}
-              <div>
-                <label htmlFor="name" className="w-1/4 pr-4">Machine Name</label>
-                <input
-                  id="machineName"
-                  type="text"
-                  value={machineName}
-                  className="form-input flex-1"
-                  onChange={handleMachineNameChange}
-                  placeholder="Enter Machine Name"
-                  required
-                />
-              </div>
-        
-          </div>
-
-          <div className="flex justify-between space-x-4 mt-6">
-            {/* Submit Button */}
-            <button type="submit" className="btn btn-success flex-1">
-              <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
-              Submit
-            </button>
-
-            {/* Cancel Button */}
-            <Link to="/machines" className="flex-1">
-              <button type="button" className="btn btn-danger w-full">
-                <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                Cancel
-              </button>
-            </Link>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+type FormValues = {
+    plant_id: string;
+    name: string;
 };
 
-export default ProjectCreation;
+const MachineCreation = () => {
+    const navigate = useNavigate();
+    const [apiError, setApiError] = useState('');
+    const [plantOptions, setPlantOptions] = useState<{ value: string; label: string }[]>([]);
+
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors, isSubmitting },
+    } = useForm<FormValues>();
+
+    useEffect(() => {
+        const fetchPlants = async () => {
+            const options = await fetchPlantData();
+            const plantData = options.map((plant: any) => ({
+                value: plant._id,
+                label: `${plant.plant_name} - ${plant.plant_code}`,
+            }));
+            setPlantOptions(plantData);
+        };
+        fetchPlants();
+    }, []);
+
+    const onSubmit = async (data: FormValues) => {
+        setApiError('');
+        try {
+            await storeMachineData({
+                name: data.name,
+                plant_id: data.plant_id,
+            });
+            navigate('/konkrete-klinkers/machines');
+        } catch (error: any) {
+            console.error('Error creating machine:', error);
+            setApiError(error.response?.data?.message || 'Failed to create machine. Please try again.');
+        }
+    };
+
+    const breadcrumbItems = [
+        { label: 'Home', link: '/', isActive: false },
+        { label: 'Machines', link: '/konkrete-klinkers/machines', isActive: false },
+        { label: 'Create', link: '#', isActive: true },
+    ];
+
+    return (
+        <div>
+            <Breadcrumbs
+                items={breadcrumbItems}
+                addButton={{
+                    label: 'Back',
+                    link: '/konkrete-klinkers/machines',
+                    icon: <IconArrowBackward className="text-4xl" />,
+                }}
+            />
+            <div className="panel">
+                <div className="mb-5">
+                    <h5 className="font-semibold text-lg">Machine Creation</h5>
+                </div>
+
+                {apiError && <div className="alert alert-danger mb-5">{apiError}</div>}
+
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                    {/* Plant Dropdown */}
+                    <div className="flex items-center">
+                        <label htmlFor="plant_id" className="w-1/4 pr-4">
+                            Plant Name
+                        </label>
+                        <Controller
+                            control={control}
+                            name="plant_id"
+                            rules={{ required: 'Plant is required' }}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    options={plantOptions}
+                                    placeholder="Select Plant"
+                                    className="flex-1"
+                                    value={plantOptions.find((option) => option.value === field.value)}
+                                    onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                />
+                            )}
+                        />
+                    </div>
+                    {errors.plant_id && <p className="text-red-500 text-sm">{errors.plant_id.message}</p>}
+
+                    {/* Machine Name */}
+                    <div className="flex items-center">
+                        <label htmlFor="machineName" className="w-1/4 pr-4">
+                            Machine Name
+                        </label>
+                        <input
+                            id="machineName"
+                            type="text"
+                            placeholder="Enter Machine Name"
+                            className={`form-input flex-1 ${errors.name ? 'border-red-500' : ''}`}
+                            {...register('name', { required: 'Machine Name is required' })}
+                        />
+                    </div>
+                    {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+
+                    {/* Buttons */}
+                    <div className="flex justify-between space-x-4 mt-6">
+                        <button type="submit" className="btn btn-success flex-1" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                                <span className="animate-spin border-2 border-white border-l-transparent rounded-full w-5 h-5 inline-block align-middle"></span>
+                            ) : (
+                                <>
+                                    <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                                    Submit
+                                </>
+                            )}
+                        </button>
+                        <button type="button" className="btn btn-danger flex-1" onClick={() => navigate('/konkrete-klinkers/projects')} disabled={isSubmitting}>
+                            <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default MachineCreation;

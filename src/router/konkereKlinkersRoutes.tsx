@@ -57,6 +57,12 @@ import {
     HelperClientDetail,
     HelperProjectUpdate,
     HelperProjectDetail,
+    HelperPlantUpdate,
+    HelperPlantDetail,
+    HelperMachineUpdate,
+    HelperMachineDetail,
+    ProductUpdate,
+    ProductDetail,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -170,8 +176,18 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/product/create`,
+        path: `${basePath}/products/create`,
         element: <ProductCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/products/:id/edit`,
+        element: <ProductUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/products/:id/detail`,
+        element: <ProductDetail />,
         layout: 'admin',
     },
 
@@ -332,8 +348,13 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/plants/edit/:id`,
-        element: <HelperPlantCreate />,
+        path: `${basePath}/plants/:id/edit`,
+        element: <HelperPlantUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/plants/:id/detail`,
+        element: <HelperPlantDetail />,
         layout: 'admin',
     },
 
@@ -366,8 +387,13 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/machines/edit/:id`,
-        element: <HelperMachineCreate />,
+        path: `${basePath}/machines/:id/edit`,
+        element: <HelperMachineUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/machines/:id/detail`,
+        element: <HelperMachineDetail />,
         layout: 'admin',
     },
 
