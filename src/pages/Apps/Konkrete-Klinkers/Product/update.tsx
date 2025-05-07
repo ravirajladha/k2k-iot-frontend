@@ -7,11 +7,12 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import { Controller, useForm } from 'react-hook-form';
-import { storeProductData } from '@/api/konkreteKlinkers/product';
-import { useNavigate } from 'react-router-dom';
+import { fetchProductById, storeProductData } from '@/api/konkreteKlinkers/product';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPlantData } from '@/api/konkreteKlinkers/plant';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
+import CustomLoader from '@/components/Loader';
 interface FormValues {
     plant: string;
     materialCode: string;
@@ -22,16 +23,19 @@ interface FormValues {
     area: string;
 }
 
-const ProductCreationForm = () => {
+const ProductUpdateForm = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [apiError, setApiError] = useState('');
     const [plantOptions, setPlantOptions] = useState<{ value: string; label: string }[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const {
         register,
         handleSubmit,
         control,
         formState: { errors, isSubmitting },
+        reset,
     } = useForm<FormValues>({
         defaultValues: {
             uom: 'Square Metre/No',
@@ -56,6 +60,39 @@ const ProductCreationForm = () => {
         fetchPlants();
     }, []);
 
+    useEffect(() => {
+        const init = async () => {
+            try {
+                const options = await fetchPlantData();
+                const plantData = options.map((plant: any) => ({
+                    value: plant._id,
+                    label: `${plant.plant_name} - ${plant.plant_code}`,
+                }));
+                setPlantOptions(plantData);
+
+                // Load project
+                if (id) {
+                    const data = await fetchProductById(id);
+                    reset({
+                        plant: data.plant?._id || '',
+                        materialCode: data.material_code || '',
+                        description: data.description || '',
+                        piecesPerPunch: data.no_of_pieces_per_punch || '',
+                        uom: data.uom || '',
+                        qtyInBundle: data.qty_in_bundle || '',
+                        area: data.area || '',
+                    });
+                }
+            } catch (error: any) {
+                setApiError(error.response?.data?.message || 'Failed to load data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        init();
+    }, [id, reset]);
+
     const onSubmit = async (data: FormValues) => {
         setApiError('');
         try {
@@ -79,7 +116,7 @@ const ProductCreationForm = () => {
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
         { label: ' Products', link: '/konkrete-klinkers/products', isActive: false },
-        { label: 'Create', link: '#', isActive: true },
+        { label: 'Update', link: '#', isActive: true },
     ];
 
     return (
@@ -87,7 +124,7 @@ const ProductCreationForm = () => {
             <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/products', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5 flex items-center justify-between">
-                    <h5 className="font-semibold text-lg dark:text-white-light">Product Creation Form</h5>
+                    <h5 className="font-semibold text-lg dark:text-white-light">Product Update Form</h5>
                     <button
                         onMouseEnter={() => setShowTooltip(true)}
                         onMouseLeave={() => setShowTooltip(false)}
@@ -108,7 +145,9 @@ const ProductCreationForm = () => {
                     </button>
                 </div>
                 {apiError && <div className="alert alert-danger mb-5">{apiError}</div>}
-
+                {loading ? (
+                    <CustomLoader />
+                ) : (
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -218,9 +257,10 @@ const ProductCreationForm = () => {
                         </button>
                     </div>
                 </form>
+                )}
             </div>
         </div>
     );
 };
 
-export default ProductCreationForm;
+export default ProductUpdateForm;

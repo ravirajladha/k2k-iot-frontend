@@ -3,32 +3,32 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import CustomLoader from '@/components/Loader';
-import { fetchProjectById } from '@/api/konkreteKlinkers/project';
+import { fetchMachineById } from '@/api/konkreteKlinkers/machine';
 
-const ProjectView = () => {
+const MachineView = () => {
     const { id } = useParams<{ id: string }>();
-    const [project, setProject] = useState<{ client: any; name: string; address: string } | null>(null);
+    const [machine, setMachine] = useState<{ plant_id: any; name: string } | null>(null);
     const [apiError, setApiError] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchProject = async () => {
+        const fetchMachine = async () => {
             try {
-                const data = await fetchProjectById(id);
-                setProject(data);
+                const data = await fetchMachineById(id);
+                setMachine(data);
             } catch (error) {
-                setApiError('Failed to fetch project details.');
+                setApiError('Failed to fetch Machine details.');
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProject();
+        fetchMachine();
     }, [id]);
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
-        { label: 'Projects', link: '/konkrete-klinkers/projects', isActive: false },
+        { label: 'Machines', link: '/konkrete-klinkers/machines', isActive: false },
         { label: 'View', link: '#', isActive: true },
     ];
 
@@ -38,14 +38,14 @@ const ProjectView = () => {
                 items={breadcrumbItems}
                 addButton={{
                     label: 'Back',
-                    link: '/konkrete-klinkers/projects',
+                    link: '/konkrete-klinkers/machines',
                     icon: <IconArrowBackward className="text-4xl" />,
                 }}
             />
 
             <div className="panel">
                 <div className="mb-5">
-                    <h5 className="font-semibold text-lg">Project Details</h5>
+                    <h5 className="font-semibold text-lg">Machine Details</h5>
                 </div>
 
                 {apiError && <div className="alert alert-danger mb-5">{apiError}</div>}
@@ -53,23 +53,17 @@ const ProjectView = () => {
                 {loading ? (
                     <CustomLoader />
                 ) : (
-                    project && (
+                    machine && (
                         <div className="space-y-5">
-                            {/* Client Name */}
+                            {/* Plant Name */}
                             <div className="flex items-center">
-                                <label className="w-1/4 pr-4 font-medium">Client Name</label>
-                                <div className="flex-1">{project.client?.name}</div>
+                                <label className="w-1/4 pr-4 font-medium">Plant Name</label>
+                                <div className="flex-1">{machine.plant_id?.plant_name}</div>
                             </div>
-                            {/* Project Name */}
+                            {/* machine Name */}
                             <div className="flex items-center">
                                 <label className="w-1/4 pr-4 font-medium">Project Name</label>
-                                <div className="flex-1">{project.name}</div>
-                            </div>
-
-                            {/* Client Address */}
-                            <div className="flex items-start">
-                                <label className="w-1/4 pr-4 font-medium">Project Address</label>
-                                <div className="flex-1 whitespace-pre-line">{project.address}</div>
+                                <div className="flex-1">{machine.name}</div>
                             </div>
                         </div>
                     )
@@ -79,4 +73,4 @@ const ProjectView = () => {
     );
 };
 
-export default ProjectView;
+export default MachineView;
