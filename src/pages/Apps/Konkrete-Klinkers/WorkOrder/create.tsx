@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconX from '@/components/Icon/IconX';
 import Select from 'react-select';
@@ -10,27 +10,46 @@ import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import { addAlert } from '@/store/slices/alertSlice';
 import { useDispatch } from 'react-redux';
+import { fetchClientData } from '@/api/konkreteKlinkers/client';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { fetchProjectsByClientId } from '@/api/konkreteKlinkers/workOrder';
+import { fetchProductData } from '@/api/konkreteKlinkers/product';
+import { uniqueId } from 'lodash';
 
-interface Client {
-    value: string;
-    label: string;
-    projects: Project[];
-}
+// interface Product {
+//     value: string;
+//     label: string;
+//     uom: string;
+// }
 
-interface Product {
-    value: string;
+// interface Project {
+//     value: string;
+//     label: string;
+// }
+interface ProductOption {
     label: string;
+    value: string;
+  }
+
+  interface UOMOption {
+    label: string;
+    value: string;
+  }
+
+  interface Item {
+    id: string; // or number depending on your key logic
+    product: ProductOption | null;
     uom: string;
-}
-
-interface Project {
-    value: string;
-    label: string;
-}
+    originalQuantity: number | string;
+    convertedQuantity?: number | string;
+    plantCode: string;
+    deliveryDate?: string;
+  }
 
 interface FormData {
-    clientName: string;
-    projectName: string;
+    client: string;
+    project: string;
     workOrderNumber: string;
     workOrderDate: string;
     productId: string;
@@ -38,33 +57,123 @@ interface FormData {
     orderQuantity: string;
     plantCode: string;
     files: ImageListType;
+    bufferStock: boolean;
+    items: Item[];
 }
 
 const Create = () => {
-    console.log('inside create work order component');
+    const navigate = useNavigate();
+    const [apiError, setApiError] = useState('');
+    const [clientOptions, setClientOptions] = useState<{ value: string; label: string }[]>([]);
+    const [projectOptions, setProjectOptions] = useState([]);
+    const [products, setProducts] = useState([]);
 
-    const [formData, setFormData] = useState<FormData>({
-        clientName: '',
-        projectName: '',
-        workOrderNumber: '',
-        workOrderDate: '',
-        productId: '',
-        uom: '',
-        orderQuantity: '',
-        plantCode: '',
-        files: [],
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors, isSubmitting },
+        watch,
+        setValue,
+    } = useForm<FormData>({
+        defaultValues: {
+            bufferStock: false,
+            items: [],
+        },
     });
+
+    const selectedClientId = watch('client');
+    const { fields: items, append, remove, update } = useFieldArray({
+        control,
+        name: 'items',
+    });
+
+    const addItem = () => {
+        append({
+          id: uniqueId(),
+          product: null,
+          uom: '',
+          originalQuantity: '',
+          convertedQuantity: '',
+          plantCode: '',
+          deliveryDate: '',
+        });
+      };
+
+    const fetchClients = async () => {
+        const options = await fetchClientData();
+        const clientData = options.map((client: any) => ({
+            value: client._id,
+            label: client.name,
+        }));
+        setClientOptions(clientData);
+    };
+    const fetchProducts = async () => {
+        const options = await fetchProductData();
+        const productData = options.map((product: any) => ({
+            value: product._id,
+            label: product.material_code,
+        }));
+        setClientOptions(productData);
+    };
+    useEffect(() => {
+        fetchClients();
+        fetchProducts();
+    }, []);
+
+    // Fetch projects when client changes
+    useEffect(() => {
+        if (selectedClientId) {
+            const fetchProjects = async () => {
+                const res = await fetchProjectsByClientId(selectedClientId);
+                const formatted = res.map((project: any) => ({
+                    value: project._id,
+                    label: project.name,
+                }));
+                setProjectOptions(formatted);
+                // reset project field on client change
+                setValue('project', '');
+            };
+            fetchProjects();
+        } else {
+            setProjectOptions([]);
+        }
+    }, [selectedClientId, setValue]);
+
+    const onSubmit = async (data: FormData) => {
+        setApiError('');
+        try {
+            // await storeProjectData({
+            //     name: data.name,
+            //     client: data.client,
+            // });
+            navigate('/konkrete-klinkers/projects');
+        } catch (error: any) {
+            console.error('Error creating project:', error);
+            setApiError(error.response?.data?.message || 'Failed to create project. Please try again.');
+        }
+    };
+
+    // const [formData, setFormData] = useState<FormData>({
+    //     client: '',
+    //     project: '',
+    //     workOrderNumber: '',
+    //     workOrderDate: '',
+    //     productId: '',
+    //     uom: '',
+    //     orderQuantity: '',
+    //     plantCode: '',
+    //     files: [],
+    //     bufferStock: false,
+    //     items: []
+    // });
 
     const maxNumber = 5;
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
 
-    const handleFileChange = (imageList: ImageListType) => {
-        setFormData((prev) => ({ ...prev, files: imageList }));
-    };
+    // const handleFileChange = (imageList: ImageListType) => {
+    //     setFormData((prev) => ({ ...prev, files: imageList }));
+    // };
 
     const dispatch = useDispatch();
 
@@ -80,170 +189,111 @@ const Create = () => {
         }
     };
 
-    const [items, setItems] = useState<any[]>([]);
-    console.log('items', items);
+    // const [items, setItems] = useState<any[]>([]);
+    // console.log('items', items);
 
-    const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-    const clients: Client[] = [
-        {
-            value: 'client1',
-            label: 'Client 1',
-            projects: [
-                { value: 'project1', label: 'Project 1' },
-                { value: 'project2', label: 'Project 2' },
-            ],
-        },
-        {
-            value: 'client2',
-            label: 'Client 2',
-            projects: [
-                { value: 'project3', label: 'Project 3' },
-                { value: 'project4', label: 'Project 4' },
-            ],
-        },
-    ];
-
-    const products: Product[] = [
-        { label: '1000010188/Paver Black 200*200*60', value: 'Paver_Black_200_200_60', uom: 'sqmt' },
-        { label: '1000010184/Paver Grey 200*200*60', value: 'Paver_Grey_200_200_60', uom: 'sqmt' },
-        { label: '1000010185/Paver Dark Grey 200*200*60', value: 'Paver_Dark_Grey_200_200_60', uom: 'sqmt' },
-        { label: '1000010186/Paver Red 200*200*60', value: 'Paver_Red_200_200_60', uom: 'sqmt' },
-        { label: '1000010464/Paver Yellow 200*200*60', value: 'Paver_Yellow_200_200_60', uom: 'sqmt' },
-        { label: '1000010180/Paver Black 200*100*60', value: 'Paver_Black_200_100_60', uom: 'nos' },
-        { label: '1000010189/Pavers Dark Grey 200*100*60', value: 'Pavers_Dark_Grey_200_100_60', uom: 'nos' },
-    ];
+    // const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     const plantCodes = ['Plant 101', 'Plant 102', 'Plant 103'];
 
-    const addItem = () => {
-        let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
-        setItems([
-            ...items,
-            {
-                id: maxId + 1,
-                product: null,
-                uom: '',
-                quantity: 0,
-                originalQuantity: '',
-                convertedQuantity: '',
-                plantCode: '',
-                deliveryDate: '',
-            },
-        ]);
-    };
+    // const addItem = () => {
+    //     let maxId = items.length ? Math.max(...items.map((item) => item.id)) : 0;
+    //     setItems([
+    //         ...items,
+    //         {
+    //             id: maxId + 1,
+    //             product: null,
+    //             uom: '',
+    //             quantity: 0,
+    //             originalQuantity: '',
+    //             convertedQuantity: '',
+    //             plantCode: '',
+    //             deliveryDate: '',
+    //         },
+    //     ]);
+    // };
 
-    const handleClientChange = (selectedOption: Client | null) => {
-        setSelectedClient(selectedOption);
-        setSelectedProject(null); // Reset project selection
-    };
-
-    const handleProductChange = (selectedOption: Product | null, id: number) => {
-        setItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id
-                    ? {
-                          ...item,
-                          product: selectedOption,
-                      }
-                    : item
-            )
-        );
-    };
+    // const handleProductChange = (selectedOption: Product | null, id: number) => {
+    //     setItems((prevItems) =>
+    //         prevItems.map((item) =>
+    //             item.id === id
+    //                 ? {
+    //                       ...item,
+    //                       product: selectedOption,
+    //                   }
+    //                 : item
+    //         )
+    //     );
+    // };
 
     const uomOptions = [
         { value: 'sqmt', label: 'sqmt' },
         { value: 'nos', label: 'nos' },
     ];
 
-    const handleUOMChange = (selectedOption: any, id: number) => {
-        setItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id
-                    ? {
-                          ...item,
-                          uom: selectedOption ? selectedOption.value : '',
-                          quantity: selectedOption ? (selectedOption.value === 'sqmt' ? 0.0 : 0) : 0,
-                          originalQuantity: '',
-                      }
-                    : item
-            )
-        );
-    };
+    // const handleUOMChange = (selectedOption: any, id: number) => {
+    //     setItems((prevItems) =>
+    //         prevItems.map((item) =>
+    //             item.id === id
+    //                 ? {
+    //                       ...item,
+    //                       uom: selectedOption ? selectedOption.value : '',
+    //                       quantity: selectedOption ? (selectedOption.value === 'sqmt' ? 0.0 : 0) : 0,
+    //                       originalQuantity: '',
+    //                   }
+    //                 : item
+    //         )
+    //     );
+    // };
 
-    const handleChange = (id: number, field: string, value: any) => {
-        setItems((prevItems) =>
-            prevItems.map((item) => {
-                if (item.id === id) {
-                    if (field === 'quantity') {
-                        const uom = item.uom;
-                        const parsedValue = uom === 'sqmt' ? parseFloat(value) : parseInt(value, 10);
+    // const handleChange = (id: number, field: string, value: any) => {
+    //     setItems((prevItems) =>
+    //         prevItems.map((item) => {
+    //             if (item.id === id) {
+    //                 if (field === 'quantity') {
+    //                     const uom = item.uom;
+    //                     const parsedValue = uom === 'sqmt' ? parseFloat(value) : parseInt(value, 10);
 
-                        // Calculate the converted quantity if UOM is 'sqmt' and value is valid
-                        const convertedQuantity = uom === 'sqmt' && !isNaN(parsedValue) ? Math.floor(parsedValue / 1.5) : '';
+    //                     // Calculate the converted quantity if UOM is 'sqmt' and value is valid
+    //                     const convertedQuantity = uom === 'sqmt' && !isNaN(parsedValue) ? Math.floor(parsedValue / 1.5) : '';
 
-                        return {
-                            ...item,
-                            quantity: parsedValue < 0 ? 0 : parsedValue,
-                            originalQuantity: value,
-                            convertedQuantity: convertedQuantity, // Update converted quantity
-                        };
-                    }
-                    return { ...item, [field]: value };
-                }
-                return item;
-            })
-        );
-    };
+    //                     return {
+    //                         ...item,
+    //                         quantity: parsedValue < 0 ? 0 : parsedValue,
+    //                         originalQuantity: value,
+    //                         convertedQuantity: convertedQuantity, // Update converted quantity
+    //                     };
+    //                 }
+    //                 return { ...item, [field]: value };
+    //             }
+    //             return item;
+    //         })
+    //     );
+    // };
 
-    const handleQuantityBlur = (id: number) => {
-        setItems((prevItems) =>
-            prevItems.map((item) => {
-                if (item.id === id && item.uom === 'sqmt') {
-                    const areaPerPiece = 1.5; // Define the area per piece
-                    const convertedQuantity = Math.floor(item.quantity / areaPerPiece);
-                    return { ...item, quantity: convertedQuantity < 0 ? 0 : convertedQuantity };
-                }
-                return item;
-            })
-        );
-    };
+    // const handleQuantityBlur = (id: number) => {
+    //     setItems((prevItems) =>
+    //         prevItems.map((item) => {
+    //             if (item.id === id && item.uom === 'sqmt') {
+    //                 const areaPerPiece = 1.5; // Define the area per piece
+    //                 const convertedQuantity = Math.floor(item.quantity / areaPerPiece);
+    //                 return { ...item, quantity: convertedQuantity < 0 ? 0 : convertedQuantity };
+    //             }
+    //             return item;
+    //         })
+    //     );
+    // };
 
-    const handleProjectChange = (selectedOption: Project | null) => {
-        setSelectedProject(selectedOption);
-    };
+    // const handleProjectChange = (selectedOption: Project | null) => {
+    //     setSelectedProject(selectedOption);
+    // };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Form Data:', formData);
-    };
-
-    const removeItem = (id: number) => {
-        setItems(items.filter((item) => item.id !== id));
-        console.log('id', id);
-    };
+    // const removeItem = (id: number) => {
+    //     setItems(items.filter((item) => item.id !== id));
+    //     console.log('id', id);
+    // };
 
     const [showTooltip, setShowTooltip] = useState(false);
-
-    const customStyles = {
-        control: (base: any) => ({
-            ...base,
-            border: 'none',
-            boxShadow: 'none',
-            '&:hover': {
-                border: 'none',
-            },
-            '&:focus': {
-                border: 'none',
-                boxShadow: 'none',
-            },
-        }),
-        input: (base: any) => ({
-            ...base,
-            outline: 'none',
-        }),
-    };
 
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
@@ -259,37 +309,45 @@ const Create = () => {
                 <div className="mb-5">
                     <h5 className="font-semibold text-lg">Create Work Order</h5>
                 </div>
-                <form className="space-y-5" onSubmit={handleSubmit}>
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="clientName">Client Name</label>
-                            <Select
-                                id="clientName"
-                                name="clientName"
-                                options={clients}
-                                onChange={handleClientChange}
-                                value={selectedClient}
-                                getOptionLabel={(e) => e.label}
-                                getOptionValue={(e) => e.value}
-                                placeholder="Select Client"
-                                isClearable
+                            <label htmlFor="client">Client Name</label>
+                            <Controller
+                                control={control}
+                                name="client"
+                                rules={{ required: 'Client is required' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={clientOptions}
+                                        placeholder="Select Client"
+                                        className="flex-1"
+                                        value={clientOptions.find((option) => option.value === field.value)}
+                                        onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                        isClearable
+                                    />
+                                )}
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="projectName">Project Name</label>
-                            <Select
-                                id="projectName"
-                                name="projectName"
-                                options={selectedClient ? selectedClient.projects : []}
-                                onChange={handleProjectChange}
-                                value={selectedProject}
-                                getOptionLabel={(e) => e.label}
-                                getOptionValue={(e) => e.value}
-                                placeholder="Select Project"
-                                // styles={customStyles}
-                                isClearable
-                                isDisabled={!selectedClient}
+                            <label htmlFor="project">Project Name</label>
+                            <Controller
+                                control={control}
+                                name="project"
+                                rules={{ required: 'Project is required' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={projectOptions}
+                                        placeholder="Select Project"
+                                        value={projectOptions.find((option) => option.value === field.value)}
+                                        onChange={(selected) => field.onChange(selected?.value)}
+                                        isDisabled={!selectedClientId}
+                                        isClearable
+                                    />
+                                )}
                             />
                         </div>
 
@@ -297,23 +355,37 @@ const Create = () => {
                             <label htmlFor="workOrderNumber">Work Order Number</label>
                             <input
                                 id="workOrderNumber"
-                                name="workOrderNumber"
                                 type="text"
                                 placeholder="Enter Work Order Number"
-                                className="form-input w-full"
-                                value={formData.workOrderNumber}
-                                onChange={handleInputChange}
+                                className={`form-input flex-1 ${errors.workOrderNumber ? 'border-red-500' : ''}`}
+                                {...register('workOrderNumber', { required: 'Work Order Number is required' })}
                             />
                         </div>
 
                         <div>
                             <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input id="workOrderDate" name="workOrderDate" type="date" className="form-input w-full" value={formData.workOrderDate} onChange={handleInputChange} />
+                            <input
+                                id="workOrderDate"
+                                type="date"
+                                placeholder="Enter Work Order Date"
+                                className={`form-input flex-1 ${errors.workOrderDate ? 'border-red-500' : ''}`}
+                                {...register('workOrderDate', { required: 'Work Order Date is required' })}
+                            />
                         </div>
 
                         <div>
                             <label className="inline-flex items-center">
-                                <input type="checkbox" className="form-checkbox outline-success rounded-full mr-2" style={{ transform: 'scale(1.5)' }} onChange={handleCheckboxChange} />
+                                <input
+                                id="bufferStock"
+                                type="checkbox"
+                                placeholder="Enter Work Order Date"
+                                className={`form-checkbox outline-success rounded-full mr-2`}
+                                style={{ transform: 'scale(1.5)' }}
+                                {...register('bufferStock')}
+                                onChange={(e) => {
+                                    handleCheckboxChange(e); // alert logic
+                                }}
+                            />
                                 <span> &ensp;Buffer Stock</span>
                             </label>
                         </div>
@@ -333,7 +405,7 @@ const Create = () => {
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {/* <tbody>
                                     {items.length === 0 && (
                                         <tr>
                                             <td colSpan={7} className="!text-center font-semibold">
@@ -425,22 +497,110 @@ const Create = () => {
                                             </td>
                                         </tr>
                                     ))}
-                                </tbody>
+                                </tbody> */}
+                                <tbody>
+    {items.length === 0 && (
+        <tr>
+            <td colSpan={7} className="!text-center font-semibold">No Item Available</td>
+        </tr>
+    )}
+    {items.map((item, index) => (
+        <tr className="align-top" key={item.id}>
+            <td>
+                <Controller
+                    control={control}
+                    name={`items.${index}.product`}
+                    render={({ field }) => (
+                        <Select
+                            {...field}
+                            options={products.map((p) => ({
+                                ...p,
+                                isDisabled: items.some((itm, idx) => idx !== index && itm.product?.value === p.value),
+                            }))}
+                            onChange={(selected) => field.onChange(selected)}
+                            value={field.value}
+                            placeholder="Select Product"
+                            menuPortalTarget={document.body}
+                            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                            className="w-full sm:w-96"
+                        />
+                    )}
+                />
+            </td>
+            <td>
+                <Controller
+                    control={control}
+                    name={`items.${index}.uom`}
+                    render={({ field }) => (
+                        <Select
+                            {...field}
+                            options={uomOptions}
+                            onChange={(selected) => field.onChange(selected?.value)}
+                            value={uomOptions.find((opt) => opt.value === field.value)}
+                            placeholder="UOM"
+                            className="w-32"
+                        />
+                    )}
+                />
+            </td>
+            <td>
+                <input
+                    type="number"
+                    className="form-input w-32"
+                    placeholder="Quantity"
+                    {...register(`items.${index}.originalQuantity`)}
+                    step={item.uom === 'sqmt' ? '0.01' : '1'}
+                    min={0}
+                />
+            </td>
+            <td>
+                {item.uom === 'sqmt' ? (
+                    <input type="text" className="form-input w-32" value={item.convertedQuantity || ''} readOnly />
+                ) : ''}
+            </td>
+            <td>
+                <select
+                    className="form-select w-40"
+                    {...register(`items.${index}.plantCode`)}
+                >
+                    <option value="">Select Plant Code</option>
+                    {plantCodes.map((code) => (
+                        <option key={code} value={code}>{code}</option>
+                    ))}
+                </select>
+            </td>
+            <td>
+                <input
+                    type="date"
+                    className="form-input w-34"
+                    {...register(`items.${index}.deliveryDate`)}
+                />
+            </td>
+            <td>
+                <button type="button" onClick={() => remove(index)}>❌</button>
+            </td>
+        </tr>
+    ))}
+</tbody>
+
                             </table>
                         </div>
 
                         <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
                             <div className="sm:mb-0 mb-6">
-                                <button type="button" className="btn btn-primary" onClick={addItem}>
+                                {/* <button type="button" className="btn btn-primary" onClick={addItem}>
                                     ➕ Add Product
-                                </button>
+                                </button> */}
+                                <button type="button" className="btn btn-primary" onClick={addItem}>
+    ➕ Add Product
+  </button>
                             </div>
                         </div>
                     </div>
 
                     <div className="mb-12 gap-72">
                         <div className="flex items-center space-x-1">
-                            <label htmlFor="clientName">
+                            <label htmlFor="client">
                                 Upload Files <span className="text-red-500">*</span>
                             </label>
                             <div className="relative flex items-center">
@@ -455,7 +615,7 @@ const Create = () => {
                             </div>
                         </div>
 
-                        <ImageUploading multiple value={formData.files} onChange={handleFileChange} maxNumber={maxNumber}>
+                        {/* <ImageUploading multiple value={formData.files} onChange={handleFileChange} maxNumber={maxNumber}>
                             {({ imageList, onImageUpload, onImageRemove }) => (
                                 <div>
                                     <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
@@ -474,7 +634,7 @@ const Create = () => {
                                     </div>
                                 </div>
                             )}
-                        </ImageUploading>
+                        </ImageUploading> */}
                     </div>
 
                     <div className="flex gap-4">

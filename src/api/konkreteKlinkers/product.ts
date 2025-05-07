@@ -1,8 +1,12 @@
 import axiosInstance from '@/utils/axios';
 
 export const fetchProductData = async () => {
-    const response = await axiosInstance.get('/konkreteKlinkers/helpers/products');
-    return response.data.data;
+    try {
+        const response = await axiosInstance.get('/konkreteKlinkers/helpers/products');
+        return response.data.data;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const storeProductData = async (data: any) => {
