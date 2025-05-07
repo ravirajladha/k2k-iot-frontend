@@ -112,7 +112,7 @@ const BufferStockManagement = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '#', isActive: false },
-        { label: 'Stock Managemenet', link: '/konkrete-klinkers/stockManagement', isActive: true },
+        { label: 'Stock Management', link: '/konkrete-klinkers/stockManagement', isActive: true },
     ];
 
     useEffect(() => {
