@@ -49,18 +49,6 @@ const ProductUpdateForm = () => {
     const [showTooltip, setShowTooltip] = useState(false);
 
     useEffect(() => {
-        const fetchPlants = async () => {
-            const options = await fetchPlantData();
-            const plantData = options.map((plant: any) => ({
-                value: plant._id,
-                label: `${plant.plant_name} - ${plant.plant_code}`,
-            }));
-            setPlantOptions(plantData);
-        };
-        fetchPlants();
-    }, []);
-
-    useEffect(() => {
         const init = async () => {
             try {
                 const options = await fetchPlantData();

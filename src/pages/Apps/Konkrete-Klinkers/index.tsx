@@ -4,6 +4,7 @@ export { default as WorkOrderView } from './WorkOrder/view';
 export { default as WorkOrderCreate } from './WorkOrder/create';
 
 export { default as WorkOrderDetail } from './WorkOrder/detail';
+export { default as WorkOrderUpdate } from './WorkOrder/update';
 
 export { default as DailyProductionPlanningView } from './DailyProductionReport/view';
 export { default as DailyProductionPlanningCreate } from './DailyProductionReport/create';

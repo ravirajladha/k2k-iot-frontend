@@ -12,16 +12,16 @@ import { addAlert } from '@/store/slices/alertSlice';
 import { useDispatch } from 'react-redux';
 import { fetchClientData } from '@/api/konkreteKlinkers/client';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { fetchPlantsByProduct, fetchProjectsByClientId, storeWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchProjectsByClientId, fetchWorkOrderById, updateWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
 import { fetchProductData } from '@/api/konkreteKlinkers/product';
 import { uniqueId } from 'lodash';
+import CustomLoader from '@/components/Loader';
 
 interface ProductOption {
     label: string;
     value: string;
     plant: { plant_code: string; plant_name: string };
-    area: number;
 }
 
 interface UOMOption {
@@ -49,13 +49,15 @@ interface FormData {
     items: Item[];
 }
 
-const Create = () => {
+const Update = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [apiError, setApiError] = useState('');
     const [clientOptions, setClientOptions] = useState<{ value: string; label: string }[]>([]);
     const [projectOptions, setProjectOptions] = useState([]);
     const [products, setProducts] = useState([]);
     const [uploadedImages, setUploadedImages] = useState([]);
+    const [loading, setLoading] = useState(true);
     const maxFileCount = 5;
     const {
         register,
@@ -65,6 +67,7 @@ const Create = () => {
         watch,
         setValue,
         getValues,
+        reset,
     } = useForm<FormData>({
         defaultValues: {
             bufferStock: false,
@@ -114,14 +117,9 @@ const Create = () => {
             value: product._id,
             label: product.material_code,
             plant: { plant_name: product.plant?.plant_name, plant_code: product.plant?.plant_code },
-            area: Number(product.area),
         }));
         setProducts(productData);
     };
-    useEffect(() => {
-        fetchClients();
-        fetchProducts();
-    }, []);
 
     // Fetch projects when client changes
     useEffect(() => {
@@ -142,6 +140,62 @@ const Create = () => {
         }
     }, [selectedClientId, setValue]);
 
+    useEffect(() => {
+        const init = async () => {
+            try {
+                fetchClients();
+                await fetchProducts();
+
+                if (id) {
+                    const data = await fetchWorkOrderById(id);
+
+                    // Format products
+                    const items = (data.products || []).map((item: any) => ({
+                        product: {
+                            value: item.product._id,
+                            label: item.product.material_code,
+                            plant: {
+                                plant_name: '', // You can fill this if you have the plant info
+                                plant_code: item.product.plant.plant_code || '', // You may need to store this explicitly in DB if missing
+                            },
+                        },
+                        uom: item.uom,
+                        originalQuantity: item.po_quantity || '', // Assuming originalQuantity = original_sqmt
+                        convertedQuantity: item.qty_in_nos || '',
+                        plantCode: item.product.plant.plant_code || '',
+                        deliveryDate: item.delivery_date?.slice(0, 10) || '', // Format to yyyy-mm-dd for input[type=date]
+                    }));
+
+                    // Prepopulate form
+                    reset({
+                        client: data.client._id || '',
+                        project: data.project?._id || '',
+                        workOrderNumber: data.work_order_number || '',
+                        workOrderDate: data.date?.slice(0, 10) || '',
+                        bufferStock: data.buffer_stock || false,
+                        items: items,
+                    });
+
+                    // Prepopulate uploaded files
+                    const preloadedImages = (data.files || []).map((file: any) => ({
+                        dataURL: file.file_url,
+                        file: null, // Not available unless re-uploaded
+                        uploaded: true,
+                        existing: true,
+                        file_name: file.file_name,
+                    }));
+                    setUploadedImages(preloadedImages); // Assuming you have a state called `uploadedImages`
+                }
+            } catch (error: any) {
+                setApiError(error.response?.data?.message || 'Failed to load data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        init();
+    }, [id, reset]);
+
     const onSubmit = async (formValues: FormData) => {
         setApiError('');
         try {
@@ -158,16 +212,21 @@ const Create = () => {
                 formData.append(`products[${index}][product_id]`, item.product.value);
                 formData.append(`products[${index}][uom]`, item.uom);
                 formData.append(`products[${index}][po_quantity]`, item.originalQuantity);
+                formData.append(`products[${index}][qty_in_nos]`, item.convertedQuantity);
                 formData.append(`products[${index}][plant_code]`, item.plantCode);
                 formData.append(`products[${index}][delivery_date]`, item.deliveryDate);
             });
 
             // Add uploaded images
-            uploadedImages.forEach((img: any, index: number) => {
-                formData.append(`files`, img.file); // or use files[] if backend expects array
+            uploadedImages.forEach((img: any) => {
+                if (img.existing) {
+                    formData.append('existingFiles[]', img.file_name); // Or img._id if backend expects ID
+                } else if (img.file) {
+                    formData.append('files', img.file);
+                }
             });
 
-            await storeWorkOrderData(formData);
+            await updateWorkOrderData(id, formData);
             navigate('/konkrete-klinkers/work-order');
         } catch (error: any) {
             console.error('Error creating project:', error);
@@ -195,8 +254,7 @@ const Create = () => {
     const handleQuantityChange = (value, index) => {
         const quantity = parseFloat(value);
         const currentUom = getValues(`items.${index}.uom`);
-        const currentProduct = getValues(`items.${index}.product`);
-        const convertedQuantity = currentUom === 'sqmt' && !isNaN(quantity) ? Math.floor(quantity / currentProduct.area) : '';
+        const convertedQuantity = currentUom === 'sqmt' && !isNaN(quantity) ? Math.floor(quantity / 1.5) : '';
 
         setValue(`items.${index}.convertedQuantity`, convertedQuantity);
     };
@@ -212,7 +270,7 @@ const Create = () => {
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
         { label: 'Work Order', link: '/konkrete-klinkers/work-order', isActive: false },
-        { label: 'Create', link: '#', isActive: true },
+        { label: 'Update', link: '#', isActive: true },
     ];
 
     return (
@@ -220,8 +278,11 @@ const Create = () => {
             <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order', icon: <IconArrowBackward className="text-4xl" /> }} />
             <div className="panel">
                 <div className="mb-5">
-                    <h5 className="font-semibold text-lg">Create Work Order</h5>
+                    <h5 className="font-semibold text-lg">Update Work Order</h5>
                 </div>
+                {loading ? (
+                    <CustomLoader />
+                ) : (
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -465,9 +526,10 @@ const Create = () => {
                         </button>
                     </div>
                 </form>
+                )}
             </div>
         </div>
     );
 };
 
-export default Create;
+export default Update;

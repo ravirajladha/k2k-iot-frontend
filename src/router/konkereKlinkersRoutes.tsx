@@ -63,6 +63,7 @@ import {
     HelperMachineDetail,
     ProductUpdate,
     ProductDetail,
+    WorkOrderUpdate,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -96,7 +97,7 @@ export const konkereKlinkersRoutes = [
     // Work Order
 
     {
-        path: `${basePath}/work-order/view`,
+        path: `${basePath}/work-order`,
         element: <WorkOrderView />,
         layout: 'admin',
     },
@@ -106,8 +107,13 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/work-order/detail`,
+        path: `${basePath}/work-order/:id/detail`,
         element: <WorkOrderDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/work-order/:id/edit`,
+        element: <WorkOrderUpdate />,
         layout: 'admin',
     },
 

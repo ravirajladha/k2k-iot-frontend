@@ -24,7 +24,7 @@ interface CustomTableProps {
     isRtl?: boolean;
 }
 
-const CustomTable = ({ pageHeader, data, columns, defaultSort = { columnAccessor: columns[0]?.accessor, direction: 'asc' }, pageSizeOptions = PAGE_SIZES, isRtl = false }: CustomTableProps) => {
+const CustomTable = ({ pageHeader, data, columns, defaultSort = { columnAccessor: 'createdAt', direction: 'desc' }, pageSizeOptions = PAGE_SIZES, isRtl = false }: CustomTableProps) => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(pageSizeOptions[0]);

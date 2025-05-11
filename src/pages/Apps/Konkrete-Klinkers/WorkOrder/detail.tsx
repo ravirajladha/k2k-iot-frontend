@@ -7,9 +7,32 @@ import AnimateHeight from 'react-animate-height';
 import IconFile from '@/components/Icon/IconFile';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import { useParams } from 'react-router-dom';
+import { fetchWorkOrderById } from '@/api/konkreteKlinkers/workOrder';
+import CustomLoader from '@/components/Loader';
+import { formatDateTime } from '@/utils/formatDate';
 
 const WorkOrderPage = () => {
     const dispatch = useDispatch();
+    const { id } = useParams<{ id: string }>();
+    const [workOrderDetail, setWorkOrderDetail] = useState<any>([]);
+    const [apiError, setApiError] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const data = await fetchWorkOrderById(id);
+                setWorkOrderDetail(data);
+            } catch (error) {
+                setApiError('Failed to fetch Product details.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
 
     useEffect(() => {
         dispatch(setPageTitle('Work Order Detail'));
@@ -299,10 +322,13 @@ const WorkOrderPage = () => {
 
     return (
         <div>
-            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order/view', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/work-order', icon: <IconArrowBackward className="text-4xl" /> }} />
             <button onClick={() => window.print()} className="mb-10 bg-blue-500 text-white px-4 py-2 rounded float-right">
                 Print Page
             </button>
+            {loading ? (
+                    <CustomLoader />
+                ) : (
             <div className="p-4 pt-10">
                 {/* Client Details Section */}
                 <div className="panel mb-6 bg-gray-100 p-4 rounded-lg shadow-md">
@@ -313,13 +339,13 @@ const WorkOrderPage = () => {
                         <div className="bg-yellow-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
                             <p className="text-sm">
-                                <strong>Client Name:</strong> {clientDetails.clientName}
+                                <strong>Client Name:</strong> {workOrderDetail.client.name}
                             </p>
                             <p className="text-sm">
-                                <strong>Project Name:</strong> Lorem, ipsum.
+                                <strong>Project Name:</strong> {workOrderDetail.project.name}
                             </p>
                             <p className="text-sm">
-                                <strong>Address:</strong> {clientDetails.address}
+                                <strong>Address:</strong> {workOrderDetail.client.address}
                             </p>
                         </div>
 
@@ -327,13 +353,13 @@ const WorkOrderPage = () => {
                         <div className="bg-blue-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Work Order Details</h3>
                             <p className="text-sm">
-                                <strong>Work Order Number:</strong> {workOrder.id}
+                                <strong>Work Order Number:</strong> {workOrderDetail.work_order_number}
                             </p>
                             <p className="text-sm">
-                                <strong>Created At:</strong> {workOrder.createdAt}
+                                <strong>Created At:</strong> {formatDateTime(workOrderDetail.createdAt)}
                             </p>
                             <p className="text-sm">
-                                <strong>Created By:</strong> {workOrder.createdBy.name} ({workOrder.createdBy.role})
+                                <strong>Created By:</strong> {workOrderDetail.creator.username} ({workOrderDetail.creator.userType})
                             </p>
 
                             <div className="flex items-center gap-2 mt-2">
@@ -342,16 +368,16 @@ const WorkOrderPage = () => {
                             </div>
 
                             <p className="text-sm mt-2">
-                                <strong>Dates:</strong> {workOrder.deadline}
+                                <strong>Dates:</strong> {formatDateTime(workOrderDetail.date)}
                             </p>
 
                             <p className="text-sm">
                                 <strong>Status:</strong>
                                 <span
                                     className={`ml-2 px-2 py-1 rounded text-sm font-semibold
-                    ${workOrder.status === 'In Progress' ? 'text-blue-500' : workOrder.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
+                    ${workOrderDetail.status === 'Pending' ? 'text-blue-500' : workOrderDetail.status === 'Completed' ? 'text-green-500' : 'text-red-500'}`}
                                 >
-                                    {workOrder.status}
+                                    {workOrderDetail.status}
                                 </span>
                             </p>
 
@@ -359,9 +385,9 @@ const WorkOrderPage = () => {
                                 <strong>Buffer Stock:</strong>
                                 <span
                                     className={`ml-2 px-2 py-1 rounded text-sm font-semibold
-                    ${workOrder.bufferStock === 'False' ? 'text-red-500' : workOrder.bufferStock === 'True' ? 'text-yellow-500' : 'text-green-500'}`}
+                    ${workOrderDetail.bufferStock === 'False' ? 'text-red-500' : workOrderDetail.bufferStock === 'True' ? 'text-yellow-500' : 'text-green-500'}`}
                                 >
-                                    {workOrder.bufferStock}
+                                    {workOrderDetail.bufferStock}
                                 </span>
                             </p>
                         </div>
@@ -387,17 +413,17 @@ const WorkOrderPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {products.map((product, index) => (
+                                {workOrderDetail.products.map((product, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
-                                        <td className="px-4 py-2 border border-gray-300">{product.description}</td>
-                                        <td className="px-4 py-2 border border-gray-300">{product.materialCode}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.product.description}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.product.material_code}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.uom}</td>
-                                        <td className="px-4 py-2 border border-gray-300">{product.requiredQuantity}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{product.po_quantity}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.achieved}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.dispatched}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.packed}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.plantCode}</td>
-                                        <td className="px-4 py-2 border border-gray-300">{product.deliveryDate}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{formatDateTime(product.delivery_date)}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -643,6 +669,7 @@ const WorkOrderPage = () => {
                     </div>
                 </div>
             </div>
+                )}
         </div>
     );
 };
