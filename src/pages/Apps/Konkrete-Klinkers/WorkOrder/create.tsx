@@ -11,7 +11,7 @@ import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import { addAlert } from '@/store/slices/alertSlice';
 import { useDispatch } from 'react-redux';
 import { fetchClientData } from '@/api/konkreteKlinkers/client';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { fetchPlantsByProduct, fetchProjectsByClientId, storeWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
 import { fetchProductData } from '@/api/konkreteKlinkers/product';
@@ -73,6 +73,7 @@ const Create = () => {
     });
 
     const selectedClientId = watch('client');
+    const [bufferStock, setBufferStock] = useState(false);
     const {
         fields: items,
         append,
@@ -148,10 +149,13 @@ const Create = () => {
             const formData = new FormData();
 
             // Basic fields
-            formData.append('client_id', formValues.client);
-            formData.append('project_id', formValues.project);
+            if(!bufferStock){
+                formData.append('client_id', formValues.client);
+                formData.append('project_id', formValues.project);
+                formData.append('date', formValues.workOrderDate);
+            }
             formData.append('work_order_number', formValues.workOrderNumber);
-            formData.append('date', formValues.workOrderDate);
+            formData.append('buffer_stock', formValues.bufferStock);
 
             // Prepare product items
             formValues.items.forEach((item: any, index: number) => {
@@ -179,6 +183,7 @@ const Create = () => {
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
+            setBufferStock(true);
             dispatch(
                 addAlert({
                     type: 'warning',
@@ -186,6 +191,8 @@ const Create = () => {
                     autoClose: 5000,
                 })
             );
+        } else {
+            setBufferStock(false);
         }
     };
     const handleFileChange = (imageList) => {
@@ -225,46 +232,6 @@ const Create = () => {
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="client">Client Name</label>
-                            <Controller
-                                control={control}
-                                name="client"
-                                rules={{ required: 'Client is required' }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        options={clientOptions}
-                                        placeholder="Select Client"
-                                        className="flex-1"
-                                        value={clientOptions.find((option) => option.value === field.value)}
-                                        onChange={(selectedOption) => field.onChange(selectedOption?.value)}
-                                        isClearable
-                                    />
-                                )}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="project">Project Name</label>
-                            <Controller
-                                control={control}
-                                name="project"
-                                rules={{ required: 'Project is required' }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        options={projectOptions}
-                                        placeholder="Select Project"
-                                        value={projectOptions.find((option) => option.value === field.value)}
-                                        onChange={(selected) => field.onChange(selected?.value)}
-                                        isDisabled={!selectedClientId}
-                                        isClearable
-                                    />
-                                )}
-                            />
-                        </div>
-
-                        <div>
                             <label htmlFor="workOrderNumber">Work Order Number</label>
                             <input
                                 id="workOrderNumber"
@@ -275,18 +242,7 @@ const Create = () => {
                             />
                         </div>
 
-                        <div>
-                            <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input
-                                id="workOrderDate"
-                                type="date"
-                                placeholder="Enter Work Order Date"
-                                className={`form-input flex-1 ${errors.workOrderDate ? 'border-red-500' : ''}`}
-                                {...register('workOrderDate', { required: 'Work Order Date is required' })}
-                            />
-                        </div>
-
-                        <div>
+                        <div className="inline-flex items-center justify-center">
                             <label className="inline-flex items-center">
                                 <input
                                     id="bufferStock"
@@ -302,6 +258,59 @@ const Create = () => {
                                 <span> &ensp;Buffer Stock</span>
                             </label>
                         </div>
+                        {!bufferStock && (
+                            <>
+                                <div>
+                                    <label htmlFor="client">Client Name</label>
+                                    <Controller
+                                        control={control}
+                                        name="client"
+                                        rules={{ required: 'Client is required' }}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                options={clientOptions}
+                                                placeholder="Select Client"
+                                                className="flex-1"
+                                                value={clientOptions.find((option) => option.value === field.value)}
+                                                onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                                isClearable
+                                            />
+                                        )}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="project">Project Name</label>
+                                    <Controller
+                                        control={control}
+                                        name="project"
+                                        rules={{ required: 'Project is required' }}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                options={projectOptions}
+                                                placeholder="Select Project"
+                                                value={projectOptions.find((option) => option.value === field.value)}
+                                                onChange={(selected) => field.onChange(selected?.value)}
+                                                isDisabled={!selectedClientId}
+                                                isClearable
+                                            />
+                                        )}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="workOrderDate">Work Order Date</label>
+                                    <input
+                                        id="workOrderDate"
+                                        type="date"
+                                        placeholder="Enter Work Order Date"
+                                        className={`form-input flex-1 ${errors.workOrderDate ? 'border-red-500' : ''}`}
+                                        {...register('workOrderDate', { required: 'Work Order Date is required' })}
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
 
                     <div className="mt-8">

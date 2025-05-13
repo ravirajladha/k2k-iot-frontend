@@ -20,7 +20,6 @@ import {
     DailyProductionPlanningNewView,
     DailyProductionPlanningNewCreate,
     // JobOrderView,
-    JobOrderViewNew, /////New
     JobOrderDetail, /////New
     JobOrderCreate,
     ProductView,
@@ -64,6 +63,8 @@ import {
     ProductUpdate,
     ProductDetail,
     WorkOrderUpdate,
+    JobOrderView,
+    JobOrderUpdate,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -124,13 +125,18 @@ export const konkereKlinkersRoutes = [
     //     layout: 'admin',
     // },
     {
-        path: `${basePath}/job-order/view`, ////////New
-        element: <JobOrderViewNew />,
+        path: `${basePath}/job-order`, ////////New
+        element: <JobOrderView />,
         layout: 'admin',
     },
     {
-        path: `${basePath}/job-order/detail`, ////////New
+        path: `${basePath}/job-order/:id/detail`, ////////New
         element: <JobOrderDetail />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/job-order/:id/edit`, ////////New
+        element: <JobOrderUpdate />,
         layout: 'admin',
     },
     {

@@ -13,9 +13,10 @@ export { default as DailyProductionPlanningNewView } from './DailyProductionRepo
 export { default as DailyProductionPlanningNewCreate } from './DailyProductionReportNew/create';
 
 // export { default as JobOrderView } from './JobOrder/view';
-export { default as JobOrderViewNew } from './JobOrder/viewNew'; ////////////////////////
+export { default as JobOrderView } from './JobOrder/view'; ////////////////////////
 export { default as JobOrderDetail } from './JobOrder/detail'; ////////////////////////
 export { default as JobOrderCreate } from './JobOrder/create';
+export { default as JobOrderUpdate } from './JobOrder/update';
 
 export { default as ProductView } from './Product/view';
 export { default as ProductCreate } from './Product/create';
