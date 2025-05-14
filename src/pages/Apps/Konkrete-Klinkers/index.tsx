@@ -1,5 +1,7 @@
 export { default as QCCheckView } from './QCCheck/view';
 export { default as QCCheckCreate } from './QCCheck/create';
+export { default as QCCheckUpdate } from './QCCheck/update';
+export { default as QCCheckDetail } from './QCCheck/detail';
 export { default as WorkOrderView } from './WorkOrder/view';
 export { default as WorkOrderCreate } from './WorkOrder/create';
 

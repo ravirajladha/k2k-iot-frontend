@@ -1,248 +1,191 @@
 import React, { useState } from 'react';
 import IconInfoCircle from '@/components/Icon/IconInfoCircle';
+import IconArrowBackward from '@/components/Icon/IconArrowBackward';
+import Breadcrumbs from '@/pages/Components/Breadcrumbs';
+import Select from 'react-select';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setPageTitle } from '@/store/slices/themeConfigSlice';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
-import Select from 'react-select';
-import Breadcrumbs from "@/pages/Components/Breadcrumbs";
-import IconArrowBackward from '@/components/Icon/IconArrowBackward';
-interface FormData {
-    workOrder: string;
+import { fetchProductByJobOrder, storeQcData } from '@/api/konkreteKlinkers/qc';
+import { fetchJobOrderDropdown } from '@/api/konkreteKlinkers/dropdowns';
+
+interface FormValues {
     jobOrder: string;
+    workOrder: string;
     productId: string;
     rejectedQuantity: string;
     recycledQuantity: string;
     rejectionReason: string;
 }
+const QcCreateForm = () => {
+    const navigate = useNavigate();
+    const [apiError, setApiError] = useState('');
+    const [jobOrderOptions, setJobOrderOptions] = useState<{ value: string; label: string }[]>([]);
+    const [productOptions, setProductOptions] = useState<{ label: string; value: string }[]>([]);
+    const [workOrder, setWorkOrder] = useState<any>();
+    const {
+        register,
+        handleSubmit,
+        control,
+        watch,
+        setValue,
+        formState: { errors, isSubmitting },
+    } = useForm<FormValues>();
+    const selectedJobOrderId = watch('jobOrder');
 
-const QcCheckForm: React.FC = () => {
-
-    //tooltip
-    const [showTooltip, setShowTooltip] = useState(false);
-
-    const toggleCode = (code: string) => {
-        setShowTooltip((prev) => !prev);
-    };
-    const [formData, setFormData] = useState<FormData>({
-        workOrder: '',
-        jobOrder: '',
-        productId: '',
-        rejectedQuantity: '',
-        recycledQuantity: '',
-        rejectionReason: '',
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setPageTitle('Qc Create'));
     });
 
-    const workOrders = ['Work Order 1', 'Work Order 2', 'Work Order 3'];
+    useEffect(() => {
+        const fetchJobOrder = async () => {
+            const options = await fetchJobOrderDropdown();
+            const jobOrderData = options.map((jobOrder: any) => ({
+                value: jobOrder._id,
+                label: `${jobOrder.job_order_id}`,
+            }));
+            setJobOrderOptions(jobOrderData);
+        };
+        fetchJobOrder();
+    }, []);
 
-    const jobOrdersMap: { [key: string]: { jobOrders: string[]; workOrder: string } } = {
-        "WO-001": { workOrder: "WO-001", jobOrders: ["JO-1001", "JO-1002"] },
-        "WO-002": { workOrder: "WO-002", jobOrders: ["JO-2001", "JO-2002"] },
-        "WO-003": { workOrder: "WO-003", jobOrders: ["JO-3001", "JO-3002"] },
-    };
+    useEffect(() => {
+        if (selectedJobOrderId) {
+            const fetchProducts = async () => {
+                const res = await fetchProductByJobOrder(selectedJobOrderId);
+                console.log(res);
 
-    const products = ['1000010188/Paver Black 200*200*60', '1000010184/Paver Grey 200*200*60', '1000010186/Paver Red 200*200*60'];
-    const handleJobOrderChange = (selectedOption: any) => {
-        if (!selectedOption) return;
-        const selectedJobOrder = selectedOption.value;
-
-        // Find which work order contains this job order
-        for (const workOrderKey in jobOrdersMap) {
-            if (jobOrdersMap[workOrderKey].jobOrders.includes(selectedJobOrder)) {
-                setFormData((prev) => ({
-                    ...prev,
-                    jobOrder: selectedJobOrder,
-                    workOrder: jobOrdersMap[workOrderKey].workOrder, // Automatically setting work order
+                const products = res.products;
+                const formatted = products.map((product: any) => ({
+                    value: product._id,
+                    label: product.material_code,
                 }));
-                break;
-            }
+                setProductOptions(formatted);
+                setWorkOrder(res.work_order);
+                setValue('productId', '');
+                setValue('workOrder', res.work_order?.work_order_number);
+            };
+            fetchProducts();
+        } else {
+            setProductOptions([]);
+        }
+    }, [selectedJobOrderId, setValue]);
+    const onSubmit = async (data: FormValues) => {
+        setApiError('');
+        try {
+            await storeQcData({
+                job_order: data.jobOrder,
+                work_order: workOrder._id,
+                product_id: data.productId,
+                rejected_quantity: Number(data.rejectedQuantity),
+                recycled_quantity: Number(data.recycledQuantity),
+                remarks: data.rejectionReason,
+            });
+            navigate('/konkrete-klinkers/qc-check');
+        } catch (error: any) {
+            console.error('Error creating product:', error);
+            setApiError(error.response?.data?.message || 'Failed to create product. Please try again.');
         }
     };
 
-    // Handle Input Change
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    // Form Submission
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Form Data:', formData);
-    };
-
-    // Generate Job Order options dynamically
-    const jobOrderOptions = Object.values(jobOrdersMap)
-        .flatMap(({ jobOrders }) => jobOrders)
-        .map((jobOrder) => ({
-            value: jobOrder,
-            label: jobOrder,
-        }));
-
-    // Generate Product Options
-    const productOptions = products.map((product) => ({
-        value: product,
-        label: product,
-    }));
-
-
-    const handleSelectChange = (field: keyof FormData) => (selectedOption: any) => {
-        setFormData((prev) => ({
-            ...prev,
-            [field]: selectedOption ? selectedOption.value : '',
-            ...(field === 'workOrder' ? { jobOrder: '', productId: '' } : {}),
-        }));
-    };
-
-    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prev) => ({
-    //         ...prev,
-    //         [name]: value,
-    //     }));
-    // };
-
-    
-
-    const workOrderOptions = workOrders.map((workOrder) => ({
-        value: workOrder,
-        label: workOrder,
-    }));
-
-  
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'QC Check', link: '/konkrete-klinkers/qc-check/view', isActive: false },
+        { label: 'QC Check', link: '/konkrete-klinkers/qc-check', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
 
     return (
-
         <div>
-        <Breadcrumbs
-            items={breadcrumbItems}
-            addButton={{ label: 'Back', link: '/konkrete-klinkers/qc-check/view', icon: <IconArrowBackward className="text-4xl" /> }}
-        />
+            <Breadcrumbs items={breadcrumbItems} addButton={{ label: 'Back', link: '/konkrete-klinkers/qc-check', icon: <IconArrowBackward className="text-4xl" /> }} />
+            <div className="panel">
+                {apiError && <div className="alert alert-danger mb-5">{apiError}</div>}
 
-        <div className="panel">
-            <div className="mb-5 flex items-center justify-between">
-                <h5 className="font-semibold text-lg dark:text-white-light">QC Check Form</h5>
-                <button
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                    className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600 relative"
-                >
-                    <span className="flex items-center">
-                        <IconInfoCircle className="me-2" />
-                    </span>
-                    {showTooltip && (
-                        <div className="absolute top-0 right-full ml-2 w-64 bg-gray-800 text-white text-sm p-3 rounded shadow-lg z-50">
-                            This form is used for QC checks. Select the appropriate job order, work order will  be autofetched on the basis of Job order, and select product ID. Fill out the rejected quantity or recycled quantity and reason for rejection.
-                        </div>
-                    )}
-                </button>
-            </div>
-            <form className="space-y-5" onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
-                        {/* Job Order */}
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="jobOrder">Job Order</label>
-                            <Select
-                                id="jobOrder"
-                                options={jobOrderOptions}
-                                value={jobOrderOptions.find((option) => option.value === formData.jobOrder)}
-                                onChange={handleJobOrderChange}
-                                placeholder="Select Job Order"
-                                isSearchable
+                            <label htmlFor="client">Job Order</label>
+                            <Controller
+                                control={control}
+                                name="jobOrder"
+                                rules={{ required: 'Job Order is required' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={jobOrderOptions}
+                                        placeholder="Select Job Order"
+                                        className="flex-1"
+                                        value={jobOrderOptions.find((option) => option.value === field.value)}
+                                        onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                    />
+                                )}
                             />
+                            {errors.jobOrder && <p className="text-red-500 text-sm">{errors.jobOrder.message}</p>}
                         </div>
-
-                        {/* Work Order (Auto-Filled) */}
                         <div>
                             <label htmlFor="workOrder">Work Order</label>
-                            <input
-                                id="workOrder"
-                                type="text"
-                                className="form-input"
-                                value={formData.workOrder}
-                                readOnly
-                            />
+                            <input id="workOrder" type="text" className="form-input" {...register('workOrder')} readOnly />
                         </div>
 
-                        {/* Product Selection */}
                         <div>
-                            <label htmlFor="productId">Product</label>
-                            <Select
-                                id="productId"
-                                options={productOptions}
-                                value={productOptions.find((option) => option.value === formData.productId)}
-                                onChange={(selectedOption) => setFormData((prev) => ({
-                                    ...prev,
-                                    productId: selectedOption ? selectedOption.value : '',
-                                }))}
-                                placeholder="Select Product"
-                                isSearchable
+                            <label htmlFor="product">Product Name</label>
+                            <Controller
+                                control={control}
+                                name="productId"
+                                rules={{ required: 'product is required' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={productOptions}
+                                        placeholder="Select Product"
+                                        value={productOptions.find((option) => option.value === field.value)}
+                                        onChange={(selected) => field.onChange(selected?.value)}
+                                        isDisabled={!selectedJobOrderId}
+                                        isClearable
+                                    />
+                                )}
                             />
                         </div>
-                    {/* Rejected Quantity */}
-                    <div>
-                        <label htmlFor="rejectedQuantity">Rejected Quantity</label>
-                        <input
-                            id="rejectedQuantity"
-                            name="rejectedQuantity"
-                            type="number"
-                            placeholder="Enter Rejected Quantity"
-                            className="form-input"
-                            value={formData.rejectedQuantity}
-                            onChange={handleInputChange}
-                        />
+                        <div>
+                            <label htmlFor="rejectedQuantity">Rejected Quantity</label>
+                            <input id="rejectedQuantity" type="text" className="form-input" {...register('rejectedQuantity')} />
+                        </div>
+                        <div>
+                            <label htmlFor="recycledQuantity">Recycled Quantity</label>
+                            <input id="recycledQuantity" type="text" className="form-input" {...register('recycledQuantity')} />
+                        </div>
+                        <div>
+                            <label htmlFor="rejectionReason">Rejection Reason</label>
+                            <textarea id="rejectionReason" {...register('rejectionReason')} placeholder="Enter Remarks" className="form-input"></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="recycledQuantity">Recycled Quantity</label>
-                        <input
-                            id="recycledQuantity"
-                            name="recycledQuantity"
-                            type="number"
-                            placeholder="Enter Recycled Quantity"
-                            className="form-input"
-                            value={formData.recycledQuantity}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    {/* Rejection Reason */}
-                    <div>
-                        <label htmlFor="rejectionReason">Remarks</label>
-                    
-                        <textarea
-                            id="rejectionReason"
-                            name="rejectionReason"
-                            placeholder="Enter Remarks"
-                            className="form-input"
-                            value={formData.rejectionReason}
-                            onChange={handleInputChange}
-                        ></textarea>
 
+                    {/* Submit Button */}
+                    <div className="flex justify-between space-x-4 mt-6">
+                        <button type="submit" className="btn btn-success flex-1" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                                <span className="animate-spin border-2 border-white border-l-transparent rounded-full w-5 h-5 inline-block align-middle"></span>
+                            ) : (
+                                <>
+                                    <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                                    Submit
+                                </>
+                            )}
+                        </button>
+                        <button type="button" className="btn btn-danger flex-1" onClick={() => navigate('/konkrete-klinkers/products')} disabled={isSubmitting}>
+                            <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                            Cancel
+                        </button>
                     </div>
-                </div>
-
-                {/* Submit Button */}
-                <div className="flex gap-4">
-                    <button type="submit" className="btn btn-success w-1/2">
-                        <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                        Submit
-                    </button>
-                    <button type="submit" className="btn btn-danger w-1/2">
-                        <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-        </div>
-
     );
 };
 
-export default QcCheckForm;
+export default QcCreateForm;

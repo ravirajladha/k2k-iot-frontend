@@ -65,6 +65,8 @@ import {
     WorkOrderUpdate,
     JobOrderView,
     JobOrderUpdate,
+    QCCheckUpdate,
+    QCCheckDetail,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -171,13 +173,23 @@ export const konkereKlinkersRoutes = [
 
     // QC Check
     {
-        path: `${basePath}/qc-check/view`,
+        path: `${basePath}/qc-check`,
         element: <QCCheckView />,
         layout: 'admin',
     },
     {
         path: `${basePath}/qc-check/create`,
         element: <QCCheckCreate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/qc-check/:id/edit`,
+        element: <QCCheckUpdate />,
+        layout: 'admin',
+    },
+    {
+        path: `${basePath}/qc-check/:id/detail`,
+        element: <QCCheckDetail />,
         layout: 'admin',
     },
 
