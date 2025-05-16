@@ -67,6 +67,7 @@ import {
     JobOrderUpdate,
     QCCheckUpdate,
     QCCheckDetail,
+    PackingCreate,
 } from '../pages/Apps/Konkrete-Klinkers';
 import { workerData } from 'worker_threads';
 
@@ -267,26 +268,26 @@ export const konkereKlinkersRoutes = [
     //     layout: 'admin',
     // },
     {
-        path: `${basePath}/packing/view`,
+        path: `${basePath}/packing`,
         element: <PackingViewNew />,
         layout: 'admin',
     },
 
     {
-        path: `${basePath}/packing/detail`,
+        path: `${basePath}/packing/:workOrderId/:productId/detail`,
         element: <PackingDetail />,
         layout: 'admin',
     },
-    {
-        path: `${basePath}/packing/create`, /////
-        element: <PackingCreateNew />,
-        layout: 'admin',
-    },
     // {
-    //     path: `${basePath}/packing/create`,
-    //     element: <PackingCreate />,
+    //     path: `${basePath}/packing/create`, /////
+    //     element: <PackingCreateNew />,
     //     layout: 'admin',
     // },
+    {
+        path: `${basePath}/packing/create`,
+        element: <PackingCreate />,
+        layout: 'admin',
+    },
 
     // Dispatch
     {

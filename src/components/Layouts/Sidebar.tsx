@@ -416,7 +416,7 @@ const Sidebar = () => {
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/konkrete-klinkers/packing/view" className="group">
+                                        <NavLink to="/konkrete-klinkers/packing" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuPages className="group-hover:!text-primary shrink-0" />
                                                 <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#ffffff] dark:group-hover:text-primary">{t('Packing')}</span>

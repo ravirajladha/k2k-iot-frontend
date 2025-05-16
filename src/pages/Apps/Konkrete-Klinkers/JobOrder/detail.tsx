@@ -33,10 +33,6 @@ const DispatchDetailPage = () => {
     }, [id]);
 
     useEffect(() => {
-        dispatch(setPageTitle('Work Order Detail'));
-    }, [dispatch]);
-
-    useEffect(() => {
         dispatch(setPageTitle('Job Order Detail'));
     }, [dispatch]);
 
@@ -50,11 +46,7 @@ const DispatchDetailPage = () => {
         { label: 'Job Order', link: '/konkrete-klinkers/job-order', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
-
-    useEffect(() => {
-        dispatch(setPageTitle('Work Order Detail'));
-    }, [dispatch]);
-
+    
     const today = new Date();
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(today.getDate() - 7);
