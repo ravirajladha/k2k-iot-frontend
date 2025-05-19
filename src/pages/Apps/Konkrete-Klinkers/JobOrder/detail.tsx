@@ -46,7 +46,7 @@ const DispatchDetailPage = () => {
         { label: 'Job Order', link: '/konkrete-klinkers/job-order', isActive: false },
         { label: 'Detail Page', link: '#', isActive: true },
     ];
-    
+
     const today = new Date();
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(today.getDate() - 7);
@@ -155,7 +155,7 @@ const DispatchDetailPage = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {jobOrderDetail.products.map((product, index) => (
                                             <tr className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                                <td className="px-4 py-2 border">{product.product_name}</td>
+                                                <td className="px-4 py-2 border">{product.material_code}</td>
                                                 <td className="px-4 py-2 border">{product.plant_name}</td>
                                                 {/* <td className="px-4 py-2 border">{product.uom}</td> */}
                                                 {/* <td className="px-4 py-2 border">{product.poQuantity}</td> */}

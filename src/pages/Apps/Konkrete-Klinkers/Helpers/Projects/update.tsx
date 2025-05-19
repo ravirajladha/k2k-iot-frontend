@@ -67,6 +67,7 @@ const ProjectUpdate = () => {
             await updateProjectData(id as string, {
                 name: data.name,
                 client: data.client,
+                address: data.address,
             });
             navigate('/konkrete-klinkers/projects');
         } catch (error: any) {

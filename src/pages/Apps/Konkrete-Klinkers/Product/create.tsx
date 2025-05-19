@@ -180,6 +180,7 @@ const ProductCreationForm = () => {
                             <input
                                 id="area"
                                 type="number"
+                                step="0.01"
                                 placeholder="Enter Area"
                                 className={`form-input flex-1 ${errors.area ? 'border-red-500' : ''}`}
                                 {...register('area', { required: 'Area is required' })}

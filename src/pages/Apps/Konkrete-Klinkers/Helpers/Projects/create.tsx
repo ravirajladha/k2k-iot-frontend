@@ -45,6 +45,7 @@ const ProjectCreation = () => {
             await storeProjectData({
                 name: data.name,
                 client: data.client,
+                address: data.address,
             });
             navigate('/konkrete-klinkers/projects');
         } catch (error: any) {

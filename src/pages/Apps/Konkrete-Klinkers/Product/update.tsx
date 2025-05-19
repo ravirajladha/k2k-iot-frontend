@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import { Controller, useForm } from 'react-hook-form';
-import { fetchProductById, storeProductData } from '@/api/konkreteKlinkers/product';
+import { fetchProductById, storeProductData, updateProductData } from '@/api/konkreteKlinkers/product';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPlantData } from '@/api/konkreteKlinkers/plant';
 import IconSave from '@/components/Icon/IconSave';
@@ -84,7 +84,7 @@ const ProductUpdateForm = () => {
     const onSubmit = async (data: FormValues) => {
         setApiError('');
         try {
-            await storeProductData({
+            await updateProductData(id, {
                 plant: data.plant,
                 material_code: data.materialCode,
                 description: data.description,
@@ -207,6 +207,7 @@ const ProductUpdateForm = () => {
                             <input
                                 id="area"
                                 type="number"
+                                step="0.01"
                                 placeholder="Enter Area"
                                 className={`form-input flex-1 ${errors.area ? 'border-red-500' : ''}`}
                                 {...register('area', { required: 'Area is required' })}
