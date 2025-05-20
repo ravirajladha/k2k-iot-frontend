@@ -339,13 +339,13 @@ const WorkOrderPage = () => {
                         <div className="bg-yellow-50 p-4 rounded-md shadow">
                             <h3 className="text-md font-semibold text-gray-700 mb-2">Client Details</h3>
                             <p className="text-sm">
-                                <strong>Client Name:</strong> {workOrderDetail.client.name}
+                                <strong>Client Name:</strong> {workOrderDetail.client?.name}
                             </p>
                             <p className="text-sm">
-                                <strong>Project Name:</strong> {workOrderDetail.project.name}
+                                <strong>Project Name:</strong> {workOrderDetail.project?.name}
                             </p>
                             <p className="text-sm">
-                                <strong>Address:</strong> {workOrderDetail.client.address}
+                                <strong>Address:</strong> {workOrderDetail.client?.address}
                             </p>
                         </div>
 
@@ -359,12 +359,18 @@ const WorkOrderPage = () => {
                                 <strong>Created At:</strong> {formatDateTime(workOrderDetail.createdAt)}
                             </p>
                             <p className="text-sm">
-                                <strong>Created By:</strong> {workOrderDetail.creator.username} ({workOrderDetail.creator.userType})
+                                <strong>Created By:</strong> {workOrderDetail.creator?.username} ({workOrderDetail.creator?.userType})
                             </p>
 
                             <div className="flex items-center gap-2 mt-2">
                                 <strong>Files:</strong>
-                                <IconFile className="text-gray-600" />
+                                {
+                                    workOrderDetail.files && workOrderDetail.files.map((file, index) =>{
+                                        return (
+                                            <a key={index} href={file.file_url} target='_blank'><IconFile className="text-gray-600"/></a>
+                                        )
+                                    })
+                                }
                             </div>
 
                             <p className="text-sm mt-2">
@@ -413,7 +419,7 @@ const WorkOrderPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {workOrderDetail.products.map((product, index) => (
+                                {workOrderDetail.products?.map((product, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
                                         <td className="px-4 py-2 border border-gray-300">{product.product.description}</td>
                                         <td className="px-4 py-2 border border-gray-300">{product.product.material_code}</td>

@@ -7,7 +7,7 @@ import IconTrashLines from '@/components/Icon/IconTrashLines';
 import IconArrowBackward from '@/components/Icon/IconArrowBackward';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
 import { fetchPlantData } from '@/api/konkreteKlinkers/plant';
-import { fetchMachineById, storeMachineData } from '@/api/konkreteKlinkers/machine';
+import { fetchMachineById, storeMachineData, updateMachineData } from '@/api/konkreteKlinkers/machine';
 import CustomLoader from '@/components/Loader';
 
 type FormValues = {
@@ -72,7 +72,7 @@ const MachineUpdate = () => {
     const onSubmit = async (data: FormValues) => {
         setApiError('');
         try {
-            await storeMachineData({
+            await updateMachineData(id, {
                 name: data.name,
                 plant_id: data.plant_id,
             });
