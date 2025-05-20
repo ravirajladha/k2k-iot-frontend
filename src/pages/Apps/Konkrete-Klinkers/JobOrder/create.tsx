@@ -14,6 +14,7 @@ import { uniqueId } from 'lodash';
 import { fetchProductData } from '@/api/konkreteKlinkers/product';
 import { fetchMachinesByProductId, storeJobOrderData } from '@/api/konkreteKlinkers/jobOrder';
 import { useNavigate } from 'react-router-dom';
+import { getProductByWorkOrder } from '@/api/konkreteKlinkers/dropdowns';
 
 interface ProductOption {
     label: string;
@@ -99,20 +100,28 @@ const ProductionPlanning = () => {
             console.log(selectedData);
 
             setSelectedWorkOrderData(selectedData);
+            fetchProducts(selectedId);
         } else {
             setSelectedWorkOrderData(null);
         }
     };
 
-    const fetchProducts = async () => {
-        const options = await fetchProductData();
-        const productData = options.map((product: any) => ({
-            value: product._id,
+    const fetchProducts = async (selectedId) => {
+        // const options = await fetchProductData();
+        // const productData = options.map((product: any) => ({
+        //     value: product._id,
+        //     label: product.material_code,
+        //     uom: Number(product.uom),
+        // }));
+        const products = await getProductByWorkOrder(selectedId);
+        const formatted = products.map((product: any) => ({
+            value: product.product_id,
             label: product.material_code,
-            uom: Number(product.uom),
+            uom: product.uom,
         }));
-        setProducts(productData);
+        setProducts(formatted);
     };
+
     const handleProductChange = async (selectedProduct: ProductOption | null, index: number, itemId: string) => {
         const updatedItems = [...items];
         updatedItems[index].product = selectedProduct;
@@ -124,7 +133,7 @@ const ProductionPlanning = () => {
 
         if (selectedProduct) {
             const response = await fetchMachinesByProductId(selectedProduct.label);
-            const machineOptions = response.map((m: any) => ({ label: m.name, value: m._id }));
+            const machineOptions = response.map((m: any) => ({ label: m.machineName, value: m._id }));
 
             setMachinesByRow((prev) => ({
                 ...prev,
@@ -165,7 +174,7 @@ const ProductionPlanning = () => {
 
     useEffect(() => {
         fetchWorkOrder();
-        fetchProducts();
+        // fetchProducts();
     }, []);
 
     const breadcrumbItems = [

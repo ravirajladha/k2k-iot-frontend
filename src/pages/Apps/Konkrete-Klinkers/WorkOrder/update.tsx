@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconX from '@/components/Icon/IconX';
 import Select from 'react-select';
 import IconSave from '@/components/Icon/IconSave';
@@ -17,6 +16,7 @@ import { fetchProjectsByClientId, fetchWorkOrderById, updateWorkOrderData } from
 import { fetchProductData } from '@/api/konkreteKlinkers/product';
 import { uniqueId } from 'lodash';
 import CustomLoader from '@/components/Loader';
+import FileUploader from '@/components/FileUploader';
 
 interface ProductOption {
     label: string;
@@ -38,13 +38,18 @@ interface Item {
     plantCode: string;
     deliveryDate?: string;
 }
-
+interface UploadedFile {
+    file?: File;
+    preview: string;
+    id?: string;
+    name?: string;
+}
 interface FormData {
     client: string;
     project: string;
     workOrderNumber: string;
     workOrderDate: string;
-    files: ImageListType;
+    uploads: UploadedFile[];
     bufferStock: boolean;
     items: Item[];
 }
@@ -59,6 +64,7 @@ const Update = () => {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const maxFileCount = 5;
+    const [bufferStock, setBufferStock] = useState(false);
     const {
         register,
         handleSubmit,
@@ -165,26 +171,22 @@ const Update = () => {
                         plantCode: item.product.plant.plant_code || '',
                         deliveryDate: item.delivery_date?.slice(0, 10) || '', // Format to yyyy-mm-dd for input[type=date]
                     }));
-
+                    const existingUploads: UploadedFile[] = data.files.map((file: any) => ({
+                        id: file._id,
+                        preview: file.file_url,
+                        name: file.file_name,
+                    }));
                     // Prepopulate form
                     reset({
-                        client: data.client._id || '',
+                        client: data.client?._id || '',
                         project: data.project?._id || '',
                         workOrderNumber: data.work_order_number || '',
                         workOrderDate: data.date?.slice(0, 10) || '',
                         bufferStock: data.buffer_stock || false,
                         items: items,
+                        uploads: existingUploads,
                     });
-
-                    // Prepopulate uploaded files
-                    const preloadedImages = (data.files || []).map((file: any) => ({
-                        dataURL: file.file_url,
-                        file: null, // Not available unless re-uploaded
-                        uploaded: true,
-                        existing: true,
-                        file_name: file.file_name,
-                    }));
-                    setUploadedImages(preloadedImages); // Assuming you have a state called `uploadedImages`
+                    setBufferStock(data.buffer_stock || false);
                 }
             } catch (error: any) {
                 setApiError(error.response?.data?.message || 'Failed to load data.');
@@ -216,14 +218,13 @@ const Update = () => {
                 formData.append(`products[${index}][plant_code]`, item.plantCode);
                 formData.append(`products[${index}][delivery_date]`, item.deliveryDate);
             });
-
-            // Add uploaded images
-            uploadedImages.forEach((img: any) => {
-                if (img.existing) {
-                    formData.append('existingFiles[]', img.file_name); // Or img._id if backend expects ID
-                } else if (img.file) {
-                    formData.append('files', img.file);
+            formValues.uploads.forEach((fileObj) => {
+                if (fileObj.file) {
+                    formData.append('files', fileObj.file);
                 }
+                // else if (fileObj.id) {
+                //     formData.append('existing_files', fileObj.id); // you may need this on backend to retain old files
+                // }
             });
 
             await updateWorkOrderData(id, formData);
@@ -238,6 +239,7 @@ const Update = () => {
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
+            setBufferStock(true);
             dispatch(
                 addAlert({
                     type: 'warning',
@@ -245,6 +247,8 @@ const Update = () => {
                     autoClose: 5000,
                 })
             );
+        } else {
+            setBufferStock(false);
         }
     };
     const handleFileChange = (imageList) => {
@@ -283,249 +287,254 @@ const Update = () => {
                 {loading ? (
                     <CustomLoader />
                 ) : (
-                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label htmlFor="client">Client Name</label>
-                            <Controller
-                                control={control}
-                                name="client"
-                                rules={{ required: 'Client is required' }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        options={clientOptions}
-                                        placeholder="Select Client"
-                                        className="flex-1"
-                                        value={clientOptions.find((option) => option.value === field.value)}
-                                        onChange={(selectedOption) => field.onChange(selectedOption?.value)}
-                                        isClearable
-                                    />
-                                )}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="project">Project Name</label>
-                            <Controller
-                                control={control}
-                                name="project"
-                                rules={{ required: 'Project is required' }}
-                                render={({ field }) => (
-                                    <Select
-                                        {...field}
-                                        options={projectOptions}
-                                        placeholder="Select Project"
-                                        value={projectOptions.find((option) => option.value === field.value)}
-                                        onChange={(selected) => field.onChange(selected?.value)}
-                                        isDisabled={!selectedClientId}
-                                        isClearable
-                                    />
-                                )}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="workOrderNumber">Work Order Number</label>
-                            <input
-                                id="workOrderNumber"
-                                type="text"
-                                placeholder="Enter Work Order Number"
-                                className={`form-input flex-1 ${errors.workOrderNumber ? 'border-red-500' : ''}`}
-                                {...register('workOrderNumber', { required: 'Work Order Number is required' })}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="workOrderDate">Work Order Date</label>
-                            <input
-                                id="workOrderDate"
-                                type="date"
-                                placeholder="Enter Work Order Date"
-                                className={`form-input flex-1 ${errors.workOrderDate ? 'border-red-500' : ''}`}
-                                {...register('workOrderDate', { required: 'Work Order Date is required' })}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="inline-flex items-center">
+                    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="workOrderNumber">Work Order Number</label>
                                 <input
-                                    id="bufferStock"
-                                    type="checkbox"
-                                    placeholder="Enter Work Order Date"
-                                    className={`form-checkbox outline-success rounded-full mr-2`}
-                                    style={{ transform: 'scale(1.5)' }}
-                                    {...register('bufferStock')}
-                                    onChange={(e) => {
-                                        handleCheckboxChange(e); // alert logic
-                                    }}
+                                    id="workOrderNumber"
+                                    type="text"
+                                    placeholder="Enter Work Order Number"
+                                    className={`form-input flex-1 ${errors.workOrderNumber ? 'border-red-500' : ''}`}
+                                    {...register('workOrderNumber', { required: 'Work Order Number is required' })}
                                 />
-                                <span> &ensp;Buffer Stock</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-8">
-                        <div className="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Product Name / Material Code</th>
-                                        <th>UOM</th>
-                                        <th>{items.some((item) => item.uom === 'sqmt') ? 'PO Quantity (sqmt)' : 'PO Quantity'}</th>
-                                        <th>Quantity in Nos</th>
-                                        <th>Plant Code</th>
-                                        <th>Delivery Date (optional)</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {items.length === 0 && (
-                                        <tr>
-                                            <td colSpan={7} className="!text-center font-semibold">
-                                                No Item Available
-                                            </td>
-                                        </tr>
-                                    )}
-                                    {items.map((item, index) => (
-                                        <tr className="align-top" key={item.id}>
-                                            <td>
-                                                <Controller
-                                                    control={control}
-                                                    name={`items.${index}.product`}
-                                                    render={({ field }) => (
-                                                        <Select
-                                                            {...field}
-                                                            options={products.map((p) => ({
-                                                                ...p,
-                                                                isDisabled: items.some((itm, idx) => idx !== index && itm.product?.value === p.value),
-                                                            }))}
-                                                            // onChange={(selected) => field.onChange(selected)}
-                                                            onChange={(e) => handleProductChange(e, index)}
-                                                            value={field.value}
-                                                            placeholder="Select Product"
-                                                            menuPortalTarget={document.body}
-                                                            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                                                            className="w-full sm:w-96"
-                                                        />
-                                                    )}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Controller
-                                                    control={control}
-                                                    name={`items.${index}.uom`}
-                                                    render={({ field }) => (
-                                                        <Select
-                                                            {...field}
-                                                            options={uomOptions}
-                                                            onChange={(selected) => {
-                                                                field.onChange(selected?.value); // update RHF
-                                                                // Reset quantity + converted quantity
-                                                                setValue(`items.${index}.originalQuantity`, '');
-                                                                setValue(`items.${index}.convertedQuantity`, '');
-                                                            }}
-                                                            value={uomOptions.find((opt) => opt.value === field.value)}
-                                                            placeholder="UOM"
-                                                            menuPortalTarget={document.body}
-                                                            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                                                            className="w-32"
-                                                        />
-                                                    )}
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="number"
-                                                    className="form-input w-32"
-                                                    placeholder="Quantity"
-                                                    step={item.uom === 'sqmt' ? '0.01' : '1'}
-                                                    min={0}
-                                                    defaultValue={item.originalQuantity}
-                                                    {...register(`items.${index}.originalQuantity`, {
-                                                        onChange: (e) => handleQuantityChange(e.target.value, index),
-                                                    })}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input type="number" className="form-input w-32" placeholder="Quantity" {...register(`items.${index}.convertedQuantity`)} />
-                                            </td>
-                                            <td>
-                                                <input type="text" className="form-input w-32" placeholder="Plant" {...register(`items.${index}.plantCode`)} readOnly />
-                                            </td>
-                                            <td>
-                                                <input type="date" className="form-input w-34" {...register(`items.${index}.deliveryDate`)} />
-                                            </td>
-                                            <td>
-                                                <button type="button" onClick={() => remove(index)}>
-                                                    ❌
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
-                            <div className="sm:mb-0 mb-6">
-                                <button type="button" className="btn btn-primary" onClick={addItem}>
-                                    ➕ Add Product
-                                </button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div className="mb-12 gap-72">
-                        <div className="flex items-center space-x-1">
-                            <label htmlFor="client">
-                                Upload Files <span className="text-red-500">*</span>
-                            </label>
-                            <div className="relative flex items-center">
-                                <button onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} className="text-gray-500 hover:text-gray-700">
-                                    <IconInfoCircle className="h-5 w-5" />
-                                </button>
-                                {showTooltip && (
-                                    <div className="absolute top-0 left-full ml-2 w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg">
-                                        A single pdf is mandatory here, multiple files are also allowed.
-                                    </div>
-                                )}
+                            <div className="inline-flex items-center justify-center">
+                                <label className="inline-flex items-center">
+                                    <input
+                                        id="bufferStock"
+                                        type="checkbox"
+                                        placeholder="Enter Work Order Date"
+                                        className={`form-checkbox outline-success rounded-full mr-2`}
+                                        style={{ transform: 'scale(1.5)' }}
+                                        {...register('bufferStock')}
+                                        onChange={(e) => {
+                                            handleCheckboxChange(e); // alert logic
+                                        }}
+                                    />
+                                    <span> &ensp;Buffer Stock</span>
+                                </label>
                             </div>
-                        </div>
-                        <ImageUploading multiple value={uploadedImages} onChange={handleFileChange} maxNumber={maxFileCount}>
-                            {({ imageList, onImageUpload, onImageRemove }) => (
-                                <div>
-                                    <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
-                                        <IconFile className="shrink-0" />
-                                        <span>Upload Files</span>
-                                    </button>
-                                    <div className="grid gap-4 sm:grid-cols-3 grid-cols-1">
-                                        {imageList.map((image, index) => (
-                                            <div key={index} className="relative">
-                                                <img src={image.dataURL} alt="uploaded" className="w-full h-32 object-cover rounded" />
-                                                <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full" onClick={() => onImageRemove(index)}>
-                                                    ×
-                                                </button>
-                                            </div>
-                                        ))}
+
+                            {!bufferStock && (
+                                <>
+                                    <div>
+                                        <label htmlFor="client">Client Name</label>
+                                        <Controller
+                                            control={control}
+                                            name="client"
+                                            rules={{ required: 'Client is required' }}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    options={clientOptions}
+                                                    placeholder="Select Client"
+                                                    className="flex-1"
+                                                    value={clientOptions.find((option) => option.value === field.value)}
+                                                    onChange={(selectedOption) => field.onChange(selectedOption?.value)}
+                                                    isClearable
+                                                />
+                                            )}
+                                        />
                                     </div>
-                                </div>
+                                    <div>
+                                        <label htmlFor="project">Project Name</label>
+                                        <Controller
+                                            control={control}
+                                            name="project"
+                                            rules={{ required: 'Project is required' }}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    options={projectOptions}
+                                                    placeholder="Select Project"
+                                                    value={projectOptions.find((option) => option.value === field.value)}
+                                                    onChange={(selected) => field.onChange(selected?.value)}
+                                                    isDisabled={!selectedClientId}
+                                                    isClearable
+                                                />
+                                            )}
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="workOrderDate">Work Order Date</label>
+                                        <input
+                                            id="workOrderDate"
+                                            type="date"
+                                            placeholder="Enter Work Order Date"
+                                            className={`form-input flex-1 ${errors.workOrderDate ? 'border-red-500' : ''}`}
+                                            {...register('workOrderDate', { required: 'Work Order Date is required' })}
+                                        />
+                                    </div>
+                                </>
                             )}
-                        </ImageUploading>
-                    </div>
+                        </div>
 
-                    <div className="flex gap-4">
-                        <button type="submit" className="btn btn-success w-1/2">
-                            <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                            Submit
-                        </button>
-                        <button type="submit" className="btn btn-danger w-1/2">
-                            <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
-                            Cancel
-                        </button>
-                    </div>
-                </form>
+                        <div className="mt-8">
+                            <div className="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name / Material Code</th>
+                                            <th>UOM</th>
+                                            <th>{items.some((item) => item.uom === 'sqmt') ? 'PO Quantity (sqmt)' : 'PO Quantity'}</th>
+                                            <th>Quantity in Nos</th>
+                                            <th>Plant Code</th>
+                                            <th>Delivery Date (optional)</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {items.length === 0 && (
+                                            <tr>
+                                                <td colSpan={7} className="!text-center font-semibold">
+                                                    No Item Available
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {items.map((item, index) => (
+                                            <tr className="align-top" key={item.id}>
+                                                <td>
+                                                    <Controller
+                                                        control={control}
+                                                        name={`items.${index}.product`}
+                                                        render={({ field }) => (
+                                                            <Select
+                                                                {...field}
+                                                                options={products.map((p) => ({
+                                                                    ...p,
+                                                                    isDisabled: items.some((itm, idx) => idx !== index && itm.product?.value === p.value),
+                                                                }))}
+                                                                // onChange={(selected) => field.onChange(selected)}
+                                                                onChange={(e) => handleProductChange(e, index)}
+                                                                value={field.value}
+                                                                placeholder="Select Product"
+                                                                menuPortalTarget={document.body}
+                                                                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                                                                className="w-full sm:w-96"
+                                                            />
+                                                        )}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Controller
+                                                        control={control}
+                                                        name={`items.${index}.uom`}
+                                                        render={({ field }) => (
+                                                            <Select
+                                                                {...field}
+                                                                options={uomOptions}
+                                                                onChange={(selected) => {
+                                                                    field.onChange(selected?.value); // update RHF
+                                                                    // Reset quantity + converted quantity
+                                                                    setValue(`items.${index}.originalQuantity`, '');
+                                                                    setValue(`items.${index}.convertedQuantity`, '');
+                                                                }}
+                                                                value={uomOptions.find((opt) => opt.value === field.value)}
+                                                                placeholder="UOM"
+                                                                menuPortalTarget={document.body}
+                                                                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                                                                className="w-32"
+                                                            />
+                                                        )}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        className="form-input w-32"
+                                                        placeholder="Quantity"
+                                                        step={item.uom === 'sqmt' ? '0.01' : '1'}
+                                                        min={0}
+                                                        defaultValue={item.originalQuantity}
+                                                        {...register(`items.${index}.originalQuantity`, {
+                                                            onChange: (e) => handleQuantityChange(e.target.value, index),
+                                                        })}
+                                                    />
+                                                </td>
+
+                                                <td>
+                                                    <input type="number" className="form-input w-32" placeholder="Quantity" {...register(`items.${index}.convertedQuantity`)} />
+                                                </td>
+                                                <td>
+                                                    <input type="text" className="form-input w-32" placeholder="Plant" {...register(`items.${index}.plantCode`)} readOnly />
+                                                </td>
+                                                <td>
+                                                    <input type="date" className="form-input w-34" {...register(`items.${index}.deliveryDate`)} />
+                                                </td>
+                                                <td>
+                                                    <button type="button" onClick={() => remove(index)}>
+                                                        ❌
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
+                                <div className="sm:mb-0 mb-6">
+                                    <button type="button" className="btn btn-primary" onClick={addItem}>
+                                        ➕ Add Product
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mb-12 gap-72">
+                            <div className="flex items-center space-x-1">
+                                <label htmlFor="client">
+                                    Upload Files <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative flex items-center">
+                                    <button onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)} className="text-gray-500 hover:text-gray-700">
+                                        <IconInfoCircle className="h-5 w-5" />
+                                    </button>
+                                    {showTooltip && (
+                                        <div className="absolute top-0 left-full ml-2 w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg">
+                                            A single pdf is mandatory here, multiple files are also allowed.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <Controller
+                                control={control}
+                                name="uploads"
+                                rules={{ required: 'Please upload at least one file' }}
+                                render={({ field, fieldState }) => (
+                                    <>
+                                        <FileUploader
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            accept={{
+                                                'image/*': [],
+                                                'application/pdf': ['.pdf'],
+                                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+                                                'text/csv': ['.csv'],
+                                            }}
+                                            maxFiles={5}
+                                        />
+                                        {fieldState.error && <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>}
+                                    </>
+                                )}
+                            />
+                        </div>
+
+                        <div className="flex gap-4">
+                            <button type="submit" className="btn btn-success w-1/2">
+                                <IconSave className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                                Submit
+                            </button>
+                            <button type="submit" className="btn btn-danger w-1/2">
+                                <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 )}
             </div>
         </div>
