@@ -202,7 +202,7 @@ export const refreshAccessToken = createAsyncThunk<
             throw new Error('No refresh token available');
         }
 
-        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/users/refresh`, {
+        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/users/refresh-token`, {
             method: 'POST',
             credentials: 'include',
         });
