@@ -19,11 +19,11 @@ import { getProductByWorkOrder } from '@/api/konkreteKlinkers/dropdowns';
 interface ProductOption {
     label: string;
     value: string;
-    uom: number | string;
 }
 interface MachineOption {
     label: string;
     value: string;
+    uom: number | string;
 }
 interface Item {
     id: string; // or number depending on your key logic
@@ -97,8 +97,6 @@ const ProductionPlanning = () => {
 
         if (selectedId) {
             const selectedData = workOrders.find((w) => w.value === selectedId);
-            console.log(selectedData);
-
             setSelectedWorkOrderData(selectedData);
             fetchProducts(selectedId);
         } else {
@@ -107,17 +105,10 @@ const ProductionPlanning = () => {
     };
 
     const fetchProducts = async (selectedId) => {
-        // const options = await fetchProductData();
-        // const productData = options.map((product: any) => ({
-        //     value: product._id,
-        //     label: product.material_code,
-        //     uom: Number(product.uom),
-        // }));
         const products = await getProductByWorkOrder(selectedId);
         const formatted = products.map((product: any) => ({
             value: product.product_id,
             label: product.material_code,
-            uom: product.uom,
         }));
         setProducts(formatted);
     };
@@ -126,14 +117,12 @@ const ProductionPlanning = () => {
         const updatedItems = [...items];
         updatedItems[index].product = selectedProduct;
         updatedItems[index].machine = null; // Reset machine
-        updatedItems[index].uom = selectedProduct.uom;
         setValue(`items.${index}.product`, selectedProduct);
         setValue(`items.${index}.machine`, null);
-        setValue(`items.${index}.uom`, selectedProduct.uom);
 
         if (selectedProduct) {
             const response = await fetchMachinesByProductId(selectedProduct.label);
-            const machineOptions = response.map((m: any) => ({ label: m.machineName, value: m._id }));
+            const machineOptions = response.map((m: any) => ({ label: m.name, value: m._id, uom: m.uom }));
 
             setMachinesByRow((prev) => ({
                 ...prev,
@@ -174,7 +163,6 @@ const ProductionPlanning = () => {
 
     useEffect(() => {
         fetchWorkOrder();
-        // fetchProducts();
     }, []);
 
     const breadcrumbItems = [
@@ -330,12 +318,16 @@ const ProductionPlanning = () => {
                                                             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
                                                             isDisabled={!machinesByRow[item.id]}
                                                             className="w-full sm:w-60"
+                                                            onChange={(selectedOption) => {
+                                                                field.onChange(selectedOption);
+                                                                setValue(`items.${index}.uom`, selectedOption?.uom || '');
+                                                            }}
                                                         />
                                                     )}
                                                 />
                                             </td>
                                             <td>
-                                                <input type="number" className="form-input w-32" placeholder="uom" {...register(`items.${index}.uom`)} readOnly />
+                                                <input type="text" className="form-input w-32" placeholder="uom" {...register(`items.${index}.uom`)} readOnly />
                                             </td>
                                             <td>
                                                 <input type="number" className="form-input w-32" placeholder="Planned Quantity" {...register(`items.${index}.plannedQuantity`)} />

@@ -418,7 +418,7 @@ const Create = () => {
                             </table>
                         </div>
 
-                        <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
+                        <div className="flex justify-end sm:flex-row flex-col mt-6">
                             <div className="sm:mb-0 mb-6">
                                 <button type="button" className="btn btn-primary" onClick={addItem}>
                                     ➕ Add Product

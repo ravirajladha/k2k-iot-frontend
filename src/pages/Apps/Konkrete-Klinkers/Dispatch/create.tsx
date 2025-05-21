@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IconX from '@/components/Icon/IconX';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
@@ -10,6 +10,8 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconFile from '@/components/Icon/IconFile';
 
 import Select from 'react-select';
+import { fetchWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
+import { Controller, useForm } from 'react-hook-form';
 interface QRCodeData {
     workOrder: string;
     product: string;
@@ -17,8 +19,31 @@ interface QRCodeData {
     batchId: string;
     quantity: number;
 }
+interface FormData {
+    workOrder: string;
+}
 
 const DispatchCreation = () => {
+    const [workOrders, setWorkOrders] = useState([]);
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors, isSubmitting },
+        setValue,
+    } = useForm<FormData>();
+
+    const fetchWorkOrder = async () => {
+        const options = await fetchWorkOrderData();
+        const workOrderData = options.map((workOrder: any) => ({
+            value: workOrder._id,
+            label: workOrder.work_order_number,
+        }));
+        setWorkOrders(workOrderData);
+    };
+    useEffect(() => {
+        fetchWorkOrder();
+    }, []);
     const [selectedWorkOrder, setSelectedWorkOrder] = useState<string | null>(null);
     const [scannedQRCodes, setScannedQRCodes] = useState<string[]>([]);
     const [qrCodeInput, setQrCodeInput] = useState<string>('');
@@ -42,11 +67,11 @@ const DispatchCreation = () => {
 
     const [isQRCodeGenerated, setIsQRCodeGenerated] = useState(false);
 
-    const workOrders = [
-        { id: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X' },
-        { id: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y' },
-        { id: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z' },
-    ];
+    // const workOrders = [
+    //     { id: 'WO101', plantCode: 'PC001', clientName: 'Client A', projectName: 'Project X' },
+    //     { id: 'WO102', plantCode: 'PC002', clientName: 'Client B', projectName: 'Project Y' },
+    //     { id: 'WO103', plantCode: 'PC003', clientName: 'Client C', projectName: 'Project Z' },
+    // ];
 
     const QR_CODE_DATA: Record<string, QRCodeData> = {
         QR123456: { workOrder: 'WO101', product: 'Paver Black', uom: 'Nos', batchId: 'Batch001', quantity: 50 },
@@ -113,21 +138,8 @@ const DispatchCreation = () => {
         setScannedQRCodes(scannedQRCodes.filter((code) => code !== qrCode));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (items.length === 0) {
-            alert('Please scan at least one QR Code before submitting.');
-            return;
-        }
-
-        console.log('Submitting Dispatch:', {
-            workOrderNumber: formData.workOrderNumber,
-            scannedQRCodes,
-            products: items,
-            invoiceSto: formData.invoiceSto,
-            vehicleNumber: formData.vehicleNumber,
-        });
+    const onSubmit = async (formValues: FormData) => {
+        console.log('Submitting Dispatch:', formValues);
     };
 
     // const handleQRCodeGeneration = () => {
@@ -199,14 +211,30 @@ const DispatchCreation = () => {
                 {/* <div className="mb-5">
                     <h5 className="font-semibold text-lg">Dispatch Creation</h5>
                 </div> */}
-                <form className="space-y-5" onSubmit={handleSubmit}>
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
                         {/* Work Order Number */}
+
                         <div>
-                            <label htmlFor="workOrderNumber" className="block text-sm font-medium text-bold">
-                                <strong> Work Order Number</strong>
+                            <label htmlFor="workOrder">
+                                Work Order Number <span className="text-red-700">*</span>
                             </label>
-                            <Select id="workOrderNumber" options={workOrderOptions} onChange={handleWorkOrderChange} placeholder="Select Work Order" isSearchable />
+                            <Controller
+                                control={control}
+                                name="workOrder"
+                                rules={{ required: 'Work Order Number is required' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={workOrders}
+                                        placeholder="Select Work Order"
+                                        className="flex-1"
+                                        value={workOrders.find((option) => option.value === field.value)}
+                                        onChange={(selectedOption) => handleWorkOrderChange(selectedOption?.value || null)}
+                                        isClearable
+                                    />
+                                )}
+                            />
                         </div>
                         <div className="flex items-center space-x-2">
                             <label htmlFor="workOrderNumber" className="block text-sm font-medium text-bold">
@@ -255,25 +283,6 @@ const DispatchCreation = () => {
                                 </div>
                             </div>
                         )}
-                        {/* Display Selected Work Order Details */}
-                        {/* {selectedWorkOrder ? (
-                            <div className="p-4 bg-gray-100 rounded col-span-3">
-                                <h6 className="font-semibold text-md mb-2">Selected Work Order Details</h6>
-                                <p>
-                                    <strong>Plant Code:</strong> {selectedWorkOrder.plantCode}
-                                </p>
-                                <p>
-                                    <strong>Client Name:</strong> {selectedWorkOrder.clientName}
-                                </p>
-                                <p>
-                                    <strong>Project Name:</strong> {selectedWorkOrder.projectName}
-                                </p>
-                            </div>
-                        ) : (
-                            <p className="text-gray-600 col-span-3">
-                                Please select a work order to see the details.
-                            </p>
-                        )} */}
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
