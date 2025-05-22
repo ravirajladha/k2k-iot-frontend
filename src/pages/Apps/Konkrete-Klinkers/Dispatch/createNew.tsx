@@ -9,17 +9,21 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconFile from '@/components/Icon/IconFile';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
-import { fetchDispatchData, storeDispatchData, scanQrIds } from '@/api/konkreteKlinkers/dispatch'; // Adjust path as needed
-import { fetchWorkOrderData, fetchWorkOrderById } from '@/api/konkreteKlinkers/workOrder';
+import { fetchDispatchData, storeDispatchData, scanQrIds } from '@/api/konkreteKlinkers/dispatch';
+import { fetchWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
 
 const DispatchCreation = () => {
+    console.log("came here inside new dispatch");
+    
     const navigate = useNavigate();
     const [apiError, setApiError] = useState('');
     const [workOrderOptions, setWorkOrderOptions] = useState([]);
     const [selectedWorkOrder, setSelectedWorkOrder] = useState(null);
     const [qrCodeInput, setQrCodeInput] = useState('');
     const [scannedItems, setScannedItems] = useState([]);
-    const [scannedQRCodes, setScannedQRCodes] = useState([]);
+    console.log("scannedItems", scannedItems);
+    
+    const [scannedQRCodes, setScannedQRCodes] = useState([]); // Will store Packing document IDs
     const [formData, setFormData] = useState({
         workOrderNumber: '',
         dispatchDate: '',
@@ -34,7 +38,7 @@ const DispatchCreation = () => {
     useEffect(() => {
         const fetchWorkOrders = async () => {
             try {
-                const options = await fetchWorkOrderData(); // Adjust this API call as per your backend
+                const options = await fetchWorkOrderData();
                 const workOrderData = options.map((workOrder) => ({
                     value: workOrder._id,
                     label: `${workOrder.work_order_number}`,
@@ -70,15 +74,17 @@ const DispatchCreation = () => {
             return;
         }
 
-        if (scannedQRCodes.includes(qrCodeInput)) {
+        // Check if the QR code has already been scanned (using the Packing document ID)
+        if (scannedQRCodes.some((item) => item.qrCodeString === qrCodeInput)) {
             setApiError('This QR code has already been scanned.');
             return;
         }
 
         try {
-            console.log("qrCodeInput",qrCodeInput);
+            console.log("qrCodeInput", qrCodeInput);
             
             const qrData = await scanQrIds(qrCodeInput);
+            console.log("qrData", qrData);
             
             if (!qrData) {
                 setApiError('Invalid QR code. No product found.');
@@ -90,14 +96,22 @@ const DispatchCreation = () => {
                 return;
             }
 
+            // Ensure qr_id or qr_code exists
+            const qrId = qrData.qr_id || qrData.qr_code;
+            if (!qrId) {
+                setApiError('QR code ID is missing in the response.');
+                return;
+            }
+
             const newItem = {
-                id: qrCodeInput,
+                id: qrCodeInput, // For display purposes
                 title: qrData.product.description,
                 uom: qrData.uom,
-                batchId: qrData.qr_id,
+                batchIds: [qrId], // Initialize as an array with the current qr_id
                 dispatchQuantity: qrData.product_quantity,
                 productId: qrData.product._id,
                 workOrder: qrData.work_order,
+                packingId: qrData._id, // Store the Packing document ID
             };
 
             // Check if the product already exists in scanned items
@@ -106,8 +120,15 @@ const DispatchCreation = () => {
             );
 
             if (existingItemIndex !== -1) {
-                // Update dispatch quantity if product and work order match
+                // Update dispatch quantity and append the new qr_id to batchIds
                 const updatedItems = [...scannedItems];
+                // Ensure batchIds is an array
+                if (!Array.isArray(updatedItems[existingItemIndex].batchIds)) {
+                    updatedItems[existingItemIndex].batchIds = updatedItems[existingItemIndex].batchId
+                        ? [updatedItems[existingItemIndex].batchId]
+                        : [];
+                }
+                updatedItems[existingItemIndex].batchIds.push(qrId); // Append the new qr_id
                 updatedItems[existingItemIndex].dispatchQuantity += newItem.dispatchQuantity;
                 setScannedItems(updatedItems);
             } else {
@@ -115,7 +136,11 @@ const DispatchCreation = () => {
                 setScannedItems([...scannedItems, newItem]);
             }
 
-            setScannedQRCodes([...scannedQRCodes, qrCodeInput]);
+            // Store the Packing document ID along with the QR code string for reference
+            setScannedQRCodes([
+                ...scannedQRCodes,
+                { packingId: qrData.qr_code, qrCodeString: qrCodeInput },
+            ]);
             setQrCodeInput('');
             setApiError('');
         } catch (error) {
@@ -126,7 +151,7 @@ const DispatchCreation = () => {
     // Remove a scanned item
     const removeItem = (qrCode) => {
         setScannedItems(scannedItems.filter((item) => item.id !== qrCode));
-        setScannedQRCodes(scannedQRCodes.filter((code) => code !== qrCode));
+        setScannedQRCodes(scannedQRCodes.filter((item) => item.qrCodeString !== qrCode));
     };
 
     // Handle file change for invoice upload
@@ -176,7 +201,11 @@ const DispatchCreation = () => {
             formDataToSend.append('work_order', formData.workOrderNumber);
             formDataToSend.append('invoice_or_sto', formData.invoiceSto);
             formDataToSend.append('vehicle_number', formData.vehicleNumber);
-            formDataToSend.append('qr_codes', JSON.stringify(scannedQRCodes));
+            // Send the array of Packing document IDs
+            console.log("scannedQRCodes", scannedQRCodes);
+            
+            const packingIds = scannedQRCodes.map((item) => item.packingId);
+            formDataToSend.append('qr_codes', JSON.stringify(packingIds));
             formDataToSend.append('date', formData.dispatchDate);
 
             if (formData.files.length > 0) {
@@ -293,11 +322,13 @@ const DispatchCreation = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {scannedItems.map((item) => (
-                                                <tr key={item.id} className="text-center">
+                                            {scannedItems.map((item, index) => (
+                                                <tr key={index} className="text-center">
                                                     <td className="border border-gray-300 px-4 py-2">{item.title}</td>
                                                     <td className="border border-gray-300 px-4 py-2">{item.uom}</td>
-                                                    <td className="border border-gray-300 px-4 py-2">{item.batchId}</td>
+                                                    <td className="border border-gray-300 px-4 py-2">
+                                                        {(item.batchIds || (item.batchId ? [item.batchId] : [])).join(', ') || 'N/A'}
+                                                    </td>
                                                     <td className="border border-gray-300 px-4 py-2">{item.dispatchQuantity}</td>
                                                     <td className="border border-gray-300 px-4 py-2">
                                                         <button type="button" onClick={() => removeItem(item.id)}>
