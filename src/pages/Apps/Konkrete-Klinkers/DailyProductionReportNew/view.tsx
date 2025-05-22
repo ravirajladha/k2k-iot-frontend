@@ -6,14 +6,25 @@ import DowntimeModal from './DowntimeModal';
 import DPRGrid from './DPRGrid';
 import ProductionLogsModal from './ProductionLogsModal';
 import { pastReports, currentReports, futureReports, sampleProductionLogs, sampleDowntimeLogs, Report } from './sampleDatas';
+import { fetchProductionByDate } from '@/api/konkreteKlinkers/production';
 
 const DPR = () => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ dispatchDate: new Date().toISOString().split('T')[0] });
+    const fetchProductionReports = async () =>{
+        const response = await fetchProductionByDate(new Date().toISOString().split('T')[0]);
+        console.log(response);
+
+    }
 
     useEffect(() => {
         dispatch(setPageTitle('Production Planning'));
+        fetchProductionReports();
     }, [dispatch]);
+
+    useEffect(() => {
+        fetchProductionReports();
+    }, []);
 
     const [reports, setReports] = useState<Report[]>([...currentReports]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

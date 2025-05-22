@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconX from '@/components/Icon/IconX';
 import Select from 'react-select';
 import IconSave from '@/components/Icon/IconSave';
@@ -16,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchPlantsByProduct, fetchProjectsByClientId, storeWorkOrderData } from '@/api/konkreteKlinkers/workOrder';
 import { fetchProductData } from '@/api/konkreteKlinkers/product';
 import { uniqueId } from 'lodash';
+import FileUploader from '@/components/FileUploader';
 
 interface ProductOption {
     label: string;
@@ -38,13 +38,18 @@ interface Item {
     plantCode: string;
     deliveryDate?: string;
 }
+interface UploadedFile {
+    file?: File;
+    preview: string;
+    id?: string;
+}
 
 interface FormData {
     client: string;
     project: string;
     workOrderNumber: string;
     workOrderDate: string;
-    files: ImageListType;
+    uploads: UploadedFile[];
     bufferStock: boolean;
     items: Item[];
 }
@@ -55,8 +60,6 @@ const Create = () => {
     const [clientOptions, setClientOptions] = useState<{ value: string; label: string }[]>([]);
     const [projectOptions, setProjectOptions] = useState([]);
     const [products, setProducts] = useState([]);
-    const [uploadedImages, setUploadedImages] = useState([]);
-    const maxFileCount = 5;
     const {
         register,
         handleSubmit,
@@ -144,12 +147,14 @@ const Create = () => {
     }, [selectedClientId, setValue]);
 
     const onSubmit = async (formValues: FormData) => {
+        console.log('Form Values:', formValues);
+
         setApiError('');
         try {
             const formData = new FormData();
 
             // Basic fields
-            if(!bufferStock){
+            if (!bufferStock) {
                 formData.append('client_id', formValues.client);
                 formData.append('project_id', formValues.project);
                 formData.append('date', formValues.workOrderDate);
@@ -166,11 +171,11 @@ const Create = () => {
                 formData.append(`products[${index}][delivery_date]`, item.deliveryDate);
             });
 
-            // Add uploaded images
-            uploadedImages.forEach((img: any, index: number) => {
-                formData.append(`files`, img.file); // or use files[] if backend expects array
+            formValues.uploads.forEach((fileObj: any) => {
+                if (fileObj.file) {
+                    formData.append('files', fileObj.file);
+                }
             });
-
             await storeWorkOrderData(formData);
             navigate('/konkrete-klinkers/work-order');
         } catch (error: any) {
@@ -194,9 +199,6 @@ const Create = () => {
         } else {
             setBufferStock(false);
         }
-    };
-    const handleFileChange = (imageList) => {
-        setUploadedImages(imageList); // stores image objects with file & dataURL
     };
 
     const handleQuantityChange = (value, index) => {
@@ -416,7 +418,7 @@ const Create = () => {
                             </table>
                         </div>
 
-                        <div className="flex justify-between sm:flex-row flex-col mt-6 px-4 float-right">
+                        <div className="flex justify-end sm:flex-row flex-col mt-6">
                             <div className="sm:mb-0 mb-6">
                                 <button type="button" className="btn btn-primary" onClick={addItem}>
                                     ➕ Add Product
@@ -441,26 +443,27 @@ const Create = () => {
                                 )}
                             </div>
                         </div>
-                        <ImageUploading multiple value={uploadedImages} onChange={handleFileChange} maxNumber={maxFileCount}>
-                            {({ imageList, onImageUpload, onImageRemove }) => (
-                                <div>
-                                    <button type="button" className="btn btn-primary mb-2 flex items-center space-x-2" onClick={onImageUpload}>
-                                        <IconFile className="shrink-0" />
-                                        <span>Upload Files</span>
-                                    </button>
-                                    <div className="grid gap-4 sm:grid-cols-3 grid-cols-1">
-                                        {imageList.map((image, index) => (
-                                            <div key={index} className="relative">
-                                                <img src={image.dataURL} alt="uploaded" className="w-full h-32 object-cover rounded" />
-                                                <button type="button" className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full" onClick={() => onImageRemove(index)}>
-                                                    ×
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                        <Controller
+                            control={control}
+                            name="uploads"
+                            rules={{ required: 'Please upload at least one file' }}
+                            render={({ field, fieldState }) => (
+                                <>
+                                    <FileUploader
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        accept={{
+                                            'image/*': [],
+                                            'application/pdf': ['.pdf'],
+                                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+                                            'text/csv': ['.csv'],
+                                        }}
+                                        maxFiles={5}
+                                    />
+                                    {fieldState.error && <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>}
+                                </>
                             )}
-                        </ImageUploading>
+                        />
                     </div>
 
                     <div className="flex gap-4">
