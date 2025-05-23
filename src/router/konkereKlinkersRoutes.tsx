@@ -291,17 +291,17 @@ export const konkereKlinkersRoutes = [
 
     // Dispatch
     {
-        path: `${basePath}/dispatch/view`,
+        path: `${basePath}/dispatch`,
         element: <DispatchView />,
         layout: 'admin',
     },
     {
-        path: `${basePath}/dispatch/editDetail`,
+        path: `${basePath}/dispatch/:id/editDetail`,
         element: <DispatchEditDetail />,
         layout: 'admin',
     },
     {
-        path: `${basePath}/dispatch/detail`,
+        path: `${basePath}/dispatch/:id/detail`,
         element: <DispatchViewDetail />,
         layout: 'admin',
     },
