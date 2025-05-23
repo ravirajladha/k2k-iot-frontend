@@ -296,7 +296,7 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/dispatch/:id/editDetail`,
+        path: `${basePath}/dispatch/:id/edit`,
         element: <DispatchEditDetail />,
         layout: 'admin',
     },

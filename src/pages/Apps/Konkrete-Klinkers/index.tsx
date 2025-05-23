@@ -45,7 +45,7 @@ export { default as StockManagmentViewDetail } from './BufferStockManagement/det
 export { default as StockManagmentEditDetail } from './BufferStockManagement/editStockDetail'; /////New
 
 export { default as DispatchView } from './Dispatch/view';
-export { default as DispatchEditDetail } from './Dispatch/detail'; ///////////////
+export { default as DispatchEditDetail } from './Dispatch/update'; ///////////////
 export { default as DispatchViewDetail } from './Dispatch/dispatchViewDetail'; ///////////////
 // export { default as DispatchCreate } from './Dispatch/create';
 export { default as DispatchCreate } from './Dispatch/createNew';
