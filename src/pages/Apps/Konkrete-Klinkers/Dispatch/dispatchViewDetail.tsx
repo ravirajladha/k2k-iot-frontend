@@ -31,7 +31,6 @@ const DispatchViewDetailPage = () => {
     }, [id]);
 
     const dispatch = useDispatch();
-    const location = useLocation();
 
     useEffect(() => {
         dispatch(setPageTitle('Dispatch Detail'));
@@ -126,9 +125,11 @@ const DispatchViewDetailPage = () => {
                                                 <td className="border border-gray-300 px-4 py-2">{dispatchData.vehicle_number}</td>
                                                 <td className="border border-gray-300 px-4 py-2">
                                                     {' '}
-                                                    <a href={dispatchData.invoice_file} target="_blank">
-                                                        <IconFile className="text-gray-600" />
-                                                    </a>
+                                                    {dispatchData.invoice_file.map((fileUrl, index) => (
+                                                        <a href={fileUrl} target="_blank" key={index}>
+                                                            <IconFile className="text-gray-600" />
+                                                        </a>
+                                                    ))}
                                                 </td>
                                             </tr>
                                         ))}

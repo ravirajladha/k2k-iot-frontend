@@ -228,7 +228,7 @@ export const konkereKlinkersRoutes = [
         layout: 'admin',
     },
     {
-        path: `${basePath}/inventory/detail`,
+        path: `${basePath}/inventories/:productId/detail`,
         element: <InventoryViewDetail />,
         layout: 'admin',
     },

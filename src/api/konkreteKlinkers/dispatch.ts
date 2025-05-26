@@ -15,9 +15,9 @@ export const fetchDispatchData = async () => {
     }
   };
 
-  export const updateDispatchData = async (data: any) => {
+  export const updateDispatchData = async (id: string, data: any) => {
     try {
-      const response = await axiosInstance.post('/konkreteKlinkers/dispatch/create', data);
+      const response = await axiosInstance.put(`/konkreteKlinkers/dispatch/${id}`, data);
       return response.data;
     } catch (error) {
       throw error;

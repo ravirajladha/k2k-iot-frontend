@@ -54,10 +54,10 @@ const DispatchDetailPage = () => {
             try {
                 const data = await fetchDispatchById(id);
                 setDispatchData(data);
-                const existingUploads: UploadedFile[] = data.files.map((file: any) => ({
-                    id: file._id,
-                    preview: file.file_url,
-                    name: file.file_name,
+                const existingUploads: UploadedFile[] = data.invoice_file.map((file: any, index) => ({
+                    id: index,
+                    preview: file,
+                    name: '',
                 }));
 
                 setValue('workOrderNumber', data?.work_order_name || '');
@@ -98,7 +98,7 @@ const DispatchDetailPage = () => {
                     formDataToSend.append('invoice_file', fileObj.file);
                 }
             });
-            await updateDispatchData(formDataToSend);
+            await updateDispatchData(id, formDataToSend);
             navigate('/konkrete-klinkers/dispatch');
         } catch (error) {
             setApiError(error.response?.data?.message || 'Failed to create dispatch. Please try again.');
@@ -109,6 +109,7 @@ const DispatchDetailPage = () => {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(today.getDate() - 7);
     const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 7);
     const minDate = sevenDaysAgo.toISOString().split('T')[0];
     const maxDate = nextWeek.toISOString().split('T')[0];
     return (
