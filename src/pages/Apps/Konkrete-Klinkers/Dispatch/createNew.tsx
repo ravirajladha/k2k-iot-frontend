@@ -18,7 +18,7 @@ import FileUploader from '@/components/FileUploader';
 
 // const DispatchCreation = () => {
 //     console.log("came here inside new dispatch");
-    
+
 //     const navigate = useNavigate();
 //     const [apiError, setApiError] = useState('');
 //     const [workOrderOptions, setWorkOrderOptions] = useState([]);
@@ -26,7 +26,7 @@ import FileUploader from '@/components/FileUploader';
 //     const [qrCodeInput, setQrCodeInput] = useState('');
 //     const [scannedItems, setScannedItems] = useState([]);
 //     console.log("scannedItems", scannedItems);
-    
+
 //     const [scannedQRCodes, setScannedQRCodes] = useState([]); // Will store Packing document IDs
 //     const [formData, setFormData] = useState({
 //         workOrderNumber: '',
@@ -86,10 +86,10 @@ import FileUploader from '@/components/FileUploader';
 
 //         try {
 //             console.log("qrCodeInput", qrCodeInput);
-            
+
 //             const qrData = await scanQrIds(qrCodeInput);
 //             console.log("qrData", qrData);
-            
+
 //             if (!qrData) {
 //                 setApiError('Invalid QR code. No product found.');
 //                 return;
@@ -207,7 +207,7 @@ import FileUploader from '@/components/FileUploader';
 //             formDataToSend.append('vehicle_number', formData.vehicleNumber);
 //             // Send the array of Packing document IDs
 //             console.log("scannedQRCodes", scannedQRCodes);
-            
+
 //             const packingIds = scannedQRCodes.map((item) => item.packingId);
 //             formDataToSend.append('qr_codes', JSON.stringify(packingIds));
 //             formDataToSend.append('date', formData.dispatchDate);
@@ -218,7 +218,7 @@ import FileUploader from '@/components/FileUploader';
 //             }
 
 //             await storeDispatchData(formDataToSend);
-//             navigate('/konkrete-klinkers/dispatch/view');
+//             navigate('/konkrete-klinkers/dispatch');
 //         } catch (error) {
 //             setApiError(error.response?.data?.message || 'Failed to create dispatch. Please try again.');
 //         } finally {
@@ -238,7 +238,7 @@ import FileUploader from '@/components/FileUploader';
 //     const breadcrumbItems = [
 //         { label: 'Home', link: '/', isActive: false },
 //         { label: 'Konkrete Klinkers', link: '/', isActive: false },
-//         { label: 'Dispatch', link: '/konkrete-klinkers/dispatch/view', isActive: false },
+//         { label: 'Dispatch', link: '/konkrete-klinkers/dispatch', isActive: false },
 //         { label: 'Create', link: '#', isActive: true },
 //     ];
 
@@ -248,7 +248,7 @@ import FileUploader from '@/components/FileUploader';
 //                 items={breadcrumbItems}
 //                 addButton={{
 //                     label: 'Back',
-//                     link: '/konkrete-klinkers/dispatch/view',
+//                     link: '/konkrete-klinkers/dispatch',
 //                     icon: <IconArrowBackward className="text-4xl" />,
 //                 }}
 //             />
@@ -490,7 +490,7 @@ import FileUploader from '@/components/FileUploader';
 //                         <button
 //                             type="button"
 //                             className="btn btn-danger w-1/2"
-//                             onClick={() => navigate('/konkrete-klinkers/dispatch/view')}
+//                             onClick={() => navigate('/konkrete-klinkers/dispatch')}
 //                             disabled={isSubmitting}
 //                         >
 //                             <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />
@@ -509,7 +509,7 @@ import FileUploader from '@/components/FileUploader';
 
 const DispatchCreation = () => {
     console.log("came here inside new dispatch");
-    
+
     const navigate = useNavigate();
     const [apiError, setApiError] = useState('');
     const [workOrderOptions, setWorkOrderOptions] = useState([]);
@@ -688,7 +688,7 @@ const DispatchCreation = () => {
             });
 
             await storeDispatchData(formDataToSend);
-            navigate('/konkrete-klinkers/dispatch/view');
+            navigate('/konkrete-klinkers/dispatch');
         } catch (error) {
             setApiError(error.response?.data?.message || 'Failed to create dispatch. Please try again.');
         }
@@ -706,7 +706,7 @@ const DispatchCreation = () => {
     const breadcrumbItems = [
         { label: 'Home', link: '/', isActive: false },
         { label: 'Konkrete Klinkers', link: '/', isActive: false },
-        { label: 'Dispatch', link: '/konkrete-klinkers/dispatch/view', isActive: false },
+        { label: 'Dispatch', link: '/konkrete-klinkers/dispatch', isActive: false },
         { label: 'Create', link: '#', isActive: true },
     ];
 
@@ -716,7 +716,7 @@ const DispatchCreation = () => {
                 items={breadcrumbItems}
                 addButton={{
                     label: 'Back',
-                    link: '/konkrete-klinkers/dispatch/view',
+                    link: '/konkrete-klinkers/dispatch',
                     icon: <IconArrowBackward className="text-4xl" />,
                 }}
             />
@@ -949,7 +949,7 @@ const DispatchCreation = () => {
                         <button
                             type="button"
                             className="btn btn-danger w-1/2"
-                            onClick={() => navigate('/konkrete-klinkers/dispatch/view')}
+                            onClick={() => navigate('/konkrete-klinkers/dispatch')}
                             disabled={isSubmitting}
                         >
                             <IconTrashLines className="ltr:mr-2 rtl:ml-2 shrink-0" />

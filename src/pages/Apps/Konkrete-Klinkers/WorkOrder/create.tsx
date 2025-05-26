@@ -44,7 +44,7 @@ interface UploadedFile {
     id?: string;
 }
 
-interface FormData {
+interface FormValues {
     client: string;
     project: string;
     workOrderNumber: string;
@@ -68,7 +68,7 @@ const Create = () => {
         watch,
         setValue,
         getValues,
-    } = useForm<FormData>({
+    } = useForm<FormValues>({
         defaultValues: {
             bufferStock: false,
             items: [],
@@ -146,7 +146,7 @@ const Create = () => {
         }
     }, [selectedClientId, setValue]);
 
-    const onSubmit = async (formValues: FormData) => {
+    const onSubmit = async (formValues: FormValues) => {
         console.log('Form Values:', formValues);
 
         setApiError('');
@@ -160,7 +160,7 @@ const Create = () => {
                 formData.append('date', formValues.workOrderDate);
             }
             formData.append('work_order_number', formValues.workOrderNumber);
-            formData.append('buffer_stock', formValues.bufferStock);
+            formData.append('buffer_stock', formValues.bufferStock ? 'true' : 'false');
 
             // Prepare product items
             formValues.items.forEach((item: any, index: number) => {
