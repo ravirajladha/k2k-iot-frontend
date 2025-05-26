@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '@/store/slices/themeConfigSlice';
 import Breadcrumbs from '@/pages/Components/Breadcrumbs';
@@ -8,7 +8,7 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import IconFile from '@/components/Icon/IconFile';
 import IconSave from '@/components/Icon/IconSave';
 import IconTrashLines from '@/components/Icon/IconTrashLines';
-import { fetchDispatchById } from '@/api/konkreteKlinkers/dispatch';
+import { fetchDispatchById, updateDispatchData } from '@/api/konkreteKlinkers/dispatch';
 import CustomLoader from '@/components/Loader';
 import { Controller, useForm } from 'react-hook-form';
 import { formatDateTime } from '@/utils/formatDate';
@@ -31,7 +31,7 @@ interface FormData {
 const DispatchDetailPage = () => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const [dispatchData, setDispatchData] = useState<any>(null);
     const [apiError, setApiError] = useState('');
     const [loading, setLoading] = useState(true);
@@ -86,17 +86,23 @@ const DispatchDetailPage = () => {
         { label: 'Detail Page', link: '#', isActive: true },
     ];
 
-    const onSubmit = (data: FormData) => {
-        const payload = {
-            invoice_or_sto: data.invoiceSto,
-            vehicle_number: data.vehicleNumber,
-            date: data.dispatchDate,
-        };
-        console.log(payload);
-    };
+    const onSubmit = async (data: FormData) => {
+        try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('invoice_or_sto', data.invoiceSto);
+            formDataToSend.append('vehicle_number', data.vehicleNumber);
+            formDataToSend.append('date', data.dispatchDate);
 
-    const handleFileChange = (imageList: ImageListType) => {
-        // Handle file change logic here
+            data.uploads.forEach((fileObj) => {
+                if (fileObj.file) {
+                    formDataToSend.append('invoice_file', fileObj.file);
+                }
+            });
+            await updateDispatchData(formDataToSend);
+            navigate('/konkrete-klinkers/dispatch');
+        } catch (error) {
+            setApiError(error.response?.data?.message || 'Failed to create dispatch. Please try again.');
+        }
     };
 
     const today = new Date();

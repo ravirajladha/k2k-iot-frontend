@@ -128,9 +128,9 @@ const DPRGrid: React.FC<DPRGridProps> = ({ reports, handleAction, handleRefresh,
                             </div>
                             <h4 className="text-base font-semibold text-gray-700 dark:text-white mt-2 mb-1">Production Status</h4>
                             <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-                                <div className="flex justify-between">
+                                {/* <div className="flex justify-between">
                                     <span className="font-semibold">Started By:</span> <span>{report.startedBy}</span>
-                                </div>
+                                </div> */}
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Started At:</span> <span>{report.started_at || 'Not Started'}</span>
                                 </div>
